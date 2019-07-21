@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "trmod",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "trMod Testing",
+  "description": "Playground mod to test stuff",
   "authors": [
-    "Me!"
+    "tr7zw"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://tr7zw.dev",
+    "sources": "https://github.com/tr7zw/trMod-Fabric-playground"
   },
 
   "license": "CC0-1.0",
@@ -19,18 +19,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "de.tr7zw.mod.TrMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "trMod.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.4.0",
-    "fabric": "*"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }
