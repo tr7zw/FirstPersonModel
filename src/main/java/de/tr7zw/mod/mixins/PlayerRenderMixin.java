@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import de.tr7zw.mod.TrMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -38,6 +39,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 		playerEntityModel_1.head.visible = false;
 		playerEntityModel_1.headwear.visible = false;
+		TrMod.hideNextHeadArmor = true;
 	} 
 
 	@Shadow
@@ -63,7 +65,9 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 						double_4 += 0.01f * -Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
 						bodyOffset = 0.50f;
 					}
-				} else{
+				}else if(abstractClientPlayerEntity_1.hasVehicle()) {
+					bodyOffset = 0.1f;
+				}else{
 					bodyOffset = 0.22f;
 				}
 				//(player, player.posX - entity.posX + x + CameraTest.bodyOffset * Math.sin(Math.toRadians(renderOffset)), player.posY - entity.posY + y, player.posZ - entity.posZ + z - CameraTest.bodyOffset * Math.cos(Math.toRadians(renderOffset)), (float)renderOffset, ticks);

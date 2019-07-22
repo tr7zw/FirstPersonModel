@@ -8,7 +8,7 @@
     "LivingEntityRendererMixin",
 	"FirstPersonRendererMixin",
 	"PlayerRenderMixin",
-	"EntityRenderDispatcherMixin",
+	"ArmorRendererMixin",
 	"CameraMixin"
   ],
   "injectors": {
