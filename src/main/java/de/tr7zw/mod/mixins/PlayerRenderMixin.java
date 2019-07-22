@@ -50,13 +50,13 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		if (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1) {
 			double double_4 = y;
 			if (abstractClientPlayerEntity_1.isInSneakingPose()) {
-				double_4 = y + 0.125D;
+				double_4 = y;// - 0.125D;
 			}
 
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0) {
 				if(abstractClientPlayerEntity_1.isSneaking()){
-					bodyOffset = 0.30f;
+					bodyOffset = 0.27f;
 				}else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 					bodyOffset = 0.60f;
 					if(abstractClientPlayerEntity_1.prevPitch > 0) {
@@ -66,9 +66,9 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 						bodyOffset = 0.50f;
 					}
 				}else if(abstractClientPlayerEntity_1.hasVehicle()) {
-					bodyOffset = 0.1f;
+					bodyOffset = 0.2f;
 				}else{
-					bodyOffset = 0.22f;
+					bodyOffset = 0.25f;
 				}
 				//(player, player.posX - entity.posX + x + CameraTest.bodyOffset * Math.sin(Math.toRadians(renderOffset)), player.posY - entity.posY + y, player.posZ - entity.posZ + z - CameraTest.bodyOffset * Math.cos(Math.toRadians(renderOffset)), (float)renderOffset, ticks);
 				x += bodyOffset * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevYaw));
