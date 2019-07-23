@@ -9,7 +9,8 @@
 	"FirstPersonRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
-	"CameraMixin"
+	"CameraMixin",
+	"InventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

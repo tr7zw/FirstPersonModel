@@ -10,14 +10,15 @@ import net.minecraft.client.render.Camera;
 
 @Mixin(Camera.class)
 public abstract class CameraMixin {
-	
+
 	@Inject(at = @At("HEAD"), method = "isThirdPerson", cancellable = true)
 	public boolean isThirdPerson(CallbackInfoReturnable<Boolean> info) {
-		//if(MinecraftClient.getInstance().player.isInSwimmingPose())return false;
+		if(MinecraftClient.getInstance().player.isUsingRiptide())return false;
+		if(MinecraftClient.getInstance().player.isFallFlying())return false;
 		info.setReturnValue(true);
 		return true;
 	}
-	
 
-	
+
+
 }

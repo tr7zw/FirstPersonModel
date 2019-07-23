@@ -6,6 +6,7 @@ public class TrMod implements ModInitializer {
 	
 	//Helper var
 	public static boolean hideNextHeadArmor = false;
+	public static boolean inInventory = false;
 	
 	@Override
 	public void onInitialize() {
