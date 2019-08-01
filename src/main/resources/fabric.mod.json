@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "trmod",
+  "id": "firstperson",
   "version": "${version}",
 
-  "name": "trMod Testing",
-  "description": "Playground mod to test stuff",
+  "name": "FirstpersonModel",
+  "description": "Enables the third person Model in firstperson",
   "authors": [
     "tr7zw"
   ],
   "contact": {
-    "homepage": "https://tr7zw.dev",
-    "sources": "https://github.com/tr7zw/trMod-Fabric-playground"
+    "homepage": "https://tr7zw.dev/u/1564670250.png",
+    "sources": "https://github.com/tr7zw/FirstPersonModel-Fabric"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/firstperson/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "de.tr7zw.mod.TrMod"
+      "de.tr7zw.firstperson.FirstPersonModelMod"
     ]
   },
   "mixins": [
-    "trMod.mixins.json"
+    "firstperson.mixins.json"
   ],
 
   "depends": {

@@ -1,11 +1,11 @@
-package de.tr7zw.mod.mixins;
+package de.tr7zw.firstperson.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import de.tr7zw.mod.TrMod;
+import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.render.entity.feature.ArmorBipedFeatureRenderer;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -23,8 +23,8 @@ public abstract class ArmorRendererMixin <T extends LivingEntity, M extends Bipe
 
 	@Inject(at = @At("RETURN"), method = "method_4170")
 	protected void method_4170(A bipedEntityModel_1, EquipmentSlot var2, CallbackInfo info) {
-		if(TrMod.hideNextHeadArmor && var2 == EquipmentSlot.HEAD) {
-			TrMod.hideNextHeadArmor = false;
+		if(FirstPersonModelMod.hideNextHeadArmor && var2 == EquipmentSlot.HEAD) {
+			FirstPersonModelMod.hideNextHeadArmor = false;
 	         bipedEntityModel_1.head.visible = false;
 	         bipedEntityModel_1.headwear.visible = false;
 		}

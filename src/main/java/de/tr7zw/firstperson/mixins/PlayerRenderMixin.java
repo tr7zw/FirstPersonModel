@@ -1,4 +1,4 @@
-package de.tr7zw.mod.mixins;
+package de.tr7zw.firstperson.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import de.tr7zw.mod.TrMod;
+import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -38,15 +38,15 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	@Inject(at = @At("RETURN"), method = "setModelPose")
 	private void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1, CallbackInfo info) {
 		if(MinecraftClient.getInstance().options.perspective != 0 || !abstractClientPlayerEntity_1.isMainPlayer())return;
-		if(TrMod.inInventory) {
-			TrMod.inInventory = false;
+		if(FirstPersonModelMod.inInventory) {
+			FirstPersonModelMod.inInventory = false;
 			return;
 		}
 
 		PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 		playerEntityModel_1.head.visible = false;
 		playerEntityModel_1.headwear.visible = false;
-		TrMod.hideNextHeadArmor = true;
+		FirstPersonModelMod.hideNextHeadArmor = true;
 	} 
 
 	@Shadow
@@ -74,7 +74,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 1
 			)
 	public double playerCordX(double x) {
-		if (abstractClientPlayerEntity_1 != null && !TrMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
+		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
@@ -102,7 +102,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 2
 			)
 	public double playerCordY(double y) {
-		if (abstractClientPlayerEntity_1 != null && !TrMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
+		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 
 			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 				if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isInWater()) {
@@ -122,7 +122,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 3
 			)
 	public double playerCordZ(double z) {
-		if (abstractClientPlayerEntity_1 != null && !TrMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
+		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
