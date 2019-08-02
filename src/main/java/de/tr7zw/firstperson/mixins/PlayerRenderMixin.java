@@ -14,6 +14,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.util.math.MathHelper;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>{
@@ -52,7 +53,8 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	@Shadow
 	abstract void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1);
 
-	AbstractClientPlayerEntity abstractClientPlayerEntity_1;
+	private AbstractClientPlayerEntity abstractClientPlayerEntity_1;
+	private double realYaw;
 
 	@ModifyVariable(method = "method_4215",
 			at = @At("HEAD"),
@@ -61,6 +63,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	public AbstractClientPlayerEntity playerGetter(AbstractClientPlayerEntity abstractClientPlayerEntity_1) {
 		if(abstractClientPlayerEntity_1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0) {
 			this.abstractClientPlayerEntity_1 = abstractClientPlayerEntity_1;
+			realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
 		}else {
 			this.abstractClientPlayerEntity_1 = null;
 		}
@@ -90,7 +93,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			}else{
 				bodyOffset = 0.25f;
 			}
-			x += bodyOffset * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevYaw));
+			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 		}
 
 		return x;
@@ -138,7 +141,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			}else{
 				bodyOffset = 0.25f;
 			}
-			z -= bodyOffset * Math.cos(Math.toRadians(abstractClientPlayerEntity_1.prevYaw));
+			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
 		}
 
 		return z;
