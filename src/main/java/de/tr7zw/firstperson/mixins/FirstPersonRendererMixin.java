@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.FirstPersonRenderer;
 import net.minecraft.client.render.GuiLighting;
@@ -24,6 +25,7 @@ public abstract class FirstPersonRendererMixin {
 	public void renderFirstPersonItem(float float_1, CallbackInfo info) {
 		if(MinecraftClient.getInstance().player.getMainHandStack().getItem() == Items.FILLED_MAP && MinecraftClient.getInstance().player.getOffHandStack().isEmpty()) {
 			//render normal map
+			FirstPersonModelMod.hideArms = true;
 		}else if(MinecraftClient.getInstance().player.getMainHandStack().getItem() == Items.FILLED_MAP){
 			float float_3 = MathHelper.lerp(float_1, MinecraftClient.getInstance().player.prevPitch, MinecraftClient.getInstance().player.pitch);
 			float float_4 = MathHelper.lerp(float_1, MinecraftClient.getInstance().player.prevYaw, MinecraftClient.getInstance().player.yaw);
@@ -31,6 +33,7 @@ public abstract class FirstPersonRendererMixin {
 			this.applyLightmap();
 			this.applyCameraAngles(float_1);
 			GlStateManager.enableRescaleNormal();
+			FirstPersonModelMod.hideArms = true;
 			this.renderMapInOneHand(0F, MinecraftClient.getInstance().player.getMainHand(), 1F, MinecraftClient.getInstance().player.getOffHandStack());
 			GlStateManager.disableRescaleNormal();
 			GuiLighting.disable();
@@ -43,6 +46,7 @@ public abstract class FirstPersonRendererMixin {
 			this.applyLightmap();
 			this.applyCameraAngles(float_1);
 			GlStateManager.enableRescaleNormal();
+			FirstPersonModelMod.hideArms = true;
 			this.renderMapInOneHand(0F, MinecraftClient.getInstance().player.getMainHand().getOpposite(), 1F, MinecraftClient.getInstance().player.getOffHandStack());
 			GlStateManager.disableRescaleNormal();
 			GuiLighting.disable();
