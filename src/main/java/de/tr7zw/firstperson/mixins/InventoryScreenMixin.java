@@ -16,6 +16,7 @@ public class InventoryScreenMixin {
 	private static void drawEntity(int int_1, int int_2, int int_3, float float_1, float float_2, LivingEntity livingEntity_1, CallbackInfo info) {
 		FirstPersonModelMod.inInventory = true;
 		FirstPersonModelMod.hideNextHeadArmor = false;
+		FirstPersonModelMod.hideNextHeadItem = false;
 	}
 
 }

@@ -48,6 +48,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		playerEntityModel_1.head.visible = false;
 		playerEntityModel_1.headwear.visible = false;
 		FirstPersonModelMod.hideNextHeadArmor = true;
+		FirstPersonModelMod.hideNextHeadItem = true;
 	} 
 
 	@Shadow

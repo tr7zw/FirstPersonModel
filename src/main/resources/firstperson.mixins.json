@@ -6,6 +6,7 @@
   ],
   "client": [
 	"FirstPersonRendererMixin",
+	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
 	"CameraMixin",
