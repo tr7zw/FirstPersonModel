@@ -12,6 +12,6 @@ public class FirstPersonModelMod implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-		
+		System.out.println("Loaded FirstPerson Models");
 	}
 }
