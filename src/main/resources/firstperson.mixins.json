@@ -5,14 +5,13 @@
   "mixins": [
   ],
   "client": [
-	"FirstPersonRendererMixin",
+    "FirstPersonRendererMixin",
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
 	"CameraMixin",
-	"EntityMixin",
 	"GameRendererMixin",
-	"InventoryScreenMixin"
+	"WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
