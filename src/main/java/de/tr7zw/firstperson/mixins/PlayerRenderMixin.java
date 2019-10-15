@@ -30,7 +30,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			PlayerEntityModel<AbstractClientPlayerEntity> entityModel_1, float float_1) {
 		super(entityRenderDispatcher_1, entityModel_1, float_1);
 	}
-	
+
 	private final float sneakBodyOffset = 0.27f;
 	private final float swimUpBodyOffset = 0.60f;
 	private final float swimDownBodyOffset = 0.50f;
@@ -38,17 +38,11 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 
 	@Inject(at = @At("RETURN"), method = "setModelPose")
 	private void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1, CallbackInfo info) {
-		if(MinecraftClient.getInstance().options.perspective != 0 || !abstractClientPlayerEntity_1.isMainPlayer())return;
-		if(FirstPersonModelMod.inInventory) {
-			FirstPersonModelMod.inInventory = false;
-			return;
+		if(FirstPersonModelMod.hideNextHeadItem) {
+			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
+			playerEntityModel_1.head.visible = false;
+			playerEntityModel_1.headwear.visible = false;
 		}
-
-		PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
-		playerEntityModel_1.head.visible = false;
-		playerEntityModel_1.headwear.visible = false;
-		FirstPersonModelMod.hideNextHeadArmor = true;
-		FirstPersonModelMod.hideNextHeadItem = true;
 	} 
 
 	@Shadow
@@ -62,9 +56,10 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			ordinal = 0
 			)
 	public AbstractClientPlayerEntity playerGetter(AbstractClientPlayerEntity abstractClientPlayerEntity_1) {
-		if(abstractClientPlayerEntity_1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0) {
+		if(abstractClientPlayerEntity_1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0 && FirstPersonModelMod.isRenderingPlayer) {
 			this.abstractClientPlayerEntity_1 = abstractClientPlayerEntity_1;
 			realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
+			 FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			this.abstractClientPlayerEntity_1 = null;
 		}
@@ -78,8 +73,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 1
 			)
 	public double playerCordX(double x) {
-		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
-
+		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = sneakBodyOffset;
@@ -96,7 +90,6 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 		}
-
 		return x;
 	}	
 
@@ -106,8 +99,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 2
 			)
 	public double playerCordY(double y) {
-		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
-
+		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 				if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isInWater()) {
 					y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
@@ -116,7 +108,6 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 				}
 			}
 		}
-
 		return y;
 	}	
 
@@ -126,7 +117,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			index = 3
 			)
 	public double playerCordZ(double z) {
-		if (abstractClientPlayerEntity_1 != null && !FirstPersonModelMod.inInventory && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
+		if (abstractClientPlayerEntity_1 != null &&  (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
@@ -144,8 +135,14 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			}
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
 		}
-
+		
 		return z;
 	}	
+	
+	@Inject(at = @At("RETURN"), method = "method_4215")
+	private void finishedRendering(AbstractClientPlayerEntity abstractClientPlayerEntity_1, double double_1, double double_2, double double_3, float float_1, float float_2, CallbackInfo info) {
+		abstractClientPlayerEntity_1 = null;
+		FirstPersonModelMod.isRenderingPlayer = false;
+	}
 
 }

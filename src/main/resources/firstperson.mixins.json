@@ -10,9 +10,8 @@
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
 	"CameraMixin",
-	"EntityMixin",
 	"GameRendererMixin",
-	"InventoryScreenMixin"
+	"EntityRenderDispatcherMixin"
   ],
   "injectors": {
     "defaultRequire": 1
