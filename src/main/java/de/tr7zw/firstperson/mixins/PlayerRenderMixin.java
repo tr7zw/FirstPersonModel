@@ -56,6 +56,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 
 	@Inject(at = @At("HEAD"), method = "getPositionOffset", cancellable = true)
 	public void getPositionOffset(AbstractClientPlayerEntity var1, float var2, CallbackInfoReturnable<Vec3d> info) {
+		if(MinecraftClient.getInstance().player.isSleeping())return;
 		double x,y,z = x = y = z = 0;
 		if(var1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0 && FirstPersonModelMod.isRenderingPlayer) {
 			this.abstractClientPlayerEntity_1 = (AbstractClientPlayerEntity) var1;
