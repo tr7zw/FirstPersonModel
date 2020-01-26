@@ -1,5 +1,6 @@
 # First Person Models
 
-[![Downloads](https://cf.way2muchnoise.eu/full_333287_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)[![Versions](https://cf.way2muchnoise.eu/versions/333287.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)
+[![Downloads](http://cf.way2muchnoise.eu/full_333287_downloads.svg)](https://minecraft.curseforge.com/projects/just-enough-resources-jer)
+[![Versions](http://cf.way2muchnoise.eu/versions/333287.svg)](https://minecraft.curseforge.com/projects/jei)
 
 Todo 
