@@ -11,7 +11,7 @@
 	"ArmorRendererMixin",
 	"CameraMixin",
 	"GameRendererMixin",
-	"EntityRenderDispatcherMixin"
+  "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
