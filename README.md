@@ -1,16 +1,5 @@
-# Fabric Example Mod
+# First Person Models
 
-## Setup
+[![Downloads](https://cf.way2muchnoise.eu/full_333287_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)[![Versions](https://cf.way2muchnoise.eu/versions/333287.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)
 
-1. Edit build.gradle and mod.json to suit your needs.
-    * The "mixins" object can be removed from mod.json if you do not need to use mixins.
-    * Please replace all occurences of "modid" with your own mod ID - sometimes, a different string may also suffice.
-2. Run the following command:
-
-```
-./gradlew idea
-```
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Todo 
