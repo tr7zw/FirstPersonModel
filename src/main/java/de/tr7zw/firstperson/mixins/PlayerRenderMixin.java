@@ -10,10 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 @Mixin(PlayerEntityRenderer.class)
@@ -41,7 +43,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		if(FirstPersonModelMod.hideNextHeadItem) {
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 			playerEntityModel_1.head.visible = false;
-			playerEntityModel_1.headwear.visible = false;
+			playerEntityModel_1.helmet.visible = false;
 		}
 	} 
 
@@ -51,7 +53,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	private AbstractClientPlayerEntity abstractClientPlayerEntity_1;
 	private double realYaw;
 
-	@ModifyVariable(method = "method_4215",
+	/*@ModifyVariable(method = "render",
 			at = @At("HEAD"),
 			ordinal = 0
 			)
@@ -67,7 +69,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	}
 
 
-	@ModifyVariable(method = "method_4215",
+	@ModifyVariable(method = "render",
 			at = @At("HEAD"),
 			ordinal = 0,
 			index = 1
@@ -93,7 +95,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		return x;
 	}	
 
-	@ModifyVariable(method = "method_4215",
+	@ModifyVariable(method = "render",
 			at = @At("HEAD"),
 			ordinal = 1,
 			index = 2
@@ -101,7 +103,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	public double playerCordY(double y) {
 		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
-				if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isInWater()) {
+				if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isSubmergedInWater()) {
 					y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
 				}else {
 					y += 0.01f * -Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
@@ -111,7 +113,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		return y;
 	}	
 
-	@ModifyVariable(method = "method_4215",
+	@ModifyVariable(method = "render",
 			at = @At("HEAD"),
 			ordinal = 2,
 			index = 3
@@ -137,10 +139,10 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		}
 		
 		return z;
-	}	
+	}	*/
 	
-	@Inject(at = @At("RETURN"), method = "method_4215")
-	private void finishedRendering(AbstractClientPlayerEntity abstractClientPlayerEntity_1, double double_1, double double_2, double double_3, float float_1, float float_2, CallbackInfo info) {
+	@Inject(at = @At("RETURN"), method = "render")
+	private void finishedRendering(AbstractClientPlayerEntity abstractClientPlayerEntity_1, float float_1, float float_2, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, CallbackInfo info) {
 		abstractClientPlayerEntity_1 = null;
 		FirstPersonModelMod.isRenderingPlayer = false;
 	}

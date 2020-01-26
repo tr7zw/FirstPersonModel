@@ -21,12 +21,12 @@ public abstract class ArmorRendererMixin <T extends LivingEntity, M extends Bipe
 		super(featureRendererContext_1, bipedEntityModel_1, bipedEntityModel_2);
 	}
 
-	@Inject(at = @At("RETURN"), method = "method_4170")
-	protected void method_4170(A bipedEntityModel_1, EquipmentSlot var2, CallbackInfo info) {
-		if(FirstPersonModelMod.hideNextHeadArmor && var2 == EquipmentSlot.HEAD) {
+	@Inject(at = @At("RETURN"), method = "setVisible")
+	protected void setVisible(A bipedEntityModel_1, EquipmentSlot equipmentSlot_1, CallbackInfo info) {
+		if(FirstPersonModelMod.hideNextHeadArmor && equipmentSlot_1 == EquipmentSlot.HEAD) {
 			FirstPersonModelMod.hideNextHeadArmor = false;
 	         bipedEntityModel_1.head.visible = false;
-	         bipedEntityModel_1.headwear.visible = false;
+	         bipedEntityModel_1.helmet.visible = false;
 		}
 	}
 
