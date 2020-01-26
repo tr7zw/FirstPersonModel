@@ -63,6 +63,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			 FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			this.abstractClientPlayerEntity_1 = null;
+			return;
 		}
 		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			float bodyOffset;
@@ -91,13 +92,9 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			
 		}
 		Vec3d vec = new Vec3d(x, y, z);
-		info.setReturnValue(vec);
-	}
-	
-	@Inject(at = @At("RETURN"), method = "render")
-	private void finishedRendering(AbstractClientPlayerEntity abstractClientPlayerEntity_1, float float_1, float float_2, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, CallbackInfo info) {
 		abstractClientPlayerEntity_1 = null;
 		FirstPersonModelMod.isRenderingPlayer = false;
+		info.setReturnValue(vec);
 	}
 
 }

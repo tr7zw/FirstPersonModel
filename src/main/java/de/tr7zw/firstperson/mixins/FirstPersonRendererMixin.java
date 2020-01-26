@@ -15,7 +15,6 @@ import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
@@ -32,7 +31,7 @@ public abstract class FirstPersonRendererMixin {
 			//this.applyLightmap();
 			//this.applyCameraAngles(float_1);
 			GlStateManager.enableRescaleNormal();
-			renderMapAsMinimap(MinecraftClient.getInstance().player.getMainHandStack());
+			renderMapAsMinimap(matrixStack_1, vertexConsumerProvider_1, int_1, MinecraftClient.getInstance().player.getMainHandStack());
 			GlStateManager.disableRescaleNormal();
 			//GuiLighting.disable();
 			info.cancel();
@@ -44,7 +43,7 @@ public abstract class FirstPersonRendererMixin {
 			//this.applyLightmap();
 			//this.applyCameraAngles(float_1);
 			GlStateManager.enableRescaleNormal();
-			renderMapAsMinimap(MinecraftClient.getInstance().player.getOffHandStack());
+			renderMapAsMinimap(matrixStack_1, vertexConsumerProvider_1, int_1, MinecraftClient.getInstance().player.getMainHandStack());
 			GlStateManager.disableRescaleNormal();
 			//GuiLighting.disable();
 			info.cancel();
@@ -54,7 +53,7 @@ public abstract class FirstPersonRendererMixin {
 
 	}
 	
-	public void renderMapAsMinimap(ItemStack item) {
+	public void renderMapAsMinimap(MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, ItemStack item) {
 		GlStateManager.pushMatrix();
 		float size = (float)MinecraftClient.getInstance().getFramebuffer().viewportWidth / (float)MinecraftClient.getInstance().getFramebuffer().viewportHeight;
 		GlStateManager.translatef(0, 0.0f, 0.0f); // 3rd arg is size
@@ -71,7 +70,7 @@ public abstract class FirstPersonRendererMixin {
 	      GlStateManager.rotatef(float_5 * -45.0F, 1.0F, 0.0F, 0.0F);
 	      GlStateManager.rotatef(float_3 * float_5 * -30.0F, 0.0F, 1.0F, 0.0F);
 	      GlStateManager.translatef(0.33f, 0.65f, -0.2f);
-	      //this.renderFirstPersonMap(null, null, 0, item);
+	      this.renderFirstPersonMap(matrixStack_1, vertexConsumerProvider_1, int_1, item);
 	      GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
