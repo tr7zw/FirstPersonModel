@@ -69,6 +69,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = sneakBodyOffset;
 			}else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+				abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
 				if(abstractClientPlayerEntity_1.prevPitch > 0) {
 					bodyOffset = swimUpBodyOffset;
 				}else {
