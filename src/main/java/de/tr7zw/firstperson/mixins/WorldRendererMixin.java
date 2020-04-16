@@ -21,25 +21,11 @@ public class WorldRendererMixin {
 	private void renderEntity(Entity entity_1, double double_1, double double_2, double double_3, float float_1, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, CallbackInfo info) {
 		if (FirstPersonModelMod.hideNextHeadArmor) FirstPersonModelMod.hideNextHeadArmor = false;
 		if (FirstPersonModelMod.hideNextHeadItem) FirstPersonModelMod.hideNextHeadArmor = true; 	//if I don't wear any armor head then another helmet will be hidden without this
-		
-		/*if (!FirstPersonModelMod.matrix.equals( matrixStack_1)){
-			FirstPersonModelMod.matrix = matrixStack_1;
-			if (FirstPersonModelMod.debug.length() != 0){
-				System.out.println(FirstPersonModelMod.debug);
-				FirstPersonModelMod.debug = "";
-			}	//figure out what optifine does
-		}*/
 
 		if(MinecraftClient.getInstance().options.perspective != 0)return;
 		if(entity_1 instanceof AbstractClientPlayerEntity) {
 			if(!((PlayerEntity) entity_1).isMainPlayer())return;
-			//FirstPersonModelMod.hideNextHeadArmor = true;
-			//FirstPersonModelMod.hideNextHeadItem = true;
 			FirstPersonModelMod.isRenderingPlayer = true;
-			//FirstPersonModelMod.debug = FirstPersonModelMod.debug + "X";
-		}
-		else{
-			//FirstPersonModelMod.debug = FirstPersonModelMod.debug + "I";
 		}
 	}
 	
