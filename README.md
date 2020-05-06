@@ -11,7 +11,7 @@ Since this mod is purely visual, it will also work on vanilla servers and everyt
 
 ## Dependencies
 
-- [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to chance config values (should work without)
+- [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to chance config values
 
 ## Tested for visual probems with
 
