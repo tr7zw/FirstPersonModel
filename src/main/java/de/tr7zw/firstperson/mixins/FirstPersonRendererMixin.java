@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -23,6 +24,7 @@ public abstract class FirstPersonRendererMixin {
 
 	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem", cancellable = true)
 	public void renderFirstPersonItem(AbstractClientPlayerEntity abstractClientPlayerEntity_1, float float_1, float float_2, Hand hand_1, float float_3, ItemStack itemStack_1, float float_4, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, CallbackInfo info) {
+		if(!FirstPersonModelMod.enabled)return;
 		if(MinecraftClient.getInstance().player.getMainHandStack().getItem() == Items.FILLED_MAP){
 			//render only offhand map
 			//float float_3 = MathHelper.lerp(float_1, MinecraftClient.getInstance().player.prevPitch, MinecraftClient.getInstance().player.pitch);

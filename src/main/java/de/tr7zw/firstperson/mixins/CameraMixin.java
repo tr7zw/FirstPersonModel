@@ -20,6 +20,7 @@ public abstract class CameraMixin {
 		if(MinecraftClient.getInstance().player.isUsingRiptide())return false;
 		if(MinecraftClient.getInstance().player.isFallFlying())return false;
 		if(MinecraftClient.getInstance().player.isSpectator())return false;
+		if(!FirstPersonModelMod.enabled)return false;
 		if(!this.thirdPerson)FirstPersonModelMod.hideNextHeadItem = true;
 		info.setReturnValue(true);
 		return true;

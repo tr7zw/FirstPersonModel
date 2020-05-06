@@ -67,7 +67,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
-				bodyOffset = sneakBodyOffset;
+				bodyOffset = sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
 			}else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 				abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
 				if(abstractClientPlayerEntity_1.prevPitch > 0) {
@@ -78,7 +78,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
 				bodyOffset = inVehicleBodyOffset;
 			}else{
-				bodyOffset = 0.25f;
+				bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));

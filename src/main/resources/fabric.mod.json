@@ -2,30 +2,28 @@
   "schemaVersion": 1,
   "id": "firstperson",
   "version": "${version}",
-
   "name": "FirstpersonModel",
   "description": "Enables the third person Model in firstperson",
   "authors": [
     "tr7zw"
   ],
   "contact": {
-    "homepage": "https://tr7zw.dev/u/1564670250.png",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/first-person-model",
     "sources": "https://github.com/tr7zw/FirstPersonModel-Fabric"
   },
-
   "license": "MIT",
   "icon": "assets/firstperson/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
       "de.tr7zw.firstperson.FirstPersonModelMod"
+    ],
+    "modmenu": [
+      "de.tr7zw.firstperson.FirstPersonModMenu"
     ]
   },
   "mixins": [
     "firstperson.mixins.json"
   ],
-
-  "depends": {
-  }
+  "depends": {}
 }
