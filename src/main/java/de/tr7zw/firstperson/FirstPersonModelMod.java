@@ -20,6 +20,10 @@ public class FirstPersonModelMod implements ModInitializer {
 	public static FirstPersonConfig config = null;
 	private static FabricKeyBinding keyBinding;
 	private static boolean isHeld = false;
+
+	public static boolean fixBodyShadow(){
+		return (!enabled || config.improvedCompatibility && !hideNextHeadItem);
+	}
 	
 	@Override
 	public void onInitialize() {
