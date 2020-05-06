@@ -45,7 +45,7 @@ public abstract class FirstPersonRendererMixin {
 			//this.applyLightmap();
 			//this.applyCameraAngles(float_1);
 			GlStateManager.enableRescaleNormal();
-			renderMapAsMinimap(matrixStack_1, vertexConsumerProvider_1, int_1, MinecraftClient.getInstance().player.getMainHandStack());
+			renderMapAsMinimap(matrixStack_1, vertexConsumerProvider_1, int_1, MinecraftClient.getInstance().player.getOffHandStack());
 			GlStateManager.disableRescaleNormal();
 			//GuiLighting.disable();
 			info.cancel();
