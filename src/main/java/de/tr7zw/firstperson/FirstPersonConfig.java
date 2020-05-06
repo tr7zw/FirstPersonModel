@@ -17,4 +17,6 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public int sneakXOffset = 0;
 
+	@ConfigEntry.Gui.Tooltip
+	public boolean improvedCompatibility = true;
 }
