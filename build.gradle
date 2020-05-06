@@ -25,7 +25,7 @@ dependencies {
 
 
 	modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
-	modApi "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
+	modApi "me.sargunvohra.mcmods:autoconfig1u:3.1.0-unstable"
 	include "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
 	modApi "me.shedaniel.cloth:config-2:2.14.0"
 	include "me.shedaniel.cloth:config-2:2.14.0"
