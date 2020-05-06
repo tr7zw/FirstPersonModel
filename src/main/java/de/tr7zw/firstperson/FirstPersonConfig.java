@@ -17,7 +17,6 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public int sneakXOffset = 0;
 
-	@ConfigEntry.BoundedDiscrete(min = 0, max = 1)
 	@ConfigEntry.Gui.Tooltip
-	public int fixShadow = 1;
+	public boolean improvedCompatibility = true;
 }

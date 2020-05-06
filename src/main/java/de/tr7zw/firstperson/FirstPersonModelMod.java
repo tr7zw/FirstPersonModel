@@ -22,7 +22,7 @@ public class FirstPersonModelMod implements ModInitializer {
 	private static boolean isHeld = false;
 
 	public static boolean fixBodyShadow(){
-		return (!enabled || config.fixShadow == 1 && !hideNextHeadItem);
+		return (!enabled || config.improvedCompatibility && !hideNextHeadItem);
 	}
 	
 	@Override
