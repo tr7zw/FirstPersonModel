@@ -25,5 +25,6 @@
   "mixins": [
     "firstperson.mixins.json"
   ],
-  "depends": {}
+  "depends": {
+    "modmenu": "*"
 }
