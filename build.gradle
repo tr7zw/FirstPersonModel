@@ -20,15 +20,15 @@ minecraft {
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 
 	modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
-	modApi "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
-	include "me.sargunvohra.mcmods:autoconfig1u:2.1.0"
-	modApi "me.shedaniel.cloth:config-2:2.14.0"
-	include "me.shedaniel.cloth:config-2:2.14.0"
+	modApi "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+	include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+	modApi "me.shedaniel.cloth:config-2:${project.cloth_version}"
+	include "me.shedaniel.cloth:config-2:${project.cloth_version}"
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	//modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
@@ -87,4 +87,10 @@ publishing {
 		// uncomment to publish to the local maven
 		// mavenLocal()
 	}
+	/*dependencies {
+		//@Nullable essential for mc modding
+		compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
+	}
+
+	 */
 }

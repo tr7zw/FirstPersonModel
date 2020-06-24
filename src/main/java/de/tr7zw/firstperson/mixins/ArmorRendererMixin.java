@@ -1,24 +1,25 @@
 package de.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import net.minecraft.client.render.entity.feature.ArmorBipedFeatureRenderer;
+//import net.minecraft.client.render.entity.feature.ArmorBipedFeatureRenderer;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 
-@Mixin(ArmorBipedFeatureRenderer.class)
-public abstract class ArmorRendererMixin <T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>> extends ArmorFeatureRenderer<T, M, A>  {
+@Mixin(ArmorFeatureRenderer.class)
+public abstract class ArmorRendererMixin <T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
 
-	protected ArmorRendererMixin(FeatureRendererContext<T, M> featureRendererContext_1, A bipedEntityModel_1,
-			A bipedEntityModel_2) {
-		super(featureRendererContext_1, bipedEntityModel_1, bipedEntityModel_2);
+
+	public ArmorRendererMixin(FeatureRendererContext<T, M> context) {
+		super(context);
 	}
 
 	@Inject(at = @At("RETURN"), method = "setVisible")

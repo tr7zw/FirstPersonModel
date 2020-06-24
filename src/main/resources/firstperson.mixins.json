@@ -11,7 +11,8 @@
 	"ArmorRendererMixin",
 	"CameraMixin",
 	"GameRendererMixin",
-  "WorldRendererMixin"
+    "WorldRendererMixin",
+    "FishingBobberRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
