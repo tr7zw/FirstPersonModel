@@ -24,12 +24,20 @@ public class FirstPersonModelMod implements ModInitializer {
 	public static boolean fixBodyShadow(){
 		return (!enabled || config.improvedCompatibility && !hideNextHeadItem);
 	}
+
+
+	public static final float sneakBodyOffset = 0.27f;
+	public static final float swimUpBodyOffset = 0.60f;
+	public static final float swimDownBodyOffset = 0.50f;
+	public static final float inVehicleBodyOffset = 0.20f;
+
 	
 	@Override
 	public void onInitialize() {
 		System.out.println("Loaded FirstPerson Models");
 		AutoConfig.register(FirstPersonConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(FirstPersonConfig.class).getConfig();
+		enabled = config.enabledByDefault;
 	    keyBinding = FabricKeyBinding.Builder.create(
 	            new Identifier("firstperson", "toggle"),
 	            net.minecraft.client.util.InputUtil.Type.KEYSYM,

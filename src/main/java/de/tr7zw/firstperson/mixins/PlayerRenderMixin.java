@@ -32,10 +32,6 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		super(entityRenderDispatcher_1, entityModel_1, float_1);
 	}
 
-	private final float sneakBodyOffset = 0.27f;
-	private final float swimUpBodyOffset = 0.60f;
-	private final float swimDownBodyOffset = 0.50f;
-	private final float inVehicleBodyOffset = 0.20f;
 
 	@Inject(at = @At("RETURN"), method = "setModelPose")
 	private void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1, CallbackInfo info) {
@@ -64,19 +60,19 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			this.abstractClientPlayerEntity_1 = null;
 			return;
 		}
-		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.renderManager.camera != null && this.renderManager.camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
+		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || this.getRenderManager().camera != null && this.getRenderManager().camera.getFocusedEntity() == abstractClientPlayerEntity_1)) {
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
-				bodyOffset = sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
+				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
 			}else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 				abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
 				if(abstractClientPlayerEntity_1.prevPitch > 0) {
-					bodyOffset = swimUpBodyOffset;
+					bodyOffset = FirstPersonModelMod.swimUpBodyOffset;
 				}else {
-					bodyOffset = swimDownBodyOffset;
+					bodyOffset = FirstPersonModelMod.swimDownBodyOffset;
 				}
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
-				bodyOffset = inVehicleBodyOffset;
+				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset;
 			}else{
 				bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
 			}
