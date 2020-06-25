@@ -19,4 +19,8 @@ public class FirstPersonConfig implements ConfigData {
 
 	@ConfigEntry.Gui.Tooltip
 	public boolean improvedCompatibility = true;
+	
+	@ConfigEntry.Gui.Tooltip
+	public boolean enabledByDefault = true;
+	
 }

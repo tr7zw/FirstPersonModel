@@ -37,6 +37,7 @@ public class FirstPersonModelMod implements ModInitializer {
 		System.out.println("Loaded FirstPerson Models");
 		AutoConfig.register(FirstPersonConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(FirstPersonConfig.class).getConfig();
+		enabled = config.enabledByDefault;
 	    keyBinding = FabricKeyBinding.Builder.create(
 	            new Identifier("firstperson", "toggle"),
 	            net.minecraft.client.util.InputUtil.Type.KEYSYM,

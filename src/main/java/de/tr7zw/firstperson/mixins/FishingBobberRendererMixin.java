@@ -1,24 +1,22 @@
 package de.tr7zw.firstperson.mixins;
 
 
-import de.tr7zw.firstperson.FirstPersonModelMod;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.FishingBobberEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FishingBobberEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import de.tr7zw.firstperson.FirstPersonModelMod;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.FishingBobberEntityRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 @Mixin(FishingBobberEntityRenderer.class)
 public class FishingBobberRendererMixin {
