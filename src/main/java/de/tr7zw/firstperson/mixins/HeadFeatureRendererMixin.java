@@ -24,8 +24,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 
 	@Inject(at = @At("HEAD"), method = "render", cancellable = true)
 	protected void render(MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, T livingEntity_1, float float_1, float float_2, float float_3, float float_4, float float_5, float float_6, CallbackInfo info) {
-		if(FirstPersonModelMod.hideNextHeadItem) {
-			FirstPersonModelMod.hideNextHeadItem = false;
+		if(FirstPersonModelMod.hideHeadWithMatrixStack == matrixStack_1) {
 	        info.cancel();
 		}
 	}

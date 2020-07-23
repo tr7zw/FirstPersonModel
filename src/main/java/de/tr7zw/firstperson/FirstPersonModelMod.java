@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson;
 
+import net.minecraft.client.util.math.MatrixStack;
 import org.lwjgl.glfw.GLFW;
 
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
@@ -10,12 +11,15 @@ import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.util.Identifier;
 
+import javax.annotation.Nullable;
+
 public class FirstPersonModelMod implements ModInitializer {
 	
 	//Helper var
 	public static boolean hideNextHeadArmor = false;
 	public static boolean isRenderingPlayer = false;
-	public static boolean hideNextHeadItem = false; //Pumpkin mostly // or anything other on the head  (like end rod) - unicorn :)	sorry
+	@Nullable
+	public static MatrixStack hideHeadWithMatrixStack = null;
 	public static boolean enabled = true;
 	public static FirstPersonConfig config = null;
 	private static FabricKeyBinding keyBinding;

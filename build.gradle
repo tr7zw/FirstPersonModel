@@ -34,6 +34,10 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
+
+	//KosmX - optifine debugger ingredients
+	//compile files("optifabric-1.1.0-beta2.jar")
+	//compile files("optifine_latest.jar")
 }
 
 processResources {
@@ -87,10 +91,10 @@ publishing {
 		// uncomment to publish to the local maven
 		// mavenLocal()
 	}
-	/*dependencies {
+	dependencies {
 		//@Nullable essential for mc modding
 		compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
 	}
 
-	 */
+
 }

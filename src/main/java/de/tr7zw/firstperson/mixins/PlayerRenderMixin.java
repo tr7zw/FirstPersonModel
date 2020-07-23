@@ -1,9 +1,12 @@
 package de.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -33,9 +36,13 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	}
 
 
-	@Inject(at = @At("RETURN"), method = "setModelPose")
-	private void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1, CallbackInfo info) {
-		if(FirstPersonModelMod.hideNextHeadItem) {
+	@Redirect(method = "render", at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/render/entity/PlayerEntityRenderer;setModelPose(Lnet/minecraft/client/network/AbstractClientPlayerEntity;)V"
+	))
+	private void setModelPoseRedirect(PlayerEntityRenderer playerEntityRenderer, AbstractClientPlayerEntity abstractClientPlayerEntity, AbstractClientPlayerEntity abstractClientPlayerEntity_1, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+		if(FirstPersonModelMod.hideHeadWithMatrixStack == matrixStack) {
+			this.setModelPose(abstractClientPlayerEntity);
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;

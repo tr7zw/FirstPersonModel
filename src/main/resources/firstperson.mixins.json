@@ -9,7 +9,7 @@
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
-	"CameraMixin",
+    "de.tr7zw.firstperson.CameraMixin",
 	"GameRendererMixin",
     "WorldRendererMixin",
     "FishingBobberRendererMixin"
