@@ -9,10 +9,10 @@
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
-	"CameraMixin",
 	"GameRendererMixin",
     "WorldRendererMixin",
-    "FishingBobberRendererMixin"
+    "FishingBobberRendererMixin",
+    "RenderDispatcherMixin"
   ],
   "injectors": {
     "defaultRequire": 1
