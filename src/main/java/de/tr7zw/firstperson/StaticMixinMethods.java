@@ -17,6 +17,8 @@ public class StaticMixinMethods {
 		return true;
 	}
 
+	public static Vec3d offset;
+
 	public static Vec3d getPositionOffset(AbstractClientPlayerEntity var1, Vec3d defValue, MatrixStack matrices) {
 		if(var1 == MinecraftClient.getInstance().getCameraEntity() && MinecraftClient.getInstance().player.isSleeping() || FirstPersonModelMod.fixBodyShadow(matrices))return defValue;
 		double x,y,z = x = y = z = 0;
