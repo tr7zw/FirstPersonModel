@@ -8,5 +8,19 @@
     "text.autoconfig.firstperson.option.improvedCompatibility": "Improved Mod Compatibility",
     "text.autoconfig.firstperson.option.improvedCompatibility.@Tooltip": "Tries to fix offset issues with mods like Immersive Portals Mirrors",
     "text.autoconfig.firstperson.option.enabledByDefault": "Enabled by default",
-    "text.autoconfig.firstperson.option.enabledByDefault.@Tooltip": "The default state of the FirstPerson mod after starting the game"
+    "text.autoconfig.firstperson.option.enabledByDefault.@Tooltip": "The default state of the FirstPerson mod after starting the game",
+    "text.autoconfig.firstperson.option.dollEnabled": "\"PaperDoll\" enabled",
+    "text.autoconfig.firstperson.option.dollEnabled.@Tooltip": "Shows a smaller version of yourself(or the entity you're spectating) at the side of the screen",
+    "text.autoconfig.firstperson.option.dollXOffset": "Doll X Offset",
+    "text.autoconfig.firstperson.option.dollXOffset.@Tooltip": "Moves the doll left/right",
+    "text.autoconfig.firstperson.option.dollYOffset": "Doll Y Offset",
+    "text.autoconfig.firstperson.option.dollYOffset.@Tooltip": "Moves the doll up/down",
+    "text.autoconfig.firstperson.option.dollSize": "Doll Size",
+    "text.autoconfig.firstperson.option.dollSize.@Tooltip": "Change the scale of the doll",
+    "text.autoconfig.firstperson.option.dollLookingSides": "Doll looking sides",
+    "text.autoconfig.firstperson.option.dollLookingSides.@Tooltip": "Change how much the (locked) head looks to the left/right",
+    "text.autoconfig.firstperson.option.dollLookingUpDown": "Doll looking Up/Down",
+    "text.autoconfig.firstperson.option.dollLookingUpDown.@Tooltip": "Change how much the (locked) head looks Up/Down",
+    "text.autoconfig.firstperson.option.dollLockedHead": "Doll head locked",
+    "text.autoconfig.firstperson.option.dollLockedHead.@Tooltip": "When locked, the doll will look into the direction setup above, else it will look the same way the player does"
   }
