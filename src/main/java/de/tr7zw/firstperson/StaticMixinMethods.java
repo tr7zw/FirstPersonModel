@@ -2,6 +2,7 @@ package de.tr7zw.firstperson;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.options.Perspective;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +25,7 @@ public class StaticMixinMethods {
 		double x,y,z = x = y = z = 0;
 		AbstractClientPlayerEntity abstractClientPlayerEntity_1;
 		double realYaw;
-		if(var1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.perspective == 0 && FirstPersonModelMod.isRenderingPlayer) {
+		if(var1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.getPerspective() == Perspective.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 = (AbstractClientPlayerEntity) var1;
 			realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
 			FirstPersonModelMod.isRenderingPlayer = false;

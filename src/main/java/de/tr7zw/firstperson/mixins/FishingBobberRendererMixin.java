@@ -1,6 +1,7 @@
 package de.tr7zw.firstperson.mixins;
 
 
+import net.minecraft.client.options.Perspective;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +23,7 @@ import net.minecraft.util.math.Vec3d;
 public class FishingBobberRendererMixin {
 
     private boolean doCorrect(){
-        return FirstPersonModelMod.enabled && MinecraftClient.getInstance().options.perspective <= 0;
+        return FirstPersonModelMod.enabled && MinecraftClient.getInstance().options.getPerspective() == Perspective.FIRST_PERSON;
     }
 
     private Vec3d offsetvec3d = Vec3d.ZERO; //to not create @Nullable
@@ -72,11 +73,11 @@ public class FishingBobberRendererMixin {
     }
 
     @Redirect(method = "render", at = @At(
-            value = "FIELD",
-            target = "Lnet/minecraft/client/options/GameOptions;perspective:I"
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/options/GameOptions;getPerspective()Lnet/minecraft/client/options/Perspective;"
     ))
-    private int redirect(GameOptions gameOptions){
-        return (doCorrect()) ? 1 : gameOptions.perspective;
+    private Perspective redirect(GameOptions gameOptions){
+        return (doCorrect()) ? Perspective.THIRD_PERSON_BACK : gameOptions.getPerspective();
     }
 
     @Inject(method = "render", at = @At("HEAD"))

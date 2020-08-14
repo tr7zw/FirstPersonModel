@@ -79,7 +79,7 @@ public class InGameHudMixin {
 			livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
 			livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
 		}
-		EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderManager();
+		EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
 		quaternion2.conjugate();
 		entityRenderDispatcher.setRotation(quaternion2);
 		entityRenderDispatcher.setRenderShadows(false);

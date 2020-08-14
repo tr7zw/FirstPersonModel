@@ -1,6 +1,7 @@
 package de.tr7zw.firstperson.mixins;
 
 import de.tr7zw.firstperson.StaticMixinMethods;
+import net.minecraft.client.options.Perspective;
 import net.minecraft.client.render.Camera;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +26,7 @@ public class WorldRendererMixin {
 		if (FirstPersonModelMod.hideNextHeadArmor) FirstPersonModelMod.hideNextHeadArmor = false;
 		if (entity_1 == MinecraftClient.getInstance().getCameraEntity() && FirstPersonModelMod.hideHeadWithMatrixStack == matrixStack_1) FirstPersonModelMod.hideNextHeadArmor = true; 	//if I don't wear any armor head then another helmet will be hidden without this
 
-		if(MinecraftClient.getInstance().options.perspective != 0)return;
+		if(MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON)return;
 		if(entity_1 instanceof AbstractClientPlayerEntity) {
 			if(!((PlayerEntity) entity_1).isMainPlayer())return;
 			FirstPersonModelMod.isRenderingPlayer = true;
