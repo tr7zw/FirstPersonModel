@@ -28,7 +28,7 @@ dependencies {
 	modApi("io.github.prospector:modmenu:${project.modmenu_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-	include("io.github.prospector:modmenu:${project.modmenu_version}")		//include modmenu. You can remove if you want
+
 	modApi("me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
