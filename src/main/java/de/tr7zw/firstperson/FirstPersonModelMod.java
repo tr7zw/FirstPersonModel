@@ -42,7 +42,7 @@ public class FirstPersonModelMod implements ModInitializer {
 
 
 	public static boolean isFixActive(Entity player, MatrixStack matrices){
-		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || !config.forceActive && matrices != paperDollStack);
+		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || config.forceActive && matrices != paperDollStack);
 	}
 	
 	@Override
