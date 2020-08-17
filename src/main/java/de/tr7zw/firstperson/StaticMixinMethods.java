@@ -33,7 +33,7 @@ public class StaticMixinMethods {
 			abstractClientPlayerEntity_1 = null;
 			return defValue;
 		}
-		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1)) {
+		if (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1) {
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);

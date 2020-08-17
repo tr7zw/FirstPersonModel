@@ -24,7 +24,7 @@ public class WorldRendererMixin {
 	@Inject(at = @At("HEAD"), method = "renderEntity")
 	private void renderEntity(Entity entity_1, double double_1, double double_2, double double_3, float float_1, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, CallbackInfo info) {
 		if (FirstPersonModelMod.hideNextHeadArmor) FirstPersonModelMod.hideNextHeadArmor = false;
-		if (entity_1 == MinecraftClient.getInstance().getCameraEntity() && FirstPersonModelMod.hideHeadWithMatrixStack == matrixStack_1) FirstPersonModelMod.hideNextHeadArmor = true; 	//if I don't wear any armor head then another helmet will be hidden without this
+		if (FirstPersonModelMod.isFixActive(entity_1, matrixStack_1)) FirstPersonModelMod.hideNextHeadArmor = true; 	//if I don't wear any armor head then another helmet will be hidden without this
 
 		if(MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON)return;
 		if(entity_1 instanceof AbstractClientPlayerEntity) {

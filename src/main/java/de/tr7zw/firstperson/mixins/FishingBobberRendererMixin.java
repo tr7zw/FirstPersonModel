@@ -28,11 +28,11 @@ public class FishingBobberRendererMixin {
 
     private Vec3d offsetvec3d = Vec3d.ZERO; //to not create @Nullable
 
-    private Vec3d getPositionOffset(PlayerEntity var1) {
+    private Vec3d getPositionOffset(PlayerEntity var1, MatrixStack matrices) {
         double x,y,z = x = y = z = 0;
         PlayerEntity abstractClientPlayerEntity_1;
         Float realYaw = 0f;
-        if(var1 == (PlayerEntity) MinecraftClient.getInstance().player && doCorrect()) {
+        if(FirstPersonModelMod.isFixActive(var1, matrices) && doCorrect()) {
             abstractClientPlayerEntity_1 = (PlayerEntity) var1;
             realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
         }else {
@@ -82,7 +82,7 @@ public class FishingBobberRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void calcOffset(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info){
-        this.offsetvec3d = getPositionOffset(fishingBobberEntity.getOwner());
+        this.offsetvec3d = getPositionOffset(fishingBobberEntity.getOwner(), matrixStack);
     }
 
     @Redirect(method = "render", at = @At(

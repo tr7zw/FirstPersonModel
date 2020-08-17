@@ -48,5 +48,8 @@ public class FirstPersonConfig implements ConfigData {
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean dollLockedHead = false;
+
+	@ConfigEntry.Gui.Tooltip
+	public boolean forceActive = false;
 	
 }

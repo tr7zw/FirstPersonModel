@@ -2,8 +2,10 @@ package de.tr7zw.firstperson;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import org.lwjgl.glfw.GLFW;
 
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
@@ -20,10 +22,13 @@ public class FirstPersonModelMod implements ModInitializer {
 	public static boolean isRenderingPlayer = false;
 	@Nullable
 	public static MatrixStack hideHeadWithMatrixStack = null;
+	@Nullable
+	public static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
 	public static boolean enabled = true;
 	public static FirstPersonConfig config = null;
 	private static KeyBinding keyBinding;
 	private static boolean isHeld = false;
+
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
 		return (!enabled || config.improvedCompatibility && !(hideHeadWithMatrixStack == matrixStack));
@@ -35,6 +40,10 @@ public class FirstPersonModelMod implements ModInitializer {
 	public static final float swimDownBodyOffset = 0.50f;
 	public static final float inVehicleBodyOffset = 0.20f;
 
+
+	public static boolean isFixActive(Entity player, MatrixStack matrices){
+		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || !config.forceActive && matrices != paperDollStack);
+	}
 	
 	@Override
 	public void onInitialize() {
