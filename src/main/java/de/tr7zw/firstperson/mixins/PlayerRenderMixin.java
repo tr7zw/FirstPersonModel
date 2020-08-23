@@ -42,7 +42,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 	))
 	private void setModelPoseRedirect(PlayerEntityRenderer playerEntityRenderer, AbstractClientPlayerEntity abstractClientPlayerEntity, AbstractClientPlayerEntity abstractClientPlayerEntity_1, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
 		setModelPose(abstractClientPlayerEntity);
-		if(abstractClientPlayerEntity == MinecraftClient.getInstance().getCameraEntity() && FirstPersonModelMod.hideHeadWithMatrixStack == matrixStack) {
+		if(FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
 			this.setModelPose(abstractClientPlayerEntity);
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 			playerEntityModel_1.head.visible = false;

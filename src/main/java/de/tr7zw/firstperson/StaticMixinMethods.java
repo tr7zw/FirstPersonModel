@@ -21,7 +21,7 @@ public class StaticMixinMethods {
 	public static Vec3d offset;
 
 	public static Vec3d getPositionOffset(AbstractClientPlayerEntity var1, Vec3d defValue, MatrixStack matrices) {
-		if(var1 == MinecraftClient.getInstance().getCameraEntity() && MinecraftClient.getInstance().player.isSleeping() || FirstPersonModelMod.fixBodyShadow(matrices))return defValue;
+		if(var1 == MinecraftClient.getInstance().getCameraEntity() && MinecraftClient.getInstance().player.isSleeping() || !FirstPersonModelMod.fixBodyShadow(matrices))return defValue;
 		double x,y,z = x = y = z = 0;
 		AbstractClientPlayerEntity abstractClientPlayerEntity_1;
 		double realYaw;
@@ -33,7 +33,7 @@ public class StaticMixinMethods {
 			abstractClientPlayerEntity_1 = null;
 			return defValue;
 		}
-		if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1)) {
+		if (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1) {
 			float bodyOffset;
 			if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);

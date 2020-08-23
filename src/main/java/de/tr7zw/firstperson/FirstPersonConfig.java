@@ -17,8 +17,8 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public int sneakXOffset = 0;
 
-	@ConfigEntry.Gui.Tooltip
-	public boolean improvedCompatibility = true;
+	//@ConfigEntry.Gui.Tooltip
+	//public boolean improvedCompatibility = true;
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean enabledByDefault = true;
@@ -48,5 +48,9 @@ public class FirstPersonConfig implements ConfigData {
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean dollLockedHead = false;
-	
+
+	@ConfigEntry.Gui.Tooltip
+	public boolean forceActive = false;
+	//Make the fixes force active. can solve problems in different renderers, and causing bugs
+	//on -> no OF compatibility, Hidden heads in Immersive portal mirrors...
 }
