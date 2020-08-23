@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -49,6 +49,7 @@ dependencies {
 	//KosmX - optifine debugger ingredients
 	//compile files("optifabric-1.1.0-beta2.jar")
 	//compile files("optifine_latest.jar")
+	compile files("immersive-portals-0.27-dev.jar")
 }
 
 processResources {

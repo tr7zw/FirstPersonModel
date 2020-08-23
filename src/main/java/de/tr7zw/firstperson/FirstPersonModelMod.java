@@ -31,7 +31,7 @@ public class FirstPersonModelMod implements ModInitializer {
 
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
-		return (!enabled || config.improvedCompatibility && !(hideHeadWithMatrixStack == matrixStack));
+		return (enabled && (config.forceActive || hideHeadWithMatrixStack == matrixStack));
 	}
 
 
