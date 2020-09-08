@@ -20,6 +20,9 @@
     ],
     "modmenu": [
       "de.tr7zw.firstperson.FirstPersonModMenu"
+    ],
+    "mm:early_risers": [
+      "de.tr7zw.firstperson.fix.InitCompatibilityMixins"
     ]
   },
   "mixins": [

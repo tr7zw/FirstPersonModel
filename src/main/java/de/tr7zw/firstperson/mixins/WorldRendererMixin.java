@@ -36,8 +36,6 @@ public class WorldRendererMixin {
 			target = "Lnet/minecraft/client/render/Camera;isThirdPerson()Z"
 	))
 	private void redirect(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci){
-		if(StaticMixinMethods.isThirdPerson(MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON)) {
-			FirstPersonModelMod.hideHeadWithMatrixStack = matrices;
-		}
+		StaticMixinMethods.isThirdPersonTrigger(matrices);
 	}
 }

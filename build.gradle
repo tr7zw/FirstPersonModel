@@ -12,6 +12,8 @@ group = project.maven_group
 
 repositories {
     jcenter()
+
+	maven { url 'https://jitpack.io' } //fabric asm
 }
 
 minecraft {
@@ -23,6 +25,8 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	modImplementation "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
+	include "com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"
 
 
 	modApi("io.github.prospector:modmenu:${project.modmenu_version}"){
@@ -49,7 +53,7 @@ dependencies {
 	//KosmX - optifine debugger ingredients
 	//compile files("optifabric-1.1.0-beta2.jar")
 	//compile files("optifine_latest.jar")
-	compile files("immersive-portals-0.27-dev.jar")
+	compileOnly files("canvas-mc116-99.0.0-nogit-dev.jar")
 }
 
 processResources {

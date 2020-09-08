@@ -66,4 +66,13 @@ public class StaticMixinMethods {
 		return vec;
 	}
 
+	/**
+	 * run it, if the renderer is rendering our scene, to set the head hidden.
+	 */
+ 	public static void isThirdPersonTrigger(MatrixStack matrices){
+		if (isThirdPerson(MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON)){
+			FirstPersonModelMod.hideHeadWithMatrixStack = matrices;
+		}
+	}
+
 }
