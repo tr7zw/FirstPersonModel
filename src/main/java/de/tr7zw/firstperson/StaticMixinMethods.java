@@ -30,20 +30,19 @@ public class StaticMixinMethods {
 			realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
 			FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
-			abstractClientPlayerEntity_1 = null;
 			return defValue;
 		}
 		if (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1) {
 			float bodyOffset;
-			if(abstractClientPlayerEntity_1.isSneaking()){
-				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
-			}else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
 				abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
 				if(abstractClientPlayerEntity_1.prevPitch > 0) {
 					bodyOffset = FirstPersonModelMod.swimUpBodyOffset;
 				}else {
 					bodyOffset = FirstPersonModelMod.swimDownBodyOffset;
 				}
+			}else if(abstractClientPlayerEntity_1.isSneaking()){
+				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
 				realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.sitXOffset / 100f);
