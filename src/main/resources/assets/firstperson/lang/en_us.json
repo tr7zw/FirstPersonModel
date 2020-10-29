@@ -22,5 +22,7 @@
     "text.autoconfig.firstperson.option.dollLookingUpDown": "Doll looking Up/Down",
     "text.autoconfig.firstperson.option.dollLookingUpDown.@Tooltip": "Change how much the (locked) head looks Up/Down",
     "text.autoconfig.firstperson.option.dollLockedHead": "Doll head locked",
-    "text.autoconfig.firstperson.option.dollLockedHead.@Tooltip": "When locked, the doll will look into the direction setup above, else it will look the same way the player does"
+    "text.autoconfig.firstperson.option.dollLockedHead.@Tooltip": "When locked, the doll will look into the direction setup above, else it will look the same way the player does",
+    "text.autoconfig.firstperson.option.forceActive": "Force Active",
+    "text.autoconfig.firstperson.option.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)"
   }
