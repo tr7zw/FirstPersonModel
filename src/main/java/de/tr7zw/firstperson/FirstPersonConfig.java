@@ -6,8 +6,6 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
 @Config(name = "firstperson")
 public class FirstPersonConfig implements ConfigData {
-    
-	//public boolean enabled = true;
 	
 	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
 	@ConfigEntry.Gui.Tooltip
@@ -17,8 +15,9 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public int sneakXOffset = 0;
 
-	//@ConfigEntry.Gui.Tooltip
-	//public boolean improvedCompatibility = true;
+	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
+	@ConfigEntry.Gui.Tooltip
+	public int sitXOffset = 0;
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean enabledByDefault = true;

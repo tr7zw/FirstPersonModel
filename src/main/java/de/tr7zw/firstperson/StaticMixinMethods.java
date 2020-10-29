@@ -45,7 +45,8 @@ public class StaticMixinMethods {
 					bodyOffset = FirstPersonModelMod.swimDownBodyOffset;
 				}
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
-				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset;
+				realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
+				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.sitXOffset / 100f);
 			}else{
 				bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
 			}
