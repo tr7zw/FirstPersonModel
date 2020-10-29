@@ -105,7 +105,7 @@ publishing {
 	}
 	dependencies {
 		//@Nullable essential for mc modding
-		compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
+		compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 	}
 
 
