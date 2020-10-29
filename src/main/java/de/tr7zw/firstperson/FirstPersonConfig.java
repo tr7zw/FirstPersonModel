@@ -25,6 +25,9 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public boolean dollEnabled = false;
 	
+	@ConfigEntry.Gui.Tooltip
+	public boolean vanillaHands = false;
+	
 	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
 	@ConfigEntry.Gui.Tooltip
 	public int dollXOffset = 0;

@@ -14,7 +14,8 @@
   "WorldRendererMixin",
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
-  "InGameHudMixin"
+  "InGameHudMixin",
+  "HeldItemFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

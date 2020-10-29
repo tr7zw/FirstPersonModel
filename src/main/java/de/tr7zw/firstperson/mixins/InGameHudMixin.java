@@ -86,7 +86,7 @@ public class InGameHudMixin {
 		entityRenderDispatcher.setRenderShadows(false);
 		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders()
 				.getEntityVertexConsumers();
-		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack, immediate, 15728880);
+		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack, immediate, 15728880); // Mc renders the player in the inventory without delta, causing it to look "laggy"
 		immediate.draw();
 		entityRenderDispatcher.setRenderShadows(true);
 		livingEntity.bodyYaw = m;

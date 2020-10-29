@@ -47,6 +47,12 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
+			if(FirstPersonModelMod.config.vanillaHands) {
+				playerEntityModel_1.leftArm.visible = false;
+				playerEntityModel_1.leftSleeve.visible = false;
+				playerEntityModel_1.rightArm.visible = false;
+				playerEntityModel_1.rightSleeve.visible = false;
+			}
 		}
 	} 
 

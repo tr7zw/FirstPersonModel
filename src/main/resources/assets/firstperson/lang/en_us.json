@@ -23,6 +23,8 @@
     "text.autoconfig.firstperson.option.dollLockedHead.@Tooltip": "When locked, the doll will look into the direction setup above, else it will look the same way the player does",
     "text.autoconfig.firstperson.option.sitXOffset": "Sit X Offset",
     "text.autoconfig.firstperson.option.sitXOffset.@Tooltip": "Moves the body relative to the camera back and forth while sitting",
+    "text.autoconfig.firstperson.option.vanillaHands": "Vanilla Hands",
+    "text.autoconfig.firstperson.option.vanillaHands.@Tooltip": "Shows the vanilla first person hands, but also the player model(but without arms)",
     "text.autoconfig.firstperson.option.forceActive": "Force Active",
     "text.autoconfig.firstperson.option.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)"
   }
