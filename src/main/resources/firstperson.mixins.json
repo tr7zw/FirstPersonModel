@@ -15,7 +15,8 @@
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
   "InGameHudMixin",
-  "HeldItemFeatureRendererMixin"
+  "HeldItemFeatureRendererMixin",
+  "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

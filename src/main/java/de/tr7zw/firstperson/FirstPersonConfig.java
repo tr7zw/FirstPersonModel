@@ -51,8 +51,15 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public boolean dollLockedHead = false;
 
-	@ConfigEntry.Gui.Tooltip
-	public boolean forceActive = false;
 	//Make the fixes force active. can solve problems in different renderers, and causing bugs
 	//on -> no OF compatibility, Hidden heads in Immersive portal mirrors...
+	@ConfigEntry.Gui.Tooltip
+	public boolean forceActive = false;
+
+	public boolean femaleModel = false;
+	
+	@ConfigEntry.Gui.Tooltip
+	@ConfigEntry.BoundedDiscrete(min = 70, max = 100)
+	public int playerSize = 100;
+	
 }
