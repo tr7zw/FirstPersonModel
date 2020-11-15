@@ -31,7 +31,7 @@ public class FemaleFeatureRenderer
 	    this.female.addCustomCuboid(-4.0F, 3.0F, -4.0F, 8, 1, 1);
 	    this.female.setTextureOffset(20, 23);
 	    this.female.addCustomCuboid(-3.0F, 4.0F, -4.0F, 2, 1, 1);
-	    this.female.setTextureOffset(23, 23);
+	    this.female.setTextureOffset(24, 23);
 	    this.female.addCustomCuboid(1.0F, 4.0F, -4.0F, 2, 1, 1);
 
 	}

@@ -30,7 +30,7 @@ public abstract class PlayerEntityRendererMixin
 	public void onCreate(CallbackInfo info) {
 
 		this.addFeature(new FemaleFeatureRenderer(this));
-		this.addFeature(new ModeledLayerFeatureRenderer(this));
+		//this.addFeature(new ModeledLayerFeatureRenderer(this));
 	}
 
 	@Inject(method = "scale", at = @At("HEAD"), cancellable = true)
