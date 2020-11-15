@@ -16,7 +16,8 @@
   "RenderDispatcherMixin",
   "InGameHudMixin",
   "HeldItemFeatureRendererMixin",
-  "PlayerEntityRendererMixin"
+  "PlayerEntityRendererMixin",
+  "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
