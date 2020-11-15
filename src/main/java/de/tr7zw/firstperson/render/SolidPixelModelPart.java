@@ -11,7 +11,7 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.Direction;
 
-public class CustomModelPart extends ModelPart {
+public class SolidPixelModelPart extends ModelPart {
 	private float textureWidth = 64.0F;
 	private float textureHeight = 32.0F;
 
@@ -28,20 +28,20 @@ public class CustomModelPart extends ModelPart {
 	public boolean mirror;
 	public boolean visible = true;
 
-	private final ObjectList<CustomModelPart.Cuboid> cuboids = new ObjectArrayList();
-	private final ObjectList<CustomModelPart> children = new ObjectArrayList();
+	private final ObjectList<SolidPixelModelPart.Cuboid> cuboids = new ObjectArrayList();
+	private final ObjectList<SolidPixelModelPart> children = new ObjectArrayList();
 
-	public CustomModelPart(Model model) {
+	public SolidPixelModelPart(Model model) {
 		super(model);
 		setTextureSize(model.textureWidth, model.textureHeight);
 	}
 
-	public CustomModelPart(Model model, int textureOffsetU, int textureOffsetV) {
+	public SolidPixelModelPart(Model model, int textureOffsetU, int textureOffsetV) {
 		this(model.textureWidth, model.textureHeight, textureOffsetU, textureOffsetV);
 		model.accept(this);
 	}
 
-	public CustomModelPart(int textureWidth, int textureHeight, int textureOffsetU, int textureOffsetV) {
+	public SolidPixelModelPart(int textureWidth, int textureHeight, int textureOffsetU, int textureOffsetV) {
 		super(textureWidth, textureHeight, textureOffsetU, textureOffsetV);
 		setTextureSize(textureWidth, textureHeight);
 		setTextureOffset(textureOffsetU, textureOffsetV);
@@ -57,18 +57,18 @@ public class CustomModelPart extends ModelPart {
 		this.pivotZ = modelPart.pivotZ;
 	}
 
-	public void addChild(CustomModelPart part) {
+	public void addChild(SolidPixelModelPart part) {
 		this.children.add(part);
 	}
 
 	@Override
-	public CustomModelPart setTextureOffset(int textureOffsetU, int textureOffsetV) {
+	public SolidPixelModelPart setTextureOffset(int textureOffsetU, int textureOffsetV) {
 		this.textureOffsetU = textureOffsetU;
 		this.textureOffsetV = textureOffsetV;
 		return this;
 	}
 
-	public CustomModelPart addCustomCuboid(String name, float x, float y, float z, int sizeX, int sizeY, int sizeZ,
+	public SolidPixelModelPart addCustomCuboid(String name, float x, float y, float z, int sizeX, int sizeY, int sizeZ,
 			float extra, int textureOffsetU, int textureOffsetV) {
 		setTextureOffset(textureOffsetU, textureOffsetV);
 		addCustomCuboid(this.textureOffsetU, this.textureOffsetV, x, y, z, sizeX, sizeY, sizeZ, extra, extra, extra,
@@ -76,13 +76,13 @@ public class CustomModelPart extends ModelPart {
 		return this;
 	}
 
-	public CustomModelPart addCustomCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ) {
+	public SolidPixelModelPart addCustomCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ) {
 		addCustomCuboid(this.textureOffsetU, this.textureOffsetV, x, y, z, sizeX, sizeY, sizeZ, 0.0F, 0.0F, 0.0F, this.mirror,
 				false);
 		return this;
 	}
 
-	public CustomModelPart addCustomCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, boolean mirror) {
+	public SolidPixelModelPart addCustomCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, boolean mirror) {
 		addCustomCuboid(this.textureOffsetU, this.textureOffsetV, x, y, z, sizeX, sizeY, sizeZ, 0.0F, 0.0F, 0.0F, mirror,
 				false);
 		return this;
@@ -107,7 +107,7 @@ public class CustomModelPart extends ModelPart {
 
 	private void addCustomCuboid(int u, int v, float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extraX,
 			float extraY, float extraZ, boolean mirror, boolean bl) {
-		this.cuboids.add(new CustomModelPart.Cuboid(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror,
+		this.cuboids.add(new SolidPixelModelPart.Cuboid(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror,
 				this.textureWidth, this.textureHeight));
 	}
 
@@ -149,7 +149,7 @@ public class CustomModelPart extends ModelPart {
 
 		for (ObjectListIterator localObjectListIterator = this.children.iterator(); localObjectListIterator
 				.hasNext();) {
-			CustomModelPart modelPart = (CustomModelPart) localObjectListIterator.next();
+			SolidPixelModelPart modelPart = (SolidPixelModelPart) localObjectListIterator.next();
 			modelPart.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		}
 
@@ -174,8 +174,8 @@ public class CustomModelPart extends ModelPart {
 		net.minecraft.util.math.Matrix4f matrix4f = matrices.getModel();
 		net.minecraft.util.math.Matrix3f matrix3f = matrices.getNormal();
 		for (ObjectListIterator localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
-			CustomModelPart.Cuboid cuboid = (CustomModelPart.Cuboid) localObjectListIterator.next();
-			for (CustomModelPart.Quad quad : cuboid.getSides()) {
+			SolidPixelModelPart.Cuboid cuboid = (SolidPixelModelPart.Cuboid) localObjectListIterator.next();
+			for (SolidPixelModelPart.Quad quad : cuboid.getSides()) {
 				Vector3f vector3f = quad.direction.copy();
 				vector3f.transform(matrix3f);
 
@@ -184,7 +184,7 @@ public class CustomModelPart extends ModelPart {
 				float h = vector3f.getZ();
 
 				for (int i = 0; i < 4; i++) {
-					CustomModelPart.Vertex vertex = quad.vertices[i];
+					SolidPixelModelPart.Vertex vertex = quad.vertices[i];
 					float j = vertex.pos.getX() / 16.0F;
 					float k = vertex.pos.getY() / 16.0F;
 					float l = vertex.pos.getZ() / 16.0F;
@@ -198,14 +198,14 @@ public class CustomModelPart extends ModelPart {
 		}
 	}
 
-	public CustomModelPart setTextureSize(int width, int height) {
+	public SolidPixelModelPart setTextureSize(int width, int height) {
 		this.textureWidth = width;
 		this.textureHeight = height;
 		return this;
 	}
 
 	public class Cuboid {
-		private final CustomModelPart.Quad[] sides;
+		private final SolidPixelModelPart.Quad[] sides;
 		public final float minX;
 		public final float minY;
 		public final float minZ;
@@ -221,7 +221,7 @@ public class CustomModelPart extends ModelPart {
 			this.maxX = (x + sizeX);
 			this.maxY = (y + sizeY);
 			this.maxZ = (z + sizeZ);
-			this.sides = new CustomModelPart.Quad[6];
+			this.sides = new SolidPixelModelPart.Quad[6];
 
 			float f = x + sizeX;
 			float g = y + sizeY;
@@ -240,15 +240,15 @@ public class CustomModelPart extends ModelPart {
 				x = i;
 			}
 
-			CustomModelPart.Vertex vertex = new CustomModelPart.Vertex(x, y, z, 0.0F, 0.0F);
-			CustomModelPart.Vertex vertex2 = new CustomModelPart.Vertex(f, y, z, 0.0F, 8.0F);
-			CustomModelPart.Vertex vertex3 = new CustomModelPart.Vertex(f, g, z, 8.0F, 8.0F);
-			CustomModelPart.Vertex vertex4 = new CustomModelPart.Vertex(x, g, z, 8.0F, 0.0F);
+			SolidPixelModelPart.Vertex vertex = new SolidPixelModelPart.Vertex(x, y, z, 0.0F, 0.0F);
+			SolidPixelModelPart.Vertex vertex2 = new SolidPixelModelPart.Vertex(f, y, z, 0.0F, 8.0F);
+			SolidPixelModelPart.Vertex vertex3 = new SolidPixelModelPart.Vertex(f, g, z, 8.0F, 8.0F);
+			SolidPixelModelPart.Vertex vertex4 = new SolidPixelModelPart.Vertex(x, g, z, 8.0F, 0.0F);
 
-			CustomModelPart.Vertex vertex5 = new CustomModelPart.Vertex(x, y, h, 0.0F, 0.0F);
-			CustomModelPart.Vertex vertex6 = new CustomModelPart.Vertex(f, y, h, 0.0F, 8.0F);
-			CustomModelPart.Vertex vertex7 = new CustomModelPart.Vertex(f, g, h, 8.0F, 8.0F);
-			CustomModelPart.Vertex vertex8 = new CustomModelPart.Vertex(x, g, h, 8.0F, 0.0F);
+			SolidPixelModelPart.Vertex vertex5 = new SolidPixelModelPart.Vertex(x, y, h, 0.0F, 0.0F);
+			SolidPixelModelPart.Vertex vertex6 = new SolidPixelModelPart.Vertex(f, y, h, 0.0F, 8.0F);
+			SolidPixelModelPart.Vertex vertex7 = new SolidPixelModelPart.Vertex(f, g, h, 8.0F, 8.0F);
+			SolidPixelModelPart.Vertex vertex8 = new SolidPixelModelPart.Vertex(x, g, h, 8.0F, 0.0F);
 
 			float j = u;
 			float k = u + sizeZ;
@@ -264,35 +264,35 @@ public class CustomModelPart extends ModelPart {
 			float s = v + sizeZ + sizeY + sizeZ;
 
 
-			this.sides[2] = new CustomModelPart.Quad(new CustomModelPart.Vertex[] { vertex6, vertex5, vertex, vertex2 },
-					k, p, l, q, textureWidth, textureHeight, mirror, Direction.DOWN);
-			this.sides[3] = new CustomModelPart.Quad(
-					new CustomModelPart.Vertex[] { vertex3, vertex4, vertex8, vertex7 }, k, t, l, s, textureWidth, // l, q, m, p | k, q, l, q
+			this.sides[2] = new SolidPixelModelPart.Quad(new SolidPixelModelPart.Vertex[] { vertex6, vertex5, vertex, vertex2 },
+					l, q, n, r, textureWidth, textureHeight, mirror, Direction.DOWN);
+			this.sides[3] = new SolidPixelModelPart.Quad(
+					new SolidPixelModelPart.Vertex[] { vertex3, vertex4, vertex8, vertex7 }, l, q, n, r, textureWidth, // l, q, m, p | k, q, l, q
 					textureHeight, mirror, Direction.UP);
 
-			this.sides[1] = new CustomModelPart.Quad(new CustomModelPart.Vertex[] { vertex, vertex5, vertex8, vertex4 },
-					j, q, k, r, textureWidth, textureHeight, mirror, Direction.WEST);
-			this.sides[4] = new CustomModelPart.Quad(new CustomModelPart.Vertex[] { vertex2, vertex, vertex4, vertex3 },
-					k, q, l, r, textureWidth, textureHeight, mirror, Direction.NORTH);
-			this.sides[0] = new CustomModelPart.Quad(
-					new CustomModelPart.Vertex[] { vertex6, vertex2, vertex3, vertex7 }, l, q, n, r, textureWidth,
+			this.sides[1] = new SolidPixelModelPart.Quad(new SolidPixelModelPart.Vertex[] { vertex, vertex5, vertex8, vertex4 },
+					l, q, n, r, textureWidth, textureHeight, mirror, Direction.WEST);
+			this.sides[4] = new SolidPixelModelPart.Quad(new SolidPixelModelPart.Vertex[] { vertex2, vertex, vertex4, vertex3 },
+					l, q, n, r, textureWidth, textureHeight, mirror, Direction.NORTH);
+			this.sides[0] = new SolidPixelModelPart.Quad(
+					new SolidPixelModelPart.Vertex[] { vertex6, vertex2, vertex3, vertex7 }, l, q, n, r, textureWidth,
 					textureHeight, mirror, Direction.EAST);
-			this.sides[5] = new CustomModelPart.Quad(
-					new CustomModelPart.Vertex[] { vertex5, vertex6, vertex7, vertex8 }, n, q, o, r, textureWidth,
+			this.sides[5] = new SolidPixelModelPart.Quad(
+					new SolidPixelModelPart.Vertex[] { vertex5, vertex6, vertex7, vertex8 }, l, q, n, r, textureWidth,
 					textureHeight, mirror, Direction.SOUTH);
 		}
 
-		public CustomModelPart.Quad[] getSides() {
+		public SolidPixelModelPart.Quad[] getSides() {
 			return sides;
 		}
 
 	}
 
 	class Quad {
-		public final CustomModelPart.Vertex[] vertices;
+		public final SolidPixelModelPart.Vertex[] vertices;
 		public final Vector3f direction;
 
-		public Quad(CustomModelPart.Vertex[] vertices, float u1, float v1, float u2, float v2, float squishU,
+		public Quad(SolidPixelModelPart.Vertex[] vertices, float u1, float v1, float u2, float v2, float squishU,
 				float squishV, boolean flip, Direction direction) {
 			this.vertices = vertices;
 
@@ -306,7 +306,7 @@ public class CustomModelPart extends ModelPart {
 			if (flip) {
 				int i = vertices.length;
 				for (int j = 0; j < i / 2; j++) {
-					CustomModelPart.Vertex vertex = vertices[j];
+					SolidPixelModelPart.Vertex vertex = vertices[j];
 					vertices[j] = vertices[(i - 1 - j)];
 					vertices[(i - 1 - j)] = vertex;
 				}

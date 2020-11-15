@@ -1,7 +1,6 @@
 package de.tr7zw.firstperson.layer;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.model.ModelPart;
+import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -9,6 +8,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -19,12 +19,18 @@ public class ModeledLayerFeatureRenderer
 	public ModeledLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		this.female = new ModelPart(this.getContextModel());
-		this.female.addCuboid(-3.0f, -7.0f, -2.0f, 6.0f, 6.0f, 1.0f, 1f);
+		this.head = new SolidPixelModelPart(this.getContextModel());
+		float pixelsize = 3f;
+		for(int u = 0; u < 8; u++) {
+			for(int v = 0; v < 8; v++) {
+				this.head.setTextureOffset(38 + u, 7 + v);
+				this.head.addCustomCuboid(-10.5f + u*pixelsize, -22.0f + v*pixelsize, -11.8f, 1.0f, 1.0f, 1.0f, 1f);
+			}
+		}
 
 	}
 
-	private final ModelPart female;
+	private final SolidPixelModelPart head;
 	
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
@@ -33,16 +39,19 @@ public class ModeledLayerFeatureRenderer
 			return;
 		}
 		VertexConsumer vertexConsumer = vertexConsumerProvider
-				.getBuffer(RenderLayer.getEntitySolid((Identifier) abstractClientPlayerEntity.getSkinTexture()));
+				.getBuffer(RenderLayer.getEntityCutout((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderFemale(matrixStack, vertexConsumer, i, m);
+		renderCustomHelmet(matrixStack, vertexConsumer, i, m);
 	}
 	
-	public void renderFemale(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
-		this.female.copyPositionAndRotation(this.getContextModel().head);
-		this.female.pivotX = 0.0f;
-		this.female.pivotY = 0.0f;
-		this.female.render(matrices, vertices, light, overlay);
+	public void renderCustomHelmet(MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+	    matrixStack.push();
+	    matrixStack.scale(0.33f, 0.33f, 0.33f);
+	    matrixStack.scale(1.09f, 1.09f, 1.09f);
+	    ((ModelWithHead)this.getContextModel()).getHead().rotate(matrixStack);
+		this.head.customRender(matrixStack, vertices, light, overlay);
+	    matrixStack.pop();
+
 	}
 	
 }
