@@ -1,4 +1,4 @@
-package de.tr7zw.firstperson;
+package de.tr7zw.firstperson.layer;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
@@ -14,27 +14,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
-public class FemaleFeatureRenderer
+public class ModeledLayerFeatureRenderer
 		extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-	public FemaleFeatureRenderer(
+	public ModeledLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
 		this.female = new ModelPart(this.getContextModel());
-	    this.female.setTextureOffset(20, 20);
-	    this.female.addCuboid(-3.0F, 1.0F, -3.0F, 6, 1, 1);
-	    this.female.setTextureOffset(19, 21);
-	    this.female.addCuboid(-4.0F, 2.0F, -3.0F, 8, 3, 1);
-	    this.female.setTextureOffset(19, 21);
-	    this.female.addCuboid(-4.0F, 2.0F, -3.0F, 8, 3, 1);
-	    
-	    this.female.setTextureOffset(20, 21);
-	    this.female.addCuboid(-3.0F, 2.0F, -4.0F, 6, 1, 1);
-	    this.female.setTextureOffset(19, 22);
-	    this.female.addCuboid(-4.0F, 3.0F, -4.0F, 8, 1, 1);
-	    this.female.setTextureOffset(20, 23);
-	    this.female.addCuboid(-3.0F, 4.0F, -4.0F, 2, 1, 1);
-	    this.female.setTextureOffset(23, 23);
-	    this.female.addCuboid(1.0F, 4.0F, -4.0F, 2, 1, 1);
+		this.female.addCuboid(-3.0f, -7.0f, -2.0f, 6.0f, 6.0f, 1.0f, 1f);
 
 	}
 
@@ -43,7 +29,7 @@ public class FemaleFeatureRenderer
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
 			float l) {
-		if (abstractClientPlayerEntity != MinecraftClient.getInstance().player || !FirstPersonModelMod.config.femaleModel || !abstractClientPlayerEntity.hasSkinTexture() || abstractClientPlayerEntity.isInvisible()) {
+		if (!abstractClientPlayerEntity.hasSkinTexture() || abstractClientPlayerEntity.isInvisible()) {
 			return;
 		}
 		VertexConsumer vertexConsumer = vertexConsumerProvider
@@ -53,7 +39,9 @@ public class FemaleFeatureRenderer
 	}
 	
 	public void renderFemale(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
-		this.female.copyPositionAndRotation(this.getContextModel().torso);
+		this.female.copyPositionAndRotation(this.getContextModel().head);
+		this.female.pivotX = 0.0f;
+		this.female.pivotY = 0.0f;
 		this.female.render(matrices, vertices, light, overlay);
 	}
 	

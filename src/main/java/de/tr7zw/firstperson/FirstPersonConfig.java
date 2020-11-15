@@ -59,7 +59,7 @@ public class FirstPersonConfig implements ConfigData {
 	public boolean femaleModel = false;
 	
 	@ConfigEntry.Gui.Tooltip
-	@ConfigEntry.BoundedDiscrete(min = 70, max = 100)
+	@ConfigEntry.BoundedDiscrete(min = 1, max = 200)
 	public int playerSize = 100;
 	
 }

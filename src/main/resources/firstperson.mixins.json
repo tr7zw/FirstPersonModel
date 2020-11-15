@@ -10,13 +10,14 @@
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
 	"GameRendererMixin",
-    "CameraMixin",
+  "CameraMixin",
   "WorldRendererMixin",
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
   "InGameHudMixin",
   "HeldItemFeatureRendererMixin",
-  "PlayerEntityRendererMixin"
+  "PlayerEntityRendererMixin",
+  "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
