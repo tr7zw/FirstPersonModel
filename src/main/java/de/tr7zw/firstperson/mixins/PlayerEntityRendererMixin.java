@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import de.tr7zw.firstperson.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.layer.ModeledLayerFeatureRenderer;
+import de.tr7zw.firstperson.PlayerSettings;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -37,6 +38,10 @@ public abstract class PlayerEntityRendererMixin
 			CallbackInfo info) {
 		if (abstractClientPlayerEntity == MinecraftClient.getInstance().player /*&& MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON*/) {
 			float scaled = 0.9375f * ((float)FirstPersonModelMod.config.playerSize / 100f);
+			matrixStack.scale(scaled, scaled, scaled);
+			info.cancel();
+		} else if(abstractClientPlayerEntity != MinecraftClient.getInstance().player) {
+			float scaled = 0.9375f * ((float)((PlayerSettings)abstractClientPlayerEntity).getCustomHeight() / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
 		}
