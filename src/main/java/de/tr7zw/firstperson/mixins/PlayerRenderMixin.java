@@ -54,6 +54,7 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 				playerEntityModel_1.rightSleeve.visible = false;
 			}
 		}
+		playerEntityRenderer.getModel().helmet.visible = false;
 	} 
 
 	@Shadow
