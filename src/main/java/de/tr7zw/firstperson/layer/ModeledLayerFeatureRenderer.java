@@ -27,7 +27,7 @@ public class ModeledLayerFeatureRenderer
 		super(featureRendererContext);
 		this.head = new SolidPixelModelPart(this.getContextModel());
 		float pixelsize = 3f;
-		float outsideOffset = 11.8f;
+		float outsideOffset = 11f;
 		// Front/back
 		for(int u = 0; u < 8; u++) {
 			for(int v = 0; v < 8; v++) {
@@ -47,7 +47,7 @@ public class ModeledLayerFeatureRenderer
 				this.head.addCustomCuboid(-outsideOffset, -22.0f + v*pixelsize, -outsideOffset + u*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
 				// right
 				this.head.setTextureOffset(46 + u, 7 + v);
-				this.head.addCustomCuboid(outsideOffset - 1.5f, -22.0f + v*pixelsize, -outsideOffset + (u)*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
+				this.head.addCustomCuboid(outsideOffset - 1f, -22.0f + v*pixelsize, -outsideOffset + (u)*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
 
 			}
 		}
@@ -59,7 +59,7 @@ public class ModeledLayerFeatureRenderer
 				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f, -outsideOffset + v*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
 				//bottom
 				this.head.setTextureOffset(46 + u, 6-v);
-				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f + 8*pixelsize, -outsideOffset + v*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
+				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f + 7*pixelsize, -outsideOffset + v*pixelsize, 1.0f, 1.0f, 1.0f, 1f);
 			}
 		}
 
