@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson;
 
+import de.tr7zw.firstperson.layer.LayerMode;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
@@ -61,5 +62,12 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	@ConfigEntry.BoundedDiscrete(min = 1, max = 200)
 	public int playerSize = 100;
+	
+	@ConfigEntry.Gui.Tooltip
+	public LayerMode layerMode = LayerMode.DEFAULT;
+	
+	@ConfigEntry.Gui.Tooltip
+	@ConfigEntry.BoundedDiscrete(min = 8, max = 32)
+	public int optimizedLayerDistance = 16;
 	
 }

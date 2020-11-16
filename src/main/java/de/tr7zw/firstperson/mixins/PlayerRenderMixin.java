@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.layer.ModeledLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -53,8 +54,9 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 				playerEntityModel_1.rightArm.visible = false;
 				playerEntityModel_1.rightSleeve.visible = false;
 			}
+		} else {
+			playerEntityRenderer.getModel().helmet.visible = !ModeledLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
 		}
-		playerEntityRenderer.getModel().helmet.visible = false;
 	} 
 
 	@Shadow

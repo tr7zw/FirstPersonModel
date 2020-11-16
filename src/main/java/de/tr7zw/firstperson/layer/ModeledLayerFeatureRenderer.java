@@ -4,6 +4,7 @@ import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -13,7 +14,10 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 public class ModeledLayerFeatureRenderer
@@ -32,7 +36,7 @@ public class ModeledLayerFeatureRenderer
 				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f + v*pixelsize, -outsideOffset, 1.0f, 1.0f, 1.0f, 1f);
 				//back
 				this.head.setTextureOffset(54 + u, 7 + v);
-				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f + v*pixelsize, outsideOffset, 1.0f, 1.0f, 1.0f, 1f);
+				this.head.addCustomCuboid(-outsideOffset + u*pixelsize, -22.0f + v*pixelsize, outsideOffset-0.1f, 1.0f, 1.0f, 1.0f, 1f);
 			}
 		}
 		// sides
@@ -69,9 +73,14 @@ public class ModeledLayerFeatureRenderer
 		if (!abstractClientPlayerEntity.hasSkinTexture() || abstractClientPlayerEntity.isInvisible()) {
 			return;
 		}
-		if(abstractClientPlayerEntity == MinecraftClient.getInstance().player && FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
+	    ItemStack itemStack = abstractClientPlayerEntity.getEquippedStack(EquipmentSlot.HEAD);
+	    if(itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
+	    	return;
+	    }
+		if(FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack) || !isEnabled(abstractClientPlayerEntity)) {
 			return;
 		}
+
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntityCutout((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
@@ -87,6 +96,20 @@ public class ModeledLayerFeatureRenderer
 		this.head.customRender(matrixStack, vertices, light, overlay);
 	    matrixStack.pop();
 
+	}
+	
+	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
+		LayerMode mode = FirstPersonModelMod.config.layerMode;
+		if(mode == LayerMode.DEFAULT)return false;
+		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
+		if(thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
+			return true;
+		}
+		if(mode != LayerMode.SELF) {
+			int distance = FirstPersonModelMod.config.optimizedLayerDistance * FirstPersonModelMod.config.optimizedLayerDistance;
+			return thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
+		}
+		return false;
 	}
 	
 }

@@ -29,5 +29,9 @@
     "text.autoconfig.firstperson.option.vanillaHands": "Vanilla Hands",
     "text.autoconfig.firstperson.option.vanillaHands.@Tooltip": "Shows the vanilla first person hands, but also the player model(but without arms)",
     "text.autoconfig.firstperson.option.forceActive": "Force Active",
-    "text.autoconfig.firstperson.option.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)"
+    "text.autoconfig.firstperson.option.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)",
+    "text.autoconfig.firstperson.option.layerMode": "Head layer mode",
+    "text.autoconfig.firstperson.option.layerMode.@Tooltip": "Head second layer rendering mode. DEFAULT: Normal Minecraft second layer. EVERYONE: 3d second layer on all players. OPTIMIZED: 3d second layer on nearby players. SELF: 3d second layer only on yourself",
+    "text.autoconfig.firstperson.option.optimizedLayerDistance": "Optimized layer mode distance",
+    "text.autoconfig.firstperson.option.optimizedLayerDistance.@Tooltip": "Disables the 3d effect for other players that are further away in OPTIMIZED mode"
   }
