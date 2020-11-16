@@ -9,6 +9,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.ModelWithHead;
@@ -108,7 +109,7 @@ public class ModeledLayerFeatureRenderer
 	
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
 		LayerMode mode = FirstPersonModelMod.config.layerMode;
-		if(mode == LayerMode.DEFAULT)return false;
+		if(mode == LayerMode.DEFAULT || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))return false;
 		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
 		if(thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
 			return true;
