@@ -25,16 +25,16 @@ public class ModeledLayerFeatureRenderer
 	public ModeledLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0);
+		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0, false);
 
 	}
 
 	public static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
-			int height, int depth, int textureU, int textureV) {
+			int height, int depth, int textureU, int textureV, boolean topPivot) {
 		SolidPixelModelPart wrapper = new SolidPixelModelPart(model);
 		float pixelSize = 1f;
 		float staticXOffset = -width/2f;
-		float staticYOffset = -height + 0.6f;//-7.4f;
+		float staticYOffset = topPivot ? 0f : -height + 0.6f;//-7.4f;
 		float staticZOffset = -depth/2f;
 		// Front/back
 		for (int u = 0; u < width; u++) {
@@ -44,7 +44,7 @@ public class ModeledLayerFeatureRenderer
 				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset, pixelSize, pixelSize, pixelSize);
 				// back
 				wrapper.setTextureOffset(textureU + 2*depth + width - 2 + u, textureV + depth - 1 + v); // 54 + u, 7 + v
-				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset + 7f, pixelSize, pixelSize, pixelSize);
+				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset + depth - 1, pixelSize, pixelSize, pixelSize);
 			}
 		}
 		// sides

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.layer.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.layer.ModeledLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -22,7 +23,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 @Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>{
+public abstract class PlayerRenderMixin
+		extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
 	/**
 	 * Just needed because of the extends
@@ -36,35 +38,45 @@ public abstract class PlayerRenderMixin extends LivingEntityRenderer<AbstractCli
 		super(entityRenderDispatcher_1, entityModel_1, float_1);
 	}
 
-
-	@Redirect(method = "render", at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/client/render/entity/PlayerEntityRenderer;setModelPose(Lnet/minecraft/client/network/AbstractClientPlayerEntity;)V"
-	))
-	private void setModelPoseRedirect(PlayerEntityRenderer playerEntityRenderer, AbstractClientPlayerEntity abstractClientPlayerEntity, AbstractClientPlayerEntity abstractClientPlayerEntity_1, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/PlayerEntityRenderer;setModelPose(Lnet/minecraft/client/network/AbstractClientPlayerEntity;)V"))
+	private void setModelPoseRedirect(PlayerEntityRenderer playerEntityRenderer,
+			AbstractClientPlayerEntity abstractClientPlayerEntity,
+			AbstractClientPlayerEntity abstractClientPlayerEntity_1, float f, float g, MatrixStack matrixStack,
+			VertexConsumerProvider vertexConsumerProvider, int i) {
 		setModelPose(abstractClientPlayerEntity);
-		if(FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
+		boolean bodyLayer = BodyLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
+		if (FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
 			this.setModelPose(abstractClientPlayerEntity);
-			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel)this.getModel();
+			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = (PlayerEntityModel) this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
-			if(FirstPersonModelMod.config.vanillaHands) {
+			if (FirstPersonModelMod.config.vanillaHands) {
 				playerEntityModel_1.leftArm.visible = false;
 				playerEntityModel_1.leftSleeve.visible = false;
 				playerEntityModel_1.rightArm.visible = false;
 				playerEntityModel_1.rightSleeve.visible = false;
+			} else {
+				
 			}
 		} else {
-			playerEntityRenderer.getModel().helmet.visible = !ModeledLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
+			playerEntityRenderer.getModel().helmet.visible = ModeledLayerFeatureRenderer
+					.isEnabled(abstractClientPlayerEntity) ? false : playerEntityRenderer.getModel().helmet.visible;
 		}
-	} 
+		playerEntityRenderer.getModel().leftSleeve.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().leftSleeve.visible;
+		playerEntityRenderer.getModel().rightSleeve.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().rightSleeve.visible;
+		playerEntityRenderer.getModel().leftPantLeg.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().leftPantLeg.visible;
+		playerEntityRenderer.getModel().rightPantLeg.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().rightPantLeg.visible;
+		playerEntityRenderer.getModel().jacket.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().jacket.visible;
+	}
 
 	@Shadow
 	abstract void setModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity_1);
 
-
-
-	//@Inject(at = @At("HEAD"), method = "getPositionOffset", cancellable = true)
-
+	// @Inject(at = @At("HEAD"), method = "getPositionOffset", cancellable = true)
 
 }

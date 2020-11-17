@@ -70,4 +70,7 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.BoundedDiscrete(min = 8, max = 32)
 	public int optimizedLayerDistance = 16;
 	
+	@ConfigEntry.Gui.Tooltip
+	public LayerMode skinLayerMode = LayerMode.DEFAULT;
+	
 }
