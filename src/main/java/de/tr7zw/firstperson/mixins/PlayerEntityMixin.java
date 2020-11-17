@@ -28,9 +28,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
-		if(this.getDisplayName().asString().equals("tr7zw")) { // Custom loading here
+		if(this.getDisplayName().asString().contains("tr7zw")) { // Custom loading here
 			customHeight = 110;
 			femaleModel = false;
+		}
+		if(this.getUuidAsString().equals("3d8930c8-c51f-49b8-b78d-48fdcb2139f9")) { // Custom loading here
+			customHeight = 88;
+			femaleModel = true;
 		}
 	}
 

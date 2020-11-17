@@ -12,7 +12,6 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
@@ -26,63 +25,68 @@ public class ModeledLayerFeatureRenderer
 	public ModeledLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		this.head = new SolidPixelModelPart(this.getContextModel());
+		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0);
+
+	}
+
+	public static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
+			int height, int depth, int textureU, int textureV) {
+		SolidPixelModelPart wrapper = new SolidPixelModelPart(model);
 		float pixelSize = 1f;
-		float otherOffset = 8;
-		float outsideOffset = 8f;// 11
-		float staticXOffset = -4f;
-		float staticYOffset = -15.4f;
-		float staticZOffset = +4f;
+		float staticXOffset = -width/2f;
+		float staticYOffset = -height + 0.6f;//-7.4f;
+		float staticZOffset = -depth/2f;
 		// Front/back
-		for(int u = 0; u < 8; u++) {
-			for(int v = 0; v < 8; v++) {
-				//front
-				this.head.setTextureOffset(38 + u, 7 + v);
-				this.head.addCustomCuboid(staticXOffset + u, staticYOffset + otherOffset + v, staticZOffset + -outsideOffset, pixelSize, pixelSize, pixelSize);
-				//back
-				this.head.setTextureOffset(54 + u, 7 + v);
-				this.head.addCustomCuboid(staticXOffset + u, staticYOffset + otherOffset + v, staticZOffset - 1f, pixelSize, pixelSize, pixelSize);
+		for (int u = 0; u < width; u++) {
+			for (int v = 0; v < height; v++) {
+				// front
+				wrapper.setTextureOffset(textureU + depth - 2 + u, textureV + depth - 1 + v);
+				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset, pixelSize, pixelSize, pixelSize);
+				// back
+				wrapper.setTextureOffset(textureU + 2*depth + width - 2 + u, textureV + depth - 1 + v); // 54 + u, 7 + v
+				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset + 7f, pixelSize, pixelSize, pixelSize);
 			}
 		}
 		// sides
-		for(int u = 0; u < 8; u++) {
-			for(int v = 0; v < 8; v++) {
-				// left	
-				this.head.setTextureOffset(30 +7- u, 7 + v);
-				this.head.addCustomCuboid(staticXOffset + 0, staticYOffset + otherOffset + v, staticZOffset + -outsideOffset + u, pixelSize, pixelSize, pixelSize);
+		for (int u = 0; u < depth; u++) {
+			for (int v = 0; v < height; v++) {
+				// left
+				wrapper.setTextureOffset(textureU - 3 + depth - u, textureV + depth - 1 + v); // 30 + 7 - u, 7 + v
+				wrapper.addCustomCuboid(staticXOffset + 0, staticYOffset + v, staticZOffset + u, pixelSize, pixelSize, pixelSize);
 				// right
-				this.head.setTextureOffset(46 + u, 7 + v);
-				this.head.addCustomCuboid(staticXOffset + outsideOffset - 1f, staticYOffset + otherOffset + v, staticZOffset + -outsideOffset + u, pixelSize, pixelSize, pixelSize);
+				wrapper.setTextureOffset(textureU -2 + depth + width + u, textureV + depth - 1 + v); // 46 + u
+				wrapper.addCustomCuboid(staticXOffset + width - 1f, staticYOffset + v, staticZOffset + u, pixelSize, pixelSize, pixelSize);
 
 			}
 		}
 		// top/bottom
-		for(int u = 0; u < 8; u++) {
-			for(int v = 0; v < 8; v++) {
-				//top
-				this.head.setTextureOffset(38 + u, 6-v);
-				this.head.addCustomCuboid(staticXOffset + 0 + u, staticYOffset + otherOffset, staticZOffset + -outsideOffset + v, pixelSize, pixelSize, pixelSize);
-				//bottom
-				this.head.setTextureOffset(46 + u, 6-v);
-				this.head.addCustomCuboid(staticXOffset + 0 + u, staticYOffset + otherOffset + 7, staticZOffset + -outsideOffset + v, pixelSize, pixelSize, pixelSize);
+		for (int u = 0; u < width; u++) {
+			for (int v = 0; v < depth; v++) {
+				// top
+				wrapper.setTextureOffset(textureU + depth - 2 + u, textureV + depth - 2 - v); // 38 + u
+				wrapper.addCustomCuboid(staticXOffset + 0 + u, staticYOffset, staticZOffset + v, pixelSize, pixelSize, pixelSize);
+				// bottom
+				wrapper.setTextureOffset(textureU + depth + width - 2 + u, textureV + depth - 2 - v); // 46 + u
+				wrapper.addCustomCuboid(staticXOffset + 0 + u, staticYOffset + height - 1f, staticZOffset + v, pixelSize, pixelSize, pixelSize);
 			}
 		}
-
+		return wrapper;
 	}
 
 	private final SolidPixelModelPart head;
-	
+
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
 			float l) {
 		if (!abstractClientPlayerEntity.hasSkinTexture() || abstractClientPlayerEntity.isInvisible()) {
 			return;
 		}
-	    ItemStack itemStack = abstractClientPlayerEntity.getEquippedStack(EquipmentSlot.HEAD);
-	    if(itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
-	    	return;
-	    }
-		if(FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack) || !isEnabled(abstractClientPlayerEntity)) {
+		ItemStack itemStack = abstractClientPlayerEntity.getEquippedStack(EquipmentSlot.HEAD);
+		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
+			return;
+		}
+		if (FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)
+				|| !isEnabled(abstractClientPlayerEntity)) {
 			return;
 		}
 
@@ -91,34 +95,30 @@ public class ModeledLayerFeatureRenderer
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
 		renderCustomHelmet(matrixStack, vertexConsumer, i, m);
 	}
-	
+
 	public void renderCustomHelmet(MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
-	    matrixStack.push();
-	    float scale = 1f/3f;
-	    this.head.customCopyPositionAndRotation(this.getContextModel().head);
-	    //matrixStack.scale(scale, scale, scale);
-	    matrixStack.scale(1.18f, 1.18f, 1.18f);
-	    //((ModelWithHead)this.getContextModel()).getHead().rotate(matrixStack);
-	    //if(this.getContextModel().sneaking) {
-	    //	matrixStack.translate(0, -0.125D*5, 0);
-	    //}
+		matrixStack.push();
+		this.head.customCopyPositionAndRotation(this.getContextModel().head);
+		matrixStack.scale(1.18f, 1.18f, 1.18f);
 		this.head.customRender(matrixStack, vertices, light, overlay);
-	    matrixStack.pop();
+		matrixStack.pop();
 
 	}
-	
+
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
 		LayerMode mode = FirstPersonModelMod.config.layerMode;
-		if(mode == LayerMode.DEFAULT || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))return false;
+		if (mode == LayerMode.DEFAULT || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))
+			return false;
 		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
-		if(thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
+		if (thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
 			return true;
 		}
-		if(mode != LayerMode.SELF) {
-			int distance = FirstPersonModelMod.config.optimizedLayerDistance * FirstPersonModelMod.config.optimizedLayerDistance;
+		if (mode != LayerMode.SELF) {
+			int distance = FirstPersonModelMod.config.optimizedLayerDistance
+					* FirstPersonModelMod.config.optimizedLayerDistance;
 			return thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
 		}
 		return false;
 	}
-	
+
 }
