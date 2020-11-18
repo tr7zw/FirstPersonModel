@@ -20,21 +20,21 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-public class ModeledLayerFeatureRenderer
+public class HeadLayerFeatureRenderer
 		extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-	public ModeledLayerFeatureRenderer(
+	public HeadLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0, false);
+		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0, false, 0);
 
 	}
 
 	public static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
-			int height, int depth, int textureU, int textureV, boolean topPivot) {
+			int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
 		SolidPixelModelPart wrapper = new SolidPixelModelPart(model);
 		float pixelSize = 1f;
 		float staticXOffset = -width/2f;
-		float staticYOffset = topPivot ? 0f : -height + 0.6f;//-7.4f;
+		float staticYOffset = topPivot ? + rotationOffset : -height + 0.6f;//-7.4f;
 		float staticZOffset = -depth/2f;
 		// Front/back
 		for (int u = 0; u < width; u++) {
@@ -74,6 +74,7 @@ public class ModeledLayerFeatureRenderer
 	}
 
 	private final SolidPixelModelPart head;
+	private static int entityCounter = 0;
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
@@ -93,13 +94,16 @@ public class ModeledLayerFeatureRenderer
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntityCutout((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderCustomHelmet(matrixStack, vertexConsumer, i, m);
+		renderCustomHelmet(abstractClientPlayerEntity, matrixStack, vertexConsumer, i, m);
 	}
 
-	public void renderCustomHelmet(MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+	public void renderCustomHelmet(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		matrixStack.push();
 		this.head.customCopyPositionAndRotation(this.getContextModel().head);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
+		if(abstractClientPlayerEntity.isSneaking()) {
+			matrixStack.translate(0, -0.05f, 0);
+		}
 		this.head.customRender(matrixStack, vertices, light, overlay);
 		matrixStack.pop();
 
@@ -107,16 +111,20 @@ public class ModeledLayerFeatureRenderer
 
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
 		LayerMode mode = FirstPersonModelMod.config.layerMode;
-		if (mode == LayerMode.DEFAULT || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))
+		if (mode == LayerMode.VANILLA2D || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))
 			return false;
 		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
-		if (thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
+		if (thePlayer == abstractClientPlayerEntity) {
+			entityCounter = 0;
 			return true;
 		}
-		if (mode != LayerMode.SELF) {
+		if(entityCounter > FirstPersonModelMod.config.layerLimiter)return false;
+		if (mode != LayerMode.ONLYSELF) {
 			int distance = FirstPersonModelMod.config.optimizedLayerDistance
 					* FirstPersonModelMod.config.optimizedLayerDistance;
-			return thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
+			boolean ret = thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
+			if(ret)entityCounter++;
+			return ret;
 		}
 		return false;
 	}

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import de.tr7zw.firstperson.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.layer.BodyLayerFeatureRenderer;
-import de.tr7zw.firstperson.layer.ModeledLayerFeatureRenderer;
+import de.tr7zw.firstperson.layer.HeadLayerFeatureRenderer;
 import de.tr7zw.firstperson.PlayerSettings;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -31,7 +31,7 @@ public abstract class PlayerEntityRendererMixin
 	public void onCreate(CallbackInfo info) {
 		this.addFeature(new FemaleFeatureRenderer(this));
 		
-		this.addFeature(new ModeledLayerFeatureRenderer(this));
+		this.addFeature(new HeadLayerFeatureRenderer(this));
 		this.addFeature(new BodyLayerFeatureRenderer(this));
 	}
 

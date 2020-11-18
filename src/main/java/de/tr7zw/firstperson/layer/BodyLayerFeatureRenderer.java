@@ -13,26 +13,29 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.ModelWithArms;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public class BodyLayerFeatureRenderer 
 extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 	public BodyLayerFeatureRenderer(
 		FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 			super(featureRendererContext);
-			this.leftLeg = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 0, 48, true);
-			this.rightLeg = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 0, 32, true);
+			this.leftLeg = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
+			this.rightLeg = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 0, 32, true, 0);
 			if(((PlayerEntityModelAccessor)featureRendererContext.getModel()).hasThinArms()) {
-				this.leftArm = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 3, 12, 4, 48, 48, true);
-				this.rightArm = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 3, 12, 4, 40, 32, true);
+				this.leftArm = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 3, 12, 4, 48, 48, true, -2);
+				this.rightArm = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 3, 12, 4, 40, 32, true, -2);
 			} else {
-				this.leftArm = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 48, 48, true);
-				this.rightArm = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 40, 32, true);
+				this.leftArm = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 48, 48, true, -2);
+				this.rightArm = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 4, 12, 4, 40, 32, true, -2);
 			}
-			this.jacket = ModeledLayerFeatureRenderer.wrapBox(this.getContextModel(), 8, 12, 4, 16, 32, true);
+			this.jacket = HeadLayerFeatureRenderer.wrapBox(this.getContextModel(), 8, 12, 4, 16, 32, true, 0);
 	}
 
 	private final SolidPixelModelPart leftLeg;
@@ -40,6 +43,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	private final SolidPixelModelPart leftArm;
 	private final SolidPixelModelPart rightArm;
 	private final SolidPixelModelPart jacket;
+	private static int entityCounter = 0;
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
@@ -58,12 +62,16 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	}
 
 	public void renderLayers(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+		float pixelScaling = 1.16f; //1.125f
 		// Left leg
 		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_PANTS_LEG)) {
 			matrixStack.push();
 			this.leftLeg.customCopyPositionAndRotation(this.getContextModel().leftLeg);
-			this.leftLeg.pivotY -= 1.5f;
-			matrixStack.scale(1.125f, 1.125f, 1.125f);
+			this.leftLeg.pivotY -= 2.625f;
+			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			if(abstractClientPlayerEntity.isSneaking()) {
+				matrixStack.translate(0, 0, -0.03f);
+			}
 			this.leftLeg.customRender(matrixStack, vertices, light, overlay);
 			matrixStack.pop();
 		}
@@ -71,8 +79,11 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.RIGHT_PANTS_LEG)) {
 			matrixStack.push();
 			this.rightLeg.customCopyPositionAndRotation(this.getContextModel().rightLeg);
-			this.rightLeg.pivotY -= 1.2f;
-			matrixStack.scale(1.125f, 1.125f, 1.125f);
+			this.rightLeg.pivotY -= 2.625f;
+			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			if(abstractClientPlayerEntity.isSneaking()) {
+				matrixStack.translate(0, 0, -0.03f);
+			}
 			this.rightLeg.customRender(matrixStack, vertices, light, overlay);
 			matrixStack.pop();
 		}
@@ -80,8 +91,12 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE)) {
 			matrixStack.push();
 			this.leftArm.customCopyPositionAndRotation(this.getContextModel().leftArm);
-			this.leftArm.pivotY -= 2.5f;
-			matrixStack.scale(1.125f, 1.125f, 1.125f);
+			this.leftArm.pivotY -= 0.825f;
+			this.leftArm.pivotX -= 0.02f;
+			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			if(abstractClientPlayerEntity.isSneaking()) {
+				matrixStack.translate(0, 0, 0.01f);
+			}
 			this.leftArm.customRender(matrixStack, vertices, light, overlay);
 			matrixStack.pop();
 		}
@@ -89,9 +104,12 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE)) {
 			matrixStack.push();
 			this.rightArm.customCopyPositionAndRotation(this.getContextModel().rightArm);
-			this.rightArm.pivotY -= 2.5f;
-			this.rightArm.pivotZ += 0.9f;
-			matrixStack.scale(1.125f, 1.125f, 1.125f);
+			this.rightArm.pivotY -= 0.825f;
+			this.rightArm.pivotX += 0.02f;
+			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			if(abstractClientPlayerEntity.isSneaking()) {
+				matrixStack.translate(0, 0, 0.01f);
+			}
 			this.rightArm.customRender(matrixStack, vertices, light, overlay);
 			matrixStack.pop();
 		}
@@ -100,7 +118,10 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 			matrixStack.push();
 			this.jacket.customCopyPositionAndRotation(this.getContextModel().jacket);
 			this.jacket.pivotY -= 1f;
-			matrixStack.scale(1.135f, 1.135f, 1.135f);
+			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			if(abstractClientPlayerEntity.isSneaking()) {
+				matrixStack.translate(0, 0, -0.025f);
+			}
 			this.jacket.customRender(matrixStack, vertices, light, overlay);
 			matrixStack.pop();
 		}
@@ -109,16 +130,20 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
 		LayerMode mode = FirstPersonModelMod.config.skinLayerMode;
-		if (mode == LayerMode.DEFAULT)
+		if (mode == LayerMode.VANILLA2D)
 			return false;
 		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
-		if (thePlayer == abstractClientPlayerEntity || mode == LayerMode.EVERYONE) {
+		if (thePlayer == abstractClientPlayerEntity) {
+			entityCounter = 0;
 			return true;
 		}
-		if (mode != LayerMode.SELF) {
+		if(entityCounter > FirstPersonModelMod.config.layerLimiter)return false;
+		if (mode != LayerMode.ONLYSELF) {
 			int distance = FirstPersonModelMod.config.optimizedLayerDistance
 					* FirstPersonModelMod.config.optimizedLayerDistance;
-			return thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
+			boolean ret = thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
+			if(ret)entityCounter++;
+			return ret;
 		}
 		return false;
 	}

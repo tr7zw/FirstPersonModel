@@ -64,13 +64,17 @@ public class FirstPersonConfig implements ConfigData {
 	public int playerSize = 100;
 	
 	@ConfigEntry.Gui.Tooltip
-	public LayerMode layerMode = LayerMode.DEFAULT;
+	public LayerMode layerMode = LayerMode.VANILLA2D;
 	
 	@ConfigEntry.Gui.Tooltip
 	@ConfigEntry.BoundedDiscrete(min = 8, max = 32)
 	public int optimizedLayerDistance = 16;
 	
 	@ConfigEntry.Gui.Tooltip
-	public LayerMode skinLayerMode = LayerMode.DEFAULT;
+	@ConfigEntry.BoundedDiscrete(min = 5, max = 50)
+	public int layerLimiter = 16;
+	
+	@ConfigEntry.Gui.Tooltip
+	public LayerMode skinLayerMode = LayerMode.VANILLA2D;
 	
 }

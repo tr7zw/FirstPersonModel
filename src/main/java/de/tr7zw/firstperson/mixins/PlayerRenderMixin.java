@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.layer.BodyLayerFeatureRenderer;
-import de.tr7zw.firstperson.layer.ModeledLayerFeatureRenderer;
+import de.tr7zw.firstperson.layer.HeadLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -59,7 +59,7 @@ public abstract class PlayerRenderMixin
 				
 			}
 		} else {
-			playerEntityRenderer.getModel().helmet.visible = ModeledLayerFeatureRenderer
+			playerEntityRenderer.getModel().helmet.visible = HeadLayerFeatureRenderer
 					.isEnabled(abstractClientPlayerEntity) ? false : playerEntityRenderer.getModel().helmet.visible;
 		}
 		playerEntityRenderer.getModel().leftSleeve.visible = bodyLayer ? false

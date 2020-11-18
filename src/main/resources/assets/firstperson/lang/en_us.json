@@ -31,7 +31,11 @@
     "text.autoconfig.firstperson.option.forceActive": "Force Active",
     "text.autoconfig.firstperson.option.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)",
     "text.autoconfig.firstperson.option.layerMode": "Head layer mode",
-    "text.autoconfig.firstperson.option.layerMode.@Tooltip": "Head second layer rendering mode. DEFAULT: Normal Minecraft second layer. EVERYONE: 3d second layer on all players. OPTIMIZED: 3d second layer on nearby players. SELF: 3d second layer only on yourself",
+    "text.autoconfig.firstperson.option.layerMode.@Tooltip": "Head second layer rendering mode. VANILLA2D: Normal Minecraft second layer. RENDER3D: 3d second layer on nearby players. ONLYSELF: 3d second layer only on yourself",
     "text.autoconfig.firstperson.option.optimizedLayerDistance": "Optimized layer mode distance",
-    "text.autoconfig.firstperson.option.optimizedLayerDistance.@Tooltip": "Disables the 3d effect for other players that are further away in OPTIMIZED mode"
+    "text.autoconfig.firstperson.option.optimizedLayerDistance.@Tooltip": "Disables the 3d effect for other players that are further away in OPTIMIZED mode",
+    "text.autoconfig.firstperson.option.layerLimiter": "Other player layer limiter",
+    "text.autoconfig.firstperson.option.layerLimiter.@Tooltip": "Hard limits how many other players will be rendered in 3d at a maximum. Yourself are excluded from this.",
+    "text.autoconfig.firstperson.option.skinLayerMode": "Rest of body layer mode",
+    "text.autoconfig.firstperson.option.skinLayerMode.@Tooltip": "Same setting values as for the Head layer, but applies to the rest of the skin."
   }
