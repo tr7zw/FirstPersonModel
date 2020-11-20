@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.layer.BodyLayerFeatureRenderer;
-import de.tr7zw.firstperson.layer.HeadLayerFeatureRenderer;
+import de.tr7zw.firstperson.features.layers.BodyLayerFeatureRenderer;
+import de.tr7zw.firstperson.features.layers.HeadLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;

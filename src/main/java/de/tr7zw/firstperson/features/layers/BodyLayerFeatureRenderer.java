@@ -1,7 +1,8 @@
-package de.tr7zw.firstperson.layer;
+package de.tr7zw.firstperson.features.layers;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerEntityModelAccessor;
+import de.tr7zw.firstperson.features.LayerMode;
 import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

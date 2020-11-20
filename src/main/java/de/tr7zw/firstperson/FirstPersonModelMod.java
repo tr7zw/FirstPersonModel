@@ -1,19 +1,20 @@
 package de.tr7zw.firstperson;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.glfw.GLFW;
+
+import de.tr7zw.firstperson.sync.SyncManager;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import org.lwjgl.glfw.GLFW;
-
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-
-import javax.annotation.Nullable;
 
 public class FirstPersonModelMod implements ModInitializer {
 	
@@ -28,6 +29,8 @@ public class FirstPersonModelMod implements ModInitializer {
 	public static FirstPersonConfig config = null;
 	private static KeyBinding keyBinding;
 	private static boolean isHeld = false;
+	public static SyncManager syncManager;
+	public static final String APIHost = "https://firstperson.tr7zw.dev";
 
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
@@ -69,5 +72,9 @@ public class FirstPersonModelMod implements ModInitializer {
 	        	isHeld = false;
 	        }
 	    });
+	   syncManager = new SyncManager();
 	}
+	
+
+	   
 }

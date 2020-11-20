@@ -1,6 +1,7 @@
 package de.tr7zw.firstperson;
 
-import de.tr7zw.firstperson.layer.LayerMode;
+import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.LayerMode;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
@@ -57,7 +58,7 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public boolean forceActive = false;
 
-	public boolean femaleModel = false;
+	public Chest chest = Chest.VANILLA;
 	
 	@ConfigEntry.Gui.Tooltip
 	@ConfigEntry.BoundedDiscrete(min = 1, max = 200)
@@ -76,5 +77,49 @@ public class FirstPersonConfig implements ConfigData {
 	
 	@ConfigEntry.Gui.Tooltip
 	public LayerMode skinLayerMode = LayerMode.VANILLA2D;
+	
+	public SyncSnapshot createSnapshot() {
+		return new SyncSnapshot(this);
+	}
+	
+	public static class SyncSnapshot{
+		public int height;
+		public int chest;
+		public int boots;
+		public int head;
+		public int back;
+		public int hat;
+		public SyncSnapshot(FirstPersonConfig config) {
+			height = config.playerSize;
+			chest = config.chest.getId();
+			boots = 0;
+			head = 0;
+			back = 0;
+			hat = 0;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + chest;
+			result = prime * result + height;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			SyncSnapshot other = (SyncSnapshot) obj;
+			if (chest != other.chest)
+				return false;
+			if (height != other.height)
+				return false;
+			return true;
+		}
+	}
 	
 }

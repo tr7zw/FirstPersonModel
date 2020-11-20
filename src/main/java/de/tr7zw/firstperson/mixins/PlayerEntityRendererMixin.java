@@ -5,11 +5,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import de.tr7zw.firstperson.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.layer.BodyLayerFeatureRenderer;
-import de.tr7zw.firstperson.layer.HeadLayerFeatureRenderer;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.features.chest.FemaleFeatureRenderer;
+import de.tr7zw.firstperson.features.layers.BodyLayerFeatureRenderer;
+import de.tr7zw.firstperson.features.layers.HeadLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;

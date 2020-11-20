@@ -18,7 +18,8 @@
   "HeldItemFeatureRendererMixin",
   "PlayerEntityRendererMixin",
   "PlayerEntityMixin",
-  "PlayerEntityModelMixin"
+  "PlayerEntityModelMixin",
+  "ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
