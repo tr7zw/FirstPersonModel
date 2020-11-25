@@ -1,8 +1,12 @@
 package de.tr7zw.firstperson.features.layers;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.LayerMode;
-import de.tr7zw.firstperson.render.SolidPixelModelPart;
+import de.tr7zw.firstperson.render.SolidPixelWrapper;
+import de.tr7zw.firstperson.util.SkinUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -14,6 +18,11 @@ import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.NativeImage.Format;
+import net.minecraft.client.texture.TextureManager;
+import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -26,55 +35,9 @@ public class HeadLayerFeatureRenderer
 	public HeadLayerFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		this.head = wrapBox(this.getContextModel(), 8, 8, 8, 32, 0, false, 0);
 
 	}
 
-	public static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
-			int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
-		SolidPixelModelPart wrapper = new SolidPixelModelPart(model);
-		float pixelSize = 1f;
-		float staticXOffset = -width/2f;
-		float staticYOffset = topPivot ? + rotationOffset : -height + 0.6f;//-7.4f;
-		float staticZOffset = -depth/2f;
-		// Front/back
-		for (int u = 0; u < width; u++) {
-			for (int v = 0; v < height; v++) {
-				// front
-				wrapper.setTextureOffset(textureU + depth - 2 + u, textureV + depth - 1 + v);
-				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset, pixelSize, pixelSize, pixelSize);
-				// back
-				wrapper.setTextureOffset(textureU + 2*depth + width - 2 + u, textureV + depth - 1 + v); // 54 + u, 7 + v
-				wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset + depth - 1, pixelSize, pixelSize, pixelSize);
-			}
-		}
-		// sides
-		for (int u = 0; u < depth; u++) {
-			for (int v = 0; v < height; v++) {
-				// left
-				wrapper.setTextureOffset(textureU - 3 + depth - u, textureV + depth - 1 + v); // 30 + 7 - u, 7 + v
-				wrapper.addCustomCuboid(staticXOffset + 0, staticYOffset + v, staticZOffset + u, pixelSize, pixelSize, pixelSize);
-				// right
-				wrapper.setTextureOffset(textureU -2 + depth + width + u, textureV + depth - 1 + v); // 46 + u
-				wrapper.addCustomCuboid(staticXOffset + width - 1f, staticYOffset + v, staticZOffset + u, pixelSize, pixelSize, pixelSize);
-
-			}
-		}
-		// top/bottom
-		for (int u = 0; u < width; u++) {
-			for (int v = 0; v < depth; v++) {
-				// top
-				wrapper.setTextureOffset(textureU + depth - 2 + u, textureV + depth - 2 - v); // 38 + u
-				wrapper.addCustomCuboid(staticXOffset + 0 + u, staticYOffset, staticZOffset + v, pixelSize, pixelSize, pixelSize);
-				// bottom
-				wrapper.setTextureOffset(textureU + depth + width - 2 + u, textureV + depth - 2 - v); // 46 + u
-				wrapper.addCustomCuboid(staticXOffset + 0 + u, staticYOffset + height - 1f, staticZOffset + v, pixelSize, pixelSize, pixelSize);
-			}
-		}
-		return wrapper;
-	}
-
-	private final SolidPixelModelPart head;
 	private static int entityCounter = 0;
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
@@ -91,21 +54,38 @@ public class HeadLayerFeatureRenderer
 				|| !isEnabled(abstractClientPlayerEntity)) {
 			return;
 		}
+		
+		PlayerSettings settings = (PlayerSettings) abstractClientPlayerEntity;
+		// check for it being setup first to speedup the rendering
+		if(settings.getHeadLayers() == null && !setupModel(abstractClientPlayerEntity, settings)) {
+			return; // no head layer setup and wasn't able to setup
+		}
 
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntityCutout((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderCustomHelmet(abstractClientPlayerEntity, matrixStack, vertexConsumer, i, m);
+		renderCustomHelmet(settings, abstractClientPlayerEntity, matrixStack, vertexConsumer, i, m);
 	}
 
-	public void renderCustomHelmet(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
+		
+		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
+			return false; // default skin
+		}
+		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 8, 8, 8, 32, 0, false, 0));
+		skin.untrack();
+		return true;
+	}
+
+	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		matrixStack.push();
-		this.head.customCopyPositionAndRotation(this.getContextModel().head);
+		settings.getHeadLayers().customCopyPositionAndRotation(this.getContextModel().head);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
 		if(abstractClientPlayerEntity.isSneaking()) {
 			matrixStack.translate(0, -0.05f, 0);
 		}
-		this.head.customRender(matrixStack, vertices, light, overlay);
+		settings.getHeadLayers().customRender(matrixStack, vertices, light, overlay);
 		matrixStack.pop();
 
 	}
@@ -119,7 +99,7 @@ public class HeadLayerFeatureRenderer
 			entityCounter = 0;
 			return true;
 		}
-		if(entityCounter > FirstPersonModelMod.config.layerLimiter)return false;
+		//if(entityCounter > FirstPersonModelMod.config.layerLimiter)return false;
 		if (mode != LayerMode.ONLYSELF) {
 			int distance = FirstPersonModelMod.config.optimizedLayerDistance
 					* FirstPersonModelMod.config.optimizedLayerDistance;

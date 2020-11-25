@@ -1,5 +1,8 @@
 package de.tr7zw.firstperson.render;
 
+import java.util.Random;
+
+import de.tr7zw.firstperson.render.CustomModelPart.Cuboid;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
@@ -173,7 +176,7 @@ public class CustomModelPart extends ModelPart {
 			float red, float green, float blue, float alpha) {
 		net.minecraft.util.math.Matrix4f matrix4f = matrices.getModel();
 		net.minecraft.util.math.Matrix3f matrix3f = matrices.getNormal();
-		for (ObjectListIterator localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
+		for (ObjectListIterator<Cuboid> localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
 			CustomModelPart.Cuboid cuboid = (CustomModelPart.Cuboid) localObjectListIterator.next();
 			for (CustomModelPart.Quad quad : cuboid.getSides()) {
 				Vector3f vector3f = quad.direction.copy();
@@ -196,6 +199,11 @@ public class CustomModelPart extends ModelPart {
 				}
 			}
 		}
+	}
+
+	@Override
+	public net.minecraft.client.model.ModelPart.Cuboid getRandomCuboid(Random random) {
+		return new net.minecraft.client.model.ModelPart.Cuboid(0,0,0,0,0,0,0,0,0,0,0,false,0,0);
 	}
 
 	public CustomModelPart setTextureSize(int width, int height) {

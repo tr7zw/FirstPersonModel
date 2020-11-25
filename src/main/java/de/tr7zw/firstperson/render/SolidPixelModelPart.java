@@ -1,5 +1,7 @@
 package de.tr7zw.firstperson.render;
 
+import java.util.Random;
+
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
@@ -109,6 +111,15 @@ public class SolidPixelModelPart extends ModelPart {
 			float extraY, float extraZ, boolean mirror, boolean bl) {
 		this.cuboids.add(new SolidPixelModelPart.Cuboid(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror,
 				this.textureWidth, this.textureHeight));
+	}
+	
+	public int getCuboidAmount() {
+		return this.cuboids.size();
+	}
+	
+	@Override
+	public net.minecraft.client.model.ModelPart.Cuboid getRandomCuboid(Random random) {
+		return new net.minecraft.client.model.ModelPart.Cuboid(0,0,0,0,0,0,0,0,0,0,0,false,0,0);
 	}
 
 	@Override

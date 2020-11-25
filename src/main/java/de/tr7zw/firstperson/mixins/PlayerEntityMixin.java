@@ -8,16 +8,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.render.SolidPixelModelPart;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import de.tr7zw.firstperson.FirstPersonModelMod;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSettings {
@@ -28,6 +29,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 
 	private int customHeight = 100;
 	private Chest chest = Chest.VANILLA;
+	private SolidPixelModelPart headLayer;
+	private SolidPixelModelPart[] skinLayer;
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
@@ -38,6 +41,26 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		}
 	}
 
+	@Override
+	public SolidPixelModelPart[] getSkinLayers() {
+		return skinLayer;
+	}
+	
+	@Override
+	public void setupSkinLayers(SolidPixelModelPart[] box) {
+		this.skinLayer = box;
+	}
+	
+	@Override
+	public SolidPixelModelPart getHeadLayers() {
+		return headLayer;
+	}
+	
+	@Override
+	public void setupHeadLayers(SolidPixelModelPart box) {
+		this.headLayer = box;
+	}
+	
 	@Override
 	public int getCustomHeight() {
 		return customHeight;
