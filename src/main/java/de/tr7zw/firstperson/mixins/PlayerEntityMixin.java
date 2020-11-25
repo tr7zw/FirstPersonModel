@@ -104,7 +104,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		default:
 			value = 1.62f;
 		}
-		if (((PlayerEntity) (Object) this) == MinecraftClient.getInstance().player) {
+		if (((PlayerEntity) (Object) this) == MinecraftClient.getInstance().player && FirstPersonModelMod.config.modifyCameraHeight) {
 			value *= ((float) FirstPersonModelMod.config.playerSize / 100f);
 		}
 		callback.setReturnValue(value);

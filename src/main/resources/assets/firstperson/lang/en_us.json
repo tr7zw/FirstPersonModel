@@ -26,6 +26,8 @@
     "text.autoconfig.firstperson.option.chest": "Custom Chest model (Synced)",
     "text.autoconfig.firstperson.option.playerSize": "Player size (Synced)",
     "text.autoconfig.firstperson.option.playerSize.@Tooltip": "Visually (in 3rd person) changes the player size",
+    "text.autoconfig.firstperson.option.modifyCameraHeight": "!!!READ TOOLTIP FIRST!!! Change camera height",
+    "text.autoconfig.firstperson.option.modifyCameraHeight.@Tooltip": "Changes the first person camera height to the player size. This will cause issues with anticheats and might get you banned! Do not use on 3rd party servers!",
     "text.autoconfig.firstperson.option.vanillaHands": "Vanilla Hands",
     "text.autoconfig.firstperson.option.vanillaHands.@Tooltip": "Shows the vanilla first person hands, but also the player model(but without arms)",
     "text.autoconfig.firstperson.option.forceActive": "Force Active",

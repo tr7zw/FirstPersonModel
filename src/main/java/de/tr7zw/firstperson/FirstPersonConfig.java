@@ -61,8 +61,11 @@ public class FirstPersonConfig implements ConfigData {
 	public Chest chest = Chest.VANILLA;
 	
 	@ConfigEntry.Gui.Tooltip
-	@ConfigEntry.BoundedDiscrete(min = 1, max = 200)
+	@ConfigEntry.BoundedDiscrete(min = 70, max = 100)
 	public int playerSize = 100;
+	
+	@ConfigEntry.Gui.Tooltip
+	public boolean modifyCameraHeight = false;
 	
 	@ConfigEntry.Gui.Tooltip
 	public LayerMode layerMode = LayerMode.VANILLA2D;

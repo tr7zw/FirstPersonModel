@@ -12,6 +12,7 @@ import de.tr7zw.firstperson.features.layers.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.features.layers.HeadLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.options.Perspective;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -38,7 +39,7 @@ public abstract class PlayerEntityRendererMixin
 	@Inject(method = "scale", at = @At("HEAD"), cancellable = true)
 	protected void scale(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f,
 			CallbackInfo info) {
-		if (abstractClientPlayerEntity == MinecraftClient.getInstance().player /*&& MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON*/) {
+		if (abstractClientPlayerEntity == MinecraftClient.getInstance().player && (MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON || FirstPersonModelMod.config.modifyCameraHeight)) {
 			float scaled = 0.9375f * ((float)FirstPersonModelMod.config.playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
