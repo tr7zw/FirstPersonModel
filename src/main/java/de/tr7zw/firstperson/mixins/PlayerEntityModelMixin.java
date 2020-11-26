@@ -6,6 +6,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import de.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
+/**
+ * Used to expose the thinArms setting of the player model
+ *
+ */
 @Mixin(PlayerEntityModel.class)
 public class PlayerEntityModelMixin implements PlayerEntityModelAccessor{
 

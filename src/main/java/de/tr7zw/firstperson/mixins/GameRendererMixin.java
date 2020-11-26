@@ -12,9 +12,15 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
 
+/**
+ * Temporary fix for the view bobbing and map rendering. 
+ *
+ */
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
 
+	private final MinecraftClient mc = MinecraftClient.getInstance();
+	
 	// Bobbing needs to be disabled for the minimap to work(and not bob), but everywhere else it should work
 	// This does the job in vanilla but there is probably a better way (probably fixing the minimap^^)
 	private int allowBob = 0;
@@ -30,8 +36,8 @@ public class GameRendererMixin {
 	}
 	
 	private boolean hasMapInHand() {
-		return MinecraftClient.getInstance().player.getMainHandStack().getItem() == Items.FILLED_MAP ||
-				MinecraftClient.getInstance().player.getOffHandStack().getItem() == Items.FILLED_MAP;
+		return mc.player.getMainHandStack().getItem() == Items.FILLED_MAP ||
+				mc.player.getOffHandStack().getItem() == Items.FILLED_MAP;
 	}
 
 	@Inject(at = @At("HEAD"), method = "renderHand")

@@ -15,15 +15,20 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 
+/**
+ * Stops items in the hand from rendering while in first person.
+ *
+ */
 @Mixin(HeldItemFeatureRenderer.class)
 public class HeldItemFeatureRendererMixin {
 
 	@Inject(at = @At("HEAD"), method = "renderItem", cancellable = true)
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm,
 			MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
-		if(entity instanceof ClientPlayerEntity && FirstPersonModelMod.isFixActive(entity, matrices) && FirstPersonModelMod.config.vanillaHands) {
+		if (entity instanceof ClientPlayerEntity && FirstPersonModelMod.isFixActive(entity, matrices)
+				&& FirstPersonModelMod.config.vanillaHands) {
 			info.cancel();
 		}
 	}
-	
+
 }

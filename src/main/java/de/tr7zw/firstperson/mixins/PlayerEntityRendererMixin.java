@@ -19,6 +19,10 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 
+/**
+ * Adds the custom FeatureRenderers and scales the player size
+ *
+ */
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin
 		extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
@@ -28,10 +32,12 @@ public abstract class PlayerEntityRendererMixin
 		super(dispatcher, model, shadowRadius);
 	}
 
+	private final MinecraftClient mc = MinecraftClient.getInstance();
+
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
 		this.addFeature(new FemaleFeatureRenderer(this));
-		
+
 		this.addFeature(new HeadLayerFeatureRenderer(this));
 		this.addFeature(new BodyLayerFeatureRenderer(this));
 	}
@@ -39,12 +45,13 @@ public abstract class PlayerEntityRendererMixin
 	@Inject(method = "scale", at = @At("HEAD"), cancellable = true)
 	protected void scale(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f,
 			CallbackInfo info) {
-		if (abstractClientPlayerEntity == MinecraftClient.getInstance().player && (MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON || FirstPersonModelMod.config.modifyCameraHeight)) {
-			float scaled = 0.9375f * ((float)FirstPersonModelMod.config.playerSize / 100f);
+		if (abstractClientPlayerEntity == mc.player && (mc.options.getPerspective() != Perspective.FIRST_PERSON
+				|| FirstPersonModelMod.config.modifyCameraHeight)) {
+			float scaled = 0.9375f * ((float) FirstPersonModelMod.config.playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
-		} else if(abstractClientPlayerEntity != MinecraftClient.getInstance().player) {
-			float scaled = 0.9375f * ((float)((PlayerSettings)abstractClientPlayerEntity).getCustomHeight() / 100f);
+		} else if (abstractClientPlayerEntity != mc.player) {
+			float scaled = 0.9375f * ((float) ((PlayerSettings) abstractClientPlayerEntity).getCustomHeight() / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
 		}

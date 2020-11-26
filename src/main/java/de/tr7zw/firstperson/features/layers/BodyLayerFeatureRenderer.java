@@ -63,16 +63,16 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
 		SolidPixelModelPart[] layers = new SolidPixelModelPart[5];
-		layers[0] = SolidPixelWrapper.wrapBox(this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
-		layers[1] = SolidPixelWrapper.wrapBox(this.getContextModel(), 4, 12, 4, 0, 32, true, 0);
+		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
+		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 32, true, 0);
 		if(thinArms) {
-			layers[2] = SolidPixelWrapper.wrapBox(this.getContextModel(), 3, 12, 4, 48, 48, true, -2);
-			layers[3] = SolidPixelWrapper.wrapBox(this.getContextModel(), 3, 12, 4, 40, 32, true, -2);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 3, 12, 4, 48, 48, true, -2);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 3, 12, 4, 40, 32, true, -2);
 		} else {
-			layers[2] = SolidPixelWrapper.wrapBox(this.getContextModel(), 4, 12, 4, 48, 48, true, -2);
-			layers[3] = SolidPixelWrapper.wrapBox(this.getContextModel(), 4, 12, 4, 40, 32, true, -2);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 48, 48, true, -2);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 40, 32, true, -2);
 		}
-		layers[4] = SolidPixelWrapper.wrapBox(this.getContextModel(), 8, 12, 4, 16, 32, true, 0);
+		layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 8, 12, 4, 16, 32, true, 0);
 		settings.setupSkinLayers(layers);
 		skin.untrack();
 		return true;

@@ -1,7 +1,5 @@
 package de.tr7zw.firstperson.features.layers;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.LayerMode;
@@ -18,11 +16,7 @@ import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.texture.AbstractTexture;
 import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.NativeImage.Format;
-import net.minecraft.client.texture.TextureManager;
-import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;

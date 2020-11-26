@@ -15,6 +15,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker.Entry;
 import net.minecraft.network.packet.s2c.play.EntityTrackerUpdateS2CPacket;
 
+/**
+ * Catches the player layer update packet and notifies the syncManager to update
+ * this players settings
+ *
+ */
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
 
@@ -29,7 +34,7 @@ public class ClientPlayNetworkHandlerMixin {
 			Entity entity = world.getEntityById(packet.id());
 			if (entity != null && packet.getTrackedValues() != null && entity instanceof PlayerSettings) {
 				for (Entry<?> entry : packet.getTrackedValues()) {
-					if(entry.getData().getId() == 16 && (Byte)entry.get() == 0){
+					if (entry.getData().getId() == 16 && (Byte) entry.get() == 0) {
 						FirstPersonModelMod.syncManager.updateSettings((PlayerSettings) entity);
 					}
 				}

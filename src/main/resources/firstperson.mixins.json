@@ -5,7 +5,7 @@
   "mixins": [
   ],
   "client": [
-	"FirstPersonRendererMixin",
+	"HeldItemRendererMixin",
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",

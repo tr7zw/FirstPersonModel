@@ -30,8 +30,8 @@ public class SolidPixelModelPart extends ModelPart {
 	public boolean mirror;
 	public boolean visible = true;
 
-	private final ObjectList<SolidPixelModelPart.Cuboid> cuboids = new ObjectArrayList();
-	private final ObjectList<SolidPixelModelPart> children = new ObjectArrayList();
+	private final ObjectList<SolidPixelModelPart.Cuboid> cuboids = new ObjectArrayList<Cuboid>();
+	private final ObjectList<SolidPixelModelPart> children = new ObjectArrayList<SolidPixelModelPart>();
 
 	public SolidPixelModelPart(Model model) {
 		super(model);
@@ -158,7 +158,7 @@ public class SolidPixelModelPart extends ModelPart {
 
 		customRenderCuboids(matrices.peek(), vertices, light, overlay, red, green, blue, alpha);
 
-		for (ObjectListIterator localObjectListIterator = this.children.iterator(); localObjectListIterator
+		for (ObjectListIterator<SolidPixelModelPart> localObjectListIterator = this.children.iterator(); localObjectListIterator
 				.hasNext();) {
 			SolidPixelModelPart modelPart = (SolidPixelModelPart) localObjectListIterator.next();
 			modelPart.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -184,7 +184,7 @@ public class SolidPixelModelPart extends ModelPart {
 			float red, float green, float blue, float alpha) {
 		net.minecraft.util.math.Matrix4f matrix4f = matrices.getModel();
 		net.minecraft.util.math.Matrix3f matrix3f = matrices.getNormal();
-		for (ObjectListIterator localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
+		for (ObjectListIterator<Cuboid> localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
 			SolidPixelModelPart.Cuboid cuboid = (SolidPixelModelPart.Cuboid) localObjectListIterator.next();
 			for (SolidPixelModelPart.Quad quad : cuboid.getSides()) {
 				Vector3f vector3f = quad.direction.copy();

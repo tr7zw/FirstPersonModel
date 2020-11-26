@@ -10,25 +10,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Redirects the isThirdPerson call to "trick" Minecraft to render the Player
+ * during firstperson
+ *
+ */
 @Mixin(Camera.class)
 public class CameraMixin {
-    @Shadow private boolean thirdPerson;
-    @Shadow private Entity focusedEntity;
-    @Shadow private float lastCameraY;
-    @Shadow private float cameraY;
+	@Shadow
+	private boolean thirdPerson;
+	@Shadow
+	private Entity focusedEntity;
+	@Shadow
+	private float lastCameraY;
+	@Shadow
+	private float cameraY;
 
-    @Inject(method = "isThirdPerson", at = @At("HEAD"), cancellable = true)
-    private void CameraInject(CallbackInfoReturnable<Boolean> cir){
-        if(!this.thirdPerson)cir.setReturnValue(StaticMixinMethods.isThirdPerson(false));
-        //cir.setReturnValue(true);
-    }
-    
-   /* @Inject(method = "updateEyeHeight", at = @At("HEAD"), cancellable = true)
-	public void updateEyeHeight() {
-		if (this.focusedEntity != null) {
-			this.lastCameraY = this.cameraY;
-			this.cameraY += (this.focusedEntity.getStandingEyeHeight() - this.cameraY) * 0.5f;
-		}
-	}*/
-    
+	@Inject(method = "isThirdPerson", at = @At("HEAD"), cancellable = true)
+	private void CameraInject(CallbackInfoReturnable<Boolean> cir) {
+		if (!this.thirdPerson)
+			cir.setReturnValue(StaticMixinMethods.isThirdPerson(false));
+	}
+
 }

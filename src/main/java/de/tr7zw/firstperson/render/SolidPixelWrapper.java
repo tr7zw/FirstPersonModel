@@ -6,7 +6,7 @@ import net.minecraft.client.texture.NativeImage;
 
 public class SolidPixelWrapper {
 
-	public static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
+	private static SolidPixelModelPart wrapBox(PlayerEntityModel<AbstractClientPlayerEntity> model, int width,
 			int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
 		SolidPixelModelPart wrapper = new SolidPixelModelPart(model);
 		float pixelSize = 1f;

@@ -2,7 +2,6 @@ package de.tr7zw.firstperson.render;
 
 import java.util.Random;
 
-import de.tr7zw.firstperson.render.CustomModelPart.Cuboid;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
@@ -31,8 +30,8 @@ public class CustomModelPart extends ModelPart {
 	public boolean mirror;
 	public boolean visible = true;
 
-	private final ObjectList<CustomModelPart.Cuboid> cuboids = new ObjectArrayList();
-	private final ObjectList<CustomModelPart> children = new ObjectArrayList();
+	private final ObjectList<CustomModelPart.Cuboid> cuboids = new ObjectArrayList<Cuboid>();
+	private final ObjectList<CustomModelPart> children = new ObjectArrayList<CustomModelPart>();
 
 	public CustomModelPart(Model model) {
 		super(model);
@@ -150,7 +149,7 @@ public class CustomModelPart extends ModelPart {
 
 		customRenderCuboids(matrices.peek(), vertices, light, overlay, red, green, blue, alpha);
 
-		for (ObjectListIterator localObjectListIterator = this.children.iterator(); localObjectListIterator
+		for (ObjectListIterator<CustomModelPart> localObjectListIterator = this.children.iterator(); localObjectListIterator
 				.hasNext();) {
 			CustomModelPart modelPart = (CustomModelPart) localObjectListIterator.next();
 			modelPart.render(matrices, vertices, light, overlay, red, green, blue, alpha);

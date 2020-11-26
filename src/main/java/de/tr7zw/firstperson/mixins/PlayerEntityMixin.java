@@ -20,6 +20,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
+/**
+ * Keep player specific settings, data and modifies the eye location when enabled
+ *
+ */
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSettings {
 
