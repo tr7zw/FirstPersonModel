@@ -1,7 +1,8 @@
 package de.tr7zw.firstperson.features;
 
 public enum Hat {
-VANILLA(0)
+VANILLA(0),
+DEADMAU5(1),
 
 ;
 	
@@ -15,7 +16,7 @@ VANILLA(0)
 		return id;
 	}
 	
-	public static Hat getChest(int id) {
+	public static Hat getHat(int id) {
 		for(Hat c : values()) {
 			if(c.id == id)return c;
 		}

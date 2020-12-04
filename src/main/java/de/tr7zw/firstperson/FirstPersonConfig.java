@@ -1,6 +1,7 @@
 package de.tr7zw.firstperson;
 
 import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.LayerMode;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
@@ -58,6 +59,7 @@ public class FirstPersonConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip
 	public boolean forceActive = false;
 
+	public Hat hat = Hat.VANILLA;
 	public Chest chest = Chest.VANILLA;
 	
 	@ConfigEntry.Gui.Tooltip
@@ -98,7 +100,7 @@ public class FirstPersonConfig implements ConfigData {
 			boots = 0;
 			head = 0;
 			back = 0;
-			hat = 0;
+			hat = config.hat.getId();
 		}
 		@Override
 		public int hashCode() {

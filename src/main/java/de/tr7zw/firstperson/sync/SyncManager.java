@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -19,8 +17,6 @@ import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.net.ssl.SSLContext;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLContextBuilder;
@@ -33,12 +29,12 @@ import com.google.gson.Gson;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.exceptions.InvalidCredentialsException;
-import com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService;
 
 import de.tr7zw.firstperson.FirstPersonConfig.SyncSnapshot;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.Hat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.toast.SystemToast;
@@ -123,6 +119,7 @@ public class SyncManager implements Runnable {
 					if(player != null) {
 						player.setCustomHeight(ent.getValue().height);
 						player.setChest(Chest.getChest(ent.getValue().chest));
+						player.setHat(Hat.getHat(ent.getValue().hat));
 					}
 				}
 			} catch (Exception e) {

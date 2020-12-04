@@ -3,8 +3,8 @@ package de.tr7zw.firstperson;
 import java.util.UUID;
 
 import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.render.SolidPixelModelPart;
-import net.minecraft.client.texture.NativeImage;
 
 public interface PlayerSettings {
 
@@ -18,12 +18,14 @@ public interface PlayerSettings {
 	
 	public void setupSkinLayers(SolidPixelModelPart[] box);
 	
+	public Hat getHat();
+	public void setHat(Hat hat);
+	
 	public Chest getChest();
+	public void setChest(Chest chest);
 	
 	public UUID getUUID();
 
 	public void setCustomHeight(int customHeight);
-	
-	public void setChest(Chest chest);
 	
 }

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EntityDimensions;
@@ -18,6 +19,7 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Arm;
 import net.minecraft.world.World;
 
 /**
@@ -33,6 +35,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 
 	private int customHeight = 100;
 	private Chest chest = Chest.VANILLA;
+	private Hat hat = Hat.VANILLA;
 	private SolidPixelModelPart headLayer;
 	private SolidPixelModelPart[] skinLayer;
 
@@ -78,6 +81,24 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	@Override
 	public void setChest(Chest chest) {
 		this.chest = chest;
+	}
+	
+	
+
+	@Override
+	public Hat getHat() {
+		return hat;
+	}
+
+	@Override
+	public void setHat(Hat hat) {
+		this.hat = hat;
+	}
+
+	@Override
+	public Arm getMainArm() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
