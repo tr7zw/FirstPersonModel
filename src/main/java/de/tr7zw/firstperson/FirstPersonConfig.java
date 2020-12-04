@@ -123,6 +123,8 @@ public class FirstPersonConfig implements ConfigData {
 				return false;
 			if (height != other.height)
 				return false;
+			if(hat != other.hat)
+				return false;
 			return true;
 		}
 	}
