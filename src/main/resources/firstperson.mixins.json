@@ -19,7 +19,8 @@
   "PlayerEntityRendererMixin",
   "PlayerEntityMixin",
   "PlayerEntityModelMixin",
-  "ClientPlayNetworkHandlerMixin"
+  "ClientPlayNetworkHandlerMixin",
+  "PlayerSkinTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

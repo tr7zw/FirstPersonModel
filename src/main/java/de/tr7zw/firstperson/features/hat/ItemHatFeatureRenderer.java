@@ -73,6 +73,9 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 		}else if(hat == Hat.FEATHER) {
 			itemStack = feather;
 		}
+		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {
+			return;
+		}
 		if (!itemStack.isEmpty()) {
 			Item item = itemStack.getItem();
 			matrixStack.push();

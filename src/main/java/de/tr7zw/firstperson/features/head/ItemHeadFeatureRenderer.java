@@ -73,6 +73,9 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 		}else if (head == Head.LEAD) {
 			itemStack = lead;
 		}
+		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {
+			return;
+		}
 		if (!itemStack.isEmpty()) {
 			Item item = itemStack.getItem();
 			matrixStack.push();
