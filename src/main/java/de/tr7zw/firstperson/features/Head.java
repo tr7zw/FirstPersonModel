@@ -1,7 +1,9 @@
 package de.tr7zw.firstperson.features;
 
 public enum Head {
-VANILLA(0)
+VANILLA(0),
+BONE(1),
+LEAD(2),
 
 ;
 	
@@ -15,7 +17,7 @@ VANILLA(0)
 		return id;
 	}
 	
-	public static Head getChest(int id) {
+	public static Head getHead(int id) {
 		for(Head c : values()) {
 			if(c.id == id)return c;
 		}

@@ -33,8 +33,11 @@ import com.mojang.authlib.exceptions.InvalidCredentialsException;
 import de.tr7zw.firstperson.FirstPersonConfig.SyncSnapshot;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.features.Back;
+import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
+import de.tr7zw.firstperson.features.Head;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.toast.SystemToast;
@@ -120,6 +123,9 @@ public class SyncManager implements Runnable {
 						player.setCustomHeight(ent.getValue().height);
 						player.setChest(Chest.getChest(ent.getValue().chest));
 						player.setHat(Hat.getHat(ent.getValue().hat));
+						player.setBack(Back.getBack(ent.getValue().back));
+						player.setBoots(Boots.getBoots(ent.getValue().boots));
+						player.setHead(Head.getHead(ent.getValue().head));
 					}
 				}
 			} catch (Exception e) {

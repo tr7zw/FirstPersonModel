@@ -15,7 +15,7 @@ VANILLA(0)
 		return id;
 	}
 	
-	public static Boots getChest(int id) {
+	public static Boots getBoots(int id) {
 		for(Boots c : values()) {
 			if(c.id == id)return c;
 		}

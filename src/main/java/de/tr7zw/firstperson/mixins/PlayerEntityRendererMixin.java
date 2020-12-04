@@ -9,6 +9,8 @@ import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.chest.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.features.hat.Deadmau5EarsFeatureRenderer;
+import de.tr7zw.firstperson.features.hat.ItemHatFeatureRenderer;
+import de.tr7zw.firstperson.features.head.ItemHeadFeatureRenderer;
 import de.tr7zw.firstperson.features.layers.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.features.layers.HeadLayerFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
@@ -38,6 +40,8 @@ public abstract class PlayerEntityRendererMixin
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
 		this.addFeature(new Deadmau5EarsFeatureRenderer(this));
+		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
+		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new FemaleFeatureRenderer(this));
 
 		this.addFeature(new HeadLayerFeatureRenderer(this));

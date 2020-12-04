@@ -10,8 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.features.Back;
+import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
+import de.tr7zw.firstperson.features.Head;
 import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EntityDimensions;
@@ -19,7 +22,6 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Arm;
 import net.minecraft.world.World;
 
 /**
@@ -36,6 +38,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	private int customHeight = 100;
 	private Chest chest = Chest.VANILLA;
 	private Hat hat = Hat.VANILLA;
+	private Back back = Back.VANILLA;
+	private Boots boots = Boots.VANILLA;
+	private Head head = Head.VANILLA;
 	private SolidPixelModelPart headLayer;
 	private SolidPixelModelPart[] skinLayer;
 
@@ -82,8 +87,36 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	public void setChest(Chest chest) {
 		this.chest = chest;
 	}
-	
-	
+
+	@Override
+	public Head getHead() {
+		return head;
+	}
+
+	@Override
+	public void setHead(Head head) {
+		this.head = head;
+	}
+
+	@Override
+	public Back getBack() {
+		return back;
+	}
+
+	@Override
+	public void setBack(Back back) {
+		this.back = back;
+	}
+
+	@Override
+	public Boots getBoots() {
+		return boots;
+	}
+
+	@Override
+	public void setBoots(Boots boots) {
+		this.boots = boots;
+	}
 
 	@Override
 	public Hat getHat() {

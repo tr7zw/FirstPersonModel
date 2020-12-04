@@ -3,6 +3,8 @@ package de.tr7zw.firstperson.features;
 public enum Hat {
 VANILLA(0),
 DEADMAU5(1),
+ENDROD(2),
+FEATHER(3),
 
 ;
 	

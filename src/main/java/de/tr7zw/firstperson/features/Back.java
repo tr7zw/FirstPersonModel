@@ -15,7 +15,7 @@ VANILLA(0)
 		return id;
 	}
 	
-	public static Back getChest(int id) {
+	public static Back getBack(int id) {
 		for(Back c : values()) {
 			if(c.id == id)return c;
 		}
