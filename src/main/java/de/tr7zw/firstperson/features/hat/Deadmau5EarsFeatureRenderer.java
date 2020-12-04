@@ -23,7 +23,7 @@ public class Deadmau5EarsFeatureRenderer
 		this.ears = new ModelPart(featureRendererContext.getModel(), 25, 1);
 		this.ears.addCuboid(3.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1); // left
 		this.ears.setTextureOffset(25, 1);
-		this.ears.addCuboid(-9.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1); // right
+		this.ears.addCuboid(-9.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1, true); // right
 	}
 	
 	private final ModelPart ears;
