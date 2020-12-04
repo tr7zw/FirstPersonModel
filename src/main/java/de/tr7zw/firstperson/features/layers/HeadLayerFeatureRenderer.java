@@ -74,11 +74,8 @@ public class HeadLayerFeatureRenderer
 
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		matrixStack.push();
-		settings.getHeadLayers().customCopyPositionAndRotation(this.getContextModel().head);
+		this.getContextModel().head.rotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
-		if(abstractClientPlayerEntity.isSneaking()) {
-			matrixStack.translate(0, -0.05f, 0);
-		}
 		settings.getHeadLayers().customRender(matrixStack, vertices, light, overlay);
 		matrixStack.pop();
 
