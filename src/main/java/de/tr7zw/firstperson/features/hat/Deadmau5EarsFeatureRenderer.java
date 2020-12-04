@@ -45,7 +45,7 @@ public class Deadmau5EarsFeatureRenderer
 		
 		if (abstractClientPlayerEntity.hasSkinTexture() && !abstractClientPlayerEntity.isInvisible()) {
 			VertexConsumer vertexConsumer = vertexConsumerProvider
-					.getBuffer(RenderLayer.getEntitySolid(abstractClientPlayerEntity.getSkinTexture()));
+					.getBuffer(RenderLayer.getEntityCutout(abstractClientPlayerEntity.getSkinTexture()));
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
