@@ -96,12 +96,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 
 	@Override
-	public Arm getMainArm() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public UUID getUUID() {
 		return super.uuid;
 	}
