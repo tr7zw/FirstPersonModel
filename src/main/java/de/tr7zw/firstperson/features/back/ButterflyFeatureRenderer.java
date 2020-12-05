@@ -67,7 +67,7 @@ public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlay
 		}
 		if (abstractClientPlayerEntity.hasSkinTexture() && !abstractClientPlayerEntity.isInvisible()) {
 			VertexConsumer vertexConsumer = vertexConsumerProvider
-					.getBuffer(RenderLayer.getEntityTranslucent(texture));
+					.getBuffer(RenderLayer.getEntityTranslucentCull(texture));
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
