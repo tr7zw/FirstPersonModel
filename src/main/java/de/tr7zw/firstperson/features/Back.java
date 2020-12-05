@@ -1,7 +1,8 @@
 package de.tr7zw.firstperson.features;
 
 public enum Back {
-VANILLA(0)
+VANILLA(0),
+BUTTERFLY(1),
 
 ;
 	
