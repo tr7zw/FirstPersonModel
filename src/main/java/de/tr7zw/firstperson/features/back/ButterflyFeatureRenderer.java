@@ -36,30 +36,38 @@ public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlay
 		setRotationAngle(cube_r2, 0.0F, 0.7854F, 0.0F);
 		cube_r2.setTextureOffset(0, 0).addCuboid(-15.5F, -16.0F, -0.5F, 16.0F, 16.0F, 0.0F, 0.0F, false);
 		
-		texture = new Identifier("firstperson", "textures/features/back/butterfly.png");
+		butterflyTexture = new Identifier("firstperson", "textures/features/back/butterfly.png");
+		fantasyTexture = new Identifier("firstperson", "textures/features/back/fantasywings.png");
 	}
 	
 	private final ModelPart bone;
 	private final ModelPart cube_r1;
 	private final ModelPart cube_r2;
-	private final Identifier texture;
-
+	private final Identifier butterflyTexture;
+	private final Identifier fantasyTexture;
 
 	@Override
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float limbAngle, float limbDistance, float tickDelta,
 			float animationProgress, float headYaw, float headPitch) {
 		boolean self = abstractClientPlayerEntity == MinecraftClient.getInstance().player;
-		Back boots = Back.VANILLA;
+		Back wings = Back.VANILLA;
 		if(self) {
-			boots = FirstPersonModelMod.config.back;
+			wings = FirstPersonModelMod.config.back;
 		}else {
-			boots = ((PlayerSettings)abstractClientPlayerEntity).getBack();
+			wings = ((PlayerSettings)abstractClientPlayerEntity).getBack();
 		}
-		if(boots != Back.BUTTERFLY)return;
+		Identifier texture = null;
+		if(wings == Back.BUTTERFLY) {
+			texture = butterflyTexture;
+		}else if(wings == Back.FANTASYWINGS) {
+			texture = fantasyTexture;
+		} else {
+			return;
+		}
 		if (abstractClientPlayerEntity.hasSkinTexture() && !abstractClientPlayerEntity.isInvisible()) {
 			VertexConsumer vertexConsumer = vertexConsumerProvider
-					.getBuffer(RenderLayer.getEntityCutoutNoCull(texture));
+					.getBuffer(RenderLayer.getEntityTranslucent(texture));
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
