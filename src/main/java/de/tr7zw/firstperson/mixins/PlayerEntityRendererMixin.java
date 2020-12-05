@@ -12,6 +12,7 @@ import de.tr7zw.firstperson.features.boot.Boots1FeatureRenderer;
 import de.tr7zw.firstperson.features.chest.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.features.hat.Deadmau5EarsFeatureRenderer;
 import de.tr7zw.firstperson.features.hat.ItemHatFeatureRenderer;
+import de.tr7zw.firstperson.features.hat.PlungerFeatureRenderer;
 import de.tr7zw.firstperson.features.head.ItemHeadFeatureRenderer;
 import de.tr7zw.firstperson.features.layers.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.features.layers.HeadLayerFeatureRenderer;
@@ -47,6 +48,7 @@ public abstract class PlayerEntityRendererMixin
 		this.addFeature(new Boots1FeatureRenderer(this));
 		this.addFeature(new FemaleFeatureRenderer(this));
 		this.addFeature(new WingFeatureRenderer(this));
+		this.addFeature(new PlungerFeatureRenderer(this));
 
 		this.addFeature(new HeadLayerFeatureRenderer(this));
 		this.addFeature(new BodyLayerFeatureRenderer(this));
