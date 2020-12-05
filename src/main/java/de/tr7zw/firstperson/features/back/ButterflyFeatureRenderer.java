@@ -21,20 +21,20 @@ public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlay
 	public ButterflyFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		bone = new ModelPart(32, 32, 0, 0);
+		bone = new ModelPart(40, 40, 0, 0);
 		bone.setPivot(0.0F, 12.0F, 0.0F);
 
-		cube_r1 = new ModelPart(32, 32, 0, 0);
+		cube_r1 = new ModelPart(40, 40, 0, 0);
 		cube_r1.setPivot(0.0F, 0.0F, 2.0F);
 		bone.addChild(cube_r1);
 		setRotationAngle(cube_r1, 0.0F, 2.3562F, 0.0F);
-		cube_r1.setTextureOffset(0, 0).addCuboid(-15.5F, -16.0F, 0.5F, 16.0F, 16.0F, 0.0F, 0.0F, false);
+		cube_r1.setTextureOffset(0, 0).addCuboid(-19.5F, -20.0F, 0.5F, 20.0F, 20.0F, 0.0F, 0.0F, false);
 
-		cube_r2 = new ModelPart(32, 32, 0, 0);
+		cube_r2 = new ModelPart(40, 40, 0, 0);
 		cube_r2.setPivot(0.0F, 0.0F, 2.0F);
 		bone.addChild(cube_r2);
 		setRotationAngle(cube_r2, 0.0F, 0.7854F, 0.0F);
-		cube_r2.setTextureOffset(0, 0).addCuboid(-15.5F, -16.0F, -0.5F, 16.0F, 16.0F, 0.0F, 0.0F, false);
+		cube_r2.setTextureOffset(0, 0).addCuboid(-19.5F, -20.0F, -0.5F, 20.0F, 20.0F, 0.0F, 0.0F, false);
 		
 		butterflyTexture = new Identifier("firstperson", "textures/features/back/butterfly.png");
 		fantasyTexture = new Identifier("firstperson", "textures/features/back/fantasywings.png");
