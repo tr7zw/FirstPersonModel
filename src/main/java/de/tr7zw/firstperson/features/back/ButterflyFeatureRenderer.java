@@ -16,9 +16,9 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-	public WingFeatureRenderer(
+	public ButterflyFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
 		bone = new ModelPart(32, 32, 0, 0);
@@ -63,12 +63,12 @@ public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEnt
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
-			renderEars(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
+			renderButterfly(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
 			matrixStack.pop();
 		}
 	}
 	
-	public void renderEars(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
+	public void renderButterfly(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
 		matrices.push();
 		model.torso.rotate(matrices);
 		float timestep = System.currentTimeMillis()%4000;
