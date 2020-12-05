@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.features.boot.Boots1FeatureRenderer;
 import de.tr7zw.firstperson.features.chest.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.features.hat.Deadmau5EarsFeatureRenderer;
 import de.tr7zw.firstperson.features.hat.ItemHatFeatureRenderer;
@@ -42,6 +43,7 @@ public abstract class PlayerEntityRendererMixin
 		this.addFeature(new Deadmau5EarsFeatureRenderer(this));
 		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
+		this.addFeature(new Boots1FeatureRenderer(this));
 		this.addFeature(new FemaleFeatureRenderer(this));
 
 		this.addFeature(new HeadLayerFeatureRenderer(this));

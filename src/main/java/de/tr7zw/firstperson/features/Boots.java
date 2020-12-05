@@ -1,7 +1,8 @@
 package de.tr7zw.firstperson.features;
 
 public enum Boots {
-VANILLA(0)
+VANILLA(0),
+BOOT1(1),
 
 ;
 	
