@@ -16,9 +16,9 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-	public ButterflyFeatureRenderer(
+	public WingFeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
 		bone = new ModelPart(40, 40, 0, 0);
@@ -57,26 +57,26 @@ public class ButterflyFeatureRenderer extends FeatureRenderer<AbstractClientPlay
 		}else {
 			wings = ((PlayerSettings)abstractClientPlayerEntity).getBack();
 		}
-		Identifier texture = null;
+		RenderLayer renderlayer = null;
 		if(wings == Back.BUTTERFLY) {
-			texture = butterflyTexture;
+			renderlayer = RenderLayer.getEntityCutout(butterflyTexture);
 		}else if(wings == Back.FANTASYWINGS) {
-			texture = fantasyTexture;
+			renderlayer = RenderLayer.getEntityTranslucentCull(fantasyTexture);
 		} else {
 			return;
 		}
 		if (abstractClientPlayerEntity.hasSkinTexture() && !abstractClientPlayerEntity.isInvisible()) {
 			VertexConsumer vertexConsumer = vertexConsumerProvider
-					.getBuffer(RenderLayer.getEntityTranslucentCull(texture));
+					.getBuffer(renderlayer);
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
-			renderButterfly(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
+			renderWing(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
 			matrixStack.pop();
 		}
 	}
 	
-	public void renderButterfly(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
+	public void renderWing(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
 		matrices.push();
 		model.torso.rotate(matrices);
 		float timestep = System.currentTimeMillis()%4000;
