@@ -55,8 +55,8 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 		this.field_24476 = h;
 	}
 	
-	private ItemStack endrod = Items.END_ROD.getStackForRender();
-	private ItemStack feather = Items.FEATHER.getStackForRender();
+	private ItemStack endrod = Items.END_ROD.getDefaultStack();
+	private ItemStack feather = Items.FEATHER.getDefaultStack();
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity,
 			float f, float g, float h, float j, float k, float l) {

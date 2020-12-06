@@ -83,7 +83,11 @@ public class FishingBobberRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void calcOffset(FishingBobberEntity fishingBobberEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info){
-        this.offsetvec3d = getPositionOffset(fishingBobberEntity.getOwner(), matrixStack);
+        if(fishingBobberEntity.getOwner() instanceof PlayerEntity) {
+        	this.offsetvec3d = getPositionOffset((PlayerEntity)fishingBobberEntity.getOwner(), matrixStack);
+        }else {
+        	this.offsetvec3d = new Vec3d(0, 0, 0);
+        }
     }
 
     @Redirect(method = "render", at = @At(

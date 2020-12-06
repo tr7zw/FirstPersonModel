@@ -55,8 +55,8 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 		this.field_24476 = h;
 	}
 	
-	private ItemStack bone = Items.BONE.getStackForRender();
-	private ItemStack lead = Items.LEAD.getStackForRender();
+	private ItemStack bone = Items.BONE.getDefaultStack();
+	private ItemStack lead = Items.LEAD.getDefaultStack();
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity,
 			float f, float g, float h, float j, float k, float l) {
