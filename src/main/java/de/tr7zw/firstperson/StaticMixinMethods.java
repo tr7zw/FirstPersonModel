@@ -9,11 +9,13 @@ import net.minecraft.util.math.Vec3d;
 
 public class StaticMixinMethods {
 
+	private static MinecraftClient client = MinecraftClient.getInstance();
+	
 	public static boolean isThirdPerson(boolean thirdPerson) {
 
-		if(MinecraftClient.getInstance().player.isUsingRiptide())return false;
-		if(MinecraftClient.getInstance().player.isFallFlying())return false;
-		if(MinecraftClient.getInstance().player.isSpectator())return false;
+		if(client.player.isUsingRiptide())return false;
+		if(client.player.isFallFlying())return false;
+		if(client.player.isSpectator())return false;
 		if(!FirstPersonModelMod.enabled || thirdPerson)return false;
 		return true;
 	}
@@ -21,20 +23,20 @@ public class StaticMixinMethods {
 	public static Vec3d offset;
 
 	public static Vec3d getPositionOffset(AbstractClientPlayerEntity var1, Vec3d defValue, MatrixStack matrices) {
-		if(var1 == MinecraftClient.getInstance().getCameraEntity() && MinecraftClient.getInstance().player.isSleeping() || !FirstPersonModelMod.fixBodyShadow(matrices))return defValue;
+		if(var1 == client.getCameraEntity() && client.player.isSleeping() || !FirstPersonModelMod.fixBodyShadow(matrices))return defValue;
 		double x,y,z = x = y = z = 0;
 		AbstractClientPlayerEntity abstractClientPlayerEntity_1;
 		double realYaw;
-		if(var1 == MinecraftClient.getInstance().player && MinecraftClient.getInstance().options.getPerspective() == Perspective.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
+		if(var1 == client.player && client.options.getPerspective() == Perspective.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 = (AbstractClientPlayerEntity) var1;
-			realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
+			realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
 			FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			return defValue;
 		}
-		if (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1) {
+		if (!abstractClientPlayerEntity_1.isMainPlayer() || client.getCameraEntity() == abstractClientPlayerEntity_1) {
 			float bodyOffset;
-			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+			if(client.player.isInSwimmingPose()) {
 				abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
 				if(abstractClientPlayerEntity_1.prevPitch > 0) {
 					bodyOffset = FirstPersonModelMod.swimUpBodyOffset;
@@ -44,14 +46,14 @@ public class StaticMixinMethods {
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
-				realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
+				realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.sitXOffset / 100f);
 			}else{
 				bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-			if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+			if(client.player.isInSwimmingPose()) {
 				if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isSubmergedInWater()) {
 					y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
 				}else {
@@ -70,7 +72,7 @@ public class StaticMixinMethods {
 	 * run it, if the renderer is rendering our scene, to set the head hidden.
 	 */
  	public static void isThirdPersonTrigger(MatrixStack matrices){
-		if (isThirdPerson(MinecraftClient.getInstance().options.getPerspective() != Perspective.FIRST_PERSON)){
+		if (isThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
 			FirstPersonModelMod.hideHeadWithMatrixStack = matrices;
 		}
 	}

@@ -62,12 +62,12 @@ public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEnt
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
-			renderWing(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
+			renderWing(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel<AbstractClientPlayerEntity>) this.getContextModel()));
 			matrixStack.pop();
 		}
 	}
 	
-	public void renderWing(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
+	public void renderWing(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel<AbstractClientPlayerEntity> model) {
 		matrices.push();
 		model.torso.rotate(matrices);
 		float timestep = System.currentTimeMillis()%4000;

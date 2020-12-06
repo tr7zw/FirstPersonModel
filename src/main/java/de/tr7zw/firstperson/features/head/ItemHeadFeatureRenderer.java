@@ -74,10 +74,7 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 			Item item = itemStack.getItem();
 			matrixStack.push();
 			matrixStack.scale(this.field_24474, this.field_24475, this.field_24476);
-			float p;
 			if (livingEntity.isBaby() && !(livingEntity instanceof VillagerEntity)) {
-				p = 2.0F;
-				float n = 1.4F;
 				matrixStack.translate(0.0D, 0.03125D, 0.0D);
 				matrixStack.scale(0.7F, 0.7F, 0.7F);
 				matrixStack.translate(0.0D, 1.0D, 0.0D);
@@ -85,7 +82,6 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 
 			((ModelWithHead) this.getContextModel()).getHead().rotate(matrixStack);
 			if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-				p = 1.1875F;
 				matrixStack.scale(1.1875F, -1.1875F, -1.1875F);
 
 				GameProfile gameProfile = null;
@@ -107,7 +103,6 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 						((AbstractSkullBlock) ((BlockItem) item).getBlock()).getSkullType(), gameProfile, f,
 						matrixStack, vertexConsumerProvider, i);
 			} else if (!(item instanceof ArmorItem) || ((ArmorItem) item).getSlotType() != EquipmentSlot.HEAD) {
-				p = 0.625F;
 				matrixStack.translate(0.0D, -0.25D, 0.0D);
 				matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
 				matrixStack.scale(0.625F, -0.625F, -0.625F);

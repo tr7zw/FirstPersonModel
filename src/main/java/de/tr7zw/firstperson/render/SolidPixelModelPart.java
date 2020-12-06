@@ -261,19 +261,11 @@ public class SolidPixelModelPart extends ModelPart {
 			SolidPixelModelPart.Vertex vertex7 = new SolidPixelModelPart.Vertex(f, g, h, 8.0F, 8.0F);
 			SolidPixelModelPart.Vertex vertex8 = new SolidPixelModelPart.Vertex(x, g, h, 8.0F, 0.0F);
 
-			float j = u;
-			float k = u + sizeZ;
 			float l = u + sizeZ + sizeX;
-			float m = u + sizeZ + sizeX + sizeX;
 			float n = u + sizeZ + sizeX + sizeZ;
-			float o = u + sizeZ + sizeX + sizeZ + sizeX;
 
-			float p = v;
 			float q = v + sizeZ;
 			float r = v + sizeZ + sizeY;
-			float t = v + sizeZ + sizeY;
-			float s = v + sizeZ + sizeY + sizeZ;
-
 
 			this.sides[2] = new SolidPixelModelPart.Quad(new SolidPixelModelPart.Vertex[] { vertex6, vertex5, vertex, vertex2 },
 					l, q, n, r, textureWidth, textureHeight, mirror, Direction.DOWN);

@@ -260,7 +260,7 @@ public class CustomModelPart extends ModelPart {
 			float j = u;
 			float k = u + sizeZ;
 			float l = u + sizeZ + sizeX;
-			float m = u + sizeZ + sizeX + sizeX;
+			//float m = u + sizeZ + sizeX + sizeX;
 			float n = u + sizeZ + sizeX + sizeZ;
 			float o = u + sizeZ + sizeX + sizeZ + sizeX;
 

@@ -7,7 +7,6 @@ import de.tr7zw.firstperson.render.SolidPixelWrapper;
 import de.tr7zw.firstperson.util.SkinUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -31,8 +30,6 @@ public class HeadLayerFeatureRenderer
 		super(featureRendererContext);
 
 	}
-
-	private static int entityCounter = 0;
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
@@ -81,21 +78,19 @@ public class HeadLayerFeatureRenderer
 
 	}
 
+	private static MinecraftClient client = MinecraftClient.getInstance();
+	
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
 		LayerMode mode = FirstPersonModelMod.config.layerMode;
 		if (mode == LayerMode.VANILLA2D || !abstractClientPlayerEntity.isPartVisible(PlayerModelPart.HAT))
 			return false;
-		ClientPlayerEntity thePlayer = MinecraftClient.getInstance().player;
-		if (thePlayer == abstractClientPlayerEntity) {
-			entityCounter = 0;
+		if (client.player == abstractClientPlayerEntity) {
 			return true;
 		}
-		//if(entityCounter > FirstPersonModelMod.config.layerLimiter)return false;
 		if (mode != LayerMode.ONLYSELF) {
 			int distance = FirstPersonModelMod.config.optimizedLayerDistance
 					* FirstPersonModelMod.config.optimizedLayerDistance;
-			boolean ret = thePlayer.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
-			if(ret)entityCounter++;
+			boolean ret = client.player.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
 			return ret;
 		}
 		return false;

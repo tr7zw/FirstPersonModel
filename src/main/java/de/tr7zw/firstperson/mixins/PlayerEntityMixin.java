@@ -138,6 +138,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		this.customHeight = customHeight;
 	}
 
+	@SuppressWarnings("resource")
 	@Inject(method = "getActiveEyeHeight", at = @At("HEAD"), cancellable = true)
 	public float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions,
 			CallbackInfoReturnable<Float> callback) {

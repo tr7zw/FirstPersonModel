@@ -63,7 +63,7 @@ public abstract class HeldItemRendererMixin {
 	
 	public void renderMapAsMinimap(MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, ItemStack item) {
 		GlStateManager.pushMatrix();
-		float size = (float)mc.getFramebuffer().viewportWidth / (float)mc.getFramebuffer().viewportHeight;
+		//float size = (float)mc.getFramebuffer().viewportWidth / (float)mc.getFramebuffer().viewportHeight;
 		GlStateManager.translatef(0, 0.0f, 0.0f); // 3rd arg is size
 	      float float_3 =  1.0F;
 	      GlStateManager.translatef(float_3 * 0.125F, -0.125F, 0.0F);

@@ -27,7 +27,7 @@ public abstract class RenderDispatcherMixin {
 	}
 
 	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;getPositionOffset(Lnet/minecraft/entity/Entity;F)Lnet/minecraft/util/math/Vec3d;"))
-	private Vec3d getPosRedirect(EntityRenderer entityRenderer, Entity entity, float tickDelta, Entity entity_1,
+	private Vec3d getPosRedirect(EntityRenderer<Entity> entityRenderer, Entity entity, float tickDelta, Entity entity_1,
 			double x, double y, double z, float yaw, float tickDelta_1, MatrixStack matrices,
 			VertexConsumerProvider vertexConsumers, int light) {
 		if (entity instanceof AbstractClientPlayerEntity) {

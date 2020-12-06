@@ -51,12 +51,12 @@ public class Boots1FeatureRenderer extends FeatureRenderer<AbstractClientPlayerE
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
-			renderEars(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel) this.getContextModel()));
+			renderEars(matrixStack, vertexConsumer, light, m, ((PlayerEntityModel<AbstractClientPlayerEntity>) this.getContextModel()));
 			matrixStack.pop();
 		}
 	}
 	
-	public void renderEars(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
+	public void renderEars(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel<AbstractClientPlayerEntity> model) {
 		matrices.push();
 		model.leftLeg.rotate(matrices);
 		this.bb_main.render(matrices, vertices, light, overlay);

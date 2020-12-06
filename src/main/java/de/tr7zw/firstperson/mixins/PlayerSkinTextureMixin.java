@@ -15,6 +15,7 @@ public abstract class PlayerSkinTextureMixin {
 	private static NativeImage remapTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
 		boolean bl = image.getHeight() == 32;
 		if (bl) {
+			@SuppressWarnings("resource")
 			NativeImage nativeImage = new NativeImage(64, 64, true);
 			nativeImage.copyFrom(image);
 			image.close();

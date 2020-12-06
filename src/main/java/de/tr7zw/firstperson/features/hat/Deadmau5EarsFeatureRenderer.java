@@ -41,12 +41,12 @@ public class Deadmau5EarsFeatureRenderer
 			int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0F);
 
 			matrixStack.push();
-			renderEars(matrixStack, vertexConsumer, i, m, ((PlayerEntityModel) this.getContextModel()));
+			renderEars(matrixStack, vertexConsumer, i, m, ((PlayerEntityModel<AbstractClientPlayerEntity>) this.getContextModel()));
 			matrixStack.pop();
 		}
 	}
 	
-	public void renderEars(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel model) {
+	public void renderEars(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, PlayerEntityModel<AbstractClientPlayerEntity> model) {
 		model.head.rotate(matrices);
 		this.ears.pivotX = 0.0F;
 		this.ears.pivotY = 0.0F;

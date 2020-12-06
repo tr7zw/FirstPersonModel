@@ -89,6 +89,8 @@ public abstract class EntityMixin {
 		case CROUCHING: {
 			return 1.27f;
 		}
+		default:
+			break;
 		}
 		return 1.62f;
 	}

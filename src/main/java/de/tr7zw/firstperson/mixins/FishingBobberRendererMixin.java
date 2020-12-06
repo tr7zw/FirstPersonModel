@@ -26,6 +26,7 @@ public class FishingBobberRendererMixin {
         return FirstPersonModelMod.enabled && MinecraftClient.getInstance().options.getPerspective() == Perspective.FIRST_PERSON;
     }
 
+    private MinecraftClient client = MinecraftClient.getInstance();
     private Vec3d offsetvec3d = Vec3d.ZERO; //to not create @Nullable
 
     private Vec3d getPositionOffset(PlayerEntity var1, MatrixStack matrices) {
@@ -43,7 +44,7 @@ public class FishingBobberRendererMixin {
             float bodyOffset;
             if(abstractClientPlayerEntity_1.isSneaking()){
                 bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
-            }else if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+            }else if(client.player.isInSwimmingPose()) {
                 abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
                 if(abstractClientPlayerEntity_1.prevPitch > 0) {
                     bodyOffset = FirstPersonModelMod.swimUpBodyOffset;
@@ -57,7 +58,7 @@ public class FishingBobberRendererMixin {
             }
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-            if(MinecraftClient.getInstance().player.isInSwimmingPose()) {
+            if(client.player.isInSwimmingPose()) {
                 if(abstractClientPlayerEntity_1.prevPitch > 0  && abstractClientPlayerEntity_1.isSubmergedInWater()) {
                     y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevPitch));
                 }else {
