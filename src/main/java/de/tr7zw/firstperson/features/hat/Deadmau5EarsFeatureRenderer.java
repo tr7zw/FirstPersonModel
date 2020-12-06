@@ -1,9 +1,8 @@
 package de.tr7zw.firstperson.features.hat;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Hat;
-import net.minecraft.client.MinecraftClient;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -31,14 +30,7 @@ public class Deadmau5EarsFeatureRenderer
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
 			float l) {
-		boolean self = abstractClientPlayerEntity == MinecraftClient.getInstance().player;
-		Hat hat = Hat.VANILLA;
-		if(self) {
-			hat = FirstPersonModelMod.config.hat;
-		}else {
-			hat = ((PlayerSettings)abstractClientPlayerEntity).getHat();
-		}
-		if(hat != Hat.DEADMAU5)return;
+		if(!SettingsUtil.hasEnabled(abstractClientPlayerEntity, Hat.DEADMAU5))return;
 		if (FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
 			return;
 		}

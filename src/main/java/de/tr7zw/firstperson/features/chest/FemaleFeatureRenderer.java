@@ -1,10 +1,8 @@
 package de.tr7zw.firstperson.features.chest;
 
-import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.render.CustomModelPart;
-import net.minecraft.client.MinecraftClient;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -51,36 +49,24 @@ public class FemaleFeatureRenderer
 	private final CustomModelPart female1;
 	private final CustomModelPart female2;
 	
-	private boolean isValid(Chest chest) {
-		return chest == Chest.FEMALE1 || chest == Chest.FEMALE2;
-	}
-	
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
 			float l) {
 		if (!abstractClientPlayerEntity.hasSkinTexture() || abstractClientPlayerEntity.isInvisible()) {
 			return;
 		}
-		boolean self = abstractClientPlayerEntity == MinecraftClient.getInstance().player;
-		Chest chest = Chest.VANILLA;
-		if(self) {
-			chest = FirstPersonModelMod.config.chest;
-		}else {
-			chest = ((PlayerSettings)abstractClientPlayerEntity).getChest();
-		}
-		if(!isValid(chest))return;
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntitySolid((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderFemale(matrixStack, vertexConsumer, i, m, chest);
+		renderFemale(matrixStack, vertexConsumer, i, m, abstractClientPlayerEntity);
 	}
 	
-	public void renderFemale(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, Chest mode) {
-		if(mode == Chest.FEMALE1) {
+	public void renderFemale(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, AbstractClientPlayerEntity player) {
+		if(SettingsUtil.hasEnabled(player, Chest.FEMALE1)) {
 			this.female1.customCopyPositionAndRotation(this.getContextModel().torso);
 			this.female1.customRender(matrices, vertices, light, overlay);
 		}
-		if(mode == Chest.FEMALE2) {
+		if(SettingsUtil.hasEnabled(player, Chest.FEMALE2)) {
 			this.female2.customCopyPositionAndRotation(this.getContextModel().torso);
 			this.female2.customRender(matrices, vertices, light, overlay);
 		}

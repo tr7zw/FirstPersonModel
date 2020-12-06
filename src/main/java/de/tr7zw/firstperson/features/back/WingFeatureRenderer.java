@@ -1,9 +1,7 @@
 package de.tr7zw.firstperson.features.back;
 
-import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Back;
-import net.minecraft.client.MinecraftClient;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -50,17 +48,10 @@ public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEnt
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float limbAngle, float limbDistance, float tickDelta,
 			float animationProgress, float headYaw, float headPitch) {
-		boolean self = abstractClientPlayerEntity == MinecraftClient.getInstance().player;
-		Back wings = Back.VANILLA;
-		if(self) {
-			wings = FirstPersonModelMod.config.back;
-		}else {
-			wings = ((PlayerSettings)abstractClientPlayerEntity).getBack();
-		}
 		RenderLayer renderlayer = null;
-		if(wings == Back.BUTTERFLY) {
+		if(SettingsUtil.hasEnabled(abstractClientPlayerEntity, Back.BUTTERFLY)) {
 			renderlayer = RenderLayer.getEntityCutout(butterflyTexture);
-		}else if(wings == Back.FANTASYWINGS) {
+		}else if(SettingsUtil.hasEnabled(abstractClientPlayerEntity, Back.FANTASYWINGS)) {
 			renderlayer = RenderLayer.getEntityTranslucentCull(fantasyTexture);
 		} else {
 			return;

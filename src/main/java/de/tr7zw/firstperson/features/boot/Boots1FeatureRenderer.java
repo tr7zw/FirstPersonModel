@@ -1,9 +1,7 @@
 package de.tr7zw.firstperson.features.boot;
 
-import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Boots;
-import net.minecraft.client.MinecraftClient;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -45,14 +43,7 @@ public class Boots1FeatureRenderer extends FeatureRenderer<AbstractClientPlayerE
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light,
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float limbAngle, float limbDistance, float tickDelta,
 			float animationProgress, float headYaw, float headPitch) {
-		boolean self = abstractClientPlayerEntity == MinecraftClient.getInstance().player;
-		Boots boots = Boots.VANILLA;
-		if(self) {
-			boots = FirstPersonModelMod.config.boots;
-		}else {
-			boots = ((PlayerSettings)abstractClientPlayerEntity).getBoots();
-		}
-		if(boots != Boots.BOOT1)return;
+		if(!SettingsUtil.hasEnabled(abstractClientPlayerEntity, Boots.BOOT1))return;
 		if(!abstractClientPlayerEntity.getEquippedStack(EquipmentSlot.FEET).isEmpty())return;
 		if (abstractClientPlayerEntity.hasSkinTexture() && !abstractClientPlayerEntity.isInvisible()) {
 			VertexConsumer vertexConsumer = vertexConsumerProvider

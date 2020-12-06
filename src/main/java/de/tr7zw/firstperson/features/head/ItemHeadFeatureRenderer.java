@@ -7,13 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import com.mojang.authlib.GameProfile;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Head;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -59,18 +60,11 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity,
 			float f, float g, float h, float j, float k, float l) {
-		boolean self = livingEntity == MinecraftClient.getInstance().player;
-		Head head = Head.VANILLA;
-		if(self) {
-			head = FirstPersonModelMod.config.head;
-		}else {
-			head = ((PlayerSettings)livingEntity).getHead();
-		}
-		ItemStack headItem = livingEntity.getEquippedStack(EquipmentSlot.HEAD);
+		//ItemStack headItem = livingEntity.getEquippedStack(EquipmentSlot.HEAD);
 		ItemStack itemStack = ItemStack.EMPTY;
-		if(head == Head.BONE) {
+		if(SettingsUtil.hasEnabled((AbstractClientPlayerEntity) livingEntity, Head.BONE)) {
 			itemStack = bone;
-		}else if (head == Head.LEAD) {
+		}else if (SettingsUtil.hasEnabled((AbstractClientPlayerEntity) livingEntity, Head.LEAD)) {
 			itemStack = lead;
 		}
 		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {

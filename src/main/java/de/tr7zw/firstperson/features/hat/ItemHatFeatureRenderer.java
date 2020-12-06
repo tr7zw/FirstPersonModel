@@ -7,13 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import com.mojang.authlib.GameProfile;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
-import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.Hat;
+import de.tr7zw.firstperson.util.SettingsUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -59,18 +60,10 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity,
 			float f, float g, float h, float j, float k, float l) {
-		boolean self = livingEntity == MinecraftClient.getInstance().player;
-		Hat hat = Hat.VANILLA;
-		if(self) {
-			hat = FirstPersonModelMod.config.hat;
-		}else {
-			hat = ((PlayerSettings)livingEntity).getHat();
-		}
-		ItemStack headItem = livingEntity.getEquippedStack(EquipmentSlot.HEAD);
 		ItemStack itemStack = ItemStack.EMPTY;
-		if(hat == Hat.ENDROD) {
+		if(SettingsUtil.hasEnabled((AbstractClientPlayerEntity)livingEntity, Hat.ENDROD)) {
 			itemStack = endrod;
-		}else if(hat == Hat.FEATHER) {
+		}else if(SettingsUtil.hasEnabled((AbstractClientPlayerEntity)livingEntity, Hat.FEATHER)) {
 			itemStack = feather;
 		}
 		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {
