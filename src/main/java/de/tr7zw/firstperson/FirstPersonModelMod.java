@@ -60,7 +60,6 @@ public class FirstPersonModelMod implements ModInitializer {
 	            GLFW.GLFW_KEY_F6,
 	            "Firstperson"
 	        );
-	    //KeyBindingRegistry.INSTANCE.addCategory("Firstperson");  It is added automatically now
 	    KeyBindingHelper.registerKeyBinding(keyBinding);
 	    ClientTickEvents.END_CLIENT_TICK.register(e ->
 	    {
