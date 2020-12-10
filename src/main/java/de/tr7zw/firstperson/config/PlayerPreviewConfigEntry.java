@@ -62,7 +62,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		timestep /= 8000F;
 		timestep *= 2*Math.PI;
 		timestep = (float) Math.sin(timestep);
-		drawEntity(x + entryWidth/2, y + entryHeight, entryHeight/2, timestep * 60f, 10, playerEntity, delta,
+		drawEntity(x + entryWidth/2, y + entryHeight, entryHeight/2, timestep * 80f, 10, playerEntity, delta,
 				true);
 	}
 

@@ -62,14 +62,19 @@
     "text.firstperson.option.cosmetic.playerSize": "Player size",
     "text.firstperson.option.cosmetic.playerSize.@Tooltip": "Visually (in 3rd person) changes the player size",
     "text.firstperson.option.cosmetic.modifyCameraHeight": "!!!READ TOOLTIP FIRST!!! Change camera height",
-    "text.firstperson.option.cosmetic.modifyCameraHeight.@Tooltip": "Changes the first person camera height to the player size. This will cause issues with anticheats and might get you banned! Do not use on 3rd party servers!",
+    "text.firstperson.option.cosmetic.modifyCameraHeight.@Tooltip": "Changes the first person camera height to the player size. This will cause issues with anticheats and might get you banned! Do not use on 3rd party servers! (Sneak once to update the height)",
     
-    "text.firstperson.option.layerMode": "Head layer mode",
-    "text.firstperson.option.layerMode.@Tooltip": "Head second layer rendering mode. VANILLA2D: Normal Minecraft second layer. RENDER3D: 3d second layer on nearby players. ONLYSELF: 3d second layer only on yourself",
-    "text.firstperson.option.optimizedLayerDistance": "Optimized layer mode distance",
-    "text.firstperson.option.optimizedLayerDistance.@Tooltip": "Disables the 3d effect for other players that are further away in OPTIMIZED mode",
-    "text.firstperson.option.layerLimiter": "Other player layer limiter",
-    "text.firstperson.option.layerLimiter.@Tooltip": "Hard limits how many other players will be rendered in 3d at a maximum. Yourself are excluded from this.",
-    "text.firstperson.option.skinLayerMode": "Rest of body layer mode",
-    "text.firstperson.option.skinLayerMode.@Tooltip": "Same setting values as for the Head layer, but applies to the rest of the skin."
+    "category.firstperson.skinlayer": "Skin Layer",
+    "text.firstperson.option.skinlayer.headLayerMode": "Head layer mode",
+    "text.firstperson.option.skinlayer.headLayerMode.@Tooltip": "Head second layer rendering mode.",
+    "text.firstperson.option.skinlayer.headLayerMode.VANILLA2D": "Vanilla",
+    "text.firstperson.option.skinlayer.headLayerMode.RENDER3D": "3d everyone",
+    "text.firstperson.option.skinlayer.headLayerMode.ONLYSELF": "3d yourself",
+    "text.firstperson.option.skinlayer.optimizedLayerDistance": "Optimized layer mode distance",
+    "text.firstperson.option.skinlayer.optimizedLayerDistance.@Tooltip": "Distance to disable the 3d effect",
+    "text.firstperson.option.skinlayer.skinLayerMode": "Rest of body layer mode",
+    "text.firstperson.option.skinlayer.skinLayerMode.VANILLA2D": "Vanilla",
+    "text.firstperson.option.skinlayer.skinLayerMode.RENDER3D": "3d everyone",
+    "text.firstperson.option.skinlayer.skinLayerMode.ONLYSELF": "3d yourself",
+    "text.firstperson.option.skinlayer.skinLayerMode.@Tooltip": "Same setting values as for the Head layer, but applies to the rest of the skin."
   }

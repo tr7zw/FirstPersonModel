@@ -32,7 +32,7 @@ import com.mojang.authlib.exceptions.InvalidCredentialsException;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
-import de.tr7zw.firstperson.config.FirstPersonConfig.SyncSnapshot;
+import de.tr7zw.firstperson.config.CosmeticSettings.SyncSnapshot;
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
@@ -46,45 +46,26 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-public class SyncManager implements Runnable {
+public class SyncManager {
 
 	private SyncSnapshot settings = null;
 	private Gson gson = new Gson();
 	private Map<UUID, PlayerSettings> playersToUpdate = new ConcurrentHashMap<>();
 	private final String settingsUrl;
-	private Thread thread;
 	private MinecraftClient client = MinecraftClient.getInstance();
-	private boolean updateNextTick = false;
+	private boolean unreachable = false;
 
 	public SyncManager() {
 			settingsUrl = FirstPersonModelMod.APIHost + "/firstperson/settings/";
-			thread = new Thread(this, "Firstperson sync thread");
-			thread.start();
-	}
-	
-	@Override
-	public void run() {
-		while(client.isRunning()) { 
-			try {
-				Thread.sleep(1000);
-				checkForUpdates();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public void checkForUpdates() {
+		if(unreachable)return; // Not authenticated, don't even try to sync
 		if (settings == null) {
-			settings = FirstPersonModelMod.config.createSnapshot();
-			return;
+			settings = FirstPersonModelMod.config.cosmetic.createSnapshot();
 		}
-		if(updateNextTick) {
-			updateNextTick = false;
-			client.options.onPlayerModelPartChange();
-		}
-		SyncSnapshot tmp = FirstPersonModelMod.config.createSnapshot();
-		if (!tmp.equals(settings)) { // there has to be a better way
+		SyncSnapshot tmp = FirstPersonModelMod.config.cosmetic.createSnapshot();
+		if (!tmp.equals(settings)) {
 			settings = tmp;
 			String random = UUID.randomUUID().toString();
 			String sha = hash("verify-" + random + ".tr7zw.dev");
@@ -100,7 +81,6 @@ public class SyncManager implements Runnable {
 						if(this.client.player != null && this.client.player.networkHandler != null)
 							this.client.player.networkHandler.sendPacket(new ClientSettingsC2SPacket(options.language, options.viewDistance,
 									options.chatVisibility, options.chatColors, 0, options.mainArm));
-						updateNextTick = true;
 					}else {
 						client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText(ret)));
 					}
@@ -109,6 +89,7 @@ public class SyncManager implements Runnable {
 					client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText("Error while reaching the server")));
 				}
 			} else {
+				unreachable = true;
 				client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText(request.getString())));
 			}
 		}

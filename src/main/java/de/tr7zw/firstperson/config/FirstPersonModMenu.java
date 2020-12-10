@@ -2,14 +2,13 @@ package de.tr7zw.firstperson.config;
 
 import java.util.function.Consumer;
 
-import org.jetbrains.annotations.NotNull;
-
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.Head;
+import de.tr7zw.firstperson.features.LayerMode;
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -18,6 +17,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
 import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
 import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.TranslatableText;
 
 public class FirstPersonModMenu implements ModMenuApi{
@@ -29,7 +29,8 @@ public class FirstPersonModMenu implements ModMenuApi{
 	public static EnumListEntry<Boots> bootsSelection = null;
 	public static IntegerSliderEntry sizeSelection = null;
 	
-    @Override
+    @SuppressWarnings("resource")
+	@Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         //return screen -> AutoConfig.getConfigScreen(FirstPersonConfig.class, screen).get();
     	return parent -> {
@@ -48,8 +49,21 @@ public class FirstPersonModMenu implements ModMenuApi{
     		ConfigCategory cosmetics = builder.getOrCreateCategory(new TranslatableText("category.firstperson.cosmetics"));
     		setupCosmeticConfig(entryBuilder, cosmetics, config);
     		
+    		ConfigCategory skinlayer = builder.getOrCreateCategory(new TranslatableText("category.firstperson.skinlayer"));
+    		setupSkinLayerConfig(entryBuilder, skinlayer, config);
+    		
     		builder.setSavingRunnable(() -> {
     			// on save
+    			
+    			FirstPersonModelMod.syncManager.checkForUpdates();
+    			new Thread(() -> {
+    				try {
+						Thread.sleep(1000);
+						MinecraftClient.getInstance().options.onPlayerModelPartChange();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+    			}).start();
     		});
     		builder.setTransparentBackground(true);
     		return builder.build();
@@ -90,6 +104,12 @@ public class FirstPersonModMenu implements ModMenuApi{
     	category.addEntry(sizeSelection);
     	category.addEntry(createBooleanSetting(entryBuilder, "cosmetic.modifyCameraHeight", config.cosmetic.modifyCameraHeight, false, n -> config.cosmetic.modifyCameraHeight = n));
     	category.addEntry(new PlayerPreviewConfigEntry());
+    }
+    
+    private void setupSkinLayerConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
+    	category.addEntry(createEnumSetting(entryBuilder, "skinlayer.headLayerMode", LayerMode.class, config.skinLayer.headLayerMode, LayerMode.VANILLA2D, n -> config.skinLayer.headLayerMode = n));
+    	category.addEntry(createIntSetting(entryBuilder, "skinlayer.optimizedLayerDistance", config.skinLayer.optimizedLayerDistance, 16, 8, 32,  n -> config.skinLayer.optimizedLayerDistance = n));
+    	category.addEntry(createEnumSetting(entryBuilder, "skinlayer.skinLayerMode", LayerMode.class, config.skinLayer.skinLayerMode, LayerMode.VANILLA2D, n -> config.skinLayer.skinLayerMode = n));
     }
     
     private <T extends Enum<?>> EnumListEntry<T> createEnumSetting(ConfigEntryBuilder entryBuilder, String id, Class<T> type, T value, T def, Consumer<T> save) {

@@ -150,15 +150,15 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	private static MinecraftClient client = MinecraftClient.getInstance();
 	
 	public static boolean isEnabled(AbstractClientPlayerEntity abstractClientPlayerEntity) {
-		LayerMode mode = FirstPersonModelMod.config.skinLayerMode;
+		LayerMode mode = FirstPersonModelMod.config.skinLayer.skinLayerMode;
 		if (mode == LayerMode.VANILLA2D)
 			return false;
 		if (client.player == abstractClientPlayerEntity) {
 			return true;
 		}
 		if (mode != LayerMode.ONLYSELF) {
-			int distance = FirstPersonModelMod.config.optimizedLayerDistance
-					* FirstPersonModelMod.config.optimizedLayerDistance;
+			int distance = FirstPersonModelMod.config.skinLayer.optimizedLayerDistance
+					* FirstPersonModelMod.config.skinLayer.optimizedLayerDistance;
 			boolean ret = client.player.getPos().squaredDistanceTo(abstractClientPlayerEntity.getPos()) < distance;
 			return ret;
 		}
