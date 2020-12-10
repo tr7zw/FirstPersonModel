@@ -22,7 +22,7 @@ public class SettingsUtil {
 		boolean self = player == client.player;
 		Head selected = Head.VANILLA;
 		if(self) {
-			selected = FirstPersonModelMod.config.head;
+			selected = FirstPersonModelMod.config.cosmetic.head;
 		}else {
 			selected = ((PlayerSettings)player).getHead();
 		}
@@ -33,7 +33,7 @@ public class SettingsUtil {
 		boolean self = player == client.player;
 		Hat selected = Hat.VANILLA;
 		if(self) {
-			selected = FirstPersonModelMod.config.hat;
+			selected = FirstPersonModelMod.config.cosmetic.hat;
 		}else {
 			selected = ((PlayerSettings)player).getHat();
 		}
@@ -44,7 +44,7 @@ public class SettingsUtil {
 		boolean self = player == client.player;
 		Chest selected = Chest.VANILLA;
 		if(self) {
-			selected = FirstPersonModelMod.config.chest;
+			selected = FirstPersonModelMod.config.cosmetic.chest;
 		}else {
 			selected = ((PlayerSettings)player).getChest();
 		}
@@ -55,7 +55,7 @@ public class SettingsUtil {
 		boolean self = player == client.player;
 		Back selected = Back.VANILLA;
 		if(self) {
-			selected = FirstPersonModelMod.config.back;
+			selected = FirstPersonModelMod.config.cosmetic.back;
 		}else {
 			selected = ((PlayerSettings)player).getBack();
 		}
@@ -66,7 +66,7 @@ public class SettingsUtil {
 		boolean self = player == client.player;
 		Boots selected = Boots.VANILLA;
 		if(self) {
-			selected = FirstPersonModelMod.config.boots;
+			selected = FirstPersonModelMod.config.cosmetic.boots;
 		}else {
 			selected = ((PlayerSettings)player).getBoots();
 		}

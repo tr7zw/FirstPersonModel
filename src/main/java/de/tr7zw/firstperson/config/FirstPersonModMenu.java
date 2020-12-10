@@ -2,21 +2,33 @@ package de.tr7zw.firstperson.config;
 
 import java.util.function.Consumer;
 
+import org.jetbrains.annotations.NotNull;
+
 import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.features.Back;
+import de.tr7zw.firstperson.features.Boots;
+import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.screen.PlayerPreviewConfigEntry;
+import de.tr7zw.firstperson.features.Head;
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
+import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
 import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 public class FirstPersonModMenu implements ModMenuApi{
 
+	public static EnumListEntry<Hat> hatSelection = null;
+	public static EnumListEntry<Head> headSelection = null;
+	public static EnumListEntry<Chest> chestSelection = null;
+	public static EnumListEntry<Back> backSelection = null;
+	public static EnumListEntry<Boots> bootsSelection = null;
+	public static IntegerSliderEntry sizeSelection = null;
+	
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         //return screen -> AutoConfig.getConfigScreen(FirstPersonConfig.class, screen).get();
@@ -34,11 +46,12 @@ public class FirstPersonModMenu implements ModMenuApi{
     		setupPaperDollConfig(entryBuilder, paperdoll, config);
     		
     		ConfigCategory cosmetics = builder.getOrCreateCategory(new TranslatableText("category.firstperson.cosmetics"));
-    		setupCosmeticConfig(entryBuilder, cosmetics);
+    		setupCosmeticConfig(entryBuilder, cosmetics, config);
     		
     		builder.setSavingRunnable(() -> {
     			// on save
     		});
+    		builder.setTransparentBackground(true);
     		return builder.build();
     	};
     }
@@ -62,24 +75,30 @@ public class FirstPersonModMenu implements ModMenuApi{
     	category.addEntry(createBooleanSetting(entryBuilder, "doll.LockedHead", config.paperDoll.dollLockedHead, false, n -> config.paperDoll.dollLockedHead = n));
     }
     
-    private void setupCosmeticConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category) {
-    	category.addEntry(entryBuilder.startStrField(new TranslatableText("key"), "test")
-		        .setDefaultValue("This is the default value") // Recommended: Used when user click "Reset"
-		        .setTooltip(new TranslatableText("This option is awesome!")) // Optional: Shown when the user hover over this option
-		        .setSaveConsumer(newValue -> System.out.println(newValue)) // Recommended: Called when user save the config
-		        .build());
+    private void setupCosmeticConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
+    	hatSelection = createEnumSetting(entryBuilder, "cosmetic.hat", Hat.class, config.cosmetic.hat, Hat.VANILLA, n -> config.cosmetic.hat = n);
+    	category.addEntry(hatSelection);
+    	headSelection = createEnumSetting(entryBuilder, "cosmetic.head", Head.class, config.cosmetic.head, Head.VANILLA, n -> config.cosmetic.head = n);
+    	category.addEntry(headSelection);
+    	chestSelection = createEnumSetting(entryBuilder, "cosmetic.chest", Chest.class, config.cosmetic.chest, Chest.VANILLA, n -> config.cosmetic.chest = n);
+    	category.addEntry(chestSelection);
+    	backSelection = createEnumSetting(entryBuilder, "cosmetic.back", Back.class, config.cosmetic.back, Back.VANILLA, n -> config.cosmetic.back = n);
+    	category.addEntry(backSelection);
+    	bootsSelection = createEnumSetting(entryBuilder, "cosmetic.boots", Boots.class, config.cosmetic.boots, Boots.VANILLA, n -> config.cosmetic.boots = n);
+    	category.addEntry(bootsSelection);
+    	sizeSelection = createIntSetting(entryBuilder, "cosmetic.playerSize", config.cosmetic.playerSize, 100, 70, 100,  n -> config.cosmetic.playerSize = n);
+    	category.addEntry(sizeSelection);
+    	category.addEntry(createBooleanSetting(entryBuilder, "cosmetic.modifyCameraHeight", config.cosmetic.modifyCameraHeight, false, n -> config.cosmetic.modifyCameraHeight = n));
     	category.addEntry(new PlayerPreviewConfigEntry());
-    	category.addEntry(entryBuilder.startStrField(new TranslatableText("key"), "test")
-		        .setDefaultValue("This is the default value") // Recommended: Used when user click "Reset"
-		        .setTooltip(new TranslatableText("This option is awesome!")) // Optional: Shown when the user hover over this option
-		        .setSaveConsumer(newValue -> System.out.println(newValue)) // Recommended: Called when user save the config
-		        .build());
-    	category.addEntry(entryBuilder.startEnumSelector(new TranslatableText("key"), Hat.class, Hat.VANILLA)
-		        .setDefaultValue(Hat.VANILLA) // Recommended: Used when user click "Reset"
-		        .setTooltip(new TranslatableText("This option is awesome!")) // Optional: Shown when the user hover over this option
-		        .setSaveConsumer(newValue -> System.out.println(newValue)) // Recommended: Called when user save the config
-		        .setEnumNameProvider((en) -> new LiteralText(en.name().toLowerCase()))
-		        .build());
+    }
+    
+    private <T extends Enum<?>> EnumListEntry<T> createEnumSetting(ConfigEntryBuilder entryBuilder, String id, Class<T> type, T value, T def, Consumer<T> save) {
+    	return entryBuilder.startEnumSelector(new TranslatableText("text.firstperson.option." + id), type, value)
+		        .setDefaultValue(def)
+		        .setTooltip(new TranslatableText("text.firstperson.option." + id + ".@Tooltip"))
+		        .setSaveConsumer(save)
+		        .setEnumNameProvider((en) -> (new TranslatableText("text.firstperson.option." + id + "." + en.name())))
+		        .build();
     }
     
     private BooleanListEntry createBooleanSetting(ConfigEntryBuilder entryBuilder, String id, Boolean value, Boolean def, Consumer<Boolean> save) {

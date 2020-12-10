@@ -58,8 +58,8 @@ public abstract class PlayerEntityRendererMixin
 	protected void scale(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f,
 			CallbackInfo info) {
 		if (abstractClientPlayerEntity == mc.player && (mc.options.getPerspective() != Perspective.FIRST_PERSON
-				|| FirstPersonModelMod.config.modifyCameraHeight)) {
-			float scaled = 0.9375f * ((float) FirstPersonModelMod.config.playerSize / 100f);
+				|| FirstPersonModelMod.config.cosmetic.modifyCameraHeight)) {
+			float scaled = 0.9375f * ((float) FirstPersonModelMod.config.cosmetic.playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
 		} else if (abstractClientPlayerEntity != mc.player) {

@@ -1,4 +1,4 @@
-package de.tr7zw.firstperson.screen;
+package de.tr7zw.firstperson.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,11 @@ import java.util.Optional;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.features.Back;
+import de.tr7zw.firstperson.features.Boots;
+import de.tr7zw.firstperson.features.Chest;
+import de.tr7zw.firstperson.features.Hat;
+import de.tr7zw.firstperson.features.Head;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
@@ -104,6 +109,21 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 			livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
 			livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
 		}
+		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
+		Hat hat = settings.hat;
+		settings.hat = FirstPersonModMenu.hatSelection.getValue();
+		Head head = settings.head;
+		settings.head = FirstPersonModMenu.headSelection.getValue();
+		Chest chest = settings.chest;
+		settings.chest = FirstPersonModMenu.chestSelection.getValue();
+		Back back = settings.back;
+		settings.back = FirstPersonModMenu.backSelection.getValue();
+		Boots boots = settings.boots;
+		settings.boots = FirstPersonModMenu.bootsSelection.getValue();
+		int size = settings.playerSize;
+		settings.playerSize = FirstPersonModMenu.sizeSelection.getValue();
+		boolean allowSizeChange = settings.modifyCameraHeight;
+		settings.modifyCameraHeight = true;
 		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();
 		quaternion2.conjugate();
 		entityRenderDispatcher.setRotation(quaternion2);
@@ -121,6 +141,13 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		livingEntity.prevPitch = prevPitch;
 		livingEntity.prevHeadYaw = p;
 		livingEntity.headYaw = q;
+		settings.hat = hat;
+		settings.head = head;
+		settings.chest = chest;
+		settings.back = back;
+		settings.boots = boots;
+		settings.playerSize = size;
+		settings.modifyCameraHeight = allowSizeChange;
 		RenderSystem.popMatrix();
 	}
 	

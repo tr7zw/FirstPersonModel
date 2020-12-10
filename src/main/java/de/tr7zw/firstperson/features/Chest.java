@@ -1,7 +1,9 @@
 package de.tr7zw.firstperson.features;
 
 public enum Chest {
-VANILLA(0), FEMALE1(1), FEMALE2(2)
+VANILLA(0),
+FEMALE1(1),
+FEMALE2(2),
 ;
 	private int id;
 	

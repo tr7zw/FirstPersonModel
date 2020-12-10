@@ -1,10 +1,5 @@
 package de.tr7zw.firstperson.config;
 
-import de.tr7zw.firstperson.features.Back;
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.features.Chest;
-import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.features.Head;
 import de.tr7zw.firstperson.features.LayerMode;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
@@ -15,20 +10,7 @@ public class FirstPersonConfig implements ConfigData {
 	
 	public FirstPersonSettings firstPerson = new FirstPersonSettings();
 	public PaperDollSettings paperDoll = new PaperDollSettings();
-
-	public Hat hat = Hat.VANILLA;
-	public Head head = Head.VANILLA;
-	public Chest chest = Chest.VANILLA;
-	public Boots boots = Boots.VANILLA;
-	public Back back = Back.VANILLA;
-	
-	
-	@ConfigEntry.Gui.Tooltip
-	@ConfigEntry.BoundedDiscrete(min = 70, max = 100)
-	public int playerSize = 100;
-	
-	@ConfigEntry.Gui.Tooltip
-	public boolean modifyCameraHeight = false;
+	public CosmeticSettings cosmetic = new CosmeticSettings();
 	
 	@ConfigEntry.Gui.Tooltip
 	public LayerMode layerMode = LayerMode.VANILLA2D;
@@ -56,12 +38,12 @@ public class FirstPersonConfig implements ConfigData {
 		public int back;
 		public int hat;
 		public SyncSnapshot(FirstPersonConfig config) {
-			height = config.playerSize;
-			chest = config.chest.getId();
-			boots = config.boots.getId();
-			head = config.head.getId();
-			back = config.back.getId();
-			hat = config.hat.getId();
+			height = config.cosmetic.playerSize;
+			chest = config.cosmetic.chest.getId();
+			boots = config.cosmetic.boots.getId();
+			head = config.cosmetic.head.getId();
+			back = config.cosmetic.back.getId();
+			hat = config.cosmetic.hat.getId();
 		}
 		@Override
 		public int hashCode() {
