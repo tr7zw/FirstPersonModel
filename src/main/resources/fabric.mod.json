@@ -19,7 +19,7 @@
       "de.tr7zw.firstperson.FirstPersonModelMod"
     ],
     "modmenu": [
-      "de.tr7zw.firstperson.FirstPersonModMenu"
+      "de.tr7zw.firstperson.config.FirstPersonModMenu"
     ],
     "mm:early_risers": [
       "de.tr7zw.firstperson.fix.InitCompatibilityMixins"

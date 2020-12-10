@@ -30,9 +30,9 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.exceptions.InvalidCredentialsException;
 
-import de.tr7zw.firstperson.FirstPersonConfig.SyncSnapshot;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.config.FirstPersonConfig.SyncSnapshot;
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;

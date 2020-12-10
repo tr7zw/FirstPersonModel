@@ -28,12 +28,12 @@ public class InGameHudMixin {
 
 	@Inject(at = @At("HEAD"), method = "render")
 	public void render(MatrixStack matrixStack, float delta, CallbackInfo info) {
-		if (FirstPersonModelMod.config.dollEnabled && !mc.options.debugEnabled) {
-			int xpos = 25 + FirstPersonModelMod.config.dollXOffset;
-			int ypos = 55 + FirstPersonModelMod.config.dollYOffset;
-			int size = 25 + FirstPersonModelMod.config.dollSize;
-			int lookSides = -FirstPersonModelMod.config.dollLookingSides;
-			int lookUpDown = FirstPersonModelMod.config.dollLookingUpDown;
+		if (FirstPersonModelMod.config.paperDoll.dollEnabled && !mc.options.debugEnabled) {
+			int xpos = 25 + FirstPersonModelMod.config.paperDoll.dollXOffset;
+			int ypos = 55 + FirstPersonModelMod.config.paperDoll.dollYOffset;
+			int size = 25 + FirstPersonModelMod.config.paperDoll.dollSize;
+			int lookSides = -FirstPersonModelMod.config.paperDoll.dollLookingSides;
+			int lookUpDown = FirstPersonModelMod.config.paperDoll.dollLookingUpDown;
 			if (mc.player.isFallFlying() || mc.player.isUsingRiptide()) {
 				lookSides = 0;
 				lookUpDown = 40;
@@ -43,7 +43,7 @@ public class InGameHudMixin {
 				playerEntity = (LivingEntity) mc.getCameraEntity();
 			}
 			drawEntity(xpos, ypos, size, lookSides, lookUpDown, playerEntity, delta,
-					FirstPersonModelMod.config.dollLockedHead);
+					FirstPersonModelMod.config.paperDoll.dollLockedHead);
 		}
 	}
 

@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
+import de.tr7zw.firstperson.config.FirstPersonConfig;
 import de.tr7zw.firstperson.sync.SyncManager;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;

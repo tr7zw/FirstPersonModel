@@ -1,4 +1,4 @@
-package de.tr7zw.firstperson;
+package de.tr7zw.firstperson.config;
 
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.features.Boots;
@@ -12,6 +12,8 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
 @Config(name = "firstperson")
 public class FirstPersonConfig implements ConfigData {
+	
+	public PaperDollSettings paperDoll = new PaperDollSettings();
 	
 	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
 	@ConfigEntry.Gui.Tooltip
@@ -27,35 +29,10 @@ public class FirstPersonConfig implements ConfigData {
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean enabledByDefault = true;
-	
-	@ConfigEntry.Gui.Tooltip
-	public boolean dollEnabled = false;
+
 	
 	@ConfigEntry.Gui.Tooltip
 	public boolean vanillaHands = false;
-	
-	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
-	@ConfigEntry.Gui.Tooltip
-	public int dollXOffset = 0;
-	
-	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
-	@ConfigEntry.Gui.Tooltip
-	public int dollYOffset = 0;
-	
-	@ConfigEntry.BoundedDiscrete(min = -40, max = 40)
-	@ConfigEntry.Gui.Tooltip
-	public int dollSize = 0;
-	
-	@ConfigEntry.BoundedDiscrete(min = -80, max = 80)
-	@ConfigEntry.Gui.Tooltip
-	public int dollLookingSides = 20;
-	
-	@ConfigEntry.BoundedDiscrete(min = -80, max = 80)
-	@ConfigEntry.Gui.Tooltip
-	public int dollLookingUpDown = -20;
-	
-	@ConfigEntry.Gui.Tooltip
-	public boolean dollLockedHead = false;
 
 	//Make the fixes force active. can solve problems in different renderers, and causing bugs
 	//on -> no OF compatibility, Hidden heads in Immersive portal mirrors...
