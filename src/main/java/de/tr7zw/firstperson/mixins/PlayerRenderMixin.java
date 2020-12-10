@@ -48,7 +48,7 @@ public abstract class PlayerRenderMixin
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
-			if (FirstPersonModelMod.config.vanillaHands) {
+			if (FirstPersonModelMod.config.firstPerson.vanillaHands) {
 				playerEntityModel_1.leftArm.visible = false;
 				playerEntityModel_1.leftSleeve.visible = false;
 				playerEntityModel_1.rightArm.visible = false;

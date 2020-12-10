@@ -32,7 +32,7 @@ public class HeldItemFeatureRendererMixin {
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm,
 			MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
 		if (entity instanceof ClientPlayerEntity && FirstPersonModelMod.isFixActive(entity, matrices)
-				&& FirstPersonModelMod.config.vanillaHands) {
+				&& FirstPersonModelMod.config.firstPerson.vanillaHands) {
 			info.cancel();
 			return;
 		}

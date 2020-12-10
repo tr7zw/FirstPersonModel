@@ -43,7 +43,7 @@ public class FishingBobberRendererMixin {
         if (abstractClientPlayerEntity_1 != null && (!abstractClientPlayerEntity_1.isMainPlayer() || MinecraftClient.getInstance().getCameraEntity() != null && MinecraftClient.getInstance().getCameraEntity() == abstractClientPlayerEntity_1)) {
             float bodyOffset;
             if(abstractClientPlayerEntity_1.isSneaking()){
-                bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
+                bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
             }else if(client.player.isInSwimmingPose()) {
                 abstractClientPlayerEntity_1.bodyYaw = abstractClientPlayerEntity_1.headYaw;
                 if(abstractClientPlayerEntity_1.prevPitch > 0) {
@@ -54,7 +54,7 @@ public class FishingBobberRendererMixin {
             }else if(abstractClientPlayerEntity_1.hasVehicle()) {
                 bodyOffset = FirstPersonModelMod.inVehicleBodyOffset;
             }else{
-                bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
+                bodyOffset = 0.25f + (FirstPersonModelMod.config.firstPerson.xOffset / 100f);
             }
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));

@@ -27,6 +27,9 @@ public class FirstPersonModMenu implements ModMenuApi{
     		        .setTitle(new TranslatableText("text.firstperson.title"));
     		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
     		
+    		ConfigCategory firstperson = builder.getOrCreateCategory(new TranslatableText("category.firstperson.firstperson"));
+    		setupFirstPersonConfig(entryBuilder, firstperson, config);
+    		
     		ConfigCategory paperdoll = builder.getOrCreateCategory(new TranslatableText("category.firstperson.paperdoll"));
     		setupPaperDollConfig(entryBuilder, paperdoll, config);
     		
@@ -38,6 +41,15 @@ public class FirstPersonModMenu implements ModMenuApi{
     		});
     		return builder.build();
     	};
+    }
+ 
+    private void setupFirstPersonConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
+    	category.addEntry(createBooleanSetting(entryBuilder, "firstperson.enabledByDefault", config.firstPerson.enabledByDefault, true, n -> config.firstPerson.enabledByDefault = n));
+    	category.addEntry(createIntSetting(entryBuilder, "firstperson.xOffset", config.firstPerson.xOffset, 0, -40, 40,  n -> config.firstPerson.xOffset = n));
+    	category.addEntry(createIntSetting(entryBuilder, "firstperson.sneakXOffset", config.firstPerson.sneakXOffset, 0, -40, 40,  n -> config.firstPerson.sneakXOffset = n));
+    	category.addEntry(createIntSetting(entryBuilder, "firstperson.sitXOffset", config.firstPerson.sitXOffset, 0, -40, 40,  n -> config.firstPerson.sitXOffset = n));
+    	category.addEntry(createBooleanSetting(entryBuilder, "firstperson.vanillaHands", config.firstPerson.vanillaHands, false, n -> config.firstPerson.vanillaHands = n));
+    	category.addEntry(createBooleanSetting(entryBuilder, "firstperson.forceActive", config.firstPerson.forceActive, false, n -> config.firstPerson.forceActive = n));
     }
     
     private void setupPaperDollConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {

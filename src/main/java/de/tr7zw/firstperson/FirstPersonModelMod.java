@@ -35,7 +35,7 @@ public class FirstPersonModelMod implements ModInitializer {
 
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
-		return (enabled && (config.forceActive || hideHeadWithMatrixStack == matrixStack));
+		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
 	}
 
 
@@ -46,7 +46,7 @@ public class FirstPersonModelMod implements ModInitializer {
 
 
 	public static boolean isFixActive(Entity player, MatrixStack matrices){
-		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || config.forceActive && matrices != paperDollStack);
+		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class FirstPersonModelMod implements ModInitializer {
 		System.out.println("Loaded FirstPerson Models");
 		AutoConfig.register(FirstPersonConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(FirstPersonConfig.class).getConfig();
-		enabled = config.enabledByDefault;
+		enabled = config.firstPerson.enabledByDefault;
 	    keyBinding = new KeyBinding(
 	            new Identifier("firstperson", "toggle").getPath(),
 	            net.minecraft.client.util.InputUtil.Type.KEYSYM,

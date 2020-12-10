@@ -44,12 +44,12 @@ public class StaticMixinMethods {
 					bodyOffset = FirstPersonModelMod.swimDownBodyOffset;
 				}
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
-				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.sneakXOffset / 100f);
+				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
 				realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
-				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.sitXOffset / 100f);
+				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.firstPerson.sitXOffset / 100f);
 			}else{
-				bodyOffset = 0.25f + (FirstPersonModelMod.config.xOffset / 100f);
+				bodyOffset = 0.25f + (FirstPersonModelMod.config.firstPerson.xOffset / 100f);
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
