@@ -1,6 +1,13 @@
 package de.tr7zw.firstperson.config;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.function.Consumer;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Back;
@@ -22,6 +29,7 @@ import net.minecraft.text.TranslatableText;
 
 public class FirstPersonModMenu implements ModMenuApi{
 
+	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	public static EnumListEntry<Hat> hatSelection = null;
 	public static EnumListEntry<Head> headSelection = null;
 	public static EnumListEntry<Chest> chestSelection = null;
@@ -54,7 +62,13 @@ public class FirstPersonModMenu implements ModMenuApi{
     		
     		builder.setSavingRunnable(() -> {
     			// on save
-    			
+    			File settingsFile = new File("config", "firstperson.json");
+    			if(settingsFile.exists())settingsFile.delete();
+    			try {
+					Files.write(settingsFile.toPath(), gson.toJson(config).getBytes(StandardCharsets.UTF_8));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
     			FirstPersonModelMod.syncManager.checkForUpdates();
     			new Thread(() -> {
     				try {

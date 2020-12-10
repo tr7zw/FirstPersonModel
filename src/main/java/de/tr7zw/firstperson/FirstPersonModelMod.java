@@ -1,8 +1,15 @@
 package de.tr7zw.firstperson;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
+
+import com.google.gson.Gson;
 
 import de.tr7zw.firstperson.config.FirstPersonConfig;
 import de.tr7zw.firstperson.sync.SyncManager;
@@ -52,8 +59,17 @@ public class FirstPersonModelMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		System.out.println("Loaded FirstPerson Models");
-		AutoConfig.register(FirstPersonConfig.class, GsonConfigSerializer::new);
-		config = AutoConfig.getConfigHolder(FirstPersonConfig.class).getConfig();
+		File settingsFile = new File("config", "firstperson.json");
+		if(settingsFile.exists()) {
+			try {
+				config = new Gson().fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8), FirstPersonConfig.class);
+			}catch(IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		if(config == null) {
+			config = new FirstPersonConfig();
+		}
 		enabled = config.firstPerson.enabledByDefault;
 	    keyBinding = new KeyBinding(
 	            new Identifier("firstperson", "toggle").getPath(),
