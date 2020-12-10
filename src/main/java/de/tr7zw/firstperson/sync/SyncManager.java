@@ -46,17 +46,53 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-public class SyncManager {
+public class SyncManager implements Runnable {
 
 	private SyncSnapshot settings = null;
 	private Gson gson = new Gson();
 	private Map<UUID, PlayerSettings> playersToUpdate = new ConcurrentHashMap<>();
 	private final String settingsUrl;
 	private MinecraftClient client = MinecraftClient.getInstance();
+	private Thread thread;
 	private boolean unreachable = false;
 
 	public SyncManager() {
 			settingsUrl = FirstPersonModelMod.APIHost + "/firstperson/settings/";
+			this.thread = new Thread(this);
+			thread.start();
+	}
+	
+	// Works on the queue
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			if(!playersToUpdate.isEmpty()) {
+				String request = gson.toJson(playersToUpdate.keySet().stream().map(u -> u.toString()).limit(10).toArray());
+				try {
+					String json = performPost(settingsUrl, request);
+					RequestedSettings set = gson.fromJson(json, RequestedSettings.class);
+					for(Entry<String, Settings> ent : set.data.entrySet()) {
+						PlayerSettings player = playersToUpdate.remove(UUID.fromString(ent.getKey()));
+						if(player != null) {
+							player.setCustomHeight(ent.getValue().height);
+							player.setChest(Chest.getChest(ent.getValue().chest));
+							player.setHat(Hat.getHat(ent.getValue().hat));
+							player.setBack(Back.getBack(ent.getValue().back));
+							player.setBoots(Boots.getBoots(ent.getValue().boots));
+							player.setHead(Head.getHead(ent.getValue().head));
+						}
+					}
+				} catch (Exception e) {
+					playersToUpdate.clear();
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void checkForUpdates() {
@@ -91,27 +127,6 @@ public class SyncManager {
 			} else {
 				unreachable = true;
 				client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText(request.getString())));
-			}
-		}
-		if(!playersToUpdate.isEmpty()) {
-			String request = gson.toJson(playersToUpdate.keySet().stream().map(u -> u.toString()).limit(10).toArray());
-			try {
-				String json = performPost(settingsUrl, request);
-				RequestedSettings set = gson.fromJson(json, RequestedSettings.class);
-				for(Entry<String, Settings> ent : set.data.entrySet()) {
-					PlayerSettings player = playersToUpdate.remove(UUID.fromString(ent.getKey()));
-					if(player != null) {
-						player.setCustomHeight(ent.getValue().height);
-						player.setChest(Chest.getChest(ent.getValue().chest));
-						player.setHat(Hat.getHat(ent.getValue().hat));
-						player.setBack(Back.getBack(ent.getValue().back));
-						player.setBoots(Boots.getBoots(ent.getValue().boots));
-						player.setHead(Head.getHead(ent.getValue().head));
-					}
-				}
-			} catch (Exception e) {
-				playersToUpdate.clear();
-				e.printStackTrace();
 			}
 		}
 	}
@@ -211,7 +226,7 @@ public class SyncManager {
 			settings.boots = rec.boots;
 			settings.head = rec.head;
 			settings.back = rec.back;
-			settings.back = rec.hat;
+			settings.hat = rec.hat;
 			return settings;
 		}
     }
