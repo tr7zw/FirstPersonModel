@@ -13,8 +13,6 @@ import com.google.gson.Gson;
 
 import de.tr7zw.firstperson.config.FirstPersonConfig;
 import de.tr7zw.firstperson.sync.SyncManager;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
