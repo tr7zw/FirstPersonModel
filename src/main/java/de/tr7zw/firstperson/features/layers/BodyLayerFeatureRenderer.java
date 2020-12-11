@@ -49,7 +49,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		}
 		
 		VertexConsumer vertexConsumer = vertexConsumerProvider
-				.getBuffer(RenderLayer.getEntityCutout((Identifier) abstractClientPlayerEntity.getSkinTexture()));
+				.getBuffer(RenderLayer.getEntityTranslucentCull((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
 		renderLayers(abstractClientPlayerEntity, settings.getSkinLayers(), matrixStack, vertexConsumer, i, m);
 	}
