@@ -3,6 +3,12 @@ apply plugin: 'java-library'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+repositories {
+    jcenter()
+
+	maven { url 'https://jitpack.io' }
+}
+
 dependencies {
-    
+
 }

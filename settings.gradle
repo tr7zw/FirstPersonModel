@@ -9,7 +9,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'FirstPersonModel-Parent'
+rootProject.name = 'FirstPersonModel'
 
 include 'Core'
 include 'Fabric'

@@ -1,3 +1,6 @@
+buildscript {
+    apply from: '../build.gradle'
+}
 plugins {
 	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
@@ -17,6 +20,11 @@ repositories {
 }
 
 minecraft {
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
 }
 
 dependencies {
@@ -51,7 +59,8 @@ dependencies {
 	//compile files("optifine_latest.jar")
 	compileOnly files("canvas-mc116-99.0.0-nogit-dev.jar")
 
-	include project(':Core')
+	compile project(':Core')
+	extraLibs project(':Core')
 }
 
 processResources {
@@ -84,6 +93,9 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
 	from "LICENSE"
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 // configure the maven publication
