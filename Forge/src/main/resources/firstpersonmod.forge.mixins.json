@@ -1,8 +1,8 @@
 {
   "required": true,
-  "package": "com.example.examplemod.mixin",
+  "package": "com.example.firstpersonmod.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "examplemod.refmap.json",
+  "refmap": "firstpersonmod.forge.refmap.json",
   "mixins": [
   ],
   "client":[

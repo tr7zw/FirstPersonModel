@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.example.firstpersonmod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -19,7 +19,7 @@ public class ExampleMod
 {
     // Directly reference a log4j logger.
 
-    public static final String MODID = "examplemod";
+    public static final String MODID = "firstpersonmod";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
