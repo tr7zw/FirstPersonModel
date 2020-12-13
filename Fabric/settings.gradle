@@ -8,9 +8,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-
-rootProject.name = 'FirstPersonModel-Parent'
-
-include 'Core'
-include 'Fabric'
-include 'Forge'
+rootProject.name = 'Fabric'
