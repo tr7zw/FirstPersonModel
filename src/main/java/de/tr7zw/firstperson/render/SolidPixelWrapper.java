@@ -93,7 +93,7 @@ public class SolidPixelWrapper {
 		for (int u = 0; u < width; u++) {
 			for (int v = 0; v < depth; v++) {
 				// top
-				if(natImage.getPixelOpacity(textureU + depth - 2 + u, textureV + depth - v) != 0) {
+				if(natImage.getPixelOpacity(textureU + depth + u, textureV + depth - 1 - v) != 0) {
 					wrapper.setTextureOffset(textureU + depth - 2 + u, textureV + depth - 2 - v); // 38 + u
 					wrapper.addCustomCuboid(staticXOffset + 0 + u, staticYOffset, staticZOffset + v, pixelSize, pixelSize, pixelSize);
 				}
