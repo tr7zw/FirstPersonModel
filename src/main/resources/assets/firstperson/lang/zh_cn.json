@@ -1,12 +1,12 @@
 {
-    "text.autoconfig.firstperson.title": "第一人称模型配置 §7(FirstPersonModel)",
-    "text.autoconfig.firstperson.option.xOffset": "站立时的 X 轴补偿",
-    "text.autoconfig.firstperson.option.xOffset.@Tooltip": "前后调节站立时身体相对于镜头的位置",
-    "text.autoconfig.firstperson.option.sneakXOffset": "潜行时的 X 轴补偿",
-    "text.autoconfig.firstperson.option.sneakXOffset.@Tooltip": "前后调节潜行时身体相对于镜头的位置",
+    "text.firstperson.title": "第一人称模型配置 §7(FirstPersonModel)",
+    "text.firstperson.option.firstperson.xOffset": "站立时的 X 轴补偿",
+    "text.firstperson.option.firstperson.xOffset.@Tooltip": "前后调节站立时身体相对于镜头的位置",
+    "text.firstperson.option.firstperson.sneakXOffset": "潜行时的 X 轴补偿",
+    "text.firstperson.option.firstperson.sneakXOffset.@Tooltip": "前后调节潜行时身体相对于镜头的位置",
     "key.firstperson.toggle": "第一人称模型开关",
-    "text.autoconfig.firstperson.option.improvedCompatibility": "提升模组兼容性",
-    "text.autoconfig.firstperson.option.improvedCompatibility.@Tooltip": "尝试修复与 Immersive Portals 的镜面等模组功能的补偿兼容性问题",
-    "text.autoconfig.firstperson.option.enabledByDefault": "默认启用",
-    "text.autoconfig.firstperson.option.enabledByDefault.@Tooltip": "开始游戏后是否默认启用第一人称模型"
+    "text.firstperson.option.firstperson.improvedCompatibility": "提升模组兼容性",
+    "text.firstperson.option.firstperson.improvedCompatibility.@Tooltip": "尝试修复与 Immersive Portals 的镜面等模组功能的补偿兼容性问题",
+    "text.firstperson.option.firstperson.enabledByDefault": "默认启用",
+    "text.firstperson.option.firstperson.enabledByDefault.@Tooltip": "开始游戏后是否默认启用第一人称模型"
 }

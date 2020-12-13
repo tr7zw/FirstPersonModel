@@ -14,9 +14,17 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 
+/**
+ * This mixin is just hiding the head and helmet when requested(rendering yourself in firstperson).
+ * Mod compatebility might also done from here?
+ *
+ * @param <T>
+ * @param <M>
+ * @param <A>
+ */
 @Mixin(ArmorFeatureRenderer.class)
-public abstract class ArmorRendererMixin <T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
-
+public abstract class ArmorRendererMixin<T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>>
+		extends FeatureRenderer<T, M> {
 
 	public ArmorRendererMixin(FeatureRendererContext<T, M> context) {
 		super(context);
@@ -24,10 +32,10 @@ public abstract class ArmorRendererMixin <T extends LivingEntity, M extends Bipe
 
 	@Inject(at = @At("RETURN"), method = "setVisible")
 	protected void setVisible(A bipedEntityModel_1, EquipmentSlot equipmentSlot_1, CallbackInfo info) {
-		if(FirstPersonModelMod.hideNextHeadArmor && equipmentSlot_1 == EquipmentSlot.HEAD) {
+		if (FirstPersonModelMod.hideNextHeadArmor && equipmentSlot_1 == EquipmentSlot.HEAD) {
 			FirstPersonModelMod.hideNextHeadArmor = false;
-	         bipedEntityModel_1.head.visible = false;
-	         bipedEntityModel_1.helmet.visible = false;
+			bipedEntityModel_1.head.visible = false;
+			bipedEntityModel_1.helmet.visible = false;
 		}
 	}
 

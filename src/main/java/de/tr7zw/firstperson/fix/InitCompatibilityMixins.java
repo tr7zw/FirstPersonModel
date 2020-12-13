@@ -1,8 +1,8 @@
 package de.tr7zw.firstperson.fix;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.asm.mixin.Mixins;
-import org.spongepowered.asm.mixin.connect.IMixinConnector;
+
+import net.fabricmc.loader.api.FabricLoader;
 
 public class InitCompatibilityMixins implements Runnable {
     @Override

@@ -5,18 +5,22 @@
   "mixins": [
   ],
   "client": [
-	"FirstPersonRendererMixin",
+	"HeldItemRendererMixin",
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
 	"ArmorRendererMixin",
 	"GameRendererMixin",
-    "CameraMixin",
+  "CameraMixin",
   "WorldRendererMixin",
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
   "InGameHudMixin",
   "HeldItemFeatureRendererMixin",
-  "PlayerEntityRendererMixin"
+  "PlayerEntityRendererMixin",
+  "PlayerEntityMixin",
+  "PlayerEntityModelMixin",
+  "ClientPlayNetworkHandlerMixin",
+  "PlayerSkinTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

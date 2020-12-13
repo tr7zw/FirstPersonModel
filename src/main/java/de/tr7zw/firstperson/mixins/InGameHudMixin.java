@@ -17,34 +17,38 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Quaternion;
 
+/**
+ * Paper doll rendering
+ *
+ */
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
 
+	private final MinecraftClient mc = MinecraftClient.getInstance();
+
 	@Inject(at = @At("HEAD"), method = "render")
 	public void render(MatrixStack matrixStack, float delta, CallbackInfo info) {
-		if (FirstPersonModelMod.config.dollEnabled && !MinecraftClient.getInstance().options.debugEnabled) {
-			int xpos = 25 + FirstPersonModelMod.config.dollXOffset;
-			int ypos = 55 + FirstPersonModelMod.config.dollYOffset;
-			int size = 25 + FirstPersonModelMod.config.dollSize;
-			int lookSides = -FirstPersonModelMod.config.dollLookingSides;
-			int lookUpDown = FirstPersonModelMod.config.dollLookingUpDown;
-			if (MinecraftClient.getInstance().player.isFallFlying()
-					|| MinecraftClient.getInstance().player.isUsingRiptide()) {
+		if (FirstPersonModelMod.config.paperDoll.dollEnabled && !mc.options.debugEnabled) {
+			int xpos = 25 + FirstPersonModelMod.config.paperDoll.dollXOffset;
+			int ypos = 55 + FirstPersonModelMod.config.paperDoll.dollYOffset;
+			int size = 25 + FirstPersonModelMod.config.paperDoll.dollSize;
+			int lookSides = -FirstPersonModelMod.config.paperDoll.dollLookingSides;
+			int lookUpDown = FirstPersonModelMod.config.paperDoll.dollLookingUpDown;
+			if (mc.player.isFallFlying() || mc.player.isUsingRiptide()) {
 				lookSides = 0;
 				lookUpDown = 40;
 			}
-			LivingEntity playerEntity = MinecraftClient.getInstance().player;
-			if (MinecraftClient.getInstance().getCameraEntity() != playerEntity
-					&& MinecraftClient.getInstance().getCameraEntity() instanceof LivingEntity) {
-				playerEntity = (LivingEntity) MinecraftClient.getInstance().getCameraEntity();
+			LivingEntity playerEntity = mc.player;
+			if (mc.getCameraEntity() != playerEntity && mc.getCameraEntity() instanceof LivingEntity) {
+				playerEntity = (LivingEntity) mc.getCameraEntity();
 			}
 			drawEntity(xpos, ypos, size, lookSides, lookUpDown, playerEntity, delta,
-					FirstPersonModelMod.config.dollLockedHead);
+					FirstPersonModelMod.config.paperDoll.dollLockedHead);
 		}
 	}
 
 	// Modified version from InventoryScreen
-	public void drawEntity(int i, int j, int k, float f, float g, LivingEntity livingEntity, float delta,
+	private void drawEntity(int i, int j, int k, float f, float g, LivingEntity livingEntity, float delta,
 			boolean lockHead) {
 		float h = (float) Math.atan((double) (f / 40.0F));
 		float l = (float) Math.atan((double) (g / 40.0F));
@@ -80,13 +84,13 @@ public class InGameHudMixin {
 			livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
 			livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
 		}
-		EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
+		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();
 		quaternion2.conjugate();
 		entityRenderDispatcher.setRotation(quaternion2);
 		entityRenderDispatcher.setRenderShadows(false);
-		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders()
-				.getEntityVertexConsumers();
-		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack, immediate, 15728880); // Mc renders the player in the inventory without delta, causing it to look "laggy"
+		VertexConsumerProvider.Immediate immediate = mc.getBufferBuilders().getEntityVertexConsumers();
+		// Mc renders the player in the inventory without delta, causing it to look "laggy". Good luck unseeing this :)
+		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack, immediate, 15728880);
 		immediate.draw();
 		entityRenderDispatcher.setRenderShadows(true);
 		livingEntity.bodyYaw = m;
