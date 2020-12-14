@@ -16,9 +16,10 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
-version = "${mod_version}-${mc_version}"
-group = "com.tfar.${modid}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "${version}-${mc_version}"
+group = "dev.tr7zw.forge.${modid}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${modid}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -41,7 +42,6 @@ minecraft {
             property 'mixin.env.disableRefMap', 'true'
             workingDirectory project.file('run')
             arg "-mixin.config="+archivesBaseName+".forge.mixins.json"
-
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -147,8 +147,6 @@ publishing {
     }
 }
 
-apply plugin: 'org.spongepowered.mixin'
-
 mixin {
-    add sourceSets.main, "${modid}.forge.refmap.json"
+    add sourceSets.main, "firstperson.forge.refmap.json"
 }

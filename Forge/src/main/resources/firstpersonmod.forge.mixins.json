@@ -1,12 +1,13 @@
 {
   "required": true,
-  "package": "com.example.firstpersonmod.mixin",
+  "package": "dev.tr7zw.firstperson.forge.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "firstpersonmod.forge.refmap.json",
+  "refmap": "firstperson.forge.refmap.json",
   "mixins": [
   ],
   "client":[
-    "ExampleMixin"
+    "ExampleMixin",
+    "ActiveRenderInfoMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,4 +1,4 @@
-package com.example.firstpersonmod.mixin;
+package dev.tr7zw.firstperson.forge.mixin;
 
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import org.spongepowered.asm.mixin.Mixin;

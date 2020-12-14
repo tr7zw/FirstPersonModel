@@ -1,10 +1,19 @@
 buildscript {
     apply from: '../build.gradle'
+	repositories {
+        jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+    }
+	dependencies {
+        classpath group: 'net.fabricmc', name: 'fabric-loom', version: '0.5-SNAPSHOT', changing: true
+    }
 }
-plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
-	id 'maven-publish'
-}
+apply plugin: 'fabric-loom'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
