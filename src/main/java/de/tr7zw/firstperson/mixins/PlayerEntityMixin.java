@@ -22,6 +22,8 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 /**
@@ -162,6 +164,27 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		}
 		callback.setReturnValue(value);
 		return value;
+	}
+	
+	@Inject(method = "tick", at = @At("RETURN"))
+	public void tick(CallbackInfo info) {
+		if(isBlockingFast()) {
+			this.bodyYaw = headYaw;
+			this.prevBodyYaw = prevHeadYaw;
+		}
+	}
+	
+	public boolean isBlockingFast() {
+		if (this.isUsingItem() && !this.activeItemStack.isEmpty()) {
+			Item item = this.activeItemStack.getItem();
+			if (item.getUseAction(this.activeItemStack) != UseAction.BLOCK) {
+				return false;
+			} else {
+				return item.getMaxUseTime(this.activeItemStack) > 0;
+			}
+		} else {
+			return false;
+		}
 	}
 
 }

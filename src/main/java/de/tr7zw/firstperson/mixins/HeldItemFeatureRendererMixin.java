@@ -37,32 +37,36 @@ public class HeldItemFeatureRendererMixin {
 			return;
 		}
 		if(entity instanceof AbstractClientPlayerEntity) {
-			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;
+			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;			
 			ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
 			ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
-			if(!(armPose == ArmPose.BOW_AND_ARROW || armPose2 == ArmPose.BOW_AND_ARROW))return;
+			if(!(isUsingboothHands(armPose) || isUsingboothHands(armPose2)))return;
 			if (armPose.method_30156()) {
 				armPose2 = player.getOffHandStack().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
 			}
 
 			if (player.getMainArm() == Arm.RIGHT) {
-				if(arm == Arm.RIGHT && armPose2 == ArmPose.BOW_AND_ARROW) {
+				if(arm == Arm.RIGHT && isUsingboothHands(armPose2)) {
 					info.cancel();
 					return;
-				}else if(arm == Arm.LEFT && armPose == ArmPose.BOW_AND_ARROW) {
+				}else if(arm == Arm.LEFT && isUsingboothHands(armPose)) {
 					info.cancel();
 					return;
 				}
 			} else {
-				if(arm == Arm.LEFT && armPose2 == ArmPose.BOW_AND_ARROW) {
+				if(arm == Arm.LEFT && isUsingboothHands(armPose2)) {
 					info.cancel();
 					return;
-				}else if(arm == Arm.RIGHT && armPose == ArmPose.BOW_AND_ARROW) {
+				}else if(arm == Arm.RIGHT && isUsingboothHands(armPose)) {
 					info.cancel();
 					return;
 				}
 			}
 		}
+	}
+
+	private boolean isUsingboothHands(ArmPose pose) {
+		return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
 	}
 
 	private static ArmPose getArmPose(AbstractClientPlayerEntity abstractClientPlayerEntity, Hand hand) {
