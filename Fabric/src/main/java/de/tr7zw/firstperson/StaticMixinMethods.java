@@ -11,15 +11,6 @@ public class StaticMixinMethods {
 
 	private static MinecraftClient client = MinecraftClient.getInstance();
 	
-	public static boolean isThirdPerson(boolean thirdPerson) {
-
-		if(client.player.isUsingRiptide())return false;
-		if(client.player.isFallFlying())return false;
-		if(client.player.isSpectator())return false;
-		if(!FirstPersonModelMod.enabled || thirdPerson)return false;
-		return true;
-	}
-
 	public static Vec3d offset;
 
 	public static Vec3d getPositionOffset(AbstractClientPlayerEntity var1, Vec3d defValue, MatrixStack matrices) {
@@ -72,7 +63,7 @@ public class StaticMixinMethods {
 	 * run it, if the renderer is rendering our scene, to set the head hidden.
 	 */
  	public static void isThirdPersonTrigger(MatrixStack matrices){
-		if (isThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
+		if (FirstPersonModelCore.instance.getWrapper().applyThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
 			FirstPersonModelMod.hideHeadWithMatrixStack = matrices;
 		}
 	}

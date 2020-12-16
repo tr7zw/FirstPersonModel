@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -30,7 +31,7 @@ public class WorldRendererMixin {
 			MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, CallbackInfo info) {
 		if (FirstPersonModelMod.hideNextHeadArmor)
 			FirstPersonModelMod.hideNextHeadArmor = false;
-		if (FirstPersonModelMod.isFixActive(entity_1, matrixStack_1))
+		if (FirstPersonModelCore.instance.isFixActive(entity_1, matrixStack_1))
 			FirstPersonModelMod.hideNextHeadArmor = true; // if I don't wear any armor head then another helmet will be
 															// hidden without this
 

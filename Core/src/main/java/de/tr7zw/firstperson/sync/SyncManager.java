@@ -37,6 +37,7 @@ import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.Head;
 
+@SuppressWarnings("deprecation")
 public class SyncManager implements Runnable {
 
 	private SyncSnapshot settings = null;
@@ -119,7 +120,7 @@ public class SyncManager implements Runnable {
 	}
 	
 	private String performPost(String url, String content) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
-        try (@SuppressWarnings("deprecation")
+        try (
 		CloseableHttpClient client = HttpClientBuilder.create().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
 			
 			@Override

@@ -10,4 +10,5 @@ public interface MinecraftWrapper {
 	public void showToastFailure(String message, String submessage);
 	public void sendNoLayerClientSettings();
 	public Object getPlayer();
+	public boolean applyThirdPerson(boolean thirdPerson);
 }

@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson.features.layers;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.LayerMode;
@@ -42,7 +43,7 @@ public class HeadLayerFeatureRenderer
 		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
 			return;
 		}
-		if (FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)
+		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)
 				|| !isEnabled(abstractClientPlayerEntity)) {
 			return;
 		}

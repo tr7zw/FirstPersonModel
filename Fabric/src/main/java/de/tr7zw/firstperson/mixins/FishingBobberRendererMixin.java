@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.GameOptions;
@@ -33,7 +34,7 @@ public class FishingBobberRendererMixin {
         double x,y,z = x = y = z = 0;
         PlayerEntity abstractClientPlayerEntity_1;
         Float realYaw = 0f;
-        if(FirstPersonModelMod.isFixActive(var1, matrices) && doCorrect()) {
+        if(FirstPersonModelCore.instance.isFixActive(var1, matrices) && doCorrect()) {
             abstractClientPlayerEntity_1 = (PlayerEntity) var1;
             realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
         }else {

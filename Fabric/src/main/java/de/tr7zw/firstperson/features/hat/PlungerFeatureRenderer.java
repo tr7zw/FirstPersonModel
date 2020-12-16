@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson.features.hat;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.util.SettingsUtil;
@@ -35,7 +36,7 @@ public class PlungerFeatureRenderer
 			AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k,
 			float l) {
 		if(!SettingsUtil.hasEnabled(abstractClientPlayerEntity, Hat.PLUNGER))return;
-		if (FirstPersonModelMod.isFixActive(abstractClientPlayerEntity, matrixStack)) {
+		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)) {
 			return;
 		}
 		

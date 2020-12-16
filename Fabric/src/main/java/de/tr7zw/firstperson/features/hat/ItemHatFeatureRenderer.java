@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.authlib.GameProfile;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.util.SettingsUtil;
@@ -66,7 +67,7 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 		}else if(SettingsUtil.hasEnabled((AbstractClientPlayerEntity)livingEntity, Hat.FEATHER)) {
 			itemStack = feather;
 		}
-		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {
+		if (FirstPersonModelCore.instance.isFixActive(livingEntity, matrixStack)) {
 			return;
 		}
 		if (!itemStack.isEmpty()) {

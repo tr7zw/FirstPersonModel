@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.authlib.GameProfile;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Head;
 import de.tr7zw.firstperson.util.SettingsUtil;
@@ -67,7 +68,7 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 		}else if (SettingsUtil.hasEnabled((AbstractClientPlayerEntity) livingEntity, Head.LEAD)) {
 			itemStack = lead;
 		}
-		if (FirstPersonModelMod.isFixActive(livingEntity, matrixStack)) {
+		if (FirstPersonModelCore.instance.isFixActive(livingEntity, matrixStack)) {
 			return;
 		}
 		if (!itemStack.isEmpty()) {

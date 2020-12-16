@@ -64,4 +64,13 @@ public class FabricWrapper implements MinecraftWrapper {
 		return client.player;
 	}
 
+	@Override
+	public boolean applyThirdPerson(boolean thirdPerson) {
+		if(client.player.isUsingRiptide())return false;
+		if(client.player.isFallFlying())return false;
+		if(client.player.isSpectator())return false;
+		if(!FirstPersonModelCore.enabled || thirdPerson)return false;
+		return true;
+	}
+
 }

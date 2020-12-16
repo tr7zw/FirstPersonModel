@@ -21,7 +21,10 @@ public abstract class FirstPersonModelCore {
 	public static SyncManager syncManager;
 	public static final String APIHost = "https://firstperson.tr7zw.dev";
 	
-	public abstract MinecraftWrapper getWrapper();
+	public static final float sneakBodyOffset = 0.27f;
+	public static final float swimUpBodyOffset = 0.60f;
+	public static final float swimDownBodyOffset = 0.50f;
+	public static final float inVehicleBodyOffset = 0.20f;
 	
 	public void sharedSetup() {
 		System.out.println("Loading FirstPerson Mod");
@@ -39,5 +42,8 @@ public abstract class FirstPersonModelCore {
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
 	}
+	
+	public abstract MinecraftWrapper getWrapper();
+	public abstract boolean isFixActive(Object player, Object matrices);
 	
 }

@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class FirstPersonModelMod extends FirstPersonModelCore implements ModInitializer {
@@ -31,13 +30,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	}
 
 
-	public static final float sneakBodyOffset = 0.27f;
-	public static final float swimUpBodyOffset = 0.60f;
-	public static final float swimDownBodyOffset = 0.50f;
-	public static final float inVehicleBodyOffset = 0.20f;
-
-
-	public static boolean isFixActive(Entity player, MatrixStack matrices){
+	public boolean isFixActive(Object player, Object matrices){
 		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
 	}
 	

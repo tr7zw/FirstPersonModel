@@ -7,6 +7,7 @@ repositories {
     jcenter()
 	maven { url 'https://libraries.minecraft.net/' }
 	maven { url 'https://jitpack.io' }
+	maven {url='https://repo.spongepowered.org/maven/'}
 }
 
 dependencies {
@@ -15,4 +16,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 	compileOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	compileOnly group: 'com.mojang', name: 'authlib', version: '1.5.25'
+	// https://mvnrepository.com/artifact/org.spongepowered/mixin
+	compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.4.4', transitive:false
+	
 }
