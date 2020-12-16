@@ -16,13 +16,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "de.tr7zw.firstperson.FirstPersonModelMod"
+      "de.tr7zw.firstperson.fabric.FirstPersonModelMod"
     ],
     "modmenu": [
-      "de.tr7zw.firstperson.config.FirstPersonModMenu"
+      "de.tr7zw.firstperson.fabric.config.FirstPersonModMenu"
     ],
     "mm:early_risers": [
-      "de.tr7zw.firstperson.fix.InitCompatibilityMixins"
+      "de.tr7zw.firstperson.fabric.fix.InitCompatibilityMixins"
     ]
   },
   "mixins": [
