@@ -8,7 +8,8 @@
   "client":[
     "ExampleMixin",
     "ActiveRenderInfoMixin",
-    "HeadLayerMixin"
+    "HeadLayerMixin",
+    "FirstPersonRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

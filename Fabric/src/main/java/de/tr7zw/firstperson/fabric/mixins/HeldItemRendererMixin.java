@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import de.tr7zw.firstperson.mixinbase.HeldItemBase;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -24,13 +24,13 @@ import net.minecraft.util.math.MathHelper;
  *
  */
 @Mixin(HeldItemRenderer.class)
-public abstract class HeldItemRendererMixin {
+public abstract class HeldItemRendererMixin implements HeldItemBase{
 
 	private final MinecraftClient mc = MinecraftClient.getInstance();
 	
 	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem", cancellable = true)
 	public void renderFirstPersonItem(AbstractClientPlayerEntity abstractClientPlayerEntity_1, float float_1, float float_2, Hand hand_1, float float_3, ItemStack itemStack_1, float float_4, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, CallbackInfo info) {
-		if(!FirstPersonModelMod.enabled || FirstPersonModelMod.config.firstPerson.vanillaHands)return;
+		if(skip())return;
 		if(mc.player.getMainHandStack().getItem() == Items.FILLED_MAP){
 			//render only offhand map
 			//float float_3 = MathHelper.lerp(float_1, MinecraftClient.getInstance().player.prevPitch, MinecraftClient.getInstance().player.pitch);
@@ -67,8 +67,6 @@ public abstract class HeldItemRendererMixin {
 		GlStateManager.translatef(0, 0.0f, 0.0f); // 3rd arg is size
 	      float float_3 =  1.0F;
 	      GlStateManager.translatef(float_3 * 0.125F, -0.125F, 0.0F);
-
-	      GlStateManager.pushMatrix();
 	      GlStateManager.translatef(float_3 * 0.51F, -0.08F, -0.75F);
 	      float float_5 = MathHelper.sin(3.1415927F);
 	      float float_6 = -0.5F * float_5;
@@ -79,7 +77,6 @@ public abstract class HeldItemRendererMixin {
 	      GlStateManager.rotatef(float_3 * float_5 * -30.0F, 0.0F, 1.0F, 0.0F);
 	      GlStateManager.translatef(0.33f, 0.65f, -0.2f);
 	      this.renderFirstPersonMap(matrixStack_1, vertexConsumerProvider_1, int_1, item);
-	      GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
 	
