@@ -51,7 +51,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntityTranslucentCull((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderLayers(abstractClientPlayerEntity, settings.getSkinLayers(), matrixStack, vertexConsumer, i, m);
+		renderLayers(abstractClientPlayerEntity, (SolidPixelModelPart[]) settings.getSkinLayers(), matrixStack, vertexConsumer, i, m);
 	}
 	
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {

@@ -1,18 +1,9 @@
 package de.tr7zw.firstperson;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-
 import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.google.gson.Gson;
-
-import de.tr7zw.firstperson.config.FirstPersonConfig;
-import de.tr7zw.firstperson.sync.SyncManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -22,22 +13,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
-public class FirstPersonModelMod implements ModInitializer {
+public class FirstPersonModelMod extends FirstPersonModelCore implements ModInitializer {
 	
-	//Helper var
-	public static boolean hideNextHeadArmor = false;
-	public static boolean isRenderingPlayer = false;
+	private MinecraftWrapper wrapper;
 	@Nullable
 	public static MatrixStack hideHeadWithMatrixStack = null;
 	@Nullable
 	public static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
-	public static boolean enabled = true;
-	public static FirstPersonConfig config = null;
 	private static KeyBinding keyBinding;
-	private static boolean isHeld = false;
-	public static SyncManager syncManager;
-	public static final String APIHost = "https://firstperson.tr7zw.dev";
 
+	public FirstPersonModelMod() {
+		instance = this;
+	}
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
 		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
@@ -56,19 +43,7 @@ public class FirstPersonModelMod implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
-		System.out.println("Loaded FirstPerson Models");
-		File settingsFile = new File("config", "firstperson.json");
-		if(settingsFile.exists()) {
-			try {
-				config = new Gson().fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8), FirstPersonConfig.class);
-			}catch(IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		if(config == null) {
-			config = new FirstPersonConfig();
-		}
-		enabled = config.firstPerson.enabledByDefault;
+		wrapper = new FabricWrapper(MinecraftClient.getInstance());
 	    keyBinding = new KeyBinding(
 	            new Identifier("firstperson", "toggle").getPath(),
 	            net.minecraft.client.util.InputUtil.Type.KEYSYM,
@@ -86,7 +61,12 @@ public class FirstPersonModelMod implements ModInitializer {
 	        	isHeld = false;
 	        }
 	    });
-	   syncManager = new SyncManager();
+	    sharedSetup();
+	}
+
+	@Override
+	public MinecraftWrapper getWrapper() {
+		return wrapper;
 	}
 	
 

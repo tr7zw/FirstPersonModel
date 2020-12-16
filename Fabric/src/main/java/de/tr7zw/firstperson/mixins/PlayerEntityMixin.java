@@ -61,8 +61,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 	
 	@Override
-	public void setupSkinLayers(SolidPixelModelPart[] box) {
-		this.skinLayer = box;
+	public void setupSkinLayers(Object[] box) {
+		this.skinLayer = (SolidPixelModelPart[]) box;
 	}
 	
 	@Override
@@ -71,8 +71,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 	
 	@Override
-	public void setupHeadLayers(SolidPixelModelPart box) {
-		this.headLayer = box;
+	public void setupHeadLayers(Object box) {
+		this.headLayer = (SolidPixelModelPart) box;
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package de.tr7zw.firstperson.features.layers;
 import de.tr7zw.firstperson.FirstPersonModelMod;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.features.LayerMode;
+import de.tr7zw.firstperson.render.SolidPixelModelPart;
 import de.tr7zw.firstperson.render.SolidPixelWrapper;
 import de.tr7zw.firstperson.util.SkinUtil;
 import net.minecraft.client.MinecraftClient;
@@ -73,7 +74,7 @@ public class HeadLayerFeatureRenderer
 		matrixStack.push();
 		this.getContextModel().head.rotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
-		settings.getHeadLayers().customRender(matrixStack, vertices, light, overlay);
+		((SolidPixelModelPart)settings.getHeadLayers()).customRender(matrixStack, vertices, light, overlay);
 		matrixStack.pop();
 
 	}

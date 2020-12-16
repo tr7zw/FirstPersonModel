@@ -7,19 +7,18 @@ import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.Head;
-import de.tr7zw.firstperson.render.SolidPixelModelPart;
 
 public interface PlayerSettings {
 
 	public int getCustomHeight();
 	
-	public SolidPixelModelPart getHeadLayers();
+	public Object getHeadLayers();
 	
-	public void setupHeadLayers(SolidPixelModelPart box);
+	public void setupHeadLayers(Object box);
 	
-	public SolidPixelModelPart[] getSkinLayers();
+	public Object[] getSkinLayers();
 	
-	public void setupSkinLayers(SolidPixelModelPart[] box);
+	public void setupSkinLayers(Object[] box);
 	
 	public Hat getHat();
 	public void setHat(Hat hat);

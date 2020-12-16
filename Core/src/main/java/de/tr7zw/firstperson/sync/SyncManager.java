@@ -26,11 +26,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gson.Gson;
-import com.mojang.authlib.exceptions.AuthenticationException;
-import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
-import com.mojang.authlib.exceptions.InvalidCredentialsException;
 
-import de.tr7zw.firstperson.FirstPersonModelMod;
+import de.tr7zw.firstperson.FirstPersonModelCore;
+import de.tr7zw.firstperson.MinecraftWrapper;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.config.CosmeticSettings.SyncSnapshot;
 import de.tr7zw.firstperson.features.Back;
@@ -38,13 +36,6 @@ import de.tr7zw.firstperson.features.Boots;
 import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.Head;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.toast.SystemToast;
-import net.minecraft.network.packet.c2s.play.ClientSettingsC2SPacket;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 public class SyncManager implements Runnable {
 
@@ -52,12 +43,12 @@ public class SyncManager implements Runnable {
 	private Gson gson = new Gson();
 	private Map<UUID, PlayerSettings> playersToUpdate = new ConcurrentHashMap<>();
 	private final String settingsUrl;
-	private MinecraftClient client = MinecraftClient.getInstance();
+	private MinecraftWrapper wrapper = FirstPersonModelCore.instance.getWrapper();
 	private Thread thread;
 	private boolean unreachable = false;
 
 	public SyncManager() {
-			settingsUrl = FirstPersonModelMod.APIHost + "/firstperson/settings/";
+			settingsUrl = FirstPersonModelCore.APIHost + "/firstperson/settings/";
 			this.thread = new Thread(this);
 			thread.start();
 	}
@@ -98,41 +89,38 @@ public class SyncManager implements Runnable {
 	public void checkForUpdates() {
 		if(unreachable)return; // Not authenticated, don't even try to sync
 		if (settings == null) {
-			settings = FirstPersonModelMod.config.cosmetic.createSnapshot();
+			settings = FirstPersonModelCore.config.cosmetic.createSnapshot();
 		}
-		SyncSnapshot tmp = FirstPersonModelMod.config.cosmetic.createSnapshot();
+		SyncSnapshot tmp = FirstPersonModelCore.config.cosmetic.createSnapshot();
 		if (!tmp.equals(settings)) {
 			settings = tmp;
 			String random = UUID.randomUUID().toString();
 			String sha = hash("verify-" + random + ".tr7zw.dev");
-			Text request = joinServerSession(sha);
+			String request = wrapper.joinServerSession(sha);
 			if (request == null) { // Authenticated user
 				String content = gson.toJson(Settings.fromSnapshot(settings));
 				try {
-					String ret = performPost(FirstPersonModelMod.APIHost + "/firstperson/update/" + client.getSession().getProfile().getName()+ "/" + random, content);
+					String ret = performPost(FirstPersonModelCore.APIHost + "/firstperson/update/" + wrapper.getGameprofile().getName() + "/" + random, content);
 					if("{\"status\":\"OK\"}".equals(ret)) {
-						client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_BACKUP, new LiteralText("Firstperson updated!"), null));
-						GameOptions options = client.options;
-						//this blinks the outer layer once, signaling a reload of this player
-						if(this.client.player != null && this.client.player.networkHandler != null)
-							this.client.player.networkHandler.sendPacket(new ClientSettingsC2SPacket(options.language, options.viewDistance,
-									options.chatVisibility, options.chatColors, 0, options.mainArm));
+						wrapper.showToastSuccess("Firstperson updated!", null);
+						wrapper.sendNoLayerClientSettings();
 					}else {
-						client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText(ret)));
+						wrapper.showToastFailure("Firstperson failed!", ret);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText("Error while reaching the server")));
+					wrapper.showToastFailure("Firstperson failed!", "Error while reaching the server");
 				}
 			} else {
 				unreachable = true;
-				client.getToastManager().add(new SystemToast(SystemToast.Type.WORLD_ACCESS_FAILURE, new LiteralText("Firstperson failed!"), new LiteralText(request.getString())));
+				wrapper.showToastFailure("Firstperson failed!", request);
 			}
 		}
 	}
 	
 	private String performPost(String url, String content) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
-        try (CloseableHttpClient client = HttpClientBuilder.create().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+        try (@SuppressWarnings("deprecation")
+		CloseableHttpClient client = HttpClientBuilder.create().setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
 			
 			@Override
 			public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException { 
@@ -167,24 +155,6 @@ public class SyncManager implements Runnable {
 	
 	public void updateSettings(PlayerSettings settings) {
 		playersToUpdate.put(settings.getUUID(), settings);
-	}
-
-	private Text joinServerSession(String var1) {
-		try {
-			client.getSessionService().joinServer(
-					client.getSession().getProfile(),
-					client.getSession().getAccessToken(), var1);
-		} catch (AuthenticationUnavailableException var3) {
-			return new TranslatableText("disconnect.loginFailedInfo",
-					new Object[] { new TranslatableText("disconnect.loginFailedInfo.serversUnavailable") });
-		} catch (InvalidCredentialsException var4) {
-			return new TranslatableText("disconnect.loginFailedInfo",
-					new Object[] { new TranslatableText("disconnect.loginFailedInfo.invalidSession") });
-		} catch (AuthenticationException var5) {
-			return new TranslatableText("disconnect.loginFailedInfo", new Object[] { var5.getMessage() });
-		}
-
-		return null;
 	}
 
 	private static String hash(String str) {
