@@ -1,10 +1,15 @@
 package dev.tr7zw.firstperson.forge;
 
+import javax.annotation.Nullable;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
+import dev.tr7zw.firstperson.forge.listener.PlayerRendererListener;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +24,10 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 
     private static final Logger LOGGER = LogManager.getLogger();
     
+	@Nullable
+	public static MatrixStack hideHeadWithMatrixStack = null;
+	@Nullable
+	public static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
     private MinecraftWrapper wrapper;
 
     public FirstPersonModelMod() {
@@ -28,6 +37,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
+        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRender);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -43,9 +53,8 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 	}
 
 	@Override
-	public boolean isFixActive(Object player, Object matrices) {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean isFixActive(Object player, Object matrices){
+		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player /*&& (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack)*/;
 	}
 
 }

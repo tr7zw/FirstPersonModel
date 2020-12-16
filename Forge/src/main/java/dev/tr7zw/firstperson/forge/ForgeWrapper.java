@@ -1,12 +1,17 @@
 package dev.tr7zw.firstperson.forge;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.exceptions.AuthenticationException;
+import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
+import com.mojang.authlib.exceptions.InvalidCredentialsException;
 
 import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
+import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.toasts.SystemToast;
 import net.minecraft.client.gui.toasts.SystemToast.Type;
+import net.minecraft.network.play.client.CClientSettingsPacket;
 import net.minecraft.util.text.StringTextComponent;
 
 public class ForgeWrapper implements MinecraftWrapper{
@@ -19,8 +24,18 @@ public class ForgeWrapper implements MinecraftWrapper{
 
 	@Override
 	public String joinServerSession(String serverId) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			client.getSessionService().joinServer(
+					client.getSession().getProfile(),
+					client.getSession().getToken(), serverId);
+		} catch (AuthenticationUnavailableException var3) {
+			return "Servers-Unavailable!";
+		} catch (InvalidCredentialsException var4) {
+			return "invalidSession";
+		} catch (AuthenticationException var5) {
+			return var5.getMessage();
+		}
+		return null; // Valid request
 	}
 
 	@Override
@@ -40,8 +55,11 @@ public class ForgeWrapper implements MinecraftWrapper{
 
 	@Override
 	public void sendNoLayerClientSettings() {
-		// TODO Auto-generated method stub
-		
+		GameSettings options = client.gameSettings;
+		//this blinks the outer layer once, signaling a reload of this player
+		if(this.client.player != null && this.client.player.connection != null)
+			this.client.player.connection.sendPacket(new CClientSettingsPacket(options.language, options.renderDistanceChunks,
+					options.chatVisibility, options.chatColor, 0, options.mainHand));
 	}
 
 	@Override

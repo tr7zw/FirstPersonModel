@@ -45,7 +45,6 @@ public abstract class PlayerRenderMixin
 		setModelPose(abstractClientPlayerEntity);
 		boolean bodyLayer = BodyLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
 		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)) {
-			this.setModelPose(abstractClientPlayerEntity);
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
