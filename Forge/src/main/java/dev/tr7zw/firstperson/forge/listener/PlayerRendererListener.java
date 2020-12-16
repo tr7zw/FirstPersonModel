@@ -10,12 +10,10 @@ public class PlayerRendererListener {
 
 	public static void onRender(RenderPlayerEvent.Pre event) {
 		//boolean bodyLayer = BodyLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
-		System.out.println("Event");
 		if (FirstPersonModelCore.instance.isFixActive(event.getPlayer(), event.getMatrixStack())) {
 			PlayerModel<AbstractClientPlayerEntity> playerEntityModel_1 = event.getRenderer().getEntityModel();
 			playerEntityModel_1.bipedHead.showModel = false;
 			playerEntityModel_1.bipedHeadwear.showModel = false;
-			System.out.println(playerEntityModel_1.bipedHead.showModel);
 			if (FirstPersonModelMod.config.firstPerson.vanillaHands) {
 				playerEntityModel_1.bipedLeftArm.showModel = false;
 				playerEntityModel_1.bipedLeftArmwear.showModel = false;
