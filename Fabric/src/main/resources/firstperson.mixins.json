@@ -20,7 +20,8 @@
   "PlayerEntityMixin",
   "PlayerEntityModelMixin",
   "ClientPlayNetworkHandlerMixin",
-  "PlayerSkinTextureMixin"
+  "PlayerSkinTextureMixin",
+  "GameMenuScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

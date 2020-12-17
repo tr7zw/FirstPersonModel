@@ -1,5 +1,6 @@
 package dev.tr7zw.firstperson.forge.config;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,8 +76,8 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void drawEntity(int posX, int posY, int scale, float mouseX, float mouseY, LivingEntity livingEntity,
 			float delta, boolean lockHead) {
-		float f = (float) Math.atan((double) (mouseX / 40.0F));
-		float f1 = (float) Math.atan((double) (mouseY / 40.0F));
+		float h = (float) Math.atan((double) (mouseX / 40.0F));
+		float l = (float) Math.atan((double) (mouseY / 40.0F));
 		RenderSystem.pushMatrix();
 		RenderSystem.translatef((float) posX, (float) posY, 1050.0F);
 		RenderSystem.scalef(1.0F, 1.0F, -1.0F);
@@ -84,10 +85,10 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		matrixstack.translate(0.0D, 0.0D, 1000.0D);
 		matrixstack.scale((float) scale, (float) scale, (float) scale);
 		Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);
-		Quaternion quaternion1 = Vector3f.XP.rotationDegrees(f1 * 20.0F);
+		Quaternion quaternion1 = Vector3f.XP.rotationDegrees(l * 20.0F);
 		quaternion.multiply(quaternion1);
 		matrixstack.rotate(quaternion);
-		float m = livingEntity.renderYawOffset;
+		float m = livingEntity.rotationYaw;
 		float prevBodyYaw = livingEntity.prevRenderYawOffset;
 		float n = livingEntity.rotationYaw;
 		float prevYaw = livingEntity.prevRotationYaw;
@@ -95,19 +96,18 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		float prevPitch = livingEntity.prevRotationPitch;
 		float p = livingEntity.prevRotationYawHead;
 		float q = livingEntity.rotationYawHead;
-		livingEntity.renderYawOffset = 180.0F + f * 20.0F;
-		livingEntity.rotationYaw = 180.0F + f * 40.0F;
-		livingEntity.rotationPitch = -f1 * 20.0F;
-		livingEntity.rotationYawHead = livingEntity.rotationYaw;
-		livingEntity.prevRotationYawHead = livingEntity.rotationYaw;
+		livingEntity.renderYawOffset = 180.0F + h * 20.0F;
+		livingEntity.rotationYawHead = 180.0F + h * 40.0F;
+		livingEntity.prevRenderYawOffset = livingEntity.renderYawOffset;
+		livingEntity.prevRotationYawHead = livingEntity.rotationYawHead;
 		if (lockHead) {
-			livingEntity.rotationPitch = -f1 * 20.0F;
+			livingEntity.rotationPitch = -l * 20.0F;
 			livingEntity.prevRotationPitch = livingEntity.rotationPitch;
 			livingEntity.rotationYawHead = livingEntity.rotationYaw;
 			livingEntity.prevRotationYawHead = livingEntity.rotationYaw;
 		} else {
-			livingEntity.rotationYawHead = 180.0F + f * 40.0F - (m - q);
-			livingEntity.prevRotationYawHead = 180.0F + f * 40.0F - (prevBodyYaw - p);
+			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (m - q);
+			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevBodyYaw - p);
 		}
 		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
 		Hat hat = settings.hat;
@@ -158,7 +158,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 
 	@Override
 	public List<? extends IGuiEventListener> getEventListeners() {
-		return null;
+		return new ArrayList<>();
 	}
 
 }
