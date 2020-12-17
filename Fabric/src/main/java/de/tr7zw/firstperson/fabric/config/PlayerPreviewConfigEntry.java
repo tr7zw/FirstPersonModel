@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import de.tr7zw.firstperson.config.CosmeticSettings;
+import de.tr7zw.firstperson.config.SharedConfigBuilder;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.features.Boots;
@@ -14,6 +15,8 @@ import de.tr7zw.firstperson.features.Chest;
 import de.tr7zw.firstperson.features.Hat;
 import de.tr7zw.firstperson.features.Head;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
+import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
+import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -74,6 +77,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 	}
 
 	// Modified version from InventoryScreen
+	@SuppressWarnings("unchecked")
 	private void drawEntity(int i, int j, int k, float f, float g, LivingEntity livingEntity, float delta,
 			boolean lockHead) {
 		float h = (float) Math.atan((double) (f / 40.0F));
@@ -112,17 +116,17 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		}
 		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
 		Hat hat = settings.hat;
-		settings.hat = FirstPersonModMenu.hatSelection.getValue();
+		settings.hat = ((EnumListEntry<Hat>) SharedConfigBuilder.hatSelection).getValue();
 		Head head = settings.head;
-		settings.head = FirstPersonModMenu.headSelection.getValue();
+		settings.head = ((EnumListEntry<Head>) SharedConfigBuilder.headSelection).getValue();
 		Chest chest = settings.chest;
-		settings.chest = FirstPersonModMenu.chestSelection.getValue();
+		settings.chest = ((EnumListEntry<Chest>) SharedConfigBuilder.chestSelection).getValue();
 		Back back = settings.back;
-		settings.back = FirstPersonModMenu.backSelection.getValue();
+		settings.back = ((EnumListEntry<Back>) SharedConfigBuilder.backSelection).getValue();
 		Boots boots = settings.boots;
-		settings.boots = FirstPersonModMenu.bootsSelection.getValue();
+		settings.boots = ((EnumListEntry<Boots>) SharedConfigBuilder.bootsSelection).getValue();
 		int size = settings.playerSize;
-		settings.playerSize = FirstPersonModMenu.sizeSelection.getValue();
+		settings.playerSize = ((IntegerSliderEntry) FirstPersonModMenu.sizeSelection).getValue();
 		boolean allowSizeChange = settings.modifyCameraHeight;
 		settings.modifyCameraHeight = true;
 		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();

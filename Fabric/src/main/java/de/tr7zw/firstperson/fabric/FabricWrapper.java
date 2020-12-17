@@ -75,4 +75,9 @@ public class FabricWrapper implements MinecraftWrapper {
 		return true;
 	}
 
+	@Override
+	public void refreshPlayerSettings() {
+		client.options.onPlayerModelPartChange();
+	}
+
 }

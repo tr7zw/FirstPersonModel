@@ -77,4 +77,9 @@ public class ForgeWrapper implements MinecraftWrapper{
 		return true;
 	}
 
+	@Override
+	public void refreshPlayerSettings() {
+		client.gameSettings.sendSettingsToServer();
+	}
+
 }

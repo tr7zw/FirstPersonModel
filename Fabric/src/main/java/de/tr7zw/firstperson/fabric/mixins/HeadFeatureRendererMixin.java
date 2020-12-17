@@ -16,7 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 
 /**
- * Stops items on the head from rendering while in first person.
+ * Stops items(not armor!, also blocks are usually not visible from the inside) on the head from rendering while in first person.
  *
  * @param <T>
  * @param <M>

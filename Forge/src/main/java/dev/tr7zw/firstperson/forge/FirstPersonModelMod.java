@@ -9,9 +9,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
+import dev.tr7zw.firstperson.forge.config.ForgeConfigBuilder;
 import dev.tr7zw.firstperson.forge.listener.PlayerRendererListener;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -40,6 +43,10 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRender);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        ModLoadingContext.get().registerExtensionPoint(
+                ExtensionPoint.CONFIGGUIFACTORY,
+                () -> new ForgeConfigBuilder()::createConfigScreen
+        );
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -56,5 +63,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 	public boolean isFixActive(Object player, Object matrices){
 		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player /*&& (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack)*/;
 	}
+	
+	
 
 }

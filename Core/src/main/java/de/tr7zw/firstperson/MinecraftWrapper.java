@@ -11,4 +11,5 @@ public interface MinecraftWrapper {
 	public void sendNoLayerClientSettings();
 	public Object getPlayer();
 	public boolean applyThirdPerson(boolean thirdPerson);
+	public void refreshPlayerSettings();
 }
