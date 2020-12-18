@@ -103,8 +103,8 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		if (lockHead) {
 			livingEntity.rotationPitch = -l * 20.0F;
 			livingEntity.prevRotationPitch = livingEntity.rotationPitch;
-			livingEntity.rotationYawHead = livingEntity.rotationYaw;
-			livingEntity.prevRotationYawHead = livingEntity.rotationYaw;
+			livingEntity.rotationYawHead = livingEntity.renderYawOffset;
+			livingEntity.prevRotationYawHead = livingEntity.renderYawOffset;
 		} else {
 			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (m - q);
 			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevBodyYaw - p);

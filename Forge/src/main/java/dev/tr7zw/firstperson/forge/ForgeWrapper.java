@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.exceptions.InvalidCredentialsException;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
@@ -11,6 +12,7 @@ import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.toasts.SystemToast;
 import net.minecraft.client.gui.toasts.SystemToast.Type;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.network.play.client.CClientSettingsPacket;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -80,6 +82,13 @@ public class ForgeWrapper implements MinecraftWrapper{
 	@Override
 	public void refreshPlayerSettings() {
 		client.gameSettings.sendSettingsToServer();
+	}
+	
+	@Override
+	public void isThirdPersonTrigger(Object matrices) {
+		if (applyThirdPerson(client.gameSettings.getPointOfView() != PointOfView.FIRST_PERSON)){
+			FirstPersonModelMod.hideHeadWithMatrixStack = (MatrixStack) matrices;
+		}
 	}
 
 }

@@ -9,7 +9,8 @@
     "IngameMenuScreenMixin",
     "ActiveRenderInfoMixin",
     "HeadLayerMixin",
-    "FirstPersonRendererMixin"
+    "FirstPersonRendererMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

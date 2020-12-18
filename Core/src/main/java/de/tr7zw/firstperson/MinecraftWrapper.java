@@ -12,4 +12,8 @@ public interface MinecraftWrapper {
 	public Object getPlayer();
 	public boolean applyThirdPerson(boolean thirdPerson);
 	public void refreshPlayerSettings();
+	/**
+	 * run it, if the renderer is rendering our scene, to set the head hidden.
+	 */
+ 	public void isThirdPersonTrigger(Object matrices);
 }

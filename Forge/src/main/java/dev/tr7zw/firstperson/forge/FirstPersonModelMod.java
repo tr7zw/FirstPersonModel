@@ -61,7 +61,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 
 	@Override
 	public boolean isFixActive(Object player, Object matrices){
-		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player /*&& (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack)*/;
+		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
 	}
 	
 	

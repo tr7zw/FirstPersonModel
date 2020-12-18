@@ -9,7 +9,9 @@ import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.options.Perspective;
 import net.minecraft.client.toast.SystemToast;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.packet.c2s.play.ClientSettingsC2SPacket;
 import net.minecraft.text.LiteralText;
 
@@ -78,6 +80,13 @@ public class FabricWrapper implements MinecraftWrapper {
 	@Override
 	public void refreshPlayerSettings() {
 		client.options.onPlayerModelPartChange();
+	}
+
+	@Override
+	public void isThirdPersonTrigger(Object matrices) {
+		if (applyThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
+			FirstPersonModelMod.hideHeadWithMatrixStack = (MatrixStack) matrices;
+		}
 	}
 
 }
