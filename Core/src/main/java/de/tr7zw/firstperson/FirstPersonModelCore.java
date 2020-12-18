@@ -41,6 +41,7 @@ public abstract class FirstPersonModelCore {
 		}
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
+		syncManager.takeSnapshot();
 	}
 	
 	public abstract MinecraftWrapper getWrapper();

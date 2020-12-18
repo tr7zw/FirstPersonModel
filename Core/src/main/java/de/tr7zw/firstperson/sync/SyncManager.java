@@ -87,8 +87,12 @@ public class SyncManager implements Runnable {
 		}
 	}
 	
+	public void takeSnapshot() {
+		settings = FirstPersonModelCore.config.cosmetic.createSnapshot();
+	}
+	
 	public void checkForUpdates() {
-		if(unreachable)return; // Not authenticated, don't even try to sync
+		if(unreachable)return; // Not authenticated, don't even bother mojang
 		if (settings == null) {
 			settings = FirstPersonModelCore.config.cosmetic.createSnapshot();
 		}

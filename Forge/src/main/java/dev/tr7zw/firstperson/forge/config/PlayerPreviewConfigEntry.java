@@ -88,14 +88,14 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		Quaternion quaternion1 = Vector3f.XP.rotationDegrees(l * 20.0F);
 		quaternion.multiply(quaternion1);
 		matrixstack.rotate(quaternion);
-		float m = livingEntity.rotationYaw;
-		float prevBodyYaw = livingEntity.prevRenderYawOffset;
-		float n = livingEntity.rotationYaw;
+		float yaw = livingEntity.rotationYaw;
+		//float prevBodyYaw = livingEntity.prevRenderYawOffset;
+		//float n = livingEntity.rotationYaw;
 		float prevYaw = livingEntity.prevRotationYaw;
-		float o = livingEntity.rotationPitch;
+		float pitch = livingEntity.rotationPitch;
 		float prevPitch = livingEntity.prevRotationPitch;
-		float p = livingEntity.prevRotationYawHead;
-		float q = livingEntity.rotationYawHead;
+		float prevHeadYaw = livingEntity.prevRotationYawHead;
+		float headYaw = livingEntity.rotationYawHead;
 		livingEntity.renderYawOffset = 180.0F + h * 20.0F;
 		livingEntity.rotationYawHead = 180.0F + h * 40.0F;
 		livingEntity.prevRenderYawOffset = livingEntity.renderYawOffset;
@@ -106,8 +106,8 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 			livingEntity.rotationYawHead = livingEntity.renderYawOffset;
 			livingEntity.prevRotationYawHead = livingEntity.renderYawOffset;
 		} else {
-			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (m - q);
-			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevBodyYaw - p);
+			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (yaw - headYaw);
+			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevYaw - prevHeadYaw);
 		}
 		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
 		Hat hat = settings.hat;
@@ -138,14 +138,14 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		});
 		irendertypebuffer$impl.finish();
 		entityrenderermanager.setRenderShadow(true);
-		livingEntity.renderYawOffset = m;
-		livingEntity.prevRenderYawOffset = prevBodyYaw;
-		livingEntity.rotationYaw = n;
+		livingEntity.renderYawOffset = yaw;
+		livingEntity.prevRenderYawOffset = prevYaw;
+		livingEntity.rotationYaw = yaw;
 		livingEntity.prevRotationYaw = prevYaw;
-		livingEntity.rotationPitch = o;
+		livingEntity.rotationPitch = pitch;
 		livingEntity.prevRotationPitch = prevPitch;
-		livingEntity.prevRotationYawHead = p;
-		livingEntity.rotationYawHead = q;
+		livingEntity.prevRotationYawHead = prevHeadYaw;
+		livingEntity.rotationYawHead = headYaw;
 		settings.hat = hat;
 		settings.head = head;
 		settings.chest = chest;
