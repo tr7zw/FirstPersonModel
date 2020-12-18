@@ -106,7 +106,7 @@ public class ForgeWrapper implements MinecraftWrapper{
 		double realYaw;
 		if(player == client.player && client.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 =  (ClientPlayerEntity) player;
-			realYaw = MathHelper.interpolateAngle(client.getTickLength(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
+			realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
 			FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			offset = (Vector3d) defValue;
@@ -124,7 +124,7 @@ public class ForgeWrapper implements MinecraftWrapper{
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.getRidingEntity() != null) {
-				realYaw = MathHelper.interpolateAngle(client.getTickLength(), abstractClientPlayerEntity_1.prevRenderYawOffset, abstractClientPlayerEntity_1.rotationYaw);
+				realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRenderYawOffset, abstractClientPlayerEntity_1.rotationYaw);
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.firstPerson.sitXOffset / 100f);
 			}else{
 				bodyOffset = 0.25f + (FirstPersonModelMod.config.firstPerson.xOffset / 100f);

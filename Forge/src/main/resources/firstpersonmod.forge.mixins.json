@@ -11,7 +11,8 @@
     "HeadLayerMixin",
     "FirstPersonRendererMixin",
     "WorldRendererMixin",
-    "EntityRendererMangerMixin"
+    "EntityRendererMangerMixin",
+    "IngameGuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1
