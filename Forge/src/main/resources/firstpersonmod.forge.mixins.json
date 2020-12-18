@@ -10,7 +10,8 @@
     "ActiveRenderInfoMixin",
     "HeadLayerMixin",
     "FirstPersonRendererMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "EntityRendererMangerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import de.tr7zw.firstperson.fabric.StaticMixinMethods;
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -31,9 +31,9 @@ public abstract class RenderDispatcherMixin {
 			double x, double y, double z, float yaw, float tickDelta_1, MatrixStack matrices,
 			VertexConsumerProvider vertexConsumers, int light) {
 		if (entity instanceof AbstractClientPlayerEntity) {
-			StaticMixinMethods.offset = StaticMixinMethods.getPositionOffset((AbstractClientPlayerEntity) entity,
+			FirstPersonModelCore.instance.getWrapper().updatePositionOffset((AbstractClientPlayerEntity) entity,
 					entityRenderer.getPositionOffset(entity, tickDelta), matrices);
-			return StaticMixinMethods.offset;
+			return (Vec3d) FirstPersonModelCore.instance.getWrapper().getOffset();
 		} else {
 			return entityRenderer.getPositionOffset(entity, tickDelta);
 		}
@@ -43,10 +43,11 @@ public abstract class RenderDispatcherMixin {
 	private void renderRedirect(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity,
 			float opacity, float tickDelta, WorldView world, float radius) {
 		if (entity instanceof AbstractClientPlayerEntity) {
-			matrices.translate(StaticMixinMethods.offset.x, StaticMixinMethods.offset.y, StaticMixinMethods.offset.z);
+			Vec3d offset = (Vec3d) FirstPersonModelCore.instance.getWrapper().getOffset();
+			matrices.translate(offset.x, offset.y, offset.z);
 			renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
-			matrices.translate(-StaticMixinMethods.offset.x, -StaticMixinMethods.offset.y,
-					-StaticMixinMethods.offset.z);
+			matrices.translate(-offset.x, -offset.y,
+					-offset.z);
 		}
 	}
 }

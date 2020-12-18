@@ -64,6 +64,9 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
 	}
 	
+	public static boolean fixBodyShadow(MatrixStack matrixStack){
+		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
+	}
 	
 
 }

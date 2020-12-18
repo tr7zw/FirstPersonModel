@@ -16,4 +16,6 @@ public interface MinecraftWrapper {
 	 * run it, if the renderer is rendering our scene, to set the head hidden.
 	 */
  	public void isThirdPersonTrigger(Object matrices);
+ 	public void updatePositionOffset(Object player, Object defValue, Object matrices);
+ 	public Object getOffset();
 }
