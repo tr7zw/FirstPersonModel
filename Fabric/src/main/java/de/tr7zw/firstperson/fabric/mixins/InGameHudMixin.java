@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
+import de.tr7zw.firstperson.config.PaperDollSettings.DollHeadMode;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -43,7 +45,7 @@ public class InGameHudMixin {
 				playerEntity = (LivingEntity) mc.getCameraEntity();
 			}
 			drawEntity(xpos, ypos, size, lookSides, lookUpDown, playerEntity, delta,
-					FirstPersonModelMod.config.paperDoll.dollLockedHead);
+					FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.LOCKED);
 		}
 	}
 
@@ -64,6 +66,8 @@ public class InGameHudMixin {
 		quaternion.hamiltonProduct(quaternion2);
 		matrixStack.multiply(quaternion);
 		float m = livingEntity.bodyYaw;
+		float renderYaw = livingEntity.yaw;
+		float prevRenderYaw = livingEntity.prevYaw;
 		float prevBodyYaw = livingEntity.prevBodyYaw;
 		float n = livingEntity.yaw;
 		float prevYaw = livingEntity.prevYaw;
@@ -81,8 +85,13 @@ public class InGameHudMixin {
 			livingEntity.headYaw = livingEntity.yaw;
 			livingEntity.prevHeadYaw = livingEntity.yaw;
 		} else {
-			livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
-			livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
+			if(FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.FREE) {
+				livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
+				livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
+			}else {
+				livingEntity.headYaw = 180.0F + h * 40.0F - (renderYaw - q);
+				livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevRenderYaw - p);
+			}
 		}
 		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();
 		quaternion2.conjugate();

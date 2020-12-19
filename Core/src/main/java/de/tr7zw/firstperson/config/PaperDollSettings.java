@@ -8,18 +8,11 @@ public class PaperDollSettings {
 	public int dollSize = 0;
 	public int dollLookingSides = 20;
 	public int dollLookingUpDown = -20;
-	public boolean dollLockedHead = false;
+	public DollHeadMode dollHeadMode = DollHeadMode.FREE;
 
-	public PaperDollSettings copy() {
-		PaperDollSettings copy = new PaperDollSettings();
-		copy.dollEnabled = dollEnabled;
-		copy.dollXOffset = dollXOffset;
-		copy.dollYOffset = dollYOffset;
-		copy.dollSize = dollSize;
-		copy.dollLookingSides = dollLookingSides;
-		copy.dollLookingUpDown = dollLookingUpDown;
-		copy.dollLockedHead = dollLockedHead;
-		return copy;
+	public enum DollHeadMode{
+		FREE, STATIC, LOCKED
 	}
+	
 	
 }

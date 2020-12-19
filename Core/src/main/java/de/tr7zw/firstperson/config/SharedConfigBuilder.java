@@ -75,8 +75,8 @@ public abstract class SharedConfigBuilder {
 				-80, 80, n -> config.paperDoll.dollLookingSides = n));
 		addEntry(category, createIntSetting(entryBuilder, "doll.LookingUpDown", config.paperDoll.dollLookingUpDown, -20,
 				-80, 80, n -> config.paperDoll.dollLookingUpDown = n));
-		addEntry(category, createBooleanSetting(entryBuilder, "doll.LockedHead", config.paperDoll.dollLockedHead, false,
-				n -> config.paperDoll.dollLockedHead = n));
+		addEntry(category, createEnumSetting(entryBuilder, "doll.headmode", PaperDollSettings.DollHeadMode.class, config.paperDoll.dollHeadMode, PaperDollSettings.DollHeadMode.FREE,
+				n -> config.paperDoll.dollHeadMode = n));
 	}
 
 	public void setupCosmeticConfig(Object entryBuilder, Object category, FirstPersonConfig config) {

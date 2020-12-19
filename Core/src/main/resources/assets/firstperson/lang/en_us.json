@@ -29,8 +29,11 @@
     "text.firstperson.option.doll.LookingSides.@Tooltip": "Change how much the (locked) head looks to the left/right",
     "text.firstperson.option.doll.LookingUpDown": "Doll looking Up/Down",
     "text.firstperson.option.doll.LookingUpDown.@Tooltip": "Change how much the (locked) head looks Up/Down",
-    "text.firstperson.option.doll.LockedHead": "Doll head locked",
-    "text.firstperson.option.doll.LockedHead.@Tooltip": "When locked, the doll will look into the direction setup above, else it will look the same way the player does",
+    "text.firstperson.option.doll.headmode": "Doll head locked",
+    "text.firstperson.option.doll.headmode.@Tooltip": "Changes how the head reacts to the player movement",
+    "text.firstperson.option.doll.headmode.FREE": "Floaty",
+    "text.firstperson.option.doll.headmode.STATIC": "Static",
+    "text.firstperson.option.doll.headmode.LOCKED": "Locked",
 
     "category.firstperson.cosmetics": "Cosmetics",
     "text.firstperson.option.cosmetic.hat": "Custom Hat model",

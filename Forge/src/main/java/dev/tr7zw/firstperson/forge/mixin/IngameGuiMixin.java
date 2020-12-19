@@ -9,6 +9,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import de.tr7zw.firstperson.FirstPersonModelCore;
+import de.tr7zw.firstperson.config.PaperDollSettings.DollHeadMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IngameGui;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -40,7 +41,7 @@ public class IngameGuiMixin {
 				playerEntity = (LivingEntity) mc.getRenderViewEntity();
 			}
 			drawEntity(xpos, ypos, size, lookSides, lookUpDown, playerEntity, partialTicks,
-					FirstPersonModelCore.config.paperDoll.dollLockedHead);
+					FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.LOCKED);
 		}
 	}
 	
@@ -79,8 +80,13 @@ public class IngameGuiMixin {
 			livingEntity.rotationYawHead = livingEntity.renderYawOffset;
 			livingEntity.prevRotationYawHead = livingEntity.renderYawOffset;
 		} else {
-			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (renderYawOffset - headYaw);
-			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevRenderYawOffset - prevHeadYaw);
+			if(FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.FREE) {
+				livingEntity.rotationYawHead = 180.0F + h * 40.0F - (renderYawOffset - headYaw);
+				livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevRenderYawOffset - prevHeadYaw);
+			}else {
+				livingEntity.rotationYawHead = 180.0F + h * 40.0F - (yaw - headYaw);
+				livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevYaw - prevHeadYaw);
+			}
 		}
 		EntityRendererManager entityrenderermanager = Minecraft.getInstance().getRenderManager();
 		quaternion1.conjugate();
