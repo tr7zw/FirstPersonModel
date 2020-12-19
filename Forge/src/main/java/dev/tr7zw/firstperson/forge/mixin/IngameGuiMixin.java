@@ -79,8 +79,8 @@ public class IngameGuiMixin {
 			livingEntity.rotationYawHead = livingEntity.renderYawOffset;
 			livingEntity.prevRotationYawHead = livingEntity.renderYawOffset;
 		} else {
-			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (yaw - headYaw);
-			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevYaw - prevHeadYaw);
+			livingEntity.rotationYawHead = 180.0F + h * 40.0F - (renderYawOffset - headYaw);
+			livingEntity.prevRotationYawHead = 180.0F + h * 40.0F - (prevRenderYawOffset - prevHeadYaw);
 		}
 		EntityRendererManager entityrenderermanager = Minecraft.getInstance().getRenderManager();
 		quaternion1.conjugate();
