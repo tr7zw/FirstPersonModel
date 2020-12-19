@@ -65,6 +65,8 @@ public abstract class SharedConfigBuilder {
 	public void setupPaperDollConfig(Object entryBuilder, Object category, FirstPersonConfig config) {
 		addEntry(category, createBooleanSetting(entryBuilder, "doll.Enabled", config.paperDoll.dollEnabled, false,
 				n -> config.paperDoll.dollEnabled = n));
+		addEntry(category, createEnumSetting(entryBuilder, "doll.headmode", PaperDollSettings.DollHeadMode.class, config.paperDoll.dollHeadMode, PaperDollSettings.DollHeadMode.FREE,
+				n -> config.paperDoll.dollHeadMode = n));
 		addEntry(category, createIntSetting(entryBuilder, "doll.XOffset", config.paperDoll.dollXOffset, 0, -40, 40,
 				n -> config.paperDoll.dollXOffset = n));
 		addEntry(category, createIntSetting(entryBuilder, "doll.YOffset", config.paperDoll.dollYOffset, 0, -40, 40,
@@ -75,8 +77,6 @@ public abstract class SharedConfigBuilder {
 				-80, 80, n -> config.paperDoll.dollLookingSides = n));
 		addEntry(category, createIntSetting(entryBuilder, "doll.LookingUpDown", config.paperDoll.dollLookingUpDown, -20,
 				-80, 80, n -> config.paperDoll.dollLookingUpDown = n));
-		addEntry(category, createEnumSetting(entryBuilder, "doll.headmode", PaperDollSettings.DollHeadMode.class, config.paperDoll.dollHeadMode, PaperDollSettings.DollHeadMode.FREE,
-				n -> config.paperDoll.dollHeadMode = n));
 	}
 
 	public void setupCosmeticConfig(Object entryBuilder, Object category, FirstPersonConfig config) {
