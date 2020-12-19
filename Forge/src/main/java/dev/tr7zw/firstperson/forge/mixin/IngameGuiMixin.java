@@ -61,7 +61,8 @@ public class IngameGuiMixin {
 		quaternion.multiply(quaternion1);
 		matrixstack.rotate(quaternion);
 		float yaw = livingEntity.rotationYaw;
-		//float prevBodyYaw = livingEntity.prevRenderYawOffset;
+		float renderYawOffset = livingEntity.renderYawOffset;
+		float prevRenderYawOffset = livingEntity.prevRenderYawOffset;
 		//float n = livingEntity.rotationYaw;
 		float prevYaw = livingEntity.prevRotationYaw;
 		float pitch = livingEntity.rotationPitch;
@@ -95,8 +96,8 @@ public class IngameGuiMixin {
 		});
 		irendertypebuffer$impl.finish();
 		entityrenderermanager.setRenderShadow(true);
-		livingEntity.renderYawOffset = yaw;
-		livingEntity.prevRenderYawOffset = prevYaw;
+		livingEntity.renderYawOffset = renderYawOffset;
+		livingEntity.prevRenderYawOffset = prevRenderYawOffset;
 		livingEntity.rotationYaw = yaw;
 		livingEntity.prevRotationYaw = prevYaw;
 		livingEntity.rotationPitch = pitch;
