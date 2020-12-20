@@ -58,6 +58,8 @@
     "text.firstperson.option.cosmetic.back.VANILLA": "Nothing",
     "text.firstperson.option.cosmetic.back.BUTTERFLY": "Butterfly",
     "text.firstperson.option.cosmetic.back.FANTASYWINGS": "Fantasy wings",
+    "text.firstperson.option.cosmetic.backHue": "Back Color shift",
+    "text.firstperson.option.cosmetic.backHue.@Tooltip": "Change the color of the Backpiece",
     "text.firstperson.option.cosmetic.boots": "Custom Boots model",
     "text.firstperson.option.cosmetic.boots.@Tooltip": "Selection of multiplayer synced custom 3d models",
     "text.firstperson.option.cosmetic.boots.VANILLA": "Nothing",

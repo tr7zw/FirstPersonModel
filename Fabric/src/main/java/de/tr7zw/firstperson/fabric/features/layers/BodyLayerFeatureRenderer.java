@@ -5,7 +5,7 @@ import de.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import de.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import de.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
-import de.tr7zw.firstperson.fabric.util.SkinUtil;
+import de.tr7zw.firstperson.fabric.util.TextureUtil;
 import de.tr7zw.firstperson.features.LayerMode;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -55,10 +55,10 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	}
 	
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
-		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
+		if(!TextureUtil.hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+		NativeImage skin = TextureUtil.getSkinTexture(abstractClientPlayerEntity);
 		SolidPixelModelPart[] layers = new SolidPixelModelPart[5];
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 32, true, 0);

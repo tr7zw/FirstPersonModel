@@ -39,4 +39,8 @@ public interface PlayerSettings {
 
 	public void setCustomHeight(int customHeight);
 	
+	public void setBackHue(int backHue);
+	
+	public int getBackHue();
+	
 }

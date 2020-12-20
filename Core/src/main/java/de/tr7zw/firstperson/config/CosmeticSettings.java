@@ -16,6 +16,7 @@ public class CosmeticSettings {
 	
 	public int playerSize = 100;
 	public boolean modifyCameraHeight = false;
+	public int backHue = 0;
 	
 	
 	public SyncSnapshot createSnapshot() {
@@ -24,6 +25,7 @@ public class CosmeticSettings {
 	
 	public static class SyncSnapshot{
 		public int height;
+		public int backHue;
 		public int chest;
 		public int boots;
 		public int head;
@@ -36,12 +38,14 @@ public class CosmeticSettings {
 			head = config.head.getId();
 			back = config.back.getId();
 			hat = config.hat.getId();
+			backHue = config.backHue;
 		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + back;
+			result = prime * result + backHue;
 			result = prime * result + boots;
 			result = prime * result + chest;
 			result = prime * result + hat;
@@ -59,6 +63,8 @@ public class CosmeticSettings {
 				return false;
 			SyncSnapshot other = (SyncSnapshot) obj;
 			if (back != other.back)
+				return false;
+			if (backHue != other.backHue)
 				return false;
 			if (boots != other.boots)
 				return false;

@@ -127,6 +127,8 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		settings.boots = ((EnumListEntry<Boots>) SharedConfigBuilder.bootsSelection).getValue();
 		int size = settings.playerSize;
 		settings.playerSize = ((IntegerSliderEntry) FirstPersonModMenu.sizeSelection).getValue();
+		int backHue = settings.backHue;
+		settings.backHue = ((IntegerSliderEntry) FirstPersonModMenu.backHueSelection).getValue();
 		boolean allowSizeChange = settings.modifyCameraHeight;
 		settings.modifyCameraHeight = true;
 		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();
@@ -153,6 +155,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		settings.boots = boots;
 		settings.playerSize = size;
 		settings.modifyCameraHeight = allowSizeChange;
+		settings.backHue = backHue;
 		RenderSystem.popMatrix();
 	}
 	

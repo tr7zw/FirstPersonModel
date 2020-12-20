@@ -1,5 +1,9 @@
 package de.tr7zw.firstperson.fabric.features.back;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import de.tr7zw.firstperson.FirstPersonModelCore;
+import de.tr7zw.firstperson.fabric.util.TextureUtil;
 import de.tr7zw.firstperson.features.Back;
 import de.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
@@ -50,9 +54,9 @@ public class WingFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEnt
 			float animationProgress, float headYaw, float headPitch) {
 		RenderLayer renderlayer = null;
 		if(SettingsUtil.hasEnabled(abstractClientPlayerEntity, Back.BUTTERFLY)) {
-			renderlayer = RenderLayer.getEntityCutout(butterflyTexture);
+			renderlayer = RenderLayer.getEntityCutout(TextureUtil.changeHue(butterflyTexture, 512, 512, SettingsUtil.getBackHue(abstractClientPlayerEntity)));
 		}else if(SettingsUtil.hasEnabled(abstractClientPlayerEntity, Back.FANTASYWINGS)) {
-			renderlayer = RenderLayer.getEntityTranslucentCull(fantasyTexture);
+			renderlayer = RenderLayer.getEntityTranslucentCull(TextureUtil.changeHue(fantasyTexture, 512, 512, SettingsUtil.getBackHue(abstractClientPlayerEntity)));
 		} else {
 			return;
 		}

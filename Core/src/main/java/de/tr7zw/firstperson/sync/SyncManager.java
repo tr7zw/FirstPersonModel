@@ -68,7 +68,7 @@ public class SyncManager implements Runnable {
 				try {
 					String json = performPost(settingsUrl, request);
 					RequestedSettings set = gson.fromJson(json, RequestedSettings.class);
-					for(Entry<String, Settings> ent : set.data.entrySet()) {
+					for(Entry<String, SyncSnapshot> ent : set.data.entrySet()) {
 						PlayerSettings player = playersToUpdate.remove(UUID.fromString(ent.getKey()));
 						if(player != null) {
 							player.setCustomHeight(ent.getValue().height);
@@ -77,6 +77,7 @@ public class SyncManager implements Runnable {
 							player.setBack(Back.getBack(ent.getValue().back));
 							player.setBoots(Boots.getBoots(ent.getValue().boots));
 							player.setHead(Head.getHead(ent.getValue().head));
+							player.setBackHue(ent.getValue().backHue);
 						}
 					}
 				} catch (Exception e) {
@@ -103,7 +104,7 @@ public class SyncManager implements Runnable {
 			String sha = hash("verify-" + random + ".tr7zw.dev");
 			String request = wrapper.joinServerSession(sha);
 			if (request == null) { // Authenticated user
-				String content = gson.toJson(Settings.fromSnapshot(settings));
+				String content = gson.toJson(settings);
 				try {
 					String ret = performPost(FirstPersonModelCore.APIHost + "/firstperson/update/" + wrapper.getGameprofile().getName() + "/" + random, content);
 					if("{\"status\":\"OK\"}".equals(ret)) {
@@ -178,32 +179,7 @@ public class SyncManager implements Runnable {
 	}
 	
     public static class RequestedSettings{
-    	public Map<String, Settings> data = new HashMap<>();
-    }
-	
-    public static class Settings{
-    	public int height = 100;
-    	public int chest = 0;
-    	public int boots = 0;
-    	public int head = 0;
-    	public int back = 0;
-    	public int hat = 0;
-		@Override
-		public String toString() {
-			return "Settings [height=" + height + ", chest=" + chest + ", boots=" + boots + ", head=" + head + ", back="
-					+ back + ", hat=" + hat + "]";
-		}
-		
-		public static Settings fromSnapshot(SyncSnapshot rec) {
-			Settings settings = new Settings();
-			settings.height = rec.height;
-			settings.chest = rec.chest;
-			settings.boots = rec.boots;
-			settings.head = rec.head;
-			settings.back = rec.back;
-			settings.hat = rec.hat;
-			return settings;
-		}
+    	public Map<String, SyncSnapshot> data = new HashMap<>();
     }
 
 }

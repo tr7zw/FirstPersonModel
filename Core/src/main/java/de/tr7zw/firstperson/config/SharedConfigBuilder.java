@@ -26,6 +26,7 @@ public abstract class SharedConfigBuilder {
 	public static Object backSelection = null;
 	public static Object bootsSelection = null;
 	public static Object sizeSelection = null;
+	public static Object backHueSelection = null;
 
 	public void onSave(FirstPersonConfig config) {
 		// on save
@@ -92,6 +93,9 @@ public abstract class SharedConfigBuilder {
 		backSelection = createEnumSetting(entryBuilder, "cosmetic.back", Back.class, config.cosmetic.back, Back.VANILLA,
 				n -> config.cosmetic.back = n);
 		addEntry(category, backSelection);
+		backHueSelection = createIntSetting(entryBuilder, "cosmetic.backHue", config.cosmetic.backHue, 0,
+				0, 360, n ->  config.cosmetic.backHue = n);
+		addEntry(category, backHueSelection);
 		bootsSelection = createEnumSetting(entryBuilder, "cosmetic.boots", Boots.class, config.cosmetic.boots,
 				Boots.VANILLA, n -> config.cosmetic.boots = n);
 		addEntry(category, bootsSelection);

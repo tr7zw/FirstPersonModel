@@ -72,4 +72,13 @@ public class SettingsUtil {
 		return selected == boots;
 	}
 	
+	public static int getBackHue(Object player) {
+		boolean self = player == wrapper.getPlayer();
+		if(self) {
+			return FirstPersonModelCore.config.cosmetic.backHue;
+		}else {
+			return ((PlayerSettings)player).getBackHue();
+		}
+	}
+		
 }

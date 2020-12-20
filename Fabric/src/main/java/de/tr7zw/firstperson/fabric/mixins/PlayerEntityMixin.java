@@ -43,6 +43,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	private Back back = Back.VANILLA;
 	private Boots boots = Boots.VANILLA;
 	private Head head = Head.VANILLA;
+	private int backHue = 0;
 	private SolidPixelModelPart headLayer;
 	private SolidPixelModelPart[] skinLayer;
 
@@ -138,6 +139,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	@Override
 	public void setCustomHeight(int customHeight) {
 		this.customHeight = customHeight;
+	}
+	
+	@Override
+	public void setBackHue(int backHue) {
+		this.backHue = backHue;
+	}
+
+	@Override
+	public int getBackHue() {
+		return this.backHue;
 	}
 
 	@SuppressWarnings("resource")
