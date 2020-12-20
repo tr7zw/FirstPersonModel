@@ -1,0 +1,35 @@
+apply plugin: 'java-library'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+configurations {
+    extraLibs
+}
+
+
+dependencies {
+    extraLibs project(path: ":Forge", configuration: 'archives')
+    extraLibs files("../Fabric/build/libs/FirstPersonMod-${mod_version}.jar")
+}
+
+jar.dependsOn (':Fabric:build', ':Forge:build')
+
+jar {
+    baseName = "FirstPersonMod-${mod_version}"
+    manifest {
+        attributes([
+                "Specification-Title": "firstpersonmod",
+                "Specification-Vendor": "tr7zw",
+                "Specification-Version": "1",
+                "Implementation-Title": "FabricForge",
+                "Implementation-Version": "${mod_version}",
+                "Implementation-Vendor" :"tr7zw",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "firstpersonmod.forge.mixins.json"
+        ])
+    }
+    from {
+            configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+}

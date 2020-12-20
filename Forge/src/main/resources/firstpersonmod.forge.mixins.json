@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "dev.tr7zw.firstperson.forge.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "firstperson.forge.refmap.json",
+  "mixins": [
+  ],
+  "client":[
+    "IngameMenuScreenMixin",
+    "ActiveRenderInfoMixin",
+    "HeadLayerMixin",
+    "FirstPersonRendererMixin",
+    "WorldRendererMixin",
+    "EntityRendererMangerMixin",
+    "IngameGuiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

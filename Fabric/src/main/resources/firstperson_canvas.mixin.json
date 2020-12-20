@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "de.tr7zw.firstperson.fabric.fix.canvas",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "CanvasWorldMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
