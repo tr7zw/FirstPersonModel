@@ -12,7 +12,8 @@
     "FirstPersonRendererMixin",
     "WorldRendererMixin",
     "EntityRendererMangerMixin",
-    "IngameGuiMixin"
+    "IngameGuiMixin",
+    "BipedArmorLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
