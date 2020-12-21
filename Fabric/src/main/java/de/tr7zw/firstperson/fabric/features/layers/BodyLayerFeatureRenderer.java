@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson.fabric.features.layers;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
@@ -107,7 +108,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 			matrixStack.pop();
 		}
 		// Left Arm
-		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE)) {
+		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE) && (!abstractClientPlayerEntity.isMainPlayer() || !FirstPersonModelCore.config.firstPerson.vanillaHands)) {
 			matrixStack.push();
 			leftArm.customCopyPositionAndRotation(this.getContextModel().leftArm);
 			leftArm.pivotY -= 0.825f;
@@ -120,7 +121,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 			matrixStack.pop();
 		}
 		// Right Arm
-		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE)) {
+		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_SLEEVE) && (!abstractClientPlayerEntity.isMainPlayer() || !FirstPersonModelCore.config.firstPerson.vanillaHands)) {
 			matrixStack.push();
 			rightArm.customCopyPositionAndRotation(this.getContextModel().rightArm);
 			rightArm.pivotY -= 0.825f;
