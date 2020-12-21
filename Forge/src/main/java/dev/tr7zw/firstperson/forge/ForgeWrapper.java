@@ -114,8 +114,8 @@ public class ForgeWrapper implements MinecraftWrapper{
 		}
 		if (!abstractClientPlayerEntity_1.isUser() || client.getRenderViewEntity() == abstractClientPlayerEntity_1) {
 			float bodyOffset;
-			if(client.player.isVisuallySwimming()) {
-				abstractClientPlayerEntity_1.rotationYaw = abstractClientPlayerEntity_1.rotationYawHead;
+			if(client.player.isActualySwimming() ) {
+				abstractClientPlayerEntity_1.renderYawOffset = abstractClientPlayerEntity_1.rotationYawHead;
 				if(abstractClientPlayerEntity_1.prevRotationPitch > 0) {
 					bodyOffset = FirstPersonModelMod.swimUpBodyOffset;
 				}else {
@@ -131,7 +131,7 @@ public class ForgeWrapper implements MinecraftWrapper{
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-			if(client.player.isVisuallySwimming()) {
+			if(client.player.isActualySwimming()) {
 				if(abstractClientPlayerEntity_1.prevRotationPitch > 0  && abstractClientPlayerEntity_1.isInWater()) {
 					y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.prevRotationPitch));
 				}else {
