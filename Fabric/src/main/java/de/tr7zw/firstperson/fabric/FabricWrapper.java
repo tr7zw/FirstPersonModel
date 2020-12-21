@@ -162,14 +162,14 @@ public class FabricWrapper implements MinecraftWrapper {
 
 	@Override
 	public boolean hasCustomSkin(Object player) {
-		return !DefaultSkinHelper.getTexture(((ClientPlayerEntity)player).getUuid()).equals(((ClientPlayerEntity)player).getSkinTexture());
+		return !DefaultSkinHelper.getTexture(((AbstractClientPlayerEntity)player).getUuid()).equals(((AbstractClientPlayerEntity)player).getSkinTexture());
 	}
 
 	@Override
 	public Object getSkinTexture(Object player) {
 		NativeImage skin = new NativeImage(Format.ABGR, 64, 64, true);
 		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
-		AbstractTexture abstractTexture = textureManager.getTexture(((ClientPlayerEntity)player).getSkinTexture());
+		AbstractTexture abstractTexture = textureManager.getTexture(((AbstractClientPlayerEntity)player).getSkinTexture());
 		GlStateManager.bindTexture(abstractTexture.getGlId());
 		skin.loadFromTextureImage(0, false);
 		return skin;

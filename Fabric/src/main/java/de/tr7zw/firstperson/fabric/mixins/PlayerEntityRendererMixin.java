@@ -7,15 +7,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import de.tr7zw.firstperson.fabric.features.FabricFeature;
 import de.tr7zw.firstperson.fabric.features.back.WingFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.boot.Boots1FeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.chest.FemaleFeatureRenderer;
-import de.tr7zw.firstperson.fabric.features.hat.Deadmau5EarsFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.hat.ItemHatFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.hat.PlungerFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.head.ItemHeadFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
+import de.tr7zw.firstperson.features.hat.Deadmau5EarsFeature;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.options.Perspective;
@@ -42,7 +43,7 @@ public abstract class PlayerEntityRendererMixin
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
-		this.addFeature(new Deadmau5EarsFeatureRenderer(this));
+		this.addFeature(new FabricFeature(this, new Deadmau5EarsFeature()));
 		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new Boots1FeatureRenderer(this));
