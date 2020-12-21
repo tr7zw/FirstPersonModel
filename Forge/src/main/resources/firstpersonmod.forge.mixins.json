@@ -13,7 +13,8 @@
     "WorldRendererMixin",
     "EntityRendererMangerMixin",
     "IngameGuiMixin",
-    "BipedArmorLayerMixin"
+    "BipedArmorLayerMixin",
+    "HeldItemLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
