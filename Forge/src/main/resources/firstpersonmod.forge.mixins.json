@@ -15,7 +15,8 @@
     "IngameGuiMixin",
     "BipedArmorLayerMixin",
     "HeldItemLayerMixin",
-    "PlayerRendererMixin"
+    "PlayerRendererMixin",
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
