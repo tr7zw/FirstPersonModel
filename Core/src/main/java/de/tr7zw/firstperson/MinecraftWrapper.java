@@ -18,4 +18,8 @@ public interface MinecraftWrapper {
  	public void isThirdPersonTrigger(Object matrices);
  	public void updatePositionOffset(Object player, Object defValue, Object matrices);
  	public Object getOffset();
+	public boolean hasCustomSkin(Object player);
+	public Object getSkinTexture(Object player);
+	public Object changeHue(Object id, int width, int height, int hue);
+	
 }

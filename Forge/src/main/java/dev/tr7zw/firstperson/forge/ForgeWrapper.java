@@ -1,10 +1,13 @@
 package dev.tr7zw.firstperson.forge;
 
+import java.awt.Color;
+
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.exceptions.InvalidCredentialsException;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 
 import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
@@ -13,8 +16,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.toasts.SystemToast;
 import net.minecraft.client.gui.toasts.SystemToast.Type;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.NativeImage;
+import net.minecraft.client.renderer.texture.NativeImage.PixelFormat;
+import net.minecraft.client.renderer.texture.Texture;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.settings.PointOfView;
 import net.minecraft.network.play.client.CClientSettingsPacket;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
@@ -149,6 +159,55 @@ public class ForgeWrapper implements MinecraftWrapper{
 	@Override
 	public Object getOffset() {
 		return offset;
+	}
+	
+	@Override
+	public boolean hasCustomSkin(Object player) {
+		return !DefaultPlayerSkin.getDefaultSkin(((ClientPlayerEntity)player).getUniqueID()).equals(((ClientPlayerEntity)player).getLocationSkin());
+	}
+
+	@Override
+	public Object getSkinTexture(Object player) {
+		NativeImage skin = new NativeImage(PixelFormat.RGBA, 64, 64, true);
+		TextureManager textureManager = client.getTextureManager();
+		Texture abstractTexture = textureManager.getTexture(((ClientPlayerEntity)player).getLocationSkin());
+		GlStateManager.bindTexture(abstractTexture.getGlTextureId());
+		skin.downloadFromTexture(0, false);
+		return skin;
+	}
+
+	@Override
+	public Object changeHue(Object ido, int width, int height, int hue) {
+		ResourceLocation id = (ResourceLocation) ido;
+		TextureManager textureManager = client.getTextureManager();
+		ResourceLocation newId = new ResourceLocation(id.getNamespace(), id.getPath() + "_" + hue);
+		if(textureManager.getTexture(newId) != null) {
+			return newId;
+		}
+		Texture abstractTexture = textureManager.getTexture(id);
+		if (abstractTexture == null) {
+			return id;
+		}
+		NativeImage skin = new NativeImage(PixelFormat.RGBA, width, height, true);
+		GlStateManager.bindTexture(abstractTexture.getGlTextureId());
+		skin.downloadFromTexture(0, false);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (skin.getPixelLuminanceOrAlpha(x, y) != 0) {
+					int RGBA = skin.getPixelRGBA(x, y);
+					int alpha = NativeImage.getAlpha(RGBA);
+					int R = (RGBA >> 16) & 0xff;
+					int G = (RGBA >> 8) & 0xff;
+					int B = (RGBA) & 0xff;
+					float HSV[] = new float[3];
+					Color.RGBtoHSB(R, G, B, HSV);
+					Color fColor = Color.getHSBColor(HSV[0] + (hue/360f), HSV[1], HSV[2]);
+					skin.setPixelRGBA(x, y, NativeImage.getCombined(alpha, fColor.getRed(), fColor.getGreen(), fColor.getBlue()));
+				}
+			}
+		}
+		textureManager.loadTexture(newId, new DynamicTexture(skin));
+		return newId;
 	}
 
 }

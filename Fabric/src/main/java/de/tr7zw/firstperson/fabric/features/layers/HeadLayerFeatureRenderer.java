@@ -5,7 +5,6 @@ import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import de.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import de.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
-import de.tr7zw.firstperson.fabric.util.TextureUtil;
 import de.tr7zw.firstperson.features.LayerMode;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -62,10 +61,10 @@ public class HeadLayerFeatureRenderer
 
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
 		
-		if(!TextureUtil.hasCustomSkin(abstractClientPlayerEntity)) {
+		if(!FirstPersonModelCore.instance.getWrapper().hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		NativeImage skin = TextureUtil.getSkinTexture(abstractClientPlayerEntity);
+		NativeImage skin = (NativeImage) FirstPersonModelCore.instance.getWrapper().getSkinTexture(abstractClientPlayerEntity);
 		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 8, 8, 8, 32, 0, false, 0));
 		skin.untrack();
 		return true;
