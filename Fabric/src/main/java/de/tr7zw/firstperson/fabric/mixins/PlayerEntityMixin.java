@@ -8,15 +8,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.config.CosmeticSettings;
 import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import de.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
-import de.tr7zw.firstperson.features.Back;
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.features.Chest;
-import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.features.Head;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -37,21 +35,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		super(entityType, world);
 	}
 
-	private int customHeight = 100;
-	private Chest chest = Chest.VANILLA;
-	private Hat hat = Hat.VANILLA;
-	private Back back = Back.VANILLA;
-	private Boots boots = Boots.VANILLA;
-	private Head head = Head.VANILLA;
-	private int backHue = 0;
+	private CosmeticSettings settings;
 	private SolidPixelModelPart headLayer;
 	private SolidPixelModelPart[] skinLayer;
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
 		if (this.getUuidAsString().equals(MinecraftClient.getInstance().getSession().getUuid())) {
-			// This is us, don't request it
+			// the local var is not used for the own player
 		} else {
+			settings = new CosmeticSettings();
 			FirstPersonModelMod.syncManager.updateSettings(this);
 		}
 	}
@@ -75,61 +68,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	public void setupHeadLayers(Object box) {
 		this.headLayer = (SolidPixelModelPart) box;
 	}
-	
-	@Override
-	public int getCustomHeight() {
-		return customHeight;
-	}
-
-	@Override
-	public Chest getChest() {
-		return chest;
-	}
-	
-	@Override
-	public void setChest(Chest chest) {
-		this.chest = chest;
-	}
-
-	@Override
-	public Head getHead() {
-		return head;
-	}
-
-	@Override
-	public void setHead(Head head) {
-		this.head = head;
-	}
-
-	@Override
-	public Back getBack() {
-		return back;
-	}
-
-	@Override
-	public void setBack(Back back) {
-		this.back = back;
-	}
-
-	@Override
-	public Boots getBoots() {
-		return boots;
-	}
-
-	@Override
-	public void setBoots(Boots boots) {
-		this.boots = boots;
-	}
-
-	@Override
-	public Hat getHat() {
-		return hat;
-	}
-
-	@Override
-	public void setHat(Hat hat) {
-		this.hat = hat;
-	}
 
 	@Override
 	public UUID getUUID() {
@@ -137,18 +75,21 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 
 	@Override
-	public void setCustomHeight(int customHeight) {
-		this.customHeight = customHeight;
-	}
-	
-	@Override
-	public void setBackHue(int backHue) {
-		this.backHue = backHue;
+	public void setCosmeticSettings(CosmeticSettings settings) {
+		if(((AbstractClientPlayerEntity)(Object)this).isMainPlayer()) {
+			settings.modifyCameraHeight = FirstPersonModelCore.config.cosmetic.modifyCameraHeight; // Not provided by the backend
+			FirstPersonModelCore.config.cosmetic = settings;
+			return;
+		}
+		this.settings = settings;
 	}
 
 	@Override
-	public int getBackHue() {
-		return this.backHue;
+	public CosmeticSettings getCosmeticSettings() {
+		if(((AbstractClientPlayerEntity)(Object)this).isMainPlayer()) {
+			return FirstPersonModelCore.config.cosmetic;
+		}
+		return settings;
 	}
 
 	@SuppressWarnings("resource")

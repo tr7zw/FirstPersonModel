@@ -63,7 +63,7 @@ public abstract class PlayerEntityRendererMixin
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
 		} else if (abstractClientPlayerEntity != mc.player) {
-			float scaled = 0.9375f * ((float) ((PlayerSettings) abstractClientPlayerEntity).getCustomHeight() / 100f);
+			float scaled = 0.9375f * ((float) ((PlayerSettings) abstractClientPlayerEntity).getCosmeticSettings().playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
 		}

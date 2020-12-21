@@ -40,6 +40,19 @@ public class CosmeticSettings {
 			hat = config.hat.getId();
 			backHue = config.backHue;
 		}
+		
+		public CosmeticSettings toSettings() {
+			CosmeticSettings settings = new CosmeticSettings();
+			settings.playerSize = height;
+			settings.chest = Chest.getChest(chest);
+			settings.boots = Boots.getBoots(boots);
+			settings.head = Head.getHead(head);
+			settings.back = Back.getBack(back);
+			settings.hat = Hat.getHat(hat);
+			settings.backHue = backHue;
+
+			return settings;
+		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;

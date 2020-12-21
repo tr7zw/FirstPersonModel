@@ -31,11 +31,6 @@ import de.tr7zw.firstperson.FirstPersonModelCore;
 import de.tr7zw.firstperson.MinecraftWrapper;
 import de.tr7zw.firstperson.PlayerSettings;
 import de.tr7zw.firstperson.config.CosmeticSettings.SyncSnapshot;
-import de.tr7zw.firstperson.features.Back;
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.features.Chest;
-import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.features.Head;
 
 @SuppressWarnings("deprecation")
 public class SyncManager implements Runnable {
@@ -71,13 +66,7 @@ public class SyncManager implements Runnable {
 					for(Entry<String, SyncSnapshot> ent : set.data.entrySet()) {
 						PlayerSettings player = playersToUpdate.remove(UUID.fromString(ent.getKey()));
 						if(player != null) {
-							player.setCustomHeight(ent.getValue().height);
-							player.setChest(Chest.getChest(ent.getValue().chest));
-							player.setHat(Hat.getHat(ent.getValue().hat));
-							player.setBack(Back.getBack(ent.getValue().back));
-							player.setBoots(Boots.getBoots(ent.getValue().boots));
-							player.setHead(Head.getHead(ent.getValue().head));
-							player.setBackHue(ent.getValue().backHue);
+							player.setCosmeticSettings(ent.getValue().toSettings());
 						}
 					}
 				} catch (Exception e) {
