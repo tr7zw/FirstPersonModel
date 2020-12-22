@@ -7,6 +7,9 @@ public abstract class AbstractCosmetic {
 	public abstract ModelCreator getModel(FeatureRenderer featureRenderer);
 	public abstract Object getRenderLayer(FeatureRenderer featureRenderer, Object player);
 	public abstract AttatchedTo getAttachedTo();
+	public void updateModel() {
+		
+	}
 	
 	
 	public abstract static class ModelCreator{
@@ -19,6 +22,8 @@ public abstract class AbstractCosmetic {
 		}
 		public abstract ModelCreator setTextureOffset(int u, int v);
 		public abstract ModelCreator setPivot(float x, float y, float z);
+		public abstract void addChild(ModelCreator child);
+		public abstract void setRotationAngle(float x, float y, float z);
 		public abstract Object getModel();
 	}
 	

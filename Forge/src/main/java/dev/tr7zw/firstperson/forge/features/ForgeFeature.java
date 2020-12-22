@@ -45,9 +45,14 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 			switch (cosmetic.getAttachedTo()) {
 			case HEAD: {
 				parentModel.bipedHead.translateRotate(matrixStackIn);
+				break;
 			}
+			case BODY:
+				parentModel.bipedBody.translateRotate(matrixStackIn);
+				break;
 			}
 
+			cosmetic.updateModel();
 			this.model.render(matrixStackIn, vertexConsumer, packedLightIn, m);
 			matrixStackIn.pop();
 		}
@@ -90,6 +95,18 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 				modelPart.setRotationPoint(x, y, z);
 				return this;
 			}
+
+			@Override
+			public void addChild(ModelCreator child) {
+				modelPart.addChild((ModelRenderer) child.getModel());
+			}
+
+			@Override
+			public void setRotationAngle(float x, float y, float z) {
+				modelPart.rotateAngleX = x;
+				modelPart.rotateAngleY = y;
+				modelPart.rotateAngleZ = z;
+			}
 		};
 	}
 
@@ -108,6 +125,15 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 			return RenderType.getEntitySolid(((AbstractClientPlayerEntity)texture).getLocationSkin());
 		}else {
 			return RenderType.getEntitySolid((ResourceLocation) texture);
+		}
+	}
+	
+	@Override
+	public Object getRenderLayerEntityTranslucentCull(Object texture) {
+		if(texture instanceof AbstractClientPlayerEntity) {
+			return RenderType.getEntityTranslucentCull(((AbstractClientPlayerEntity)texture).getLocationSkin());
+		}else {
+			return RenderType.getEntityTranslucentCull((ResourceLocation) texture);
 		}
 	}
 
@@ -138,6 +164,18 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 			public ModelCreator setPivot(float x, float y, float z) {
 				modelPart.setRotationPoint(x, y, z);
 				return this;
+			}
+
+			@Override
+			public void addChild(ModelCreator child) {
+				modelPart.addChild((CustomModelPart) child.getModel());
+			}
+
+			@Override
+			public void setRotationAngle(float x, float y, float z) {
+				modelPart.rotateAngleX = x;
+				modelPart.rotateAngleY = y;
+				modelPart.rotateAngleZ = z;
 			}
 		};
 	}

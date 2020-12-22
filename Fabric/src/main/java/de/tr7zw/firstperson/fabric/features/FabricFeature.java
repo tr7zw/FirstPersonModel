@@ -52,7 +52,7 @@ public class FabricFeature
 				break;
 			}
 			}
-
+			cosmetic.updateModel();
 			this.model.render(matrices, vertexConsumer, light, m);
 			matrices.pop();
 		}
@@ -94,6 +94,18 @@ public class FabricFeature
 				modelPart.setPivot(x, y, z);
 				return this;
 			}
+
+			@Override
+			public void addChild(ModelCreator child) {
+				modelPart.addChild((ModelPart) child.getModel());
+			}
+
+			@Override
+			public void setRotationAngle(float x, float y, float z) {
+				modelPart.pitch = x;
+				modelPart.yaw = y;
+				modelPart.roll = z;
+			}
 		};
 	}
 
@@ -112,6 +124,15 @@ public class FabricFeature
 			return RenderLayer.getEntitySolid(((AbstractClientPlayerEntity) texture).getSkinTexture());
 		}else {
 			return RenderLayer.getEntitySolid((Identifier) texture);
+		}
+	}
+
+	@Override
+	public Object getRenderLayerEntityTranslucentCull(Object texture) {
+		if(texture instanceof AbstractClientPlayerEntity) {
+			return RenderLayer.getEntityTranslucentCull(((AbstractClientPlayerEntity) texture).getSkinTexture());
+		}else {
+			return RenderLayer.getEntityTranslucentCull((Identifier) texture);
 		}
 	}
 
@@ -141,6 +162,18 @@ public class FabricFeature
 			public ModelCreator setPivot(float x, float y, float z) {
 				modelPart.setPivot(x, y, z);
 				return this;
+			}
+
+			@Override
+			public void addChild(ModelCreator child) {
+				modelPart.addChild((CustomModelPart) child.getModel());
+			}
+
+			@Override
+			public void setRotationAngle(float x, float y, float z) {
+				modelPart.pitch = x;
+				modelPart.yaw = y;
+				modelPart.roll = z;
 			}
 		};
 	}

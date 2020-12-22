@@ -14,4 +14,6 @@ public interface FeatureRenderer {
 	
 	public Object getRenderLayerEntitySolid(Object texture);
 	
+	public Object getRenderLayerEntityTranslucentCull(Object texture);
+	
 }
