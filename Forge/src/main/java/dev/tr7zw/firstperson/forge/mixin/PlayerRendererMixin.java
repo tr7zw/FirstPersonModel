@@ -8,7 +8,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import de.tr7zw.firstperson.PlayerSettings;
+import de.tr7zw.firstperson.features.AbstractCosmetic;
+import de.tr7zw.firstperson.features.FeatureProvider;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
+import dev.tr7zw.firstperson.forge.features.ForgeFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -29,7 +32,9 @@ public abstract class PlayerRendererMixin extends LivingRenderer<AbstractClientP
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
-		
+		for(AbstractCosmetic feature : FeatureProvider.getFeatures()) {
+			addLayer(new ForgeFeature(this, feature));
+		}
 	}
 
 	@Inject(method = "preRenderCallback", at = @At("HEAD"), cancellable = true)

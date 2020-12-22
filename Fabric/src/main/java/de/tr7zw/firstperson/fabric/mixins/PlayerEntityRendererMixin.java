@@ -16,7 +16,8 @@ import de.tr7zw.firstperson.fabric.features.hat.PlungerFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.head.ItemHeadFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
-import de.tr7zw.firstperson.features.hat.Deadmau5EarsFeature;
+import de.tr7zw.firstperson.features.AbstractCosmetic;
+import de.tr7zw.firstperson.features.FeatureProvider;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.options.Perspective;
@@ -43,7 +44,10 @@ public abstract class PlayerEntityRendererMixin
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
-		this.addFeature(new FabricFeature(this, new Deadmau5EarsFeature()));
+		for(AbstractCosmetic feature : FeatureProvider.getFeatures()) {
+			this.addFeature(new FabricFeature(this, feature));
+		}
+		
 		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new Boots1FeatureRenderer(this));
