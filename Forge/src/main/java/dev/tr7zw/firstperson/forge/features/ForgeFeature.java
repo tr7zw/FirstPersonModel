@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import de.tr7zw.firstperson.features.AbstractCosmetic;
 import de.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
+import dev.tr7zw.firstperson.forge.render.CustomModelPart;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -93,13 +94,52 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 	}
 
 	@Override
-	public Object getRenderLayerPlayerTextureCutout(Object player) {
-		return RenderType.getEntityCutout(((AbstractClientPlayerEntity)player).getLocationSkin());
+	public Object getRenderLayerEntityCutout(Object texture) {
+		if(texture instanceof AbstractClientPlayerEntity) {
+			return RenderType.getEntityCutout(((AbstractClientPlayerEntity)texture).getLocationSkin());
+		}else {
+			return RenderType.getEntityCutout((ResourceLocation) texture);
+		}
 	}
 
 	@Override
 	public Object getRenderLayerEntitySolid(Object texture) {
-		return RenderType.getEntitySolid((ResourceLocation) texture);
+		if(texture instanceof AbstractClientPlayerEntity) {
+			return RenderType.getEntitySolid(((AbstractClientPlayerEntity)texture).getLocationSkin());
+		}else {
+			return RenderType.getEntitySolid((ResourceLocation) texture);
+		}
+	}
+
+	@Override
+	public ModelCreator getCustomModelCreator(int u, int v) {
+		return new ModelCreator() {
+			CustomModelPart modelPart = new CustomModelPart(parentModel, u, v);
+			
+			@Override
+			public ModelCreator setTextureOffset(int u, int v) {
+				modelPart.setTextureOffset(u, v);
+				return this;
+			}
+
+			@Override
+			public Object getModel() {
+				return modelPart;
+			}
+
+			@Override
+			public ModelCreator addCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extra,
+					boolean mirror) {
+				modelPart.addCustomBox(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
+				return this;
+			}
+
+			@Override
+			public ModelCreator setPivot(float x, float y, float z) {
+				modelPart.setRotationPoint(x, y, z);
+				return this;
+			}
+		};
 	}
 
 }

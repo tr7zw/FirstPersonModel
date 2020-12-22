@@ -1,5 +1,6 @@
 package de.tr7zw.firstperson.fabric.features;
 
+import de.tr7zw.firstperson.fabric.render.CustomModelPart;
 import de.tr7zw.firstperson.features.AbstractCosmetic;
 import de.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
 import net.minecraft.client.model.ModelPart;
@@ -44,6 +45,11 @@ public class FabricFeature
 			switch (cosmetic.getAttachedTo()) {
 			case HEAD: {
 				parentModel.head.rotate(matrices);
+				break;
+			}
+			case BODY:{
+				parentModel.torso.rotate(matrices);
+				break;
 			}
 			}
 
@@ -92,13 +98,51 @@ public class FabricFeature
 	}
 
 	@Override
-	public Object getRenderLayerPlayerTextureCutout(Object player) {
-		return RenderLayer.getEntityCutout(((AbstractClientPlayerEntity) player).getSkinTexture());
+	public Object getRenderLayerEntityCutout(Object texture) {
+		if(texture instanceof AbstractClientPlayerEntity) {
+		return RenderLayer.getEntityCutout(((AbstractClientPlayerEntity) texture).getSkinTexture());
+		}else {
+			return RenderLayer.getEntityCutout((Identifier) texture);
+		}
 	}
 
 	@Override
 	public Object getRenderLayerEntitySolid(Object texture) {
-		return RenderLayer.getEntitySolid((Identifier) texture);
+		if(texture instanceof AbstractClientPlayerEntity) {
+			return RenderLayer.getEntitySolid(((AbstractClientPlayerEntity) texture).getSkinTexture());
+		}else {
+			return RenderLayer.getEntitySolid((Identifier) texture);
+		}
+	}
+
+	@Override
+	public ModelCreator getCustomModelCreator(int u, int v) {
+		return new ModelCreator() {
+			CustomModelPart modelPart = new CustomModelPart(parentModel, u, v);
+			@Override
+			public ModelCreator setTextureOffset(int u, int v) {
+				modelPart.setTextureOffset(u, v);
+				return this;
+			}
+
+			@Override
+			public Object getModel() {
+				return modelPart;
+			}
+
+			@Override
+			public ModelCreator addCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extra,
+					boolean mirror) {
+				modelPart.addCustomCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
+				return this;
+			}
+
+			@Override
+			public ModelCreator setPivot(float x, float y, float z) {
+				modelPart.setPivot(x, y, z);
+				return this;
+			}
+		};
 	}
 
 }

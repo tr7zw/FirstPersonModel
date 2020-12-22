@@ -29,7 +29,7 @@ public class Deadmau5EarsFeature extends AbstractCosmetic {
 
 	@Override
 	public Object getRenderLayer(FeatureRenderer featureRenderer, Object player) {
-		return featureRenderer.getRenderLayerPlayerTextureCutout(player);
+		return featureRenderer.getRenderLayerEntityCutout(player);
 	}
 
 	@Override

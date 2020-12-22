@@ -10,7 +10,6 @@ import de.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import de.tr7zw.firstperson.fabric.features.FabricFeature;
 import de.tr7zw.firstperson.fabric.features.back.WingFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.boot.Boots1FeatureRenderer;
-import de.tr7zw.firstperson.fabric.features.chest.FemaleFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.hat.ItemHatFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.head.ItemHeadFeatureRenderer;
 import de.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
@@ -50,7 +49,6 @@ public abstract class PlayerEntityRendererMixin
 		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new Boots1FeatureRenderer(this));
-		this.addFeature(new FemaleFeatureRenderer(this));
 		this.addFeature(new WingFeatureRenderer(this));
 
 		this.addFeature(new HeadLayerFeatureRenderer(this));

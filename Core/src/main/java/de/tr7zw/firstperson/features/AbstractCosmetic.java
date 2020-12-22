@@ -14,13 +14,16 @@ public abstract class AbstractCosmetic {
 		public ModelCreator addCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extra) {
 			return addCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, false);
 		}
+		public ModelCreator addCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ) {
+			return addCuboid(x, y, z, sizeX, sizeY, sizeZ, 0f, false);
+		}
 		public abstract ModelCreator setTextureOffset(int u, int v);
 		public abstract ModelCreator setPivot(float x, float y, float z);
 		public abstract Object getModel();
 	}
 	
 	public static enum AttatchedTo{
-		HEAD
+		HEAD, BODY
 	}
 	
 }
