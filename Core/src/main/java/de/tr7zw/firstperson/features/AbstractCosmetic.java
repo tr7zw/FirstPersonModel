@@ -2,12 +2,15 @@ package de.tr7zw.firstperson.features;
 
 public abstract class AbstractCosmetic {
 
-	public abstract void init();
+	public abstract void init(FeatureRenderer featureRenderer);
+	public void initTextures() {
+		
+	}
 	public abstract boolean shouldRender(Object player, Object matrixStack);
-	public abstract ModelCreator getModel(FeatureRenderer featureRenderer);
+	public abstract ModelCreator getModel();
 	public abstract Object getRenderLayer(FeatureRenderer featureRenderer, Object player);
 	public abstract AttatchedTo getAttachedTo();
-	public void updateModel() {
+	public void updateModel(Object player) {
 		
 	}
 	

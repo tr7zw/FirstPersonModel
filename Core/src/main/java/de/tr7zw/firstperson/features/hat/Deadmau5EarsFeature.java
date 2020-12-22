@@ -8,8 +8,14 @@ import de.tr7zw.firstperson.util.SettingsUtil;
 
 public class Deadmau5EarsFeature extends AbstractCosmetic {
 
+	private ModelCreator model;
+	
 	@Override
-	public void init() {
+	public void init(FeatureRenderer featureRenderer) {
+		model = featureRenderer.getVanillaModelCreator(25, 1);
+		model.addCuboid(3.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1); // left
+		model.setTextureOffset(25, 1);
+		model.addCuboid(-9.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1, true); // right
 	}
 	
 	@Override
@@ -19,11 +25,7 @@ public class Deadmau5EarsFeature extends AbstractCosmetic {
 	}
 
 	@Override
-	public ModelCreator getModel(FeatureRenderer featureRenderer) {
-		ModelCreator model = featureRenderer.getVanillaModelCreator(25, 1);
-		model.addCuboid(3.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1); // left
-		model.setTextureOffset(25, 1);
-		model.addCuboid(-9.0F, -12.0F, -1.0F, 6.0F, 6.0F, 0F, 1, true); // right
+	public ModelCreator getModel() {
 		return model;
 	}
 

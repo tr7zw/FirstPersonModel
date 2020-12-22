@@ -7,9 +7,15 @@ import de.tr7zw.firstperson.util.SettingsUtil;
 
 public class Female2Feature extends AbstractCosmetic{
 
+	private ModelCreator model;
+	
 	@Override
-	public void init() {
-		
+	public void init(FeatureRenderer featureRenderer) {
+		model = featureRenderer.getCustomModelCreator(0,0);
+		model.setTextureOffset(20, 20);
+		model.addCuboid(-3.0F, 1.0F, -3.0F, 6f, 1f, 1f);
+		model.setTextureOffset(19, 21);
+		model.addCuboid(-4.0F, 2.0F, -3.0F, 8f, 3f, 1f);
 	}
 
 	@Override
@@ -18,12 +24,7 @@ public class Female2Feature extends AbstractCosmetic{
 	}
 
 	@Override
-	public ModelCreator getModel(FeatureRenderer featureRenderer) {
-		ModelCreator model = featureRenderer.getCustomModelCreator(0,0);
-		model.setTextureOffset(20, 20);
-		model.addCuboid(-3.0F, 1.0F, -3.0F, 6f, 1f, 1f);
-		model.setTextureOffset(19, 21);
-		model.addCuboid(-4.0F, 2.0F, -3.0F, 8f, 3f, 1f);
+	public ModelCreator getModel() {
 		return model;
 	}
 

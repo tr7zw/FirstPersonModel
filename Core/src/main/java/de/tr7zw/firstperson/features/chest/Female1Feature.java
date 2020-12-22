@@ -7,19 +7,11 @@ import de.tr7zw.firstperson.util.SettingsUtil;
 
 public class Female1Feature extends AbstractCosmetic{
 
+	private ModelCreator model;
+	
 	@Override
-	public void init() {
-		
-	}
-
-	@Override
-	public boolean shouldRender(Object player, Object matrixStack) {
-		return SettingsUtil.hasEnabled(player, Chest.FEMALE2);
-	}
-
-	@Override
-	public ModelCreator getModel(FeatureRenderer featureRenderer) {
-		ModelCreator model = featureRenderer.getCustomModelCreator(0,0);
+	public void init(FeatureRenderer featureRenderer) {
+		model = featureRenderer.getCustomModelCreator(0,0);
 	    model.setTextureOffset(20, 20);
 	    model.addCuboid(-3.0F, 1.0F, -3.0F, 6, 1, 1);
 	    model.setTextureOffset(19, 21);
@@ -33,6 +25,15 @@ public class Female1Feature extends AbstractCosmetic{
 	    model.addCuboid(-3.0F, 4.0F, -4.0F, 2, 1, 1);
 	    model.setTextureOffset(24, 23);
 	    model.addCuboid(1.0F, 4.0F, -4.0F, 2, 1, 1);
+	}
+
+	@Override
+	public boolean shouldRender(Object player, Object matrixStack) {
+		return SettingsUtil.hasEnabled(player, Chest.FEMALE2);
+	}
+
+	@Override
+	public ModelCreator getModel() {
 		return model;
 	}
 

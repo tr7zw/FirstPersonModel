@@ -9,10 +9,19 @@ import de.tr7zw.firstperson.util.SettingsUtil;
 public class PlungerFeature extends AbstractCosmetic {
 
 	private Object texture;
+	private ModelCreator model;
 	
 	@Override
-	public void init() {
+	public void initTextures() {
 		texture = FirstPersonModelCore.instance.getWrapper().getIdentifier("firstperson", "textures/features/hat/plunger.png");
+	}
+
+	@Override
+	public void init(FeatureRenderer featureRenderer) {
+		model = featureRenderer.getVanillaModelCreator(32, 32, 0, 0);
+		model.setPivot(0.0F, -8.0F, 0.0F);
+		model.setTextureOffset(0, 0).addCuboid(-3.0F, -3.0F, -2.0F, 5.0F, 3.0F, 5.0F, 0.0F, false);
+		model.setTextureOffset(0, 9).addCuboid(-1.0F, -16.0F, 0.0F, 1.0F, 13.0F, 1.0F, 0.0F, false);
 	}
 
 	@Override
@@ -22,11 +31,7 @@ public class PlungerFeature extends AbstractCosmetic {
 	}
 
 	@Override
-	public ModelCreator getModel(FeatureRenderer featureRenderer) {
-		ModelCreator model = featureRenderer.getVanillaModelCreator(32, 32, 0, 0);
-		model.setPivot(0.0F, -8.0F, 0.0F);
-		model.setTextureOffset(0, 0).addCuboid(-3.0F, -3.0F, -2.0F, 5.0F, 3.0F, 5.0F, 0.0F, false);
-		model.setTextureOffset(0, 9).addCuboid(-1.0F, -16.0F, 0.0F, 1.0F, 13.0F, 1.0F, 0.0F, false);
+	public ModelCreator getModel() {
 		return model;
 	}
 

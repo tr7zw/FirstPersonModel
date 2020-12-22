@@ -15,18 +15,13 @@ public class WingFeature extends AbstractCosmetic{
 	private ModelCreator cube_r2;
 	
 	@Override
-	public void init() {
+	public void initTextures() {
 		butterflyTexture = FirstPersonModelCore.instance.getWrapper().getIdentifier("firstperson", "textures/features/back/butterfly.png");
 		fantasyTexture = FirstPersonModelCore.instance.getWrapper().getIdentifier("firstperson", "textures/features/back/fantasywings.png");
 	}
 
 	@Override
-	public boolean shouldRender(Object player, Object matrixStack) {
-		return SettingsUtil.hasEnabled(player, Back.BUTTERFLY) || SettingsUtil.hasEnabled(player, Back.FANTASYWINGS);
-	}
-
-	@Override
-	public ModelCreator getModel(FeatureRenderer featureRenderer) {
+	public void init(FeatureRenderer featureRenderer) {
 		model = featureRenderer.getVanillaModelCreator(40, 40, 0, 0);
 		model.setPivot(0.0F, 12.0F, 0.0F);
 
@@ -41,6 +36,15 @@ public class WingFeature extends AbstractCosmetic{
 		model.addChild(cube_r2);
 		cube_r2.setRotationAngle(0.0F, 0.7854F, 0.0F);
 		cube_r2.setTextureOffset(0, 0).addCuboid(-19.5F, -20.0F, -0.5F, 20.0F, 20.0F, 0.0F, 0.0F, false);
+	}
+
+	@Override
+	public boolean shouldRender(Object player, Object matrixStack) {
+		return SettingsUtil.hasEnabled(player, Back.BUTTERFLY) || SettingsUtil.hasEnabled(player, Back.FANTASYWINGS);
+	}
+
+	@Override
+	public ModelCreator getModel() {
 		return model;
 	}
 
@@ -61,7 +65,7 @@ public class WingFeature extends AbstractCosmetic{
 	}
 
 	@Override
-	public void updateModel() {
+	public void updateModel(Object player) {
 		float timestep = System.currentTimeMillis()%4000;
 		timestep /= 4000F;
 		timestep *= 2*Math.PI;

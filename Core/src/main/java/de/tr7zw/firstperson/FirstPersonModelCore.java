@@ -44,7 +44,7 @@ public abstract class FirstPersonModelCore {
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
 		syncManager.takeSnapshot();
-		FeatureProvider.getFeatures().forEach(AbstractCosmetic::init);
+		FeatureProvider.getFeatures().forEach(AbstractCosmetic::initTextures);
 	}
 	
 	public abstract MinecraftWrapper getWrapper();

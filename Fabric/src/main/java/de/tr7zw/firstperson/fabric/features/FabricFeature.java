@@ -21,7 +21,6 @@ public class FabricFeature
 
 	private final AbstractCosmetic cosmetic;
 	private final PlayerEntityModel<AbstractClientPlayerEntity> parentModel;
-	private ModelPart model;
 
 	public FabricFeature(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context,
@@ -29,7 +28,7 @@ public class FabricFeature
 		super(context);
 		this.parentModel = context.getModel();
 		this.cosmetic = cosmetic;
-		this.model = (ModelPart) cosmetic.getModel(this).getModel();
+		cosmetic.init(this);
 	}
 
 	@Override
@@ -43,17 +42,17 @@ public class FabricFeature
 
 			matrices.push();
 			switch (cosmetic.getAttachedTo()) {
-			case HEAD: {
-				parentModel.head.rotate(matrices);
-				break;
+				case HEAD: {
+					parentModel.head.rotate(matrices);
+					break;
+				}
+				case BODY: {
+					parentModel.torso.rotate(matrices);
+					break;
+				}
 			}
-			case BODY:{
-				parentModel.torso.rotate(matrices);
-				break;
-			}
-			}
-			cosmetic.updateModel();
-			this.model.render(matrices, vertexConsumer, light, m);
+			cosmetic.updateModel(entity);
+			((ModelPart) cosmetic.getModel().getModel()).render(matrices, vertexConsumer, light, m);
 			matrices.pop();
 		}
 	}
@@ -62,12 +61,12 @@ public class FabricFeature
 	public ModelCreator getVanillaModelCreator(int textureWith, int textureHeight, int u, int v) {
 		return getVanillaModelCreator(new ModelPart(textureWith, textureHeight, u, v));
 	}
-	
+
 	@Override
 	public ModelCreator getVanillaModelCreator(int u, int v) {
 		return getVanillaModelCreator(new ModelPart(parentModel, u, v));
 	}
-	
+
 	private ModelCreator getVanillaModelCreator(ModelPart modelPart) {
 		return new ModelCreator() {
 
@@ -111,27 +110,27 @@ public class FabricFeature
 
 	@Override
 	public Object getRenderLayerEntityCutout(Object texture) {
-		if(texture instanceof AbstractClientPlayerEntity) {
-		return RenderLayer.getEntityCutout(((AbstractClientPlayerEntity) texture).getSkinTexture());
-		}else {
+		if (texture instanceof AbstractClientPlayerEntity) {
+			return RenderLayer.getEntityCutout(((AbstractClientPlayerEntity) texture).getSkinTexture());
+		} else {
 			return RenderLayer.getEntityCutout((Identifier) texture);
 		}
 	}
 
 	@Override
 	public Object getRenderLayerEntitySolid(Object texture) {
-		if(texture instanceof AbstractClientPlayerEntity) {
+		if (texture instanceof AbstractClientPlayerEntity) {
 			return RenderLayer.getEntitySolid(((AbstractClientPlayerEntity) texture).getSkinTexture());
-		}else {
+		} else {
 			return RenderLayer.getEntitySolid((Identifier) texture);
 		}
 	}
 
 	@Override
 	public Object getRenderLayerEntityTranslucentCull(Object texture) {
-		if(texture instanceof AbstractClientPlayerEntity) {
+		if (texture instanceof AbstractClientPlayerEntity) {
 			return RenderLayer.getEntityTranslucentCull(((AbstractClientPlayerEntity) texture).getSkinTexture());
-		}else {
+		} else {
 			return RenderLayer.getEntityTranslucentCull((Identifier) texture);
 		}
 	}
@@ -140,6 +139,7 @@ public class FabricFeature
 	public ModelCreator getCustomModelCreator(int u, int v) {
 		return new ModelCreator() {
 			CustomModelPart modelPart = new CustomModelPart(parentModel, u, v);
+
 			@Override
 			public ModelCreator setTextureOffset(int u, int v) {
 				modelPart.setTextureOffset(u, v);

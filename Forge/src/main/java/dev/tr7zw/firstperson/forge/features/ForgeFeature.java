@@ -21,7 +21,6 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 
 	private final AbstractCosmetic cosmetic;
 	private final PlayerModel<AbstractClientPlayerEntity> parentModel;
-	private ModelRenderer model;
 
 	public ForgeFeature(
 			IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> entityRendererIn,
@@ -29,7 +28,7 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 		super(entityRendererIn);
 		this.cosmetic = cosmetic;
 		this.parentModel = entityRendererIn.getEntityModel();
-		this.model = (ModelRenderer) cosmetic.getModel(this).getModel();
+		cosmetic.init(this);
 	}
 
 	@Override
@@ -52,8 +51,8 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 				break;
 			}
 
-			cosmetic.updateModel();
-			this.model.render(matrixStackIn, vertexConsumer, packedLightIn, m);
+			cosmetic.updateModel(entitylivingbaseIn);
+			((ModelRenderer) cosmetic.getModel().getModel()).render(matrixStackIn, vertexConsumer, packedLightIn, m);
 			matrixStackIn.pop();
 		}
 	}
