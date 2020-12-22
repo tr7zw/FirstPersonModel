@@ -124,6 +124,8 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		settings.playerSize = ((IntegerSliderEntry) SharedConfigBuilder.sizeSelection).getValue();
 		boolean allowSizeChange = settings.modifyCameraHeight;
 		settings.modifyCameraHeight = true;
+		int backHue = settings.backHue;
+		backHue = ((IntegerSliderEntry) SharedConfigBuilder.backHueSelection).getValue();
 		EntityRendererManager entityrenderermanager = Minecraft.getInstance().getRenderManager();
 		quaternion1.conjugate();
 		entityrenderermanager.setCameraOrientation(quaternion1);
@@ -153,6 +155,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		settings.boots = boots;
 		settings.playerSize = size;
 		settings.modifyCameraHeight = allowSizeChange;
+		settings.backHue = backHue;
 		RenderSystem.popMatrix();
 	}
 
