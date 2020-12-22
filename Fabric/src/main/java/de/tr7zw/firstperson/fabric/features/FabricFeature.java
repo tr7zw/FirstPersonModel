@@ -12,6 +12,7 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 
 public class FabricFeature
 		extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>
@@ -42,7 +43,7 @@ public class FabricFeature
 			matrices.push();
 			switch (cosmetic.getAttachedTo()) {
 			case HEAD: {
-				model.copyPositionAndRotation(parentModel.head);
+				parentModel.head.rotate(matrices);
 			}
 			}
 
@@ -52,9 +53,17 @@ public class FabricFeature
 	}
 
 	@Override
+	public ModelCreator getVanillaModelCreator(int textureWith, int textureHeight, int u, int v) {
+		return getVanillaModelCreator(new ModelPart(textureWith, textureHeight, u, v));
+	}
+	
+	@Override
 	public ModelCreator getVanillaModelCreator(int u, int v) {
+		return getVanillaModelCreator(new ModelPart(parentModel, u, v));
+	}
+	
+	private ModelCreator getVanillaModelCreator(ModelPart modelPart) {
 		return new ModelCreator() {
-			ModelPart modelPart = new ModelPart(parentModel, u, v);
 
 			@Override
 			public ModelCreator setTextureOffset(int u, int v) {
@@ -73,12 +82,23 @@ public class FabricFeature
 				modelPart.addCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
 				return this;
 			}
+
+			@Override
+			public ModelCreator setPivot(float x, float y, float z) {
+				modelPart.setPivot(x, y, z);
+				return this;
+			}
 		};
 	}
 
 	@Override
 	public Object getRenderLayerPlayerTextureCutout(Object player) {
 		return RenderLayer.getEntityCutout(((AbstractClientPlayerEntity) player).getSkinTexture());
+	}
+
+	@Override
+	public Object getRenderLayerEntitySolid(Object texture) {
+		return RenderLayer.getEntitySolid((Identifier) texture);
 	}
 
 }

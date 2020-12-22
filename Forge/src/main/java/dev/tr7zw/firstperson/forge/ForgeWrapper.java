@@ -210,4 +210,9 @@ public class ForgeWrapper implements MinecraftWrapper{
 		return newId;
 	}
 
+	@Override
+	public Object getIdentifier(String namespace, String id) {
+		return new ResourceLocation(namespace, id);
+	}
+
 }

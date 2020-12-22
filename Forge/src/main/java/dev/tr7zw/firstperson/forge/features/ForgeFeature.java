@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.ResourceLocation;
 
 public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>
 		implements de.tr7zw.firstperson.features.FeatureRenderer {
@@ -42,7 +43,7 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 			matrixStackIn.push();
 			switch (cosmetic.getAttachedTo()) {
 			case HEAD: {
-				model.copyModelAngles(parentModel.bipedHead);
+				parentModel.bipedHead.translateRotate(matrixStackIn);
 			}
 			}
 
@@ -52,9 +53,18 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 	}
 
 	@Override
+	public ModelCreator getVanillaModelCreator(int textureWith, int textureHeight, int u, int v) {
+		return getVanillaModelCreator(new ModelRenderer(textureWith, textureHeight, u, v));
+	}
+
+	
+	@Override
 	public ModelCreator getVanillaModelCreator(int u, int v) {
+		return getVanillaModelCreator(new ModelRenderer(parentModel, u, v));
+	}
+	
+	private ModelCreator getVanillaModelCreator(ModelRenderer modelPart) {
 		return new ModelCreator() {
-			ModelRenderer modelPart = new ModelRenderer(parentModel, u, v);
 
 			@Override
 			public ModelCreator setTextureOffset(int u, int v) {
@@ -73,12 +83,23 @@ public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, Play
 				modelPart.addBox(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
 				return this;
 			}
+
+			@Override
+			public ModelCreator setPivot(float x, float y, float z) {
+				modelPart.setRotationPoint(x, y, z);
+				return this;
+			}
 		};
 	}
 
 	@Override
 	public Object getRenderLayerPlayerTextureCutout(Object player) {
 		return RenderType.getEntityCutout(((AbstractClientPlayerEntity)player).getLocationSkin());
+	}
+
+	@Override
+	public Object getRenderLayerEntitySolid(Object texture) {
+		return RenderType.getEntitySolid((ResourceLocation) texture);
 	}
 
 }

@@ -21,5 +21,6 @@ public interface MinecraftWrapper {
 	public boolean hasCustomSkin(Object player);
 	public Object getSkinTexture(Object player);
 	public Object changeHue(Object id, int width, int height, int hue);
+	public Object getIdentifier(String namespace, String id);
 	
 }

@@ -2,6 +2,7 @@ package de.tr7zw.firstperson.features;
 
 public abstract class AbstractCosmetic {
 
+	public abstract void init();
 	public abstract boolean shouldRender(Object player, Object matrixStack);
 	public abstract ModelCreator getModel(FeatureRenderer featureRenderer);
 	public abstract Object getRenderLayer(FeatureRenderer featureRenderer, Object player);
@@ -14,6 +15,7 @@ public abstract class AbstractCosmetic {
 			return addCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, false);
 		}
 		public abstract ModelCreator setTextureOffset(int u, int v);
+		public abstract ModelCreator setPivot(float x, float y, float z);
 		public abstract Object getModel();
 	}
 	

@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import com.google.gson.Gson;
 
 import de.tr7zw.firstperson.config.FirstPersonConfig;
+import de.tr7zw.firstperson.features.AbstractCosmetic;
+import de.tr7zw.firstperson.features.FeatureProvider;
 import de.tr7zw.firstperson.sync.SyncManager;
 
 public abstract class FirstPersonModelCore {
@@ -42,6 +44,7 @@ public abstract class FirstPersonModelCore {
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
 		syncManager.takeSnapshot();
+		FeatureProvider.getFeatures().forEach(AbstractCosmetic::init);
 	}
 	
 	public abstract MinecraftWrapper getWrapper();

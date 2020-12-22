@@ -6,6 +6,10 @@ public interface FeatureRenderer {
 
 	public ModelCreator getVanillaModelCreator(int u, int v);
 	
+	public ModelCreator getVanillaModelCreator(int textureWith, int textureHeight, int u, int v);
+	
 	public Object getRenderLayerPlayerTextureCutout(Object player);
+	
+	public Object getRenderLayerEntitySolid(Object texture);
 	
 }
