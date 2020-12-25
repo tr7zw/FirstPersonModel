@@ -29,6 +29,6 @@
     "firstperson.mixins.json"
   ],
   "depends": {
-    "modmenu": "*"
+    "fabric": "*"
   }
 }

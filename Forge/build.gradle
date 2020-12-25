@@ -102,7 +102,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     compile project(':Core')
-    extraLibs project(':Core')
+    //extraLibs project(':Core') Don't copy in the core
     compile (fg.deobf("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
 }
 
