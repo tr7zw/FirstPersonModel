@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "de.tr7zw.firstperson.fabric.fix.canvas",
+  "package": "dev.tr7zw.firstperson.fabric.fix.canvas",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

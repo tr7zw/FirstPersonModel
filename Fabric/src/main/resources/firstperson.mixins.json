@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "de.tr7zw.firstperson.fabric.mixins",
+  "package": "dev.tr7zw.firstperson.fabric.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
