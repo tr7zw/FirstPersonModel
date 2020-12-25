@@ -23,14 +23,6 @@ description='''
 Enables the third person Model in firstperson
 '''
 
-[[mods]]
-modId="cloth-config"
-version="4.0"
-displayName="Cloth Config v4 API"
-description='''
-An API for config screens.
-'''
-
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.firstpersonmod]] #optional
     # the modid of the dependency

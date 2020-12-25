@@ -124,7 +124,7 @@ jar {
     from {
             configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
         }
-    exclude('**/META-INF/**', 'fabric.mod.json')
+    exclude('**/META-INF/**', 'fabric.mod.json', '**/ClothConfig.class')
 }
 
 // Example configuration to allow publishing using the maven-publish task
