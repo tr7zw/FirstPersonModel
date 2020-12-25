@@ -11,6 +11,8 @@ import dev.tr7zw.firstperson.config.FirstPersonConfig;
 import dev.tr7zw.firstperson.features.AbstractCosmetic;
 import dev.tr7zw.firstperson.features.FeatureProvider;
 import dev.tr7zw.firstperson.sync.SyncManager;
+import dev.tr7zw.velvet.api.Velvet;
+import dev.tr7zw.velvet.api.wrapper.WrappedKeybind;
 
 public abstract class FirstPersonModelCore {
 
@@ -23,6 +25,7 @@ public abstract class FirstPersonModelCore {
 	protected static boolean isHeld = false;
 	public static SyncManager syncManager;
 	public static final String APIHost = "https://firstperson.tr7zw.dev";
+	public static WrappedKeybind keyBinding;
 	
 	public static final float sneakBodyOffset = 0.27f;
 	public static final float swimUpBodyOffset = 0.60f;
@@ -45,6 +48,8 @@ public abstract class FirstPersonModelCore {
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
 		syncManager.takeSnapshot();
+		keyBinding = Velvet.velvet.getWrapper().createKeyBind("toggle", 295, "Firstperson");
+		Velvet.velvet.getKeybindings().registerKeybinding(keyBinding);
 		FeatureProvider.getFeatures().forEach(AbstractCosmetic::initTextures);
 	}
 	
@@ -52,5 +57,15 @@ public abstract class FirstPersonModelCore {
 		return wrapper;
 	}
 	public abstract boolean isFixActive(Object player, Object matrices);
+	
+	public void onTick() {
+        if(keyBinding.isPressed()) {
+        	if(isHeld)return;
+        	isHeld = true;
+        	enabled = !enabled;
+        }else {
+        	isHeld = false;
+        }
+	}
 	
 }

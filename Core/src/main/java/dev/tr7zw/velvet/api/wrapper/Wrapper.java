@@ -12,4 +12,6 @@ public interface Wrapper {
 	
 	public WrappedConfigEntry getWrappedConfigEntry(Object clazz);
 	
+	public WrappedKeybind createKeyBind(String name, int key, String namespace);
+	
 }

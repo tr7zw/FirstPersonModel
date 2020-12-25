@@ -4,9 +4,6 @@ import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
@@ -17,6 +14,7 @@ import dev.tr7zw.velvet.api.Velvet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -28,8 +26,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 {
 
     public static final String MODID = "firstpersonmod";
-
-    private static final Logger LOGGER = LogManager.getLogger();
     
 	@Nullable
 	public static MatrixStack hideHeadWithMatrixStack = null;
@@ -42,7 +38,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
        // FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
+        MinecraftForge.EVENT_BUS.addListener(this::doTick);
         MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRender);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -56,6 +52,11 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 				}
         );
     }
+    
+    private void doTick(ClientTickEvent event) {
+    	super.onTick();
+    }
+    
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	wrapper = new ForgeWrapper(Minecraft.getInstance());

@@ -1,6 +1,7 @@
 package dev.tr7zw.velvet.fabric.wrapper;
 
 import dev.tr7zw.velvet.api.config.WrappedConfigEntry;
+import dev.tr7zw.velvet.api.wrapper.WrappedKeybind;
 import dev.tr7zw.velvet.api.wrapper.WrappedScreen;
 import dev.tr7zw.velvet.api.wrapper.WrappedText;
 import dev.tr7zw.velvet.api.wrapper.Wrapper;
@@ -8,6 +9,7 @@ import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
 import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.options.KeyBinding;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
@@ -64,6 +66,24 @@ public class WrapperImpl implements Wrapper{
 			@Override
 			public int getIntValue() {
 				return ((IntegerSliderEntry)handler).getValue();
+			}
+		};
+	}
+
+	@Override
+	public WrappedKeybind createKeyBind(String name, int key, String namespace) {
+		return new WrappedKeybind() {
+			
+			private KeyBinding keybind = new KeyBinding(name, key, namespace);
+			
+			@Override
+			public Object getHandler() {
+				return keybind;
+			}
+
+			@Override
+			public boolean isPressed() {
+				return keybind.isPressed();
 			}
 		};
 	}
