@@ -104,6 +104,7 @@ dependencies {
     compile project(':Core')
     //extraLibs project(':Core') Don't copy in the core
     compile (fg.deobf("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
+    extraLibs (("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -122,7 +123,9 @@ jar {
     }
     from {
             configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+            
         }
+    exclude('**/META-INF/**')
 }
 
 // Example configuration to allow publishing using the maven-publish task
