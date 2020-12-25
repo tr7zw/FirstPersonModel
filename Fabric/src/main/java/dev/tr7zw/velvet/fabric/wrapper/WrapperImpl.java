@@ -6,7 +6,7 @@ import dev.tr7zw.velvet.api.wrapper.WrappedText;
 import dev.tr7zw.velvet.api.wrapper.Wrapper;
 import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
-import me.shedaniel.clothconfig2.gui.entries.IntegerListEntry;
+import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -63,7 +63,7 @@ public class WrapperImpl implements Wrapper{
 
 			@Override
 			public int getIntValue() {
-				return ((IntegerListEntry)handler).getValue();
+				return ((IntegerSliderEntry)handler).getValue();
 			}
 		};
 	}
