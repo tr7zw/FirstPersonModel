@@ -9,8 +9,8 @@ import com.mojang.authlib.exceptions.InvalidCredentialsException;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.MinecraftWrapper;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.MinecraftWrapper;
 import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

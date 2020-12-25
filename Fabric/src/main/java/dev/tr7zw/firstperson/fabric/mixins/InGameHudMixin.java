@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.config.PaperDollSettings.DollHeadMode;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.config.PaperDollSettings.DollHeadMode;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;

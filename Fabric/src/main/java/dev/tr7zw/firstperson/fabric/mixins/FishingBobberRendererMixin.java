@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.GameOptions;

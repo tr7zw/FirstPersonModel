@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.PlayerSettings;
-import de.tr7zw.firstperson.config.CosmeticSettings;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.PlayerSettings;
+import dev.tr7zw.firstperson.config.CosmeticSettings;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;

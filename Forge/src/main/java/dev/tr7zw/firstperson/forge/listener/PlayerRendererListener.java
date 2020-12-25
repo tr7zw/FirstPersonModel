@@ -1,6 +1,6 @@
 package dev.tr7zw.firstperson.forge.listener;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.entity.model.PlayerModel;

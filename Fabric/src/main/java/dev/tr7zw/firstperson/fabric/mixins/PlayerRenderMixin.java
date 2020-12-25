@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import dev.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
 import dev.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;

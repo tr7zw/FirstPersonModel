@@ -6,10 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.authlib.GameProfile;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.features.Head;
-import de.tr7zw.firstperson.util.SettingsUtil;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import dev.tr7zw.firstperson.features.Head;
+import dev.tr7zw.firstperson.util.SettingsUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.AbstractSkullBlock;

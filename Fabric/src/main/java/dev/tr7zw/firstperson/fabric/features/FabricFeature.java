@@ -1,8 +1,8 @@
 package dev.tr7zw.firstperson.fabric.features;
 
-import de.tr7zw.firstperson.features.AbstractCosmetic;
-import de.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
 import dev.tr7zw.firstperson.fabric.render.CustomModelPart;
+import dev.tr7zw.firstperson.features.AbstractCosmetic;
+import dev.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 
 public class FabricFeature
 		extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>
-		implements de.tr7zw.firstperson.features.FeatureRenderer {
+		implements dev.tr7zw.firstperson.features.FeatureRenderer {
 
 	private final AbstractCosmetic cosmetic;
 	private final PlayerEntityModel<AbstractClientPlayerEntity> parentModel;

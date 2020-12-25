@@ -3,7 +3,7 @@ package dev.tr7zw.firstperson.forge.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import de.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
+import dev.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 
 @Mixin(PlayerModel.class)

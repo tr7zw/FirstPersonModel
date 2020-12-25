@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import de.tr7zw.firstperson.PlayerSettings;
-import de.tr7zw.firstperson.features.AbstractCosmetic;
-import de.tr7zw.firstperson.features.FeatureProvider;
+import dev.tr7zw.firstperson.PlayerSettings;
+import dev.tr7zw.firstperson.features.AbstractCosmetic;
+import dev.tr7zw.firstperson.features.FeatureProvider;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import dev.tr7zw.firstperson.forge.features.ForgeFeature;
 import net.minecraft.client.Minecraft;

@@ -7,17 +7,15 @@ import java.util.Optional;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import de.tr7zw.firstperson.config.CosmeticSettings;
-import de.tr7zw.firstperson.config.SharedConfigBuilder;
-import de.tr7zw.firstperson.features.Back;
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.features.Chest;
-import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.features.Head;
+import dev.tr7zw.firstperson.config.CosmeticSettings;
+import dev.tr7zw.firstperson.config.SharedConfigBuilder;
+import dev.tr7zw.firstperson.features.Back;
+import dev.tr7zw.firstperson.features.Boots;
+import dev.tr7zw.firstperson.features.Chest;
+import dev.tr7zw.firstperson.features.Hat;
+import dev.tr7zw.firstperson.features.Head;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import me.shedaniel.clothconfig2.forge.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.forge.gui.entries.EnumListEntry;
-import me.shedaniel.clothconfig2.forge.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -73,7 +71,7 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 	}
 
 	// Modified version from InventoryScreen
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "deprecation" })
 	private void drawEntity(int posX, int posY, int scale, float mouseX, float mouseY, LivingEntity livingEntity,
 			float delta, boolean lockHead) {
 		float h = (float) Math.atan((double) (mouseX / 40.0F));
@@ -111,21 +109,19 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		}
 		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
 		Hat hat = settings.hat;
-		settings.hat = ((EnumListEntry<Hat>) SharedConfigBuilder.hatSelection).getValue();
+		settings.hat = SharedConfigBuilder.hatSelection.getEnumValue(Hat.class);
 		Head head = settings.head;
-		settings.head = ((EnumListEntry<Head>) SharedConfigBuilder.headSelection).getValue();
+		settings.head = SharedConfigBuilder.headSelection.getEnumValue(Head.class);
 		Chest chest = settings.chest;
-		settings.chest = ((EnumListEntry<Chest>) SharedConfigBuilder.chestSelection).getValue();
+		settings.chest = SharedConfigBuilder.chestSelection.getEnumValue(Chest.class);
 		Back back = settings.back;
-		settings.back = ((EnumListEntry<Back>) SharedConfigBuilder.backSelection).getValue();
+		settings.back = SharedConfigBuilder.backSelection.getEnumValue(Back.class);
 		Boots boots = settings.boots;
-		settings.boots = ((EnumListEntry<Boots>) SharedConfigBuilder.bootsSelection).getValue();
+		settings.boots = SharedConfigBuilder.bootsSelection.getEnumValue(Boots.class);
 		int size = settings.playerSize;
-		settings.playerSize = ((IntegerSliderEntry) SharedConfigBuilder.sizeSelection).getValue();
-		boolean allowSizeChange = settings.modifyCameraHeight;
-		settings.modifyCameraHeight = true;
+		settings.playerSize = SharedConfigBuilder.sizeSelection.getIntValue();
 		int backHue = settings.backHue;
-		backHue = ((IntegerSliderEntry) SharedConfigBuilder.backHueSelection).getValue();
+		settings.backHue = SharedConfigBuilder.backHueSelection.getIntValue();
 		EntityRendererManager entityrenderermanager = Minecraft.getInstance().getRenderManager();
 		quaternion1.conjugate();
 		entityrenderermanager.setCameraOrientation(quaternion1);
@@ -154,7 +150,6 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		settings.back = back;
 		settings.boots = boots;
 		settings.playerSize = size;
-		settings.modifyCameraHeight = allowSizeChange;
 		settings.backHue = backHue;
 		RenderSystem.popMatrix();
 	}

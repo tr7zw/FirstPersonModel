@@ -1,11 +1,11 @@
 package dev.tr7zw.firstperson.fabric.features.layers;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.PlayerSettings;
-import de.tr7zw.firstperson.features.LayerMode;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
+import dev.tr7zw.firstperson.features.LayerMode;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;

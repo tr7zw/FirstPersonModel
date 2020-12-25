@@ -1,7 +1,7 @@
 package dev.tr7zw.firstperson.fabric.features.boot;
 
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.util.SettingsUtil;
+import dev.tr7zw.firstperson.features.Boots;
+import dev.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;

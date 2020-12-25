@@ -4,8 +4,9 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.glfw.GLFW;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.MinecraftWrapper;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.velvet.api.Velvet;
+import dev.tr7zw.velvet.fabric.VelvetImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -16,7 +17,6 @@ import net.minecraft.util.Identifier;
 
 public class FirstPersonModelMod extends FirstPersonModelCore implements ModInitializer {
 	
-	private MinecraftWrapper wrapper;
 	@Nullable
 	public static MatrixStack hideHeadWithMatrixStack = null;
 	@Nullable
@@ -39,6 +39,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	@Override
 	public void onInitialize() {
 		wrapper = new FabricWrapper(MinecraftClient.getInstance());
+		Velvet.velvet = new VelvetImpl();
 	    keyBinding = new KeyBinding(
 	            new Identifier("firstperson", "toggle").getPath(),
 	            net.minecraft.client.util.InputUtil.Type.KEYSYM,
@@ -58,12 +59,5 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	    });
 	    sharedSetup();
 	}
-
-	@Override
-	public MinecraftWrapper getWrapper() {
-		return wrapper;
-	}
-	
-
-	   
+	  
 }

@@ -6,17 +6,16 @@ import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import de.tr7zw.firstperson.config.CosmeticSettings;
-import de.tr7zw.firstperson.config.SharedConfigBuilder;
-import de.tr7zw.firstperson.features.Back;
-import de.tr7zw.firstperson.features.Boots;
-import de.tr7zw.firstperson.features.Chest;
-import de.tr7zw.firstperson.features.Hat;
-import de.tr7zw.firstperson.features.Head;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.config.CosmeticSettings;
+import dev.tr7zw.firstperson.config.SharedConfigBuilder;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import dev.tr7zw.firstperson.features.Back;
+import dev.tr7zw.firstperson.features.Boots;
+import dev.tr7zw.firstperson.features.Chest;
+import dev.tr7zw.firstperson.features.Hat;
+import dev.tr7zw.firstperson.features.Head;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
-import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
-import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -77,7 +76,6 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 	}
 
 	// Modified version from InventoryScreen
-	@SuppressWarnings("unchecked")
 	private void drawEntity(int i, int j, int k, float f, float g, LivingEntity livingEntity, float delta,
 			boolean lockHead) {
 		float h = (float) Math.atan((double) (f / 40.0F));
@@ -114,21 +112,21 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 			livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
 			livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
 		}
-		CosmeticSettings settings = FirstPersonModelMod.config.cosmetic;
+		CosmeticSettings settings = FirstPersonModelCore.config.cosmetic;
 		Hat hat = settings.hat;
-		settings.hat = ((EnumListEntry<Hat>) SharedConfigBuilder.hatSelection).getValue();
+		settings.hat = SharedConfigBuilder.hatSelection.getEnumValue(Hat.class);
 		Head head = settings.head;
-		settings.head = ((EnumListEntry<Head>) SharedConfigBuilder.headSelection).getValue();
+		settings.head = SharedConfigBuilder.headSelection.getEnumValue(Head.class);
 		Chest chest = settings.chest;
-		settings.chest = ((EnumListEntry<Chest>) SharedConfigBuilder.chestSelection).getValue();
+		settings.chest = SharedConfigBuilder.chestSelection.getEnumValue(Chest.class);
 		Back back = settings.back;
-		settings.back = ((EnumListEntry<Back>) SharedConfigBuilder.backSelection).getValue();
+		settings.back = SharedConfigBuilder.backSelection.getEnumValue(Back.class);
 		Boots boots = settings.boots;
-		settings.boots = ((EnumListEntry<Boots>) SharedConfigBuilder.bootsSelection).getValue();
+		settings.boots = SharedConfigBuilder.bootsSelection.getEnumValue(Boots.class);
 		int size = settings.playerSize;
-		settings.playerSize = ((IntegerSliderEntry) SharedConfigBuilder.sizeSelection).getValue();
+		settings.playerSize = SharedConfigBuilder.sizeSelection.getIntValue();
 		int backHue = settings.backHue;
-		settings.backHue = ((IntegerSliderEntry) SharedConfigBuilder.backHueSelection).getValue();
+		settings.backHue = SharedConfigBuilder.backHueSelection.getIntValue();
 		boolean allowSizeChange = settings.modifyCameraHeight;
 		settings.modifyCameraHeight = true;
 		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();

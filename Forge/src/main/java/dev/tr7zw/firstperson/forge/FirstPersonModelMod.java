@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.forge;
 
+import java.util.function.BiFunction;
+
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,11 +9,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import de.tr7zw.firstperson.FirstPersonModelCore;
-import de.tr7zw.firstperson.MinecraftWrapper;
-import dev.tr7zw.firstperson.forge.config.ForgeConfigBuilder;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.forge.config.ConfigBuilder;
 import dev.tr7zw.firstperson.forge.listener.PlayerRendererListener;
+import dev.tr7zw.valvet.forge.ValvetImpl;
+import dev.tr7zw.velvet.api.Velvet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -31,7 +35,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 	public static MatrixStack hideHeadWithMatrixStack = null;
 	@Nullable
 	public static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
-    private MinecraftWrapper wrapper;
 
     public FirstPersonModelMod() {
     	instance = this;
@@ -45,19 +48,20 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerExtensionPoint(
                 ExtensionPoint.CONFIGGUIFACTORY,
-                () -> new ForgeConfigBuilder()::createConfigScreen
+                () -> new BiFunction<Minecraft, Screen, Screen>() {
+					@Override
+					public Screen apply(Minecraft t, Screen screen) {
+						return new ConfigBuilder().createConfigScreen(Velvet.velvet.getWrapper().wrapScreen(screen)).getHandler(Screen.class);
+					}
+				}
         );
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	wrapper = new ForgeWrapper(Minecraft.getInstance());
+    	Velvet.velvet = new ValvetImpl();
     	sharedSetup();
     }
-
-	@Override
-	public MinecraftWrapper getWrapper() {
-		return wrapper;
-	}
 
 	@Override
 	public boolean isFixActive(Object player, Object matrices){

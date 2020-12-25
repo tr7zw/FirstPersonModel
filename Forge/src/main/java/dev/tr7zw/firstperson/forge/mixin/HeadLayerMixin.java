@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import de.tr7zw.firstperson.mixinbase.HeadFeatureRendererBase;
+import dev.tr7zw.firstperson.mixinbase.HeadFeatureRendererBase;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.HeadLayer;

@@ -3,8 +3,8 @@ package dev.tr7zw.firstperson.forge.features;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import de.tr7zw.firstperson.features.AbstractCosmetic;
-import de.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
+import dev.tr7zw.firstperson.features.AbstractCosmetic;
+import dev.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
 import dev.tr7zw.firstperson.forge.render.CustomModelPart;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class ForgeFeature extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>
-		implements de.tr7zw.firstperson.features.FeatureRenderer {
+		implements dev.tr7zw.firstperson.features.FeatureRenderer {
 
 	private final AbstractCosmetic cosmetic;
 	private final PlayerModel<AbstractClientPlayerEntity> parentModel;
