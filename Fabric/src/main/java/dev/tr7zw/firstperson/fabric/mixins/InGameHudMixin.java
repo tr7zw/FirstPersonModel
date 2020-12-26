@@ -18,6 +18,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3d;
 
 /**
  * Paper doll rendering
@@ -75,10 +76,12 @@ public class InGameHudMixin {
 		float prevPitch = livingEntity.prevPitch;
 		float p = livingEntity.prevHeadYaw;
 		float q = livingEntity.headYaw;
+		Vec3d vel = livingEntity.getVelocity();
 		livingEntity.bodyYaw = 180.0F + h * 20.0F;
 		livingEntity.yaw = 180.0F + h * 40.0F;
 		livingEntity.prevBodyYaw = livingEntity.bodyYaw;
 		livingEntity.prevYaw = livingEntity.yaw;
+		livingEntity.setVelocity(Vec3d.ZERO);
 		if (lockHead) {
 			livingEntity.pitch = -l * 20.0F;
 			livingEntity.prevPitch = livingEntity.pitch;
@@ -110,6 +113,7 @@ public class InGameHudMixin {
 		livingEntity.prevPitch = prevPitch;
 		livingEntity.prevHeadYaw = p;
 		livingEntity.headYaw = q;
+		livingEntity.setVelocity(vel);
 		RenderSystem.popMatrix();
 	}
 

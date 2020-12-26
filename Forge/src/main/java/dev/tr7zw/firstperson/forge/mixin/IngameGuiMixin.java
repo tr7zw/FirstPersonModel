@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 
 //IngameHudMixin
@@ -70,10 +71,12 @@ public class IngameGuiMixin {
 		float prevPitch = livingEntity.prevRotationPitch;
 		float prevHeadYaw = livingEntity.prevRotationYawHead;
 		float headYaw = livingEntity.rotationYawHead;
+		Vector3d vel = livingEntity.getMotion();
 		livingEntity.renderYawOffset = 180.0F + h * 20.0F;
 		livingEntity.rotationYawHead = 180.0F + h * 40.0F;
 		livingEntity.prevRenderYawOffset = livingEntity.renderYawOffset;
 		livingEntity.prevRotationYawHead = livingEntity.rotationYawHead;
+		livingEntity.setMotion(Vector3d.ZERO);
 		if (lockHead) {
 			livingEntity.rotationPitch = -l * 20.0F;
 			livingEntity.prevRotationPitch = livingEntity.rotationPitch;
@@ -110,6 +113,7 @@ public class IngameGuiMixin {
 		livingEntity.prevRotationPitch = prevPitch;
 		livingEntity.prevRotationYawHead = prevHeadYaw;
 		livingEntity.rotationYawHead = headYaw;
+		livingEntity.setMotion(vel);
 		RenderSystem.popMatrix();
 	}
 	
