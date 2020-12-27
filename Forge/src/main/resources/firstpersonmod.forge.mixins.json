@@ -13,12 +13,12 @@
     "WorldRendererMixin",
     "EntityRendererMangerMixin",
     "IngameGuiMixin",
-    "BipedArmorLayerMixin",
     "HeldItemLayerMixin",
     "PlayerRendererMixin",
     "PlayerEntityMixin",
     "DownloadingTextureMixin",
-    "ClientPlayNetHandlerMixin"
+    "ClientPlayNetHandlerMixin",
+    "ModelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,12 +3,15 @@ package dev.tr7zw.firstperson.fabric.mixins;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import dev.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
 import dev.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
+import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -48,6 +51,7 @@ public abstract class PlayerRenderMixin
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
+			((ModelPartBase)playerEntityModel_1.head).setHidden();
 			if (FirstPersonModelMod.config.firstPerson.vanillaHands) {
 				playerEntityModel_1.leftArm.visible = false;
 				playerEntityModel_1.leftSleeve.visible = false;
@@ -70,6 +74,12 @@ public abstract class PlayerRenderMixin
 				: playerEntityRenderer.getModel().rightPantLeg.visible;
 		playerEntityRenderer.getModel().jacket.visible = bodyLayer ? false
 				: playerEntityRenderer.getModel().jacket.visible;
+	}
+	
+	@Inject(method = "render", at = @At(value = "RETURN"))
+	public void render(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, MatrixStack matrixStack,
+			VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
+		((ModelPartBase)this.getModel().head).showAgain();
 	}
 
 	@Shadow

@@ -18,7 +18,6 @@ public abstract class FirstPersonModelCore {
 
 	public static MinecraftWrapper wrapper;
 	public static FirstPersonModelCore instance;
-	public static boolean hideNextHeadArmor = false;
 	public static boolean isRenderingPlayer = false;
 	public static boolean enabled = true;
 	public static FirstPersonConfig config = null;

@@ -39,7 +39,8 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(this::doTick);
-        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRender);
+        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRenderPre);
+        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRenderPost);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerExtensionPoint(

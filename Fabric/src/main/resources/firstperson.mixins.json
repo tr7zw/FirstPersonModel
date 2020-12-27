@@ -8,7 +8,6 @@
 	"HeldItemRendererMixin",
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
-	"ArmorRendererMixin",
 	"GameRendererMixin",
   "CameraMixin",
   "WorldRendererMixin",
@@ -21,7 +20,8 @@
   "PlayerEntityModelMixin",
   "ClientPlayNetworkHandlerMixin",
   "PlayerSkinTextureMixin",
-  "GameMenuScreenMixin"
+  "GameMenuScreenMixin",
+  "ModelPartMixin"
   ],
   "injectors": {
     "defaultRequire": 1
