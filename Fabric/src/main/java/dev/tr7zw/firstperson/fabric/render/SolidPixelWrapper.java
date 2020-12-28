@@ -69,7 +69,7 @@ public class SolidPixelWrapper {
 				// back
 				if(natImage.getPixelOpacity(textureU + 2*depth + width + u, textureV + depth + v) != 0) {
 					wrapper.setTextureOffset(textureU + 2*depth + width - 2 + u, textureV + depth - 1 + v); // 54 + u, 7 + v
-					wrapper.addCustomCuboid(staticXOffset + u, staticYOffset + v, staticZOffset + depth - 1, pixelSize, pixelSize, pixelSize);
+					wrapper.addCustomCuboid(staticXOffset + width - 1 - u, staticYOffset + v, staticZOffset + depth - 1, pixelSize, pixelSize, pixelSize);
 				}
 			}
 		}
