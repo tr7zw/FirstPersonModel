@@ -120,7 +120,9 @@ public class SolidPixelWrapper {
 			Set<Direction> hide = new HashSet<>();
 			if(!onBorder) {
 				for(int i = 0; i < offsets.length; i++) {
-					if(natImage.getPixelOpacity(u+ offsets[i][1], v+ offsets[i][0]) != 0) {
+					int tU = u+ offsets[i][1];
+					int tV = v+ offsets[i][0];
+					if(tU >= 0 && tU < 64 && tV >= 0 && tV < 64 && natImage.getPixelOpacity(tU, tV) != 0) {
 						if(dir == Direction.NORTH)hide.add(hiddenDirN[i]);
 						if(dir == Direction.SOUTH)hide.add(hiddenDirS[i]);
 						if(dir == Direction.EAST)hide.add(hiddenDirE[i]);
