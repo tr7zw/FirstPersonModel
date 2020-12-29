@@ -12,6 +12,7 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.config.CosmeticSettings;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import dev.tr7zw.firstperson.fabric.render.CustomizableModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -36,8 +37,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 
 	private CosmeticSettings settings;
-	private SolidPixelModelPart headLayer;
-	private SolidPixelModelPart[] skinLayer;
+	private CustomizableModelPart headLayer;
+	private CustomizableModelPart[] skinLayer;
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
@@ -50,23 +51,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 
 	@Override
-	public SolidPixelModelPart[] getSkinLayers() {
+	public CustomizableModelPart[] getSkinLayers() {
 		return skinLayer;
 	}
 	
 	@Override
 	public void setupSkinLayers(Object[] box) {
-		this.skinLayer = (SolidPixelModelPart[]) box;
+		this.skinLayer = (CustomizableModelPart[]) box;
 	}
 	
 	@Override
-	public SolidPixelModelPart getHeadLayers() {
+	public CustomizableModelPart getHeadLayers() {
 		return headLayer;
 	}
 	
 	@Override
 	public void setupHeadLayers(Object box) {
-		this.headLayer = (SolidPixelModelPart) box;
+		this.headLayer = (CustomizableModelPart) box;
 	}
 
 	@Override

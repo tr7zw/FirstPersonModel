@@ -3,6 +3,7 @@ package dev.tr7zw.firstperson.fabric.features.layers;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import dev.tr7zw.firstperson.fabric.render.CustomizableModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
 import dev.tr7zw.firstperson.features.LayerMode;
@@ -74,7 +75,7 @@ public class HeadLayerFeatureRenderer
 		matrixStack.push();
 		this.getContextModel().head.rotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
-		((SolidPixelModelPart)settings.getHeadLayers()).customRender(matrixStack, vertices, light, overlay);
+		((CustomizableModelPart)settings.getHeadLayers()).customRender(matrixStack, vertices, light, overlay);
 		matrixStack.pop();
 
 	}

@@ -4,6 +4,7 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
+import dev.tr7zw.firstperson.fabric.render.CustomizableModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
 import dev.tr7zw.firstperson.features.LayerMode;
@@ -51,7 +52,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		VertexConsumer vertexConsumer = vertexConsumerProvider
 				.getBuffer(RenderLayer.getEntityTranslucentCull((Identifier) abstractClientPlayerEntity.getSkinTexture()));
 		int m = LivingEntityRenderer.getOverlay((LivingEntity) abstractClientPlayerEntity, (float) 0.0f);
-		renderLayers(abstractClientPlayerEntity, (SolidPixelModelPart[]) settings.getSkinLayers(), matrixStack, vertexConsumer, i, m);
+		renderLayers(abstractClientPlayerEntity, (CustomizableModelPart[]) settings.getSkinLayers(), matrixStack, vertexConsumer, i, m);
 	}
 	
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
@@ -59,7 +60,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 			return false; // default skin
 		}
 		NativeImage skin = (NativeImage) FirstPersonModelCore.instance.getWrapper().getSkinTexture(abstractClientPlayerEntity);
-		SolidPixelModelPart[] layers = new SolidPixelModelPart[5];
+		CustomizableModelPart[] layers = new CustomizableModelPart[5];
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 32, true, 0);
 		if(thinArms) {
@@ -75,13 +76,13 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 		return true;
 	}
 
-	public void renderLayers(AbstractClientPlayerEntity abstractClientPlayerEntity, SolidPixelModelPart[] layers, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+	public void renderLayers(AbstractClientPlayerEntity abstractClientPlayerEntity, CustomizableModelPart[] layers, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		float pixelScaling = 1.16f; //1.125f
-		SolidPixelModelPart leftLeg = layers[0];
-		SolidPixelModelPart rightLeg = layers[1];
-		SolidPixelModelPart leftArm = layers[2];
-		SolidPixelModelPart rightArm = layers[3];
-		SolidPixelModelPart jacket = layers[4];
+		CustomizableModelPart leftLeg = layers[0];
+		CustomizableModelPart rightLeg = layers[1];
+		CustomizableModelPart leftArm = layers[2];
+		CustomizableModelPart rightArm = layers[3];
+		CustomizableModelPart jacket = layers[4];
 		// Left leg
 		if(abstractClientPlayerEntity.isPartVisible(PlayerModelPart.LEFT_PANTS_LEG)) {
 			matrixStack.push();
