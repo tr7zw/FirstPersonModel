@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "icon": "assets/firstperson/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "dev.tr7zw.firstperson.fabric.FirstPersonModelMod"
