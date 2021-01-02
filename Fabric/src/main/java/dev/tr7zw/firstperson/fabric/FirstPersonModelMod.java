@@ -69,7 +69,8 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 
 	@Override
 	public boolean isDisallowedEntityType(Object type) {
-		return disallowedTypes.contains(type);
+		return false;
+		//return disallowedTypes.contains(type);
 	}
 	
 }

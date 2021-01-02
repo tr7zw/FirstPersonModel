@@ -22,7 +22,8 @@
   "PlayerSkinTextureMixin",
   "GameMenuScreenMixin",
   "ModelPartMixin",
-  "LivingEntityRendererMixin"
+  "LivingEntityRendererMixin",
+  "FeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
