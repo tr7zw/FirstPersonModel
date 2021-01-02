@@ -51,9 +51,9 @@ public class WingFeature extends AbstractCosmetic{
 	@Override
 	public Object getRenderLayer(FeatureRenderer featureRenderer, Object player) {
 		if(SettingsUtil.hasEnabled(player, Back.BUTTERFLY)) {
-			return featureRenderer.getRenderLayerEntityCutout(FirstPersonModelCore.instance.getWrapper().changeHue(butterflyTexture, 512, 512, SettingsUtil.getBackHue(player)));
+			return featureRenderer.getRenderLayerEntityCutout(FirstPersonModelCore.instance.getWrapper().changeHue(butterflyTexture, SettingsUtil.getBackHue(player)));
 		}else if(SettingsUtil.hasEnabled(player, Back.FANTASYWINGS)) {
-			return featureRenderer.getRenderLayerEntityTranslucentCull(FirstPersonModelCore.instance.getWrapper().changeHue(fantasyTexture, 512, 512, SettingsUtil.getBackHue(player)));
+			return featureRenderer.getRenderLayerEntityTranslucentCull(FirstPersonModelCore.instance.getWrapper().changeHue(fantasyTexture, SettingsUtil.getBackHue(player)));
 		} else {
 			throw new RuntimeException("Tried getting Texture for player without using it!");
 		}

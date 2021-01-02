@@ -2,6 +2,8 @@ package dev.tr7zw.firstperson.fabric;
 
 import java.awt.Color;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
@@ -176,7 +178,7 @@ public class FabricWrapper implements MinecraftWrapper {
 	}
 
 	@Override
-	public Object changeHue(Object ido, int width, int height, int hue) {
+	public Object changeHue(Object ido, int hue) {
 		Identifier id = (Identifier) ido;
 		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
 		Identifier newId = new Identifier(id.getNamespace(), id.getPath() + "_" + hue);
@@ -187,8 +189,10 @@ public class FabricWrapper implements MinecraftWrapper {
 		if (abstractTexture == null) {
 			return id;
 		}
-		NativeImage skin = new NativeImage(Format.ABGR, width, height, true);
 		GlStateManager.bindTexture(abstractTexture.getGlId());
+		int width = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
+		int height = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
+		NativeImage skin = new NativeImage(Format.ABGR, width, height, true);
 		skin.loadFromTextureImage(0, false);
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
