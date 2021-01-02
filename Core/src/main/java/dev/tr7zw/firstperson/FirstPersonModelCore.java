@@ -57,7 +57,7 @@ public abstract class FirstPersonModelCore {
 	}
 	public abstract boolean isFixActive(Object player, Object matrices);
 	public abstract boolean isCompatebilityMatrix(Object entity, Object matrices);
-	public abstract boolean isDisallowedEntityType(Object type);
+
 	public void onTick() {
         if(keyBinding.isPressed()) {
         	if(isHeld)return;

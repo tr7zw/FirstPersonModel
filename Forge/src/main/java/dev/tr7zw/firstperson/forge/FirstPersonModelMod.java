@@ -79,10 +79,4 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 		return (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
 	}
 
-	@Override
-	public boolean isDisallowedEntityType(Object type) {
-		return false; //TODO
-	}
-	
-
 }
