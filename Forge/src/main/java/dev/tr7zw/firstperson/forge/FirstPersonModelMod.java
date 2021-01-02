@@ -73,6 +73,16 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
 		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
 	}
+
+	@Override
+	public boolean isCompatebilityMatrix(Object entity, Object matrices) {
+		return (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
+	}
+
+	@Override
+	public boolean isDisallowedEntityType(Object type) {
+		return false; //TODO
+	}
 	
 
 }

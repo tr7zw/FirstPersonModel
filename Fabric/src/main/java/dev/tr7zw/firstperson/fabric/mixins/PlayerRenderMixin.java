@@ -27,7 +27,7 @@ import net.minecraft.client.util.math.MatrixStack;
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerRenderMixin
 		extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-
+	
 	/**
 	 * Just needed because of the extends
 	 * 
@@ -80,6 +80,7 @@ public abstract class PlayerRenderMixin
 	public void render(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, MatrixStack matrixStack,
 			VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
 		((ModelPartBase)this.getModel().head).showAgain();
+		FirstPersonModelMod.clearHeadStack();
 	}
 
 	@Shadow

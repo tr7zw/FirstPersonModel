@@ -99,7 +99,7 @@ public class FabricWrapper implements MinecraftWrapper {
 	@Override
 	public void isThirdPersonTrigger(Object matrices) {
 		if (applyThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
-			FirstPersonModelMod.hideHeadWithMatrixStack = (MatrixStack) matrices;
+			FirstPersonModelMod.setHideHeadWithMatrixStack((MatrixStack) matrices);
 		}
 	}
 

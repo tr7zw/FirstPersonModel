@@ -17,7 +17,8 @@ public class ModelPartMixin implements ModelPartBase{
 	
 	@Override
 	public void setHidden() {
-		zCopy = pivotZ;
+		if(!moved)
+			zCopy = pivotZ;
 		pivotZ = 5000;
 		moved = true;
 	}
