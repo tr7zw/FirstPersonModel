@@ -8,7 +8,7 @@ public interface CameraBase {
 
 	public default void isThirdPerson(boolean thirdPerson, CallbackInfoReturnable<Boolean> cir) {
 		if (!thirdPerson)
-			cir.setReturnValue(FirstPersonModelCore.instance.getWrapper().applyThirdPerson(false));
+			cir.setReturnValue(FirstPersonModelCore.getWrapper().applyThirdPerson(false));
 	}
 	
 }

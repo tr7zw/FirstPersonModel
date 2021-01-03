@@ -14,4 +14,10 @@ public interface Wrapper {
 	
 	public WrappedKeybind createKeyBind(String name, int key, String namespace);
 	
+	public WrappedWorld wrapWorld(Object world);
+	
+	public WrappedEntity wrapEntity(Object entity);
+	
+	public WrappedEntityTrackerUpdate wrapEntityTrackerUpdatePacket(Object packet);
+	
 }
