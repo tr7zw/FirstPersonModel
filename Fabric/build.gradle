@@ -24,7 +24,9 @@ group = project.maven_group
 
 repositories {
     jcenter()
-
+    maven {
+        url "https://www.cursemaven.com"
+    }
 	maven { url 'https://jitpack.io' } //fabric asm
 }
 
@@ -64,6 +66,7 @@ dependencies {
 	//compile files("optifabric-1.1.0-beta2.jar")
 	//compile files("optifine_latest.jar")
 	compileOnly files("canvas-mc116-99.0.0-nogit-dev.jar")
+	modImplementation "curse.maven:notenoughanimations-433760:3158765"
 
 	compile project(':Core')
 	extraLibs project(':Core')

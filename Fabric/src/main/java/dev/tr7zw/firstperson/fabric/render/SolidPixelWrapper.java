@@ -66,11 +66,11 @@ public class SolidPixelWrapper {
 		for (int u = 0; u < width; u++) {
 			for (int v = 0; v < height; v++) {
 				// front
-				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == depth - 1,
+				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == height - 1,
 						textureU + depth + u, textureV + depth + v,
 						staticXOffset + u, staticYOffset + v, staticZOffset, Direction.SOUTH);
 				// back
-				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == depth - 1,
+				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == height - 1,
 						textureU + 2*depth + width + u, textureV + depth + v,
 						staticXOffset + width - 1 - u, staticYOffset + v, staticZOffset + depth - 1, Direction.NORTH);
 			}
@@ -80,11 +80,11 @@ public class SolidPixelWrapper {
 		for (int u = 0; u < depth; u++) {
 			for (int v = 0; v < height; v++) {
 				// left
-				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == depth - 1,
+				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == depth - 1 || v == height - 1,
 						textureU - 1 + depth - u, textureV + depth + v,
 						staticXOffset, staticYOffset + v, staticZOffset + u, Direction.EAST);
 				// right
-				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == width - 1 || v == depth - 1,
+				addPixel(natImage, wrapper, pixelSize, u == 0 || v == 0 || u == depth - 1 || v == height - 1,
 						textureU + depth + width + u, textureV + depth + v,
 						staticXOffset + width - 1f, staticYOffset + v, staticZOffset + u, Direction.WEST);
 

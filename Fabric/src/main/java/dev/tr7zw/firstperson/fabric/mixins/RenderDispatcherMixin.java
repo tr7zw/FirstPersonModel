@@ -31,9 +31,9 @@ public abstract class RenderDispatcherMixin {
 			double x, double y, double z, float yaw, float tickDelta_1, MatrixStack matrices,
 			VertexConsumerProvider vertexConsumers, int light) {
 		if (entity instanceof AbstractClientPlayerEntity) {
-			FirstPersonModelCore.instance.getWrapper().updatePositionOffset((AbstractClientPlayerEntity) entity,
+			FirstPersonModelCore.getWrapper().updatePositionOffset((AbstractClientPlayerEntity) entity,
 					entityRenderer.getPositionOffset(entity, tickDelta), matrices);
-			return (Vec3d) FirstPersonModelCore.instance.getWrapper().getOffset();
+			return (Vec3d) FirstPersonModelCore.getWrapper().getOffset();
 		} else {
 			return entityRenderer.getPositionOffset(entity, tickDelta);
 		}
@@ -43,7 +43,7 @@ public abstract class RenderDispatcherMixin {
 	private void renderRedirect(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity,
 			float opacity, float tickDelta, WorldView world, float radius) {
 		if (entity instanceof AbstractClientPlayerEntity) {
-			Vec3d offset = (Vec3d) FirstPersonModelCore.instance.getWrapper().getOffset();
+			Vec3d offset = (Vec3d) FirstPersonModelCore.getWrapper().getOffset();
 			matrices.translate(offset.x, offset.y, offset.z);
 			renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
 			matrices.translate(-offset.x, -offset.y,
