@@ -3,6 +3,7 @@ package dev.tr7zw.firstperson.config;
 public class FirstPersonSettings {
 
 	public boolean enabledByDefault = true;
+	public boolean lockBodyOnItems = false;
 	public int xOffset = 0;
 	public int sneakXOffset = 0;
 

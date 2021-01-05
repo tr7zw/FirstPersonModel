@@ -9,6 +9,8 @@
     "text.firstperson.option.firstperson.sneakXOffset.@Tooltip": "Moves the body relative to the camera back and forth while sneaking",
     "text.firstperson.option.firstperson.enabledByDefault": "Enabled by default",
     "text.firstperson.option.firstperson.enabledByDefault.@Tooltip": "The default state of the FirstPerson mod after starting the game",
+    "text.firstperson.option.firstperson.lockBodyOnItems": "Lock body when holding certain Items",
+    "text.firstperson.option.firstperson.lockBodyOnItems.@Tooltip": "Locks the body rotation to the head rotation when holding a map or compass to make better usable",
     "text.firstperson.option.firstperson.sitXOffset": "Sit X Offset",
     "text.firstperson.option.firstperson.sitXOffset.@Tooltip": "Moves the body relative to the camera back and forth while sitting",
     "text.firstperson.option.firstperson.vanillaHands": "Vanilla Hands",
