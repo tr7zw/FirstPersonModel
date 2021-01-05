@@ -127,7 +127,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
-		if(FirstPersonModelCore.config.firstPerson.lockBodyOnItems && (lockItems.contains(getMainHandStack().getItem()) || lockItems.contains(getOffHandStack().getItem()))) {
+		if(FirstPersonModelCore.config.firstPerson.lockBodyOnItems && ((PlayerEntity) (Object) this) == MinecraftClient.getInstance().player && (lockItems.contains(getMainHandStack().getItem()) || lockItems.contains(getOffHandStack().getItem()))) {
 			this.bodyYaw = headYaw;
 			this.prevBodyYaw = prevHeadYaw;
 		}
