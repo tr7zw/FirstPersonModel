@@ -7,6 +7,7 @@ import dev.tr7zw.velvet.api.Velvet;
 import dev.tr7zw.velvet.fabric.VelvetImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -16,6 +17,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	private static MatrixStack hideHeadWithMatrixStack = null;
 	@Nullable
 	private static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
+	public static boolean hasOptifabric = false;
 
 	public FirstPersonModelMod() {
 		instance = this;
@@ -39,11 +41,15 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	    	onTick();
 	    });
 	    sharedSetup();
+	    if(FabricLoader.getInstance().isModLoaded("optifabric")) {
+	    	hasOptifabric = true;
+	    	System.out.println("Found optifabric, limiting 3rd party mod compatebility!");
+	    }
 	}
 
 	@Override
 	public boolean isCompatebilityMatrix(Object entity, Object matrices) {
-		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().player != entity && (matrices == hideHeadWithMatrixStack && matrices != paperDollStack);
+		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().player != entity && (entity == MinecraftClient.getInstance().getCameraEntity() || !hasOptifabric) && (matrices == hideHeadWithMatrixStack && matrices != paperDollStack);
 	}
 	
 	public static void clearHeadStack() {

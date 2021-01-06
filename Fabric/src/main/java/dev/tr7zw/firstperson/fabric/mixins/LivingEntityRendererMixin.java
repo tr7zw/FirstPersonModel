@@ -57,8 +57,8 @@ public abstract class LivingEntityRendererMixin {
 				if (model instanceof ModelWithHat) {
 					((ModelWithHat) model).setHatVisible(true);
 				}
-				FirstPersonModelMod.clearHeadStack();
 			}
+			FirstPersonModelMod.clearHeadStack();
 		}
 	}
 
