@@ -25,6 +25,8 @@ import net.minecraft.client.renderer.texture.Texture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.settings.PointOfView;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.network.play.client.CClientSettingsPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -136,7 +138,13 @@ public class ForgeWrapper implements MinecraftWrapper{
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.getRidingEntity() != null) {
-				realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
+				if(abstractClientPlayerEntity_1.getRidingEntity() instanceof BoatEntity) {
+					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
+				} else if(abstractClientPlayerEntity_1.getRidingEntity() instanceof LivingEntity) {
+					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).prevRotationYaw, ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).rotationYaw);
+				} else {
+					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.getRidingEntity().prevRotationYaw, ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).rotationYaw);
+				}
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.firstPerson.sitXOffset / 100f);
 			}else{
 				bodyOffset = 0.25f + (FirstPersonModelMod.config.firstPerson.xOffset / 100f);
