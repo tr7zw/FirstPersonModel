@@ -80,7 +80,9 @@ public abstract class PlayerRenderMixin
 	public void render(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, MatrixStack matrixStack,
 			VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
 		((ModelPartBase)this.getModel().head).showAgain();
-		FirstPersonModelMod.clearHeadStack();
+		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)) {
+			FirstPersonModelMod.clearHeadStack();
+		}
 	}
 
 	@Shadow
