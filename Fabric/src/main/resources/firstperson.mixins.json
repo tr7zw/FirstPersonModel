@@ -8,7 +8,6 @@
 	"HeldItemRendererMixin",
 	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
-  "CameraMixin",
   "WorldRendererMixin",
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
