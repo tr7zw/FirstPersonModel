@@ -27,6 +27,7 @@ import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.network.packet.c2s.play.ClientSettingsC2SPacket;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
@@ -137,7 +138,7 @@ public class FabricWrapper implements MinecraftWrapper {
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.hasVehicle()) {
-				if(abstractClientPlayerEntity_1.getVehicle() instanceof BoatEntity) {
+				if(abstractClientPlayerEntity_1.getVehicle() instanceof BoatEntity || abstractClientPlayerEntity_1.getVehicle() instanceof MinecartEntity) {
 					realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevBodyYaw, abstractClientPlayerEntity_1.bodyYaw);
 				} else if(abstractClientPlayerEntity_1.getVehicle() instanceof LivingEntity){
 					realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).prevBodyYaw, ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).bodyYaw);
