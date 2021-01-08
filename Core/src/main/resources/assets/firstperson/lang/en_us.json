@@ -83,5 +83,7 @@
     "text.firstperson.option.skinlayer.skinLayerMode.VANILLA2D": "Vanilla",
     "text.firstperson.option.skinlayer.skinLayerMode.RENDER3D": "3d everyone",
     "text.firstperson.option.skinlayer.skinLayerMode.ONLYSELF": "3d yourself",
-    "text.firstperson.option.skinlayer.skinLayerMode.@Tooltip": "Same setting values as for the Head layer, but applies to the rest of the skin."
+    "text.firstperson.option.skinlayer.skinLayerMode.@Tooltip": "Same setting values as for the Head layer, but applies to the rest of the skin.",
+    "text.firstperson.option.skinlayer.playerHeadSkins": "Player Head skins",
+    "text.firstperson.option.skinlayer.playerHeadSkins.@Tooltip": "Replace the player skin with the Player Head's skin that is worn"
   }

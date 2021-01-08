@@ -21,7 +21,8 @@
   "GameMenuScreenMixin",
   "ModelPartMixin",
   "LivingEntityRendererMixin",
-  "FeatureRendererMixin"
+  "FeatureRendererMixin",
+  "AbstractClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

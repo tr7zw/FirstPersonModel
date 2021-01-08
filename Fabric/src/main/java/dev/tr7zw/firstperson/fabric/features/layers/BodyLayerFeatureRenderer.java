@@ -56,10 +56,10 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	}
 	
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
-		if(!FirstPersonModelCore.instance.getWrapper().hasCustomSkin(abstractClientPlayerEntity)) {
+		if(!FirstPersonModelCore.getWrapper().hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		NativeImage skin = (NativeImage) FirstPersonModelCore.instance.getWrapper().getSkinTexture(abstractClientPlayerEntity);
+		NativeImage skin = (NativeImage) FirstPersonModelCore.getWrapper().getSkinTexture(abstractClientPlayerEntity);
 		CustomizableModelPart[] layers = new CustomizableModelPart[5];
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 48, true, 0);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 4, 12, 4, 0, 32, true, 0);
@@ -77,6 +77,7 @@ extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractCl
 	}
 
 	public void renderLayers(AbstractClientPlayerEntity abstractClientPlayerEntity, CustomizableModelPart[] layers, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+		if(layers == null)return;
 		float pixelScaling = 1.16f; //1.125f
 		CustomizableModelPart leftLeg = layers[0];
 		CustomizableModelPart rightLeg = layers[1];

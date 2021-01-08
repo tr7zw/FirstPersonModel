@@ -166,6 +166,8 @@ public abstract class SharedConfigBuilder {
 				config.skinLayer.optimizedLayerDistance, 16, 8, 32, n -> config.skinLayer.optimizedLayerDistance = n));
 		addEntry(category, createEnumSetting(entryBuilder, "skinlayer.skinLayerMode", LayerMode.class,
 				config.skinLayer.skinLayerMode, LayerMode.VANILLA2D, n -> config.skinLayer.skinLayerMode = n));
+		addEntry(category, createBooleanSetting(entryBuilder, "skinlayer.playerHeadSkins",
+				config.firstPerson.playerHeadSkins, false, n -> config.firstPerson.playerHeadSkins = n));
 	}
 
 	public <T extends Enum<?>> WrappedConfigEntry createEnumSetting(ConfigEntryBuilder entryBuilder, String id, Class<T> type, T value,

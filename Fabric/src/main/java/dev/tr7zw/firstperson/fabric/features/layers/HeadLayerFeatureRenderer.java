@@ -4,7 +4,6 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import dev.tr7zw.firstperson.fabric.render.CustomizableModelPart;
-import dev.tr7zw.firstperson.fabric.render.SolidPixelModelPart;
 import dev.tr7zw.firstperson.fabric.render.SolidPixelWrapper;
 import dev.tr7zw.firstperson.features.LayerMode;
 import net.minecraft.client.MinecraftClient;
@@ -40,7 +39,7 @@ public class HeadLayerFeatureRenderer
 			return;
 		}
 		ItemStack itemStack = abstractClientPlayerEntity.getEquippedStack(EquipmentSlot.HEAD);
-		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
+		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem)) && !FirstPersonModelCore.config.firstPerson.playerHeadSkins) {
 			return;
 		}
 		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)
@@ -62,16 +61,17 @@ public class HeadLayerFeatureRenderer
 
 	private boolean setupModel(AbstractClientPlayerEntity abstractClientPlayerEntity, PlayerSettings settings) {
 		
-		if(!FirstPersonModelCore.instance.getWrapper().hasCustomSkin(abstractClientPlayerEntity)) {
+		if(!FirstPersonModelCore.getWrapper().hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		NativeImage skin = (NativeImage) FirstPersonModelCore.instance.getWrapper().getSkinTexture(abstractClientPlayerEntity);
+		NativeImage skin = (NativeImage) FirstPersonModelCore.getWrapper().getSkinTexture(abstractClientPlayerEntity);
 		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, this.getContextModel(), 8, 8, 8, 32, 0, false, 0));
 		skin.untrack();
 		return true;
 	}
 
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+		if(settings.getHeadLayers() == null)return;
 		matrixStack.push();
 		this.getContextModel().head.rotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f);
