@@ -5,7 +5,7 @@
     "category.firstperson.firstperson": "第一人称",
     "text.firstperson.option.firstperson.xOffset": "站立时的 X 轴补偿",
     "text.firstperson.option.firstperson.xOffset.@Tooltip": "前后调节站立时身体相对于镜头的位置",
-    "text.firstperson.option.firstperson.sneakXOffset": "潜行时的 X轴补偿",
+    "text.firstperson.option.firstperson.sneakXOffset": "潜行时的 X 轴补偿",
     "text.firstperson.option.firstperson.sneakXOffset.@Tooltip": "前后调节潜行时身体相对于镜头的位置",
     "text.firstperson.option.firstperson.enabledByDefault": "默认启用",
     "text.firstperson.option.firstperson.enabledByDefault.@Tooltip": "开始游戏后是否默认启用第一人称模型",
