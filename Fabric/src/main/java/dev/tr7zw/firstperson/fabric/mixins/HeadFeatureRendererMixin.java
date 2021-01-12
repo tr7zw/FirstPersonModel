@@ -16,6 +16,7 @@ import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -39,7 +40,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 			T livingEntity_1, float float_1, float float_2, float float_3, float float_4, float float_5, float float_6,
 			CallbackInfo info) {
 		if (FirstPersonModelCore.config.firstPerson.playerHeadSkins
-				&& shouldHide(livingEntity_1.getEquippedStack(EquipmentSlot.HEAD))) {
+				&& shouldHide(livingEntity_1.getEquippedStack(EquipmentSlot.HEAD)) && livingEntity_1 instanceof PlayerEntity) {
 			info.cancel();
 			return;
 		}
