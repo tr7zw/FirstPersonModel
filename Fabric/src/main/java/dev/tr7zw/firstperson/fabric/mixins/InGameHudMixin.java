@@ -31,12 +31,30 @@ public class InGameHudMixin {
 
 	@Inject(at = @At("HEAD"), method = "render")
 	public void render(MatrixStack matrixStack, float delta, CallbackInfo info) {
-		if (FirstPersonModelMod.config.paperDoll.dollEnabled && !mc.options.debugEnabled) {
-			int xpos = 25 + FirstPersonModelMod.config.paperDoll.dollXOffset;
-			int ypos = 55 + FirstPersonModelMod.config.paperDoll.dollYOffset;
-			int size = 25 + FirstPersonModelMod.config.paperDoll.dollSize;
-			int lookSides = -FirstPersonModelMod.config.paperDoll.dollLookingSides;
-			int lookUpDown = FirstPersonModelMod.config.paperDoll.dollLookingUpDown;
+		if (FirstPersonModelCore.config.paperDoll.dollEnabled && !mc.options.debugEnabled) {
+			int xpos = 0;
+			int ypos = 0;
+			switch (FirstPersonModelCore.config.paperDoll.location) {
+			case TOP_LEFT:
+				xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
+				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
+				break;
+			case TOP_RIGHT:
+				xpos = mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
+				break;
+			case BOTTOM_LEFT:
+				xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
+				ypos = mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				break;
+			case BOTTOM_RIGHT:
+				xpos = mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				ypos = mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				break;
+			}
+			int size = 25 + FirstPersonModelCore.config.paperDoll.dollSize;
+			int lookSides = -FirstPersonModelCore.config.paperDoll.dollLookingSides;
+			int lookUpDown = FirstPersonModelCore.config.paperDoll.dollLookingUpDown;
 			if (mc.player.isFallFlying() || mc.player.isUsingRiptide()) {
 				lookSides = 0;
 				lookUpDown = 40;
@@ -88,10 +106,10 @@ public class InGameHudMixin {
 			livingEntity.headYaw = livingEntity.yaw;
 			livingEntity.prevHeadYaw = livingEntity.yaw;
 		} else {
-			if(FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.FREE) {
+			if (FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.FREE) {
 				livingEntity.headYaw = 180.0F + h * 40.0F - (m - q);
 				livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevBodyYaw - p);
-			}else {
+			} else {
 				livingEntity.headYaw = 180.0F + h * 40.0F - (renderYaw - q);
 				livingEntity.prevHeadYaw = 180.0F + h * 40.0F - (prevRenderYaw - p);
 			}
@@ -101,7 +119,8 @@ public class InGameHudMixin {
 		entityRenderDispatcher.setRotation(quaternion2);
 		entityRenderDispatcher.setRenderShadows(false);
 		VertexConsumerProvider.Immediate immediate = mc.getBufferBuilders().getEntityVertexConsumers();
-		// Mc renders the player in the inventory without delta, causing it to look "laggy". Good luck unseeing this :)
+		// Mc renders the player in the inventory without delta, causing it to look
+		// "laggy". Good luck unseeing this :)
 		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack, immediate, 15728880);
 		immediate.draw();
 		entityRenderDispatcher.setRenderShadows(true);

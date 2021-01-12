@@ -16,6 +16,7 @@ import dev.tr7zw.firstperson.features.Chest;
 import dev.tr7zw.firstperson.features.Hat;
 import dev.tr7zw.firstperson.features.Head;
 import dev.tr7zw.firstperson.features.LayerMode;
+import dev.tr7zw.firstperson.util.PaperDollLocation;
 import dev.tr7zw.velvet.api.Velvet;
 import dev.tr7zw.velvet.api.VelvetAPI;
 import dev.tr7zw.velvet.api.config.ConfigBuilder;
@@ -120,6 +121,8 @@ public abstract class SharedConfigBuilder {
 	public void setupPaperDollConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
 		addEntry(category, createBooleanSetting(entryBuilder, "doll.Enabled", config.paperDoll.dollEnabled, false,
 				n -> config.paperDoll.dollEnabled = n));
+		addEntry(category, createEnumSetting(entryBuilder, "doll.location", PaperDollLocation.class, config.paperDoll.location, PaperDollLocation.TOP_LEFT,
+				n -> config.paperDoll.location = n));
 		addEntry(category, createEnumSetting(entryBuilder, "doll.headmode", PaperDollSettings.DollHeadMode.class, config.paperDoll.dollHeadMode, PaperDollSettings.DollHeadMode.FREE,
 				n -> config.paperDoll.dollHeadMode = n));
 		addEntry(category, createIntSetting(entryBuilder, "doll.XOffset", config.paperDoll.dollXOffset, 0, -40, 40,

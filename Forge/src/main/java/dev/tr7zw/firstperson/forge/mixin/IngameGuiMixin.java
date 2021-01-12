@@ -28,8 +28,26 @@ public class IngameGuiMixin {
 	@Inject(at = @At("HEAD"), method = "renderHotbar")
 	public void renderHotbar(float partialTicks, MatrixStack matrixStack, CallbackInfo callback) {
 		if (FirstPersonModelCore.config.paperDoll.dollEnabled && !mc.gameSettings.showDebugInfo) {
-			int xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
-			int ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
+			int xpos = 0;
+			int ypos = 0;
+			switch (FirstPersonModelCore.config.paperDoll.location) {
+			case TOP_LEFT:
+				xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
+				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
+				break;
+			case TOP_RIGHT:
+				xpos = mc.getMainWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
+				break;
+			case BOTTOM_LEFT:
+				xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
+				ypos = mc.getMainWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				break;
+			case BOTTOM_RIGHT:
+				xpos = mc.getMainWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				ypos = mc.getMainWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				break;
+			}
 			int size = 25 + FirstPersonModelCore.config.paperDoll.dollSize;
 			int lookSides = -FirstPersonModelCore.config.paperDoll.dollLookingSides;
 			int lookUpDown = FirstPersonModelCore.config.paperDoll.dollLookingUpDown;

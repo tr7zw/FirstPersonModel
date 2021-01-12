@@ -38,6 +38,12 @@
     "text.firstperson.option.doll.headmode.FREE": "Floaty",
     "text.firstperson.option.doll.headmode.STATIC": "Static",
     "text.firstperson.option.doll.headmode.LOCKED": "Locked",
+    "text.firstperson.option.doll.location": "Doll Location",
+    "text.firstperson.option.doll.location.@Tooltip": "Switch between the 4 screen corners",
+    "text.firstperson.option.doll.location.TOP_LEFT": "Top left",
+    "text.firstperson.option.doll.location.TOP_RIGHT": "Top right",
+    "text.firstperson.option.doll.location.BOTTOM_LEFT": "Bottom left",
+    "text.firstperson.option.doll.location.BOTTOM_RIGHT": "Bottom right",
 
     "category.firstperson.cosmetics": "Cosmetics",
     "text.firstperson.option.cosmetic.hat": "Custom Hat model",
