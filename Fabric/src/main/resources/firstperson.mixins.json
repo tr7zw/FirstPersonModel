@@ -22,7 +22,8 @@
   "ModelPartMixin",
   "LivingEntityRendererMixin",
   "FeatureRendererMixin",
-  "AbstractClientPlayerEntityMixin"
+  "AbstractClientPlayerEntityMixin",
+  "ArmorFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
