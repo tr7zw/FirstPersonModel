@@ -93,6 +93,7 @@ public class ForgeWrapper implements MinecraftWrapper{
 		if(client.player.isElytraFlying())return false;
 		if(client.player.isSpinAttacking())return false;
 		if(client.player.isSpectator())return false;
+		if(client.player.getSwimAnimation(1f) != 0 && !client.player.isActualySwimming())return false;
 		if(!FirstPersonModelCore.enabled || thirdPerson)return false;
 		return true;
 	}
