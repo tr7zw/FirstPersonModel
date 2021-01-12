@@ -1,16 +1,21 @@
 package dev.tr7zw.firstperson.fabric.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.mixinbase.HeldItemBase;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 
 /**
@@ -18,14 +23,35 @@ import net.minecraft.util.Hand;
  *
  */
 @Mixin(HeldItemRenderer.class)
-public abstract class HeldItemRendererMixin implements HeldItemBase{
-	
-	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem", cancellable = true)
-	public void renderFirstPersonItem(AbstractClientPlayerEntity abstractClientPlayerEntity_1, float float_1, float float_2, Hand hand_1, float float_3, ItemStack itemStack_1, float float_4, MatrixStack matrixStack_1, VertexConsumerProvider vertexConsumerProvider_1, int int_1, CallbackInfo info) {
-		if(skip())return;
-		info.cancel();
+public abstract class HeldItemRendererMixin implements HeldItemBase {
 
+	@Shadow
+	private EntityRenderDispatcher renderManager;
+	@Shadow
+	private MinecraftClient client;
+
+	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem", cancellable = true)
+	public void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand,
+			float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices,
+			VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
+		if (!skip()) {
+			info.cancel();
+			return;
+		}
+		if(!FirstPersonModelCore.config.firstPerson.doubleHands)return;
+		boolean bl = hand == Hand.MAIN_HAND;
+		Arm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
+		matrices.push();
+		if (item.isEmpty()) {
+			if (!bl && !player.isInvisible()) {
+				this.renderArmHoldingItem(matrices, vertexConsumers, light, equipProgress, swingProgress,
+						arm);
+			}
+		}
+		matrices.pop();
 	}
 
-
+	@Shadow
+	public abstract void renderArmHoldingItem(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
+			float equipProgress, float swingProgress, Arm arm);
 }

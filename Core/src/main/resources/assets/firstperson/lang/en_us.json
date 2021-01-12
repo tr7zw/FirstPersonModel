@@ -15,6 +15,8 @@
     "text.firstperson.option.firstperson.sitXOffset.@Tooltip": "Moves the body relative to the camera back and forth while sitting",
     "text.firstperson.option.firstperson.vanillaHands": "Vanilla Hands",
     "text.firstperson.option.firstperson.vanillaHands.@Tooltip": "Shows the vanilla first person hands, but also the player model(but without arms)",
+    "text.firstperson.option.firstperson.doubleHands": "Double Hands",
+    "text.firstperson.option.firstperson.doubleHands.@Tooltip": "When using Vanilla hands it will always show booth hands",
     "text.firstperson.option.firstperson.forceActive": "Force Active",
     "text.firstperson.option.firstperson.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)",
 
