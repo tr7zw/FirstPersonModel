@@ -142,9 +142,9 @@ public class ForgeWrapper implements MinecraftWrapper{
 				if(abstractClientPlayerEntity_1.getRidingEntity() instanceof BoatEntity) {
 					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
 				} else if(abstractClientPlayerEntity_1.getRidingEntity() instanceof LivingEntity) {
-					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).prevRotationYaw, ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).rotationYaw);
+					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.getRidingEntity().prevRotationYaw, abstractClientPlayerEntity_1.getRidingEntity().rotationYaw);
 				} else {
-					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.getRidingEntity().prevRotationYaw, ((LivingEntity)abstractClientPlayerEntity_1.getRidingEntity()).rotationYaw);
+					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.getRidingEntity().prevRotationYaw, abstractClientPlayerEntity_1.getRidingEntity().rotationYaw);
 				}
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.firstPerson.sitXOffset / 100f);
 			}else{
