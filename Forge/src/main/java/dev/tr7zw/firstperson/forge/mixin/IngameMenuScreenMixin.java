@@ -29,7 +29,7 @@ public abstract class IngameMenuScreenMixin extends Screen {
 	@Inject(method = "addButtons", at = @At("RETURN"))
 	private void addButtons(CallbackInfo info) {
 		if (!FirstPersonModelCore.config.firstPerson.hideCosmeticsButton) {
-			this.addButton(new ImageButton(this.width / 2 - 122, this.height / 4 + 96 + -16, 20, 20, 0, 0, 20, BUTTON_TEXTURE, 32, 64,
+			this.addButton(new ImageButton(this.width / 2 - 102 - 24, this.height / 4 + 96 + -16, 20, 20, 0, 0, 20, BUTTON_TEXTURE, 32, 64,
 					(buttonWidgetx) -> {
 						ClothConfigScreen screen = (ClothConfigScreen) new ConfigBuilder()
 								.createConfigScreen(Velvet.velvet.getWrapper().wrapScreen(this))
