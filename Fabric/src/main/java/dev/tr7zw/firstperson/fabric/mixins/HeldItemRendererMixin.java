@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.mixinbase.HeldItemBase;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -27,8 +26,6 @@ public abstract class HeldItemRendererMixin implements HeldItemBase {
 
 	@Shadow
 	private EntityRenderDispatcher renderManager;
-	@Shadow
-	private MinecraftClient client;
 
 	@Inject(at = @At("HEAD"), method = "renderFirstPersonItem", cancellable = true)
 	public void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand,
@@ -38,14 +35,14 @@ public abstract class HeldItemRendererMixin implements HeldItemBase {
 			info.cancel();
 			return;
 		}
-		if(!FirstPersonModelCore.config.firstPerson.doubleHands)return;
+		if (!FirstPersonModelCore.config.firstPerson.doubleHands)
+			return;
 		boolean bl = hand == Hand.MAIN_HAND;
 		Arm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
 		matrices.push();
 		if (item.isEmpty()) {
 			if (!bl && !player.isInvisible()) {
-				this.renderArmHoldingItem(matrices, vertexConsumers, light, equipProgress, swingProgress,
-						arm);
+				this.renderArmHoldingItem(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
 			}
 		}
 		matrices.pop();

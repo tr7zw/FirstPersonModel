@@ -102,8 +102,6 @@ public abstract class SharedConfigBuilder {
 	public void setupFirstPersonConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
 		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.enabledByDefault",
 				config.firstPerson.enabledByDefault, true, n -> config.firstPerson.enabledByDefault = n));
-		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.lockBodyOnItems",
-				config.firstPerson.lockBodyOnItems, true, n -> config.firstPerson.lockBodyOnItems = n));
 		addEntry(category, createIntSetting(entryBuilder, "firstperson.xOffset", config.firstPerson.xOffset, 0, -40, 40,
 				n -> config.firstPerson.xOffset = n));
 		addEntry(category, createIntSetting(entryBuilder, "firstperson.sneakXOffset", config.firstPerson.sneakXOffset,

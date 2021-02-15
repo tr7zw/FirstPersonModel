@@ -1,7 +1,5 @@
 package dev.tr7zw.firstperson.fabric.mixins;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +20,6 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.world.World;
 
 /**
@@ -40,14 +36,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	private CosmeticSettings settings;
 	private CustomizableModelPart headLayer;
 	private CustomizableModelPart[] skinLayer;
-	private static final Set<Item> lockItems = new HashSet<>();
-
+	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
-		if(lockItems.size() == 0) { // Late bind
-			lockItems.add(Items.FILLED_MAP);
-			lockItems.add(Items.COMPASS);
-		}
 		if (this.getUuidAsString().equals(MinecraftClient.getInstance().getSession().getUuid())) {
 			// the local var is not used for the own player
 		} else {
@@ -123,15 +114,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 		}
 		callback.setReturnValue(value);
 		return value;
-	}
-	
-	@Inject(method = "tick", at = @At("RETURN"))
-	public void tick(CallbackInfo info) {
-		if(!hasVehicle()) // Dont rotate the player while in a vehicle
-			if(FirstPersonModelCore.config.firstPerson.lockBodyOnItems && ((PlayerEntity) (Object) this) == MinecraftClient.getInstance().player && (lockItems.contains(getMainHandStack().getItem()) || lockItems.contains(getOffHandStack().getItem()))) {
-				this.bodyYaw = headYaw;
-				this.prevBodyYaw = prevHeadYaw;
-			}
 	}
 	
 }
