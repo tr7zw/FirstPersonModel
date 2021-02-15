@@ -1,6 +1,6 @@
 package dev.tr7zw.firstperson.fabric.mixins;
 
-import static dev.tr7zw.velvet.api.Velvet.velvet;
+import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +26,7 @@ public class ClientPlayNetworkHandlerMixin implements ClientPlayNetworkHandlerBa
 
 	@Inject(method = "onEntityTrackerUpdate", at = @At("HEAD"))
 	public void onEntityTrackerUpdate(EntityTrackerUpdateS2CPacket packet, CallbackInfo callback) {
-		handle(world != null ? velvet.getWrapper().wrapWorld(world) : null, velvet.getWrapper().wrapEntityTrackerUpdatePacket(packet));
+		handle(world != null ? transliteration.singletonWrapper().getWorld().of(world) : null, transliteration.getWrapper().wrapEntityTrackerUpdatePacket(packet));
 	}
 
 }

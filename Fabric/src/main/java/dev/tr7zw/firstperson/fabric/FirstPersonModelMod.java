@@ -3,8 +3,6 @@ package dev.tr7zw.firstperson.fabric;
 import javax.annotation.Nullable;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.velvet.api.Velvet;
-import dev.tr7zw.velvet.fabric.VelvetImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -35,7 +33,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	@Override
 	public void onInitialize() {
 		wrapper = new FabricWrapper(MinecraftClient.getInstance());
-		Velvet.velvet = new VelvetImpl();
 	    ClientTickEvents.END_CLIENT_TICK.register(e ->
 	    {
 	    	onTick();

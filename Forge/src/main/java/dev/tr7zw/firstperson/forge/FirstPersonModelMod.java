@@ -11,8 +11,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.config.ConfigBuilder;
 import dev.tr7zw.firstperson.forge.listener.PlayerRendererListener;
-import dev.tr7zw.valvet.forge.ValvetImpl;
-import dev.tr7zw.velvet.api.Velvet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
@@ -63,7 +61,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	wrapper = new ForgeWrapper(Minecraft.getInstance());
-    	Velvet.velvet = new ValvetImpl();
     	sharedSetup();
     }
 

@@ -58,7 +58,7 @@ dependencies {
 	// Fabric API. The keybinding registry is in this.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	modImplementation transliteration
+	compile transliteration
 	modImplementation notenoughanimations
 
 	compile project(':Core')

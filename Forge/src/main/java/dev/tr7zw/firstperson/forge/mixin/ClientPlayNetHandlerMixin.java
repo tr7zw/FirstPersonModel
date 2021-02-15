@@ -1,6 +1,6 @@
 package dev.tr7zw.firstperson.forge.mixin;
 
-import static dev.tr7zw.velvet.api.Velvet.velvet;
+import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,7 +22,7 @@ public class ClientPlayNetHandlerMixin implements ClientPlayNetworkHandlerBase{
 
 	@Inject(method = "handleEntityMetadata", at = @At("HEAD"))
 	public void handleEntityMetadata(SEntityMetadataPacket packet, CallbackInfo callback) {
-		handle(world != null ? velvet.getWrapper().wrapWorld(world) : null, velvet.getWrapper().wrapEntityTrackerUpdatePacket(packet));
+		handle(world != null ? transliteration.singletonWrapper().getWorld().of(world) : null, transliteration.getWrapper().wrapEntityTrackerUpdatePacket(packet));
 	}
 	
 }
