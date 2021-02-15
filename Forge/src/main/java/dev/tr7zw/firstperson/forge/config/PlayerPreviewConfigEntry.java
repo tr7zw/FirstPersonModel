@@ -159,4 +159,28 @@ public class PlayerPreviewConfigEntry extends AbstractConfigListEntry<Object> {
 		return new ArrayList<>();
 	}
 
+	@Override
+	public boolean isDragging() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setDragging(boolean dragging) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private IGuiEventListener listener;
+	
+	@Override
+	public IGuiEventListener getListener() {
+		return listener;
+	}
+
+	@Override
+	public void setListener(IGuiEventListener listener) {
+		this.listener = listener;
+	}
+
 }

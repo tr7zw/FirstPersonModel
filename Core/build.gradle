@@ -8,6 +8,9 @@ repositories {
 	maven { url 'https://libraries.minecraft.net/' }
 	maven { url 'https://jitpack.io' }
 	maven {url='https://repo.spongepowered.org/maven/'}
+	maven {
+        url "https://www.cursemaven.com"
+    }
 }
 
 dependencies {
@@ -18,5 +21,5 @@ dependencies {
 	compileOnly group: 'com.mojang', name: 'authlib', version: '1.5.25'
 	// https://mvnrepository.com/artifact/org.spongepowered/mixin
 	compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.4.4', transitive:false
-	
+	compileOnly transliteration
 }

@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.forge;
 
+import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
+
 import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
@@ -48,7 +50,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
                 () -> new BiFunction<Minecraft, Screen, Screen>() {
 					@Override
 					public Screen apply(Minecraft t, Screen screen) {
-						return new ConfigBuilder().createConfigScreen(Velvet.velvet.getWrapper().wrapScreen(screen)).getHandler(Screen.class);
+						return new ConfigBuilder().createConfigScreen(transliteration.getWrapper().wrapScreen(screen)).getHandler(Screen.class);
 					}
 				}
         );

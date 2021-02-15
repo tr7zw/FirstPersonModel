@@ -29,6 +29,8 @@
     "firstperson.mixins.json"
   ],
   "depends": {
-    "fabric": "*"
+    "minecraft": "1.16.x",
+    "fabric": "*",
+    "transliterationlib": "*"
   }
 }

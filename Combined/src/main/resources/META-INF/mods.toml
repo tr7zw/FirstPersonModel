@@ -42,3 +42,9 @@ Enables the third person Model in firstperson
     versionRange="[1.16.2,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.firstpersonmod]]
+    modId="transliterationlib"
+    mandatory=true
+    versionRange="*"
+    ordering="NONE"
+    side="BOTH"

@@ -17,13 +17,13 @@ import dev.tr7zw.firstperson.features.Hat;
 import dev.tr7zw.firstperson.features.Head;
 import dev.tr7zw.firstperson.features.LayerMode;
 import dev.tr7zw.firstperson.util.PaperDollLocation;
-import dev.tr7zw.velvet.api.Velvet;
-import dev.tr7zw.velvet.api.VelvetAPI;
-import dev.tr7zw.velvet.api.config.ConfigBuilder;
-import dev.tr7zw.velvet.api.config.ConfigBuilder.ConfigEntryBuilder;
-import dev.tr7zw.velvet.api.config.ConfigBuilder.ConfigEntryBuilder.ConfigCategory;
-import dev.tr7zw.velvet.api.config.WrappedConfigEntry;
-import dev.tr7zw.velvet.api.wrapper.WrappedScreen;
+import dev.tr7zw.transliterationlib.api.config.ConfigBuilder;
+import dev.tr7zw.transliterationlib.api.config.ConfigBuilder.ConfigEntryBuilder;
+import dev.tr7zw.transliterationlib.api.config.ConfigBuilder.ConfigEntryBuilder.ConfigCategory;
+import dev.tr7zw.transliterationlib.api.config.WrappedConfigEntry;
+import dev.tr7zw.transliterationlib.api.wrapper.WrappedScreen;
+
+import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 public abstract class SharedConfigBuilder {
 
@@ -37,22 +37,21 @@ public abstract class SharedConfigBuilder {
 	public static WrappedConfigEntry backHueSelection = null;
 
 	public WrappedScreen createConfigScreen(WrappedScreen parentScreen) {
-		VelvetAPI valvet = Velvet.velvet;
 		FirstPersonConfig config = FirstPersonModelCore.config;
-		ConfigBuilder builder = valvet.getNewConfigBuilder();
-		builder.setParentScreen(parentScreen).setTitle(valvet.getWrapper().getTranslateableText("text.firstperson.title"));
+		ConfigBuilder builder = transliteration.getNewConfigBuilder();
+		builder.setParentScreen(parentScreen).setTitle(transliteration.getWrapper().getTranslateableText("text.firstperson.title"));
 		ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 		
-		ConfigCategory firstperson = builder.getOrCreateCategory(valvet.getWrapper().getTranslateableText("category.firstperson.firstperson"));
+		ConfigCategory firstperson = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.firstperson"));
 		setupFirstPersonConfig(entryBuilder, firstperson, config);
 		
-		ConfigCategory paperdoll = builder.getOrCreateCategory(valvet.getWrapper().getTranslateableText("category.firstperson.paperdoll"));
+		ConfigCategory paperdoll = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.paperdoll"));
 		setupPaperDollConfig(entryBuilder, paperdoll, config);
 		
-		ConfigCategory cosmetics = builder.getOrCreateCategory(valvet.getWrapper().getTranslateableText("category.firstperson.cosmetics"));
+		ConfigCategory cosmetics = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.cosmetics"));
 		setupCosmeticConfig(entryBuilder, cosmetics, config);
 		
-		ConfigCategory skinlayer = builder.getOrCreateCategory(valvet.getWrapper().getTranslateableText("category.firstperson.skinlayer"));
+		ConfigCategory skinlayer = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.skinlayer"));
 		setupSkinLayerConfig(entryBuilder, skinlayer, config);
 		
 		builder.setSavingRunnable(() -> {
@@ -175,28 +174,28 @@ public abstract class SharedConfigBuilder {
 
 	public <T extends Enum<?>> WrappedConfigEntry createEnumSetting(ConfigEntryBuilder entryBuilder, String id, Class<T> type, T value,
 			T def, Consumer<T> save) {
-    	return entryBuilder.startEnumSelector(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id), type, value)
+    	return entryBuilder.startEnumSelector(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id), type, value)
 		        .setDefaultValue(def)
-		        .setTooltip(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
+		        .setTooltip(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
 		        .setSaveConsumer(save)
-		        .setEnumNameProvider((en) -> (Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id + "." + en.name())))
+		        .setEnumNameProvider((en) -> (transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id + "." + en.name())))
 		        .build();
     }
 
 	public WrappedConfigEntry createBooleanSetting(ConfigEntryBuilder entryBuilder, String id, Boolean value, Boolean def,
 			Consumer<Boolean> save) {
-    	return entryBuilder.startBooleanToggle(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id), value)
+    	return entryBuilder.startBooleanToggle(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id), value)
 		        .setDefaultValue(def)
-		        .setTooltip(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
+		        .setTooltip(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
 		        .setSaveConsumer(save)
 		        .build();
 	}
 
 	public WrappedConfigEntry createIntSetting(ConfigEntryBuilder entryBuilder, String id, Integer value, Integer def, Integer min,
 			Integer max, Consumer<Integer> save) {
-    	return entryBuilder.startIntSlider(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id), value, min, max)
+    	return entryBuilder.startIntSlider(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id), value, min, max)
 		        .setDefaultValue(def)
-		        .setTooltip(Velvet.velvet.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
+		        .setTooltip(transliteration.getWrapper().getTranslateableText("text.firstperson.option." + id + ".@Tooltip"))
 		        .setSaveConsumer(save)
 		        .build();
 	}

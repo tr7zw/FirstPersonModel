@@ -2,7 +2,6 @@ package dev.tr7zw.velvet.fabric.wrapper;
 
 import java.util.function.BiConsumer;
 
-import dev.tr7zw.velvet.api.config.WrappedConfigEntry;
 import dev.tr7zw.velvet.api.wrapper.WrappedEntity;
 import dev.tr7zw.velvet.api.wrapper.WrappedEntityTrackerUpdate;
 import dev.tr7zw.velvet.api.wrapper.WrappedKeybind;
@@ -10,9 +9,6 @@ import dev.tr7zw.velvet.api.wrapper.WrappedScreen;
 import dev.tr7zw.velvet.api.wrapper.WrappedText;
 import dev.tr7zw.velvet.api.wrapper.WrappedWorld;
 import dev.tr7zw.velvet.api.wrapper.Wrapper;
-import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
-import me.shedaniel.clothconfig2.gui.entries.EnumListEntry;
-import me.shedaniel.clothconfig2.gui.entries.IntegerSliderEntry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.world.ClientWorld;
@@ -52,30 +48,6 @@ public class WrapperImpl implements Wrapper{
 	@Override
 	public WrappedText getTranslateableText(String text) {
 		return wrapText(new TranslatableText(text));
-	}
-
-	@Override
-	public WrappedConfigEntry getWrappedConfigEntry(Object entry) {
-		return new WrappedConfigEntry() {
-			
-			private AbstractConfigEntry<?> handler = (AbstractConfigEntry<?>) entry;
-			
-			@Override
-			public Object getHandler() {
-				return handler;
-			}
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public <T extends Enum<?>> T getEnumValue(Class<T> targetEnum) {
-				return ((EnumListEntry<T>)handler).getValue();
-			}
-
-			@Override
-			public int getIntValue() {
-				return ((IntegerSliderEntry)handler).getValue();
-			}
-		};
 	}
 
 	@Override

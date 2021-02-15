@@ -5,7 +5,6 @@ buildscript {
         jcenter()
         mavenCentral()
         maven {url='https://dist.creeper.host/Sponge/maven'}
-
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -69,7 +68,9 @@ repositories{
     }
     jcenter()
     mavenCentral()
-
+    maven {
+    url "https://www.cursemaven.com"
+    }
 }
 
 configurations {
@@ -103,8 +104,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     compile project(':Core')
     //extraLibs project(':Core') Don't copy in the core
-    compile (fg.deobf("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
-    extraLibs (("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
+    //compile (fg.deobf("me.shedaniel.cloth:cloth-config-forge:4.1.1"))
+    compile transliteration
+    compile notenoughanimations
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
