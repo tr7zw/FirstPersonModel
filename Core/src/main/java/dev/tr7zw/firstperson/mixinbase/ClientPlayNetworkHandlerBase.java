@@ -13,7 +13,7 @@ public interface ClientPlayNetworkHandlerBase {
 			WrappedEntity entity = world.getEntityById(packet.id());
 			if (entity != null && packet.hasTrackedValues() && entity.getHandler() instanceof PlayerSettings) {
 				packet.forEach((id, data) -> {
-					if (id == 16 && (Byte) data == 0) {
+					if (id == 16 && data instanceof Byte &&  (Byte) data == 0) {
 						FirstPersonModelCore.syncManager.updateSettings((PlayerSettings) entity.getHandler());
 					}
 				});
