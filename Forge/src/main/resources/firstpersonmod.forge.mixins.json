@@ -18,7 +18,8 @@
     "DownloadingTextureMixin",
     "ClientPlayNetHandlerMixin",
     "ModelRendererMixin",
-    "BipedArmorLayerMixin"
+    "BipedArmorLayerMixin",
+    "LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

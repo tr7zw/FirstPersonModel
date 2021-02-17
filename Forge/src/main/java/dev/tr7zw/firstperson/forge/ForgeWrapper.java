@@ -27,6 +27,7 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.settings.PointOfView;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.BoatEntity;
+import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.network.play.client.CClientSettingsPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -92,7 +93,6 @@ public class ForgeWrapper implements MinecraftWrapper{
 		Minecraft client = Minecraft.getInstance();
 		if(client.player.isElytraFlying())return false;
 		if(client.player.isSpinAttacking())return false;
-		if(client.player.isSpectator())return false;
 		if(client.player.getSwimAnimation(1f) != 0 && !client.player.isActualySwimming())return false;
 		if(!FirstPersonModelCore.enabled || thirdPerson)return false;
 		return true;
@@ -131,7 +131,7 @@ public class ForgeWrapper implements MinecraftWrapper{
 			}else if(abstractClientPlayerEntity_1.isSneaking()){
 				bodyOffset = FirstPersonModelMod.sneakBodyOffset + (FirstPersonModelMod.config.firstPerson.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.getRidingEntity() != null) {
-				if(abstractClientPlayerEntity_1.getRidingEntity() instanceof BoatEntity) {
+				if(abstractClientPlayerEntity_1.getRidingEntity() instanceof BoatEntity || abstractClientPlayerEntity_1.getRidingEntity() instanceof MinecartEntity) {
 					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
 				} else if(abstractClientPlayerEntity_1.getRidingEntity() instanceof LivingEntity) {
 					realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.getRidingEntity().prevRotationYaw, abstractClientPlayerEntity_1.getRidingEntity().rotationYaw);

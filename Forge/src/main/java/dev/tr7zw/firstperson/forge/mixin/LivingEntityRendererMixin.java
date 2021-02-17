@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -20,14 +21,15 @@ import net.minecraft.entity.monster.ShulkerEntity;
 
 @Mixin(LivingRenderer.class)
 public abstract class LivingEntityRendererMixin {
-	
+
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	public void renderHead(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack,
 			IRenderTypeBuffer vertexConsumerProvider, int i, CallbackInfo info) {
-		if(livingEntity instanceof ShulkerEntity)return;//No need to mess with
+		if (livingEntity instanceof ShulkerEntity)
+			return;// No need to mess with
 		if (FirstPersonModelMod.isRenderingPlayer) {
 			EntityModel<LivingEntity> model = getEntityModel();
-			if(!(model instanceof IHasHead)) {
+			if (!(model instanceof IHasHead)) {
 				FirstPersonModelMod.isRenderingPlayer = false;
 				info.cancel();
 				return;
@@ -42,13 +44,11 @@ public abstract class LivingEntityRendererMixin {
 	@Inject(method = "render", at = @At("RETURN"))
 	public void renderReturn(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack,
 			IRenderTypeBuffer vertexConsumerProvider, int i, CallbackInfo info) {
-		if (FirstPersonModelMod.isRenderingPlayer) {
-			EntityModel<LivingEntity> model = getEntityModel();
-			if (model instanceof IHasHead) {
-				((ModelPartBase) ((IHasHead) model).getModelHead()).showAgain();
-				if (model instanceof IHeadToggle) {
-					((IHeadToggle) model).func_217146_a(true);
-				}
+		EntityModel<LivingEntity> model = getEntityModel();
+		if (model instanceof IHasHead) {
+			((ModelPartBase) ((IHasHead) model).getModelHead()).showAgain();
+			if (model instanceof IHeadToggle) {
+				((IHeadToggle) model).func_217146_a(true);
 			}
 		}
 		FirstPersonModelMod.isRenderingPlayer = false;

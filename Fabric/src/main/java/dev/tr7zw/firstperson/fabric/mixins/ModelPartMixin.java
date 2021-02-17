@@ -50,4 +50,9 @@ public class ModelPartMixin implements ModelPartBase{
 		}
 	}
 
+	@Override
+	public boolean isHidden() {
+		return moved;
+	}
+
 }

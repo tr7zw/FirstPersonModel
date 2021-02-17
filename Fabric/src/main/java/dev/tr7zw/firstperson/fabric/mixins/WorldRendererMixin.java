@@ -40,6 +40,7 @@ public class WorldRendererMixin {
 		VertexConsumerProvider.Immediate immediate = this.bufferBuilders.getEntityVertexConsumers();
 		FirstPersonModelMod.isRenderingPlayer = true;
 		this.renderEntity(camera.getFocusedEntity(), d, e, f, tickDelta, matrices, (VertexConsumerProvider) immediate);
+		FirstPersonModelMod.isRenderingPlayer = false;
 	}
 
 	@Shadow

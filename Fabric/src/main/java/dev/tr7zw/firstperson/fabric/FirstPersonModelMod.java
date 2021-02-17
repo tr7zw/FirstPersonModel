@@ -1,7 +1,5 @@
 package dev.tr7zw.firstperson.fabric;
 
-import javax.annotation.Nullable;
-
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -20,8 +18,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
 		return (enabled && (config.firstPerson.forceActive || FirstPersonModelCore.isRenderingPlayer));
 	}
-
-
 	
 	@Override
 	public void onInitialize() {

@@ -49,8 +49,8 @@ public abstract class LivingEntityRendererMixin {
 					((ModelWithHat) model).setHatVisible(true);
 				}
 			}
-			FirstPersonModelCore.isRenderingPlayer = false;
 		}
+		FirstPersonModelCore.isRenderingPlayer = false;
 	}
 
 	@Shadow

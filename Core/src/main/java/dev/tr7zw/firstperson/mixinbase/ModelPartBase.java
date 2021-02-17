@@ -6,4 +6,6 @@ public interface ModelPartBase {
 	
 	public void showAgain();
 	
+	public boolean isHidden();
+	
 }

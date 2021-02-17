@@ -40,6 +40,7 @@ public class WorldRendererMixin {
 		Impl immediate = this.renderTypeTextures.getBufferSource();
 		FirstPersonModelMod.isRenderingPlayer = true;
 		this.renderEntity(camera.getRenderViewEntity(), d, e, f, tickDelta, matrices, immediate);
+		FirstPersonModelMod.isRenderingPlayer = false;
 	}
 
 	@Shadow

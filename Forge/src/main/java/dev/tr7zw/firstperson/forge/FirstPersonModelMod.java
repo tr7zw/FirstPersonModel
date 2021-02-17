@@ -4,8 +4,6 @@ import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteratio
 
 import java.util.function.BiFunction;
 
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
