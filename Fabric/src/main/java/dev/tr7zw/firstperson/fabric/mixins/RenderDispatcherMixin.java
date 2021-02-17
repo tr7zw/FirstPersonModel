@@ -48,6 +48,8 @@ public abstract class RenderDispatcherMixin {
 			renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
 			matrices.translate(-offset.x, -offset.y,
 					-offset.z);
+		} else {
+			renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
 		}
 	}
 }

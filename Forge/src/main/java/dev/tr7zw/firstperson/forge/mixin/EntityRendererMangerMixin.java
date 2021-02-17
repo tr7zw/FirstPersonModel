@@ -31,9 +31,9 @@ public abstract class EntityRendererMangerMixin {
 			Entity entity_1, double x, double y, double z, float yaw, float tickDelta_1, MatrixStack matrices,
 			IRenderTypeBuffer vertexConsumers, int light) {
 		if (entity instanceof AbstractClientPlayerEntity) {
-			FirstPersonModelCore.instance.getWrapper().updatePositionOffset((AbstractClientPlayerEntity) entity,
+			FirstPersonModelCore.getWrapper().updatePositionOffset((AbstractClientPlayerEntity) entity,
 					entityRenderer.getRenderOffset(entity, tickDelta), matrices);
-			return (Vector3d) FirstPersonModelCore.instance.getWrapper().getOffset();
+			return (Vector3d) FirstPersonModelCore.getWrapper().getOffset();
 		} else {
 			return entityRenderer.getRenderOffset(entity, tickDelta);
 		}
@@ -43,10 +43,12 @@ public abstract class EntityRendererMangerMixin {
 	private void renderRedirect(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, Entity entityIn, float weightIn,
 			float partialTicks, IWorldReader worldIn, float sizeIn) {
 		if (entityIn instanceof AbstractClientPlayerEntity) {
-			Vector3d offset = (Vector3d) FirstPersonModelCore.instance.getWrapper().getOffset();
+			Vector3d offset = (Vector3d) FirstPersonModelCore.getWrapper().getOffset();
 			matrixStackIn.translate(offset.x, offset.y, offset.z);
 			renderShadow(matrixStackIn, bufferIn, entityIn, weightIn, partialTicks, worldIn, sizeIn);
 			matrixStackIn.translate(-offset.x, -offset.y, -offset.z);
+		}else {
+			renderShadow(matrixStackIn, bufferIn, entityIn, weightIn, partialTicks, worldIn, sizeIn);
 		}
 	}
 
