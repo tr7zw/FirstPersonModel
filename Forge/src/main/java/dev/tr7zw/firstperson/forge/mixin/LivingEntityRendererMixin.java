@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
 import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
