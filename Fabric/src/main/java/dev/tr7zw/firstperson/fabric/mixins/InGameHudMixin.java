@@ -9,7 +9,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.config.PaperDollSettings.DollHeadMode;
-import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -77,7 +76,6 @@ public class InGameHudMixin {
 		RenderSystem.translatef((float) i, (float) j, 1050.0F);
 		RenderSystem.scalef(1.0F, 1.0F, -1.0F);
 		MatrixStack matrixStack = new MatrixStack();
-		FirstPersonModelMod.setPaperDollStack(matrixStack); // To not hide head if rendering this
 		matrixStack.translate(0.0D, 0.0D, 1000.0D);
 		matrixStack.scale((float) k, (float) k, (float) k);
 		Quaternion quaternion = Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F);

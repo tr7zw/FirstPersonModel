@@ -68,7 +68,7 @@ public class ItemHeadFeatureRenderer<T extends LivingEntity, M extends EntityMod
 		}else if (SettingsUtil.hasEnabled((AbstractClientPlayerEntity) livingEntity, Head.LEAD)) {
 			itemStack = lead;
 		}
-		if (FirstPersonModelCore.instance.isFixActive(livingEntity, matrixStack)) {
+		if (FirstPersonModelCore.isRenderingPlayer) {
 			return;
 		}
 		if (!itemStack.isEmpty()) {

@@ -47,7 +47,7 @@ public abstract class PlayerRenderMixin
 			VertexConsumerProvider vertexConsumerProvider, int i) {
 		setModelPose(abstractClientPlayerEntity);
 		boolean bodyLayer = BodyLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
-		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)) {
+		if (FirstPersonModelMod.isRenderingPlayer) {
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.helmet.visible = false;
@@ -80,8 +80,8 @@ public abstract class PlayerRenderMixin
 	public void render(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, MatrixStack matrixStack,
 			VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
 		((ModelPartBase)this.getModel().head).showAgain();
-		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)) {
-			FirstPersonModelMod.clearHeadStack();
+		if (FirstPersonModelMod.isRenderingPlayer) {
+			FirstPersonModelMod.isRenderingPlayer = false;
 		}
 	}
 

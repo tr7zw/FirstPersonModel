@@ -29,7 +29,7 @@ public abstract class HeadLayerMixin<T extends LivingEntity, M extends EntityMod
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn,
 			float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
 			float headPitch, CallbackInfo info) {
-		process(entitylivingbaseIn, matrixStackIn, info);
+		process(info);
 	}
 
 }

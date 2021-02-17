@@ -24,7 +24,7 @@ public class HeldItemLayerMixin {
 	@Inject(at = @At("HEAD"), method = "func_229135_a_", cancellable = true)
 	private void renderItem(LivingEntity entity, ItemStack stack, ItemCameraTransforms.TransformType p_229135_3_, HandSide arm,
 			MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, CallbackInfo info) {
-		if (entity instanceof ClientPlayerEntity && FirstPersonModelCore.instance.isFixActive(entity, matrices)
+		if (entity instanceof ClientPlayerEntity && FirstPersonModelCore.isRenderingPlayer
 				&& FirstPersonModelMod.config.firstPerson.vanillaHands) {
 			info.cancel();
 			return;

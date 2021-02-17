@@ -67,7 +67,7 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 		}else if(SettingsUtil.hasEnabled((AbstractClientPlayerEntity)livingEntity, Hat.FEATHER)) {
 			itemStack = feather;
 		}
-		if (FirstPersonModelCore.instance.isFixActive(livingEntity, matrixStack)) {
+		if (FirstPersonModelCore.isRenderingPlayer) {
 			return;
 		}
 		if (!itemStack.isEmpty()) {

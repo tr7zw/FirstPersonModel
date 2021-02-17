@@ -56,8 +56,6 @@ public abstract class FirstPersonModelCore {
 	public static MinecraftWrapper getWrapper() {
 		return wrapper;
 	}
-	public abstract boolean isFixActive(Object player, Object matrices);
-	public abstract boolean isCompatebilityMatrix(Object entity, Object matrices);
 
 	public void onTick() {
         if(keyBinding.isPressed()) {

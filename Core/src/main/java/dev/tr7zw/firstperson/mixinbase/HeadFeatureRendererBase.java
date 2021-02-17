@@ -6,8 +6,8 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 
 public interface HeadFeatureRendererBase {
 
-	public default void process(Object livingEntity, Object matrixStack, CallbackInfo info) {
-		if (FirstPersonModelCore.instance.isFixActive(livingEntity, matrixStack)) {
+	public default void process(CallbackInfo info) {
+		if (FirstPersonModelCore.isRenderingPlayer) {
 			info.cancel();
 		}
 	}

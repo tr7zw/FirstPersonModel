@@ -102,13 +102,6 @@ public class ForgeWrapper implements MinecraftWrapper{
 	public void refreshPlayerSettings() {
 		client.gameSettings.sendSettingsToServer();
 	}
-	
-	@Override
-	public void isThirdPersonTrigger(Object matrices) {
-		if (applyThirdPerson(client.gameSettings.getPointOfView() != PointOfView.FIRST_PERSON)){
-			FirstPersonModelMod.hideHeadWithMatrixStack = (MatrixStack) matrices;
-		}
-	}
 
 	@Override
 	public void updatePositionOffset(Object player, Object defValue, Object matrices) {
@@ -122,7 +115,6 @@ public class ForgeWrapper implements MinecraftWrapper{
 		if(player == client.player && client.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 =  (ClientPlayerEntity) player;
 			realYaw = MathHelper.interpolateAngle(client.getRenderPartialTicks(), abstractClientPlayerEntity_1.prevRotationYaw, abstractClientPlayerEntity_1.rotationYaw);
-			FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			offset = (Vector3d) defValue;
 			return;
@@ -163,7 +155,6 @@ public class ForgeWrapper implements MinecraftWrapper{
 		}
 		Vector3d vec = new Vector3d(x, y, z);
 		abstractClientPlayerEntity_1 = null;
-		FirstPersonModelMod.isRenderingPlayer = false;
 		offset = vec;
 	}
 

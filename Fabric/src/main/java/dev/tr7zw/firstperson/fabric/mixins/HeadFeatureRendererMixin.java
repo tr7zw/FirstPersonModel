@@ -44,7 +44,7 @@ public abstract class HeadFeatureRendererMixin<T extends LivingEntity, M extends
 			info.cancel();
 			return;
 		}
-		process(livingEntity_1, matrixStack_1, info);
+		process(info);
 	}
 
 	private boolean shouldHide(ItemStack item) {

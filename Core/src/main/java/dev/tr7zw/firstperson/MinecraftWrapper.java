@@ -12,10 +12,7 @@ public interface MinecraftWrapper {
 	public Object getPlayer();
 	public boolean applyThirdPerson(boolean thirdPerson);
 	public void refreshPlayerSettings();
-	/**
-	 * run it, if the renderer is rendering our scene, to set the head hidden.
-	 */
- 	public void isThirdPersonTrigger(Object matrices);
+
  	public void updatePositionOffset(Object player, Object defValue, Object matrices);
  	public Object getOffset();
 	public boolean hasCustomSkin(Object player);

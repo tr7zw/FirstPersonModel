@@ -27,7 +27,7 @@ public abstract class BipedArmorLayerMixin<T extends LivingEntity, M extends Bip
 	
 	@Inject(method = "func_241739_a_", at = @At("HEAD"))
 	 private void renderArmor(MatrixStack matrices, IRenderTypeBuffer p_241739_2_, T livingEntity, EquipmentSlotType equipmentSlot, int p_241739_5_, A p_241739_6_, CallbackInfo info) {
-		if(equipmentSlot == EquipmentSlotType.CHEST && FirstPersonModelCore.instance.isFixActive(livingEntity, matrices) && FirstPersonModelCore.config.firstPerson.vanillaHands) {
+		if(equipmentSlot == EquipmentSlotType.CHEST && FirstPersonModelCore.isRenderingPlayer && FirstPersonModelCore.config.firstPerson.vanillaHands) {
 			hideShoulders = true;
 		}else {
 			hideShoulders = false;

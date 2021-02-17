@@ -10,7 +10,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.config.ConfigBuilder;
-import dev.tr7zw.firstperson.forge.listener.PlayerRendererListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,11 +25,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 {
 
     public static final String MODID = "firstpersonmod";
-    
-	@Nullable
-	public static MatrixStack hideHeadWithMatrixStack = null;
-	@Nullable
-	public static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
 
     public FirstPersonModelMod() {
     	instance = this;
@@ -39,8 +33,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(this::doTick);
-        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRenderPre);
-        MinecraftForge.EVENT_BUS.addListener(PlayerRendererListener::onRenderPost);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerExtensionPoint(
@@ -64,18 +56,8 @@ public class FirstPersonModelMod extends FirstPersonModelCore
     	sharedSetup();
     }
 
-	@Override
-	public boolean isFixActive(Object player, Object matrices){
-		return Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
-	}
-	
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
-		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
-	}
-
-	@Override
-	public boolean isCompatebilityMatrix(Object entity, Object matrices) {
-		return (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
+		return (enabled && (config.firstPerson.forceActive || FirstPersonModelCore.isRenderingPlayer));
 	}
 
 }

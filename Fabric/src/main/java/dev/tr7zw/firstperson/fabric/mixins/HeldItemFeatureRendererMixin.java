@@ -26,7 +26,7 @@ public class HeldItemFeatureRendererMixin {
 	@Inject(at = @At("HEAD"), method = "renderItem", cancellable = true)
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm,
 			MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
-		if (entity instanceof ClientPlayerEntity && FirstPersonModelCore.instance.isFixActive(entity, matrices)
+		if (entity instanceof ClientPlayerEntity && FirstPersonModelCore.isRenderingPlayer
 				&& FirstPersonModelMod.config.firstPerson.vanillaHands) {
 			info.cancel();
 			return;

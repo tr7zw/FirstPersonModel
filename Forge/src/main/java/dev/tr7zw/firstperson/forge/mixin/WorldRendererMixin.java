@@ -1,6 +1,7 @@
 package dev.tr7zw.firstperson.forge.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -9,39 +10,42 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.FirstPersonModelMod;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.IRenderTypeBuffer.Impl;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.RenderTypeBuffers;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.settings.PointOfView;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
 
 // Same name in fabric \o/
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-
-	private Minecraft client = Minecraft.getInstance();
 	
-	@Inject(at = @At("HEAD"), method = "renderEntity")
-	private void renderEntity(Entity entity_1, double double_1, double double_2, double double_3, float float_1,
-			MatrixStack matrixStack_1, IRenderTypeBuffer vertexConsumerProvider_1, CallbackInfo info) {
-		if (client.gameSettings.getPointOfView() != PointOfView.FIRST_PERSON)
-			return;
-		if (entity_1 instanceof AbstractClientPlayerEntity) {
-			if (!((PlayerEntity) entity_1).isUser())
-				return;
-			FirstPersonModelMod.isRenderingPlayer = true;
-		}
+	@Shadow
+	private RenderTypeBuffers renderTypeTextures;
+
+	
+	@Inject(method = "updateCameraAndRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/WorldRenderer;checkMatrixStack(Lcom/mojang/blaze3d/matrix/MatrixStack;)V", ordinal = 0))
+	public void render(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, ActiveRenderInfo camera,
+			GameRenderer gameRenderer, LightTexture lightmapIn, Matrix4f matrix4f, CallbackInfo info) {
+		if(camera.isThirdPerson() || !FirstPersonModelCore.getWrapper().applyThirdPerson(false))return;
+		Vector3d vec3d = camera.getProjectedView();
+		double d = vec3d.getX();
+		double e = vec3d.getY();
+		double f = vec3d.getZ();
+		Impl immediate = this.renderTypeTextures.getBufferSource();
+		FirstPersonModelMod.isRenderingPlayer = true;
+		this.renderEntity(camera.getRenderViewEntity(), d, e, f, tickDelta, matrices, immediate);
 	}
 
-	@Inject(method = "Lnet/minecraft/client/renderer/WorldRenderer;updateCameraAndRender(Lcom/mojang/blaze3d/matrix/MatrixStack;FJZLnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lnet/minecraft/util/math/vector/Matrix4f;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ActiveRenderInfo;isThirdPerson()Z"))
-	private void updateCameraAndRender(MatrixStack matrixStackIn, float partialTicks, long finishTimeNano, boolean drawBlockOutline, ActiveRenderInfo activeRenderInfoIn, GameRenderer gameRendererIn, LightTexture lightmapIn, Matrix4f projectionIn,
-			CallbackInfo ci) {
-		FirstPersonModelCore.getWrapper().isThirdPersonTrigger(matrixStackIn);
+	@Shadow
+	   private void renderEntity(Entity entityIn, double camX, double camY, double camZ, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn) {
+		
 	}
+	
+	
 }

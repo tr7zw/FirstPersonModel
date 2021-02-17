@@ -13,7 +13,7 @@ public class PlungerFeature extends AbstractCosmetic {
 	
 	@Override
 	public void initTextures() {
-		texture = FirstPersonModelCore.instance.getWrapper().getIdentifier("firstperson", "textures/features/hat/plunger.png");
+		texture = FirstPersonModelCore.getWrapper().getIdentifier("firstperson", "textures/features/hat/plunger.png");
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class PlungerFeature extends AbstractCosmetic {
 	@Override
 	public boolean shouldRender(Object player, Object matrixStack) {
 		return SettingsUtil.hasEnabled(player, Hat.PLUNGER)
-				&& !FirstPersonModelCore.instance.isFixActive(player, matrixStack);
+				&& !FirstPersonModelCore.isRenderingPlayer;
 	}
 
 	@Override

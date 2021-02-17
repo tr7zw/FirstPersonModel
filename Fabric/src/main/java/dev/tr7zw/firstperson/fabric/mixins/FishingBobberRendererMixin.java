@@ -34,7 +34,7 @@ public class FishingBobberRendererMixin {
         double x,y,z = x = y = z = 0;
         PlayerEntity abstractClientPlayerEntity_1;
         Float realYaw = 0f;
-        if(FirstPersonModelCore.instance.isFixActive(var1, matrices) && doCorrect()) {
+        if(FirstPersonModelCore.isRenderingPlayer && doCorrect()) {
             abstractClientPlayerEntity_1 = (PlayerEntity) var1;
             realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
         }else {

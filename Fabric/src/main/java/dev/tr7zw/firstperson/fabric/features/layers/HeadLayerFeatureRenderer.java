@@ -42,7 +42,7 @@ public class HeadLayerFeatureRenderer
 		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem)) && !FirstPersonModelCore.config.firstPerson.playerHeadSkins) {
 			return;
 		}
-		if (FirstPersonModelCore.instance.isFixActive(abstractClientPlayerEntity, matrixStack)
+		if (FirstPersonModelCore.isRenderingPlayer
 				|| !isEnabled(abstractClientPlayerEntity)) {
 			return;
 		}

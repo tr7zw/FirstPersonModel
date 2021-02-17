@@ -11,10 +11,6 @@ import net.minecraft.client.util.math.MatrixStack;
 
 public class FirstPersonModelMod extends FirstPersonModelCore implements ModInitializer {
 	
-	@Nullable
-	private static MatrixStack hideHeadWithMatrixStack = null;
-	@Nullable
-	private static MatrixStack paperDollStack = null; //Make force compatibility not hide paper doll
 	public static boolean hasOptifabric = false;
 
 	public FirstPersonModelMod() {
@@ -22,13 +18,10 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	}
 
 	public static boolean fixBodyShadow(MatrixStack matrixStack){
-		return (enabled && (config.firstPerson.forceActive || hideHeadWithMatrixStack == matrixStack));
+		return (enabled && (config.firstPerson.forceActive || FirstPersonModelCore.isRenderingPlayer));
 	}
 
 
-	public boolean isFixActive(Object player, Object matrices){
-		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().getCameraEntity() == player && (matrices == hideHeadWithMatrixStack || config.firstPerson.forceActive && matrices != paperDollStack);
-	}
 	
 	@Override
 	public void onInitialize() {
@@ -42,23 +35,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	    	hasOptifabric = true;
 	    	System.out.println("Found optifabric, limiting 3rd party mod compatebility!");
 	    }
-	}
-
-	@Override
-	public boolean isCompatebilityMatrix(Object entity, Object matrices) {
-		return MinecraftClient.getInstance() != null && MinecraftClient.getInstance().player != entity && (entity == MinecraftClient.getInstance().getCameraEntity() || !hasOptifabric) && (matrices == hideHeadWithMatrixStack && matrices != paperDollStack);
-	}
-	
-	public static void clearHeadStack() {
-		setHideHeadWithMatrixStack(null);
-	}
-
-	public static void setHideHeadWithMatrixStack(MatrixStack hideHeadWithMatrixStack) {
-		FirstPersonModelMod.hideHeadWithMatrixStack = hideHeadWithMatrixStack;
-	}
-
-	public static void setPaperDollStack(MatrixStack paperDollStack) {
-		FirstPersonModelMod.paperDollStack = paperDollStack;
 	}
 
 }

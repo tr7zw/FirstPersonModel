@@ -59,6 +59,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	modImplementation transliteration
+	compileOnly transliteration
 	modImplementation notenoughanimations
 
 	compile project(':Core')

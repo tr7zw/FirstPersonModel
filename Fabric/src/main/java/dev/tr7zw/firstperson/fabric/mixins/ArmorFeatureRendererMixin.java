@@ -29,7 +29,7 @@ FeatureRenderer<T, M>{
 	@Inject(method = "renderArmor", at = @At("HEAD"))
 	private void renderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T livingEntity,
 			EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
-		if(equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isFixActive(livingEntity, matrices) && FirstPersonModelCore.config.firstPerson.vanillaHands) {
+		if(equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer && FirstPersonModelCore.config.firstPerson.vanillaHands) {
 			hideShoulders = true;
 		}else {
 			hideShoulders = false;

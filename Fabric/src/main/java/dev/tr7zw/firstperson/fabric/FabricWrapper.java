@@ -103,13 +103,6 @@ public class FabricWrapper implements MinecraftWrapper {
 	}
 
 	@Override
-	public void isThirdPersonTrigger(Object matrices) {
-		if (applyThirdPerson(client.options.getPerspective() != Perspective.FIRST_PERSON)){
-			FirstPersonModelMod.setHideHeadWithMatrixStack((MatrixStack) matrices);
-		}
-	}
-
-	@Override
 	public void updatePositionOffset(Object player, Object defValue, Object matrices) {
 		if(player == client.getCameraEntity() && client.player.isSleeping() || !FirstPersonModelMod.fixBodyShadow((MatrixStack) matrices)) {
 			offset = (Vec3d) defValue;
@@ -121,7 +114,6 @@ public class FabricWrapper implements MinecraftWrapper {
 		if(player == client.player && client.options.getPerspective() == Perspective.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 = (AbstractClientPlayerEntity) player;
 			realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
-			FirstPersonModelMod.isRenderingPlayer = false;
 		}else {
 			offset = (Vec3d) defValue;
 			return;
@@ -162,7 +154,6 @@ public class FabricWrapper implements MinecraftWrapper {
 		}
 		Vec3d vec = new Vec3d(x, y, z);
 		abstractClientPlayerEntity_1 = null;
-		FirstPersonModelMod.isRenderingPlayer = false;
 		offset = vec;
 	}
 

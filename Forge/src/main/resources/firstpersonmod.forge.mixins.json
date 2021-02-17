@@ -7,7 +7,6 @@
   ],
   "client":[
     "IngameMenuScreenMixin",
-    "ActiveRenderInfoMixin",
     "HeadLayerMixin",
     "FirstPersonRendererMixin",
     "WorldRendererMixin",

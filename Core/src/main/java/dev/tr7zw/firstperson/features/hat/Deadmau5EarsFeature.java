@@ -21,7 +21,7 @@ public class Deadmau5EarsFeature extends AbstractCosmetic {
 	@Override
 	public boolean shouldRender(Object player, Object matrixStack) {
 		return SettingsUtil.hasEnabled(player, Hat.DEADMAU5)
-				&& !FirstPersonModelCore.instance.isFixActive(player, matrixStack);
+				&& !FirstPersonModelCore.isRenderingPlayer;
 	}
 
 	@Override
