@@ -25,6 +25,7 @@ FeatureRenderer<T, M>{
 	}
 
 	private boolean hideShoulders = false;
+	private boolean hideHelmet = false;
 	
 	@Inject(method = "renderArmor", at = @At("HEAD"))
 	private void renderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T livingEntity,
@@ -34,6 +35,7 @@ FeatureRenderer<T, M>{
 		}else {
 			hideShoulders = false;
 		}
+		hideHelmet = equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.isRenderingPlayer;
 	}
 	
 	@Inject(method = "renderArmorParts", at = @At("HEAD"))
@@ -43,6 +45,10 @@ FeatureRenderer<T, M>{
 		if(hideShoulders) {
 			bipedEntityModel.leftArm.visible = false;
 			bipedEntityModel.rightArm.visible = false;
+		}
+		if(hideHelmet) {
+			bipedEntityModel.head.visible = false;
+			bipedEntityModel.helmet.visible = false;
 		}
 	}
 	

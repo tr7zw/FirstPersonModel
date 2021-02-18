@@ -24,6 +24,7 @@ public abstract class BipedArmorLayerMixin<T extends LivingEntity, M extends Bip
 	}
 
 	private boolean hideShoulders = false;
+	private boolean hideHelmet = false;
 	
 	@Inject(method = "func_241739_a_", at = @At("HEAD"))
 	 private void renderArmor(MatrixStack matrices, IRenderTypeBuffer p_241739_2_, T livingEntity, EquipmentSlotType equipmentSlot, int p_241739_5_, A p_241739_6_, CallbackInfo info) {
@@ -32,6 +33,7 @@ public abstract class BipedArmorLayerMixin<T extends LivingEntity, M extends Bip
 		}else {
 			hideShoulders = false;
 		}
+		hideHelmet = equipmentSlot == EquipmentSlotType.HEAD && FirstPersonModelCore.isRenderingPlayer;
 	 }
 	
 	@Inject(method = "setModelSlotVisible", at = @At("RETURN"))
@@ -39,6 +41,10 @@ public abstract class BipedArmorLayerMixin<T extends LivingEntity, M extends Bip
 		if(hideShoulders) {
 			bipedEntityModel.bipedLeftArm.showModel = false;
 			bipedEntityModel.bipedRightArm.showModel = false;
+		}
+		if(hideHelmet) {
+			bipedEntityModel.bipedHead.showModel = false;
+			bipedEntityModel.bipedHeadwear.showModel = false;
 		}
 	}
 	
