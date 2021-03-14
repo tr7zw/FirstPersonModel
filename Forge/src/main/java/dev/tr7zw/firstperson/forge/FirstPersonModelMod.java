@@ -4,6 +4,8 @@ import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteratio
 
 import java.util.function.BiFunction;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
@@ -18,6 +20,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
 
 @Mod(FirstPersonModelMod.MODID)
 public class FirstPersonModelMod extends FirstPersonModelCore
@@ -44,6 +47,8 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 					}
 				}
         );
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+				() -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
     }
     
     private void doTick(ClientTickEvent event) {
