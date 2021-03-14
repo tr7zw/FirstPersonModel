@@ -13,6 +13,7 @@ import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PaperDoll {
@@ -21,6 +22,7 @@ public class PaperDoll {
 	
 	@SubscribeEvent
 	public void onOverlay(RenderGameOverlayEvent.Post e) {
+		if(e.getType() != ElementType.ALL)return;
 		if (FirstPersonModelCore.config.paperDoll.dollEnabled && !mc.gameSettings.showDebugInfo) {
 			int xpos = 0;
 			int ypos = 0;
