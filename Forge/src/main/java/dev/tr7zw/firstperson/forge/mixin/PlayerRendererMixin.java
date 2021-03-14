@@ -70,6 +70,13 @@ public abstract class PlayerRendererMixin
 			playerEntityModel_1.bipedHead.showModel = false;
 			playerEntityModel_1.bipedHeadwear.showModel = false;
 			((ModelPartBase) playerEntityModel_1.bipedHead).setHidden();
+			((ModelPartBase) playerEntityModel_1.bipedHeadwear).setHidden();
+			if (FirstPersonModelMod.config.firstPerson.vanillaHands) {
+				playerEntityModel_1.bipedLeftArm.showModel = false;
+				playerEntityModel_1.bipedLeftArmwear.showModel = false;
+				playerEntityModel_1.bipedRightArm.showModel = false;
+				playerEntityModel_1.bipedRightArmwear.showModel = false;
+			}
 		}
 	}
 
@@ -77,6 +84,7 @@ public abstract class PlayerRendererMixin
 	public void render(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, MatrixStack matrixStack,
 			IRenderTypeBuffer vertexConsumerProvider, int i, CallbackInfo info) {
 		((ModelPartBase) this.getEntityModel().bipedHead).showAgain();
+		((ModelPartBase) this.getEntityModel().bipedHeadwear).showAgain();
 		FirstPersonModelMod.isRenderingPlayer = false;
 	}
 

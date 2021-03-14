@@ -110,7 +110,7 @@ public abstract class SharedConfigBuilder {
 		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.vanillaHands",
 				config.firstPerson.vanillaHands, false, n -> config.firstPerson.vanillaHands = n));
 		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.doubleHands",
-				config.firstPerson.doubleHands, true, n -> config.firstPerson.doubleHands = n));
+				config.firstPerson.doubleHands, false, n -> config.firstPerson.doubleHands = n));
 		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.forceActive", config.firstPerson.forceActive,
 				false, n -> config.firstPerson.forceActive = n));
 	}

@@ -9,7 +9,7 @@ public class FirstPersonSettings {
 	public int sitXOffset = 0;
 
 	public boolean vanillaHands = false;
-	public boolean doubleHands = true;
+	public boolean doubleHands = false;
 	public boolean playerHeadSkins = false;
 	public boolean hideCosmeticsButton = false;
 
