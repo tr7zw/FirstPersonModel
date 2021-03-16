@@ -70,7 +70,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 
 	@Override
 	public void setCosmeticSettings(CosmeticSettings settings) {
-		if(((AbstractClientPlayerEntity)(Object)this).isUser()) {
+		if((Object)this instanceof AbstractClientPlayerEntity && ((AbstractClientPlayerEntity)(Object)this).isUser()) {
 			settings.modifyCameraHeight = FirstPersonModelCore.config.cosmetic.modifyCameraHeight; // Not provided by the backend
 			FirstPersonModelCore.config.cosmetic = settings;
 			return;
