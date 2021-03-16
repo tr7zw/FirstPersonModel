@@ -11,6 +11,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.forge.config.ConfigBuilder;
 import dev.tr7zw.firstperson.forge.listener.PaperDoll;
+import dev.tr7zw.firstperson.forge.listener.RenderHandEventListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,6 +36,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(new PaperDoll()::onOverlay);
+        MinecraftForge.EVENT_BUS.addListener(new RenderHandEventListener()::onRender);
         MinecraftForge.EVENT_BUS.addListener(this::doTick);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -54,7 +56,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
     private void doTick(ClientTickEvent event) {
     	super.onTick();
     }
-    
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	wrapper = new ForgeWrapper(Minecraft.getInstance());
