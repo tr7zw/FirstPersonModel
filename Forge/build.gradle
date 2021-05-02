@@ -58,6 +58,7 @@ minecraft {
 
 repositories{
     maven { url = 'https://files.minecraftforge.net/maven' }
+    maven { url = 'https://libraries.minecraft.net/' }
     maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
