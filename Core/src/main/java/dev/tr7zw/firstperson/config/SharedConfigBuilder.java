@@ -78,26 +78,6 @@ public abstract class SharedConfigBuilder {
 		return builder.build();
 	}
 	
-	public void onSave(FirstPersonConfig config) {
-		// on save
-		File settingsFile = new File("config", "firstperson.json");
-		if(settingsFile.exists())settingsFile.delete();
-		try {
-			Files.write(settingsFile.toPath(), gson.toJson(config).getBytes(StandardCharsets.UTF_8));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		FirstPersonModelCore.syncManager.checkForUpdates();
-		new Thread(() -> {
-			try {
-				Thread.sleep(1000);
-				FirstPersonModelCore.getWrapper().refreshPlayerSettings();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}).start();
-	}
-	
 	public void setupFirstPersonConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
 		addEntry(category, createBooleanSetting(entryBuilder, "firstperson.enabledByDefault",
 				config.firstPerson.enabledByDefault, true, n -> config.firstPerson.enabledByDefault = n));
