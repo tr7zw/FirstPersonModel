@@ -13,6 +13,7 @@ import dev.tr7zw.firstperson.config.FirstPersonConfig;
 import dev.tr7zw.firstperson.features.AbstractCosmetic;
 import dev.tr7zw.firstperson.features.FeatureProvider;
 import dev.tr7zw.firstperson.sync.SyncManager;
+import dev.tr7zw.transliterationlib.api.event.APIEvent;
 import dev.tr7zw.transliterationlib.api.wrapper.util.Keybind;
 
 public abstract class FirstPersonModelCore {
@@ -48,9 +49,18 @@ public abstract class FirstPersonModelCore {
 		enabled = config.firstPerson.enabledByDefault;
 		syncManager = new SyncManager();
 		syncManager.takeSnapshot();
-		keyBinding = transliteration.constructors().newKeybind("toggle", 295, "Firstperson");
-		transliteration.getKeybindings().registerKeybinding(keyBinding);
 		FeatureProvider.getFeatures().forEach(AbstractCosmetic::initTextures);
+		
+		if(transliteration == null) {
+    		APIEvent.LOADED.register(this::registerKeybinds);
+		}else {
+		    registerKeybinds();
+		}
+	}
+	
+	private void registerKeybinds() {
+	    keyBinding = transliteration.constructors().newKeybind("toggle", 295, "Firstperson");
+        transliteration.getKeybindings().registerKeybinding(keyBinding);
 	}
 	
 	public static MinecraftWrapper getWrapper() {
