@@ -34,17 +34,17 @@ Enables the third person Model in firstperson
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
+    side="CLIENT"
 # Here's another dependency
 [[dependencies.firstpersonmod]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.2,)"
     ordering="NONE"
-    side="BOTH"
+    side="CLIENT"
 [[dependencies.firstpersonmod]]
     modId="transliterationlib"
     mandatory=true
     versionRange="*"
     ordering="NONE"
-    side="BOTH"
+    side="CLIENT"

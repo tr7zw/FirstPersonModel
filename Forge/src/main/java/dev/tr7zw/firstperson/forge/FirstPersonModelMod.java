@@ -30,6 +30,12 @@ public class FirstPersonModelMod extends FirstPersonModelCore
     public static final String MODID = "firstpersonmod";
 
     public FirstPersonModelMod() {
+        try {
+            Class clientClass = net.minecraft.client.MinecraftGame.class;
+        }catch(Throwable ex) {
+            System.out.println("Firstperson Mod installed on a Server. Going to sleep.");
+            return;
+        }
     	instance = this;
         // Register the setup method for modloading
        // FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

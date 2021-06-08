@@ -24,3 +24,4 @@ bin/
 
 run/
 **/logs/latest.log
+logs/debug.log
