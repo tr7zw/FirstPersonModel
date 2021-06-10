@@ -1,7 +1,7 @@
 apply plugin: 'java-library'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 configurations {
     extraLibs
@@ -9,11 +9,12 @@ configurations {
 
 
 dependencies {
-    extraLibs project(path: ":Forge", configuration: 'archives')
+    //extraLibs project(path: ":Forge", configuration: 'archives')
     extraLibs files("../Fabric/build/libs/FirstPersonMod-${mod_version}.jar")
+    extraLibs project(':Core')
 }
 
-jar.dependsOn (':Fabric:build', ':Forge:build')
+jar.dependsOn (':Fabric:build', /*':Forge:build'*/)
 
 jar {
     baseName = "FirstPersonMod-${mod_version}"

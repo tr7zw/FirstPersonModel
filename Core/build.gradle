@@ -1,7 +1,7 @@
 apply plugin: 'java-library'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 repositories {
     jcenter()
@@ -12,6 +12,17 @@ repositories {
         url "https://www.cursemaven.com"
     }
 }
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes('Automatic-Module-Name': 'org.gradle.sample')
+    }
+}
+
 
 dependencies {
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson

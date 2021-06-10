@@ -1,22 +1,10 @@
-buildscript {
-    apply from: '../build.gradle'
-	repositories {
-        jcenter()
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
-        gradlePluginPortal()
-    }
-	dependencies {
-        classpath group: 'net.fabricmc', name: 'fabric-loom', version: '0.6.48', changing: true
-    }
+plugins {
+	id 'fabric-loom' version '0.8-SNAPSHOT'
+	id 'maven-publish'
 }
-apply plugin: 'fabric-loom'
-apply plugin: 'maven-publish'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -28,6 +16,8 @@ repositories {
         url "https://www.cursemaven.com"
     }
 	maven { url 'https://jitpack.io' } //fabric asm
+	maven {url 'https://maven.terraformersmc.com/releases'}
+	maven { url "https://maven.shedaniel.me/" }
 }
 
 minecraft {
@@ -42,18 +32,18 @@ dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 
-	modApi("io.github.prospector:modmenu:${project.modmenu_version}"){
+	modApi("com.terraformersmc:modmenu:${project.modmenu_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modApi("me.shedaniel.cloth:config-2:${project.cloth_version}"){
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
-	compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+	compileOnly group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 
 	// Fabric API. The keybinding registry is in this.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
@@ -62,11 +52,12 @@ dependencies {
 	compileOnly transliteration
 	modImplementation notenoughanimations
 
-	compile project(':Core')
+	implementation project(':Core')
 	extraLibs project(':Core')
 }
 
 processResources {
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 	inputs.property "version", project.version
 
 	from(sourceSets.main.resources.srcDirs) {
@@ -119,10 +110,6 @@ publishing {
 	repositories {
 		// uncomment to publish to the local maven
 		// mavenLocal()
-	}
-	dependencies {
-		//@Nullable essential for mc modding
-		compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 	}
 
 
