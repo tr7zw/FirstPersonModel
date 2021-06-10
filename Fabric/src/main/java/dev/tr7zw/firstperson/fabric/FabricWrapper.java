@@ -14,8 +14,8 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.MinecraftWrapper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.options.Perspective;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.client.texture.AbstractTexture;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImage.Format;
@@ -79,7 +79,7 @@ public class FabricWrapper implements MinecraftWrapper {
 		//this blinks the outer layer once, signaling a reload of this player
 		if(this.client.player != null && this.client.player.networkHandler != null)
 			this.client.player.networkHandler.sendPacket(new ClientSettingsC2SPacket(options.language, options.viewDistance,
-					options.chatVisibility, options.chatColors, 0, options.mainArm));
+					options.chatVisibility, options.chatColors, 0, options.mainArm, false));
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class FabricWrapper implements MinecraftWrapper {
 
 	@Override
 	public void refreshPlayerSettings() {
-		client.options.onPlayerModelPartChange();
+		client.options.sendClientSettings();
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class FabricWrapper implements MinecraftWrapper {
 		double realYaw;
 		if(player == client.player && client.options.getPerspective() == Perspective.FIRST_PERSON && FirstPersonModelMod.isRenderingPlayer) {
 			abstractClientPlayerEntity_1 = (AbstractClientPlayerEntity) player;
-			realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
+			realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.getYaw());
 		}else {
 			offset = (Vec3d) defValue;
 			return;
@@ -134,7 +134,7 @@ public class FabricWrapper implements MinecraftWrapper {
 				} else if(abstractClientPlayerEntity_1.getVehicle() instanceof LivingEntity){
 					realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).prevBodyYaw, ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).bodyYaw);
 				} else {
-					realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.getVehicle().prevYaw, abstractClientPlayerEntity_1.getVehicle().yaw);
+					realYaw = MathHelper.lerpAngleDegrees(client.getTickDelta(), abstractClientPlayerEntity_1.getVehicle().prevYaw, abstractClientPlayerEntity_1.getVehicle().getYaw());
 				}
 				bodyOffset = FirstPersonModelMod.inVehicleBodyOffset + (FirstPersonModelMod.config.firstPerson.sitXOffset / 100f);
 			}else{
@@ -171,7 +171,7 @@ public class FabricWrapper implements MinecraftWrapper {
 		NativeImage skin = new NativeImage(Format.ABGR, 64, 64, true);
 		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
 		AbstractTexture abstractTexture = textureManager.getTexture(((AbstractClientPlayerEntity)player).getSkinTexture());
-		GlStateManager.bindTexture(abstractTexture.getGlId());
+		GlStateManager._bindTexture(abstractTexture.getGlId());
 		skin.loadFromTextureImage(0, false);
 		return skin;
 	}
@@ -188,7 +188,7 @@ public class FabricWrapper implements MinecraftWrapper {
 		if (abstractTexture == null) {
 			return id;
 		}
-		GlStateManager.bindTexture(abstractTexture.getGlId());
+		GlStateManager._bindTexture(abstractTexture.getGlId());
 		int width = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
 		int height = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
 		NativeImage skin = new NativeImage(Format.ABGR, width, height, true);

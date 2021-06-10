@@ -1,7 +1,6 @@
 package dev.tr7zw.firstperson.fabric.mixins;
 
 
-import net.minecraft.client.options.Perspective;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.Perspective;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.FishingBobberEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -36,7 +36,7 @@ public class FishingBobberRendererMixin {
         Float realYaw = 0f;
         if(FirstPersonModelCore.isRenderingPlayer && doCorrect()) {
             abstractClientPlayerEntity_1 = (PlayerEntity) var1;
-            realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.yaw);
+            realYaw = MathHelper.lerpAngleDegrees(MinecraftClient.getInstance().getTickDelta(), abstractClientPlayerEntity_1.prevYaw, abstractClientPlayerEntity_1.getYaw());
         }else {
             abstractClientPlayerEntity_1 = null;
             return Vec3d.ZERO;

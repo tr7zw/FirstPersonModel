@@ -1,5 +1,5 @@
 project.ext {
    version = "2.0.1"
-   transliteration = "curse.maven:transliteration-441024:3205080"
-   notenoughanimations = "curse.maven:notenoughanimations-433760:3187616"
+   transliteration = "curse.maven:transliteration-441024:3346137"
+   notenoughanimations = "curse.maven:notenoughanimations-433760:3346142"
 }

@@ -44,7 +44,7 @@ FeatureRenderer<T, M>{
 		}
 		if(hideHelmet) {
 			bipedEntityModel.head.visible = false;
-			bipedEntityModel.helmet.visible = false;
+			bipedEntityModel.hat.visible = false;
 		}
 	}
 	

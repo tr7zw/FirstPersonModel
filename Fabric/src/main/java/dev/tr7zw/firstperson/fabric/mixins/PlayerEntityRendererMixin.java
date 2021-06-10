@@ -17,8 +17,8 @@ import dev.tr7zw.firstperson.features.AbstractCosmetic;
 import dev.tr7zw.firstperson.features.FeatureProvider;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.options.Perspective;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.option.Perspective;
+import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -32,12 +32,12 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class PlayerEntityRendererMixin
 		extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-	public PlayerEntityRendererMixin(EntityRenderDispatcher dispatcher,
-			PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
-		super(dispatcher, model, shadowRadius);
-	}
+	public PlayerEntityRendererMixin(Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model,
+            float shadowRadius) {
+        super(ctx, model, shadowRadius);
+    }
 
-	private final MinecraftClient mc = MinecraftClient.getInstance();
+    private final MinecraftClient mc = MinecraftClient.getInstance();
 
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {

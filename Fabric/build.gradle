@@ -20,12 +20,13 @@ repositories {
 	maven { url "https://maven.shedaniel.me/" }
 }
 
-minecraft {
-}
-
 configurations {
     // configuration that holds jars to include in the jar
     extraLibs
+}
+
+minecraft {
+	accessWidener =  file("src/main/resources/firstperson.accesswidener")
 }
 
 dependencies {

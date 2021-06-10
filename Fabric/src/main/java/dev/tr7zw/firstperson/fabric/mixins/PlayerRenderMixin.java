@@ -13,7 +13,7 @@ import dev.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
 import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -27,18 +27,18 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class PlayerRenderMixin
 		extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 	
+    
 	/**
 	 * Just needed because of the extends
 	 * 
-	 * @param entityRenderDispatcher_1
-	 * @param entityModel_1
-	 * @param float_1
+	 * @param ctx
+	 * @param model
+	 * @param shadowRadius
 	 */
-	public PlayerRenderMixin(EntityRenderDispatcher entityRenderDispatcher_1,
-			PlayerEntityModel<AbstractClientPlayerEntity> entityModel_1, float float_1) {
-		super(entityRenderDispatcher_1, entityModel_1, float_1);
-	}
-
+	public PlayerRenderMixin(Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
+        super(ctx, model, shadowRadius);
+    } 
+    
 	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/PlayerEntityRenderer;setModelPose(Lnet/minecraft/client/network/AbstractClientPlayerEntity;)V"))
 	private void setModelPoseRedirect(PlayerEntityRenderer playerEntityRenderer,
 			AbstractClientPlayerEntity abstractClientPlayerEntity,
@@ -49,7 +49,7 @@ public abstract class PlayerRenderMixin
 		if (FirstPersonModelMod.isRenderingPlayer) {
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
-			playerEntityModel_1.helmet.visible = false;
+			playerEntityModel_1.hat.visible = false;
 			((ModelPartBase)playerEntityModel_1.head).setHidden();
 			if (FirstPersonModelMod.config.firstPerson.vanillaHands) {
 				playerEntityModel_1.leftArm.visible = false;
@@ -60,17 +60,17 @@ public abstract class PlayerRenderMixin
 				
 			}
 		} else {
-			playerEntityRenderer.getModel().helmet.visible = HeadLayerFeatureRenderer
-					.isEnabled(abstractClientPlayerEntity) ? false : playerEntityRenderer.getModel().helmet.visible;
+			playerEntityRenderer.getModel().hat.visible = HeadLayerFeatureRenderer
+					.isEnabled(abstractClientPlayerEntity) ? false : playerEntityRenderer.getModel().hat.visible;
 		}
 		playerEntityRenderer.getModel().leftSleeve.visible = bodyLayer ? false
 				: playerEntityRenderer.getModel().leftSleeve.visible;
 		playerEntityRenderer.getModel().rightSleeve.visible = bodyLayer ? false
 				: playerEntityRenderer.getModel().rightSleeve.visible;
-		playerEntityRenderer.getModel().leftPantLeg.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().leftPantLeg.visible;
-		playerEntityRenderer.getModel().rightPantLeg.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().rightPantLeg.visible;
+		playerEntityRenderer.getModel().leftPants.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().leftPants.visible;
+		playerEntityRenderer.getModel().rightPants.visible = bodyLayer ? false
+				: playerEntityRenderer.getModel().rightPants.visible;
 		playerEntityRenderer.getModel().jacket.visible = bodyLayer ? false
 				: playerEntityRenderer.getModel().jacket.visible;
 	}

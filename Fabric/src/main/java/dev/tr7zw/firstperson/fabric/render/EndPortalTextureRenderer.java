@@ -15,8 +15,8 @@ import net.minecraft.client.util.math.MatrixStack;
 public class EndPortalTextureRenderer {
 
 	private static final Random RANDOM = new Random(31100L);
-	private static final List<RenderLayer> field_21732 = IntStream.range(0, 16).mapToObj((i) -> {
-		return RenderLayer.getEndPortal(i + 1);
+	private static final List<RenderLayer> field_21732 = IntStream.range(0, 1).mapToObj((i) -> {
+		return RenderLayer.getEndPortal();
 	}).collect(ImmutableList.toImmutableList());
 	
 	public static void render(ModelPart model, VertexConsumerProvider vertexConsumerProvider, MatrixStack matrixStack, int light, int overlay) {

@@ -31,7 +31,7 @@ public abstract class GameMenuScreenMixin extends Screen {
 		if (!FirstPersonModelCore.config.firstPerson.hideCosmeticsButton) {
 			//(int i, int j, int k, int l, int m, int n, int o, Identifier identifier, int p, int q,
 			//		ButtonWidget.PressAction pressAction, Text text)
-			this.addButton(new TexturedButtonWidget(this.width / 2 - 102 - 24, this.height / 4 + 96 + -16, 20, 20, 0, 0, 20, BUTTON_TEXTURE, 32, 64,
+			this.addDrawableChild(new TexturedButtonWidget(this.width / 2 - 102 - 24, this.height / 4 + 96 + -16, 20, 20, 0, 0, 20, BUTTON_TEXTURE, 32, 64,
 					(buttonWidgetx) -> {
 						ClothConfigScreen screen = (ClothConfigScreen) new ConfigBuilder()
 								.createConfigScreen(transliteration.getWrapper().wrapScreen(this))

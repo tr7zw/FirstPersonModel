@@ -9,9 +9,9 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.Vector4f;
 
 public class CustomModelPart extends ModelPart {
 	private float textureWidth = 64.0F;
@@ -30,27 +30,21 @@ public class CustomModelPart extends ModelPart {
 	public boolean mirror;
 	public boolean visible = true;
 
-	private final ObjectList<CustomModelPart.Cuboid> cuboids = new ObjectArrayList<Cuboid>();
+	private final ObjectList<CustomModelPart.Cuboid> cuboids = new ObjectArrayList<dev.tr7zw.firstperson.fabric.render.CustomModelPart.Cuboid>();
 	private final ObjectList<CustomModelPart> children = new ObjectArrayList<CustomModelPart>();
 
 	public CustomModelPart(Model model) {
-		super(model);
-		setTextureSize(model.textureWidth, model.textureHeight);
-	}
-
-	public CustomModelPart(Model model, int textureOffsetU, int textureOffsetV) {
-		this(model.textureWidth, model.textureHeight, textureOffsetU, textureOffsetV);
-		model.accept(this);
+		super(null, null);
 	}
 
 	public CustomModelPart(int textureWidth, int textureHeight, int textureOffsetU, int textureOffsetV) {
-		super(textureWidth, textureHeight, textureOffsetU, textureOffsetV);
+		super(null, null);
 		setTextureSize(textureWidth, textureHeight);
 		setTextureOffset(textureOffsetU, textureOffsetV);
 	}
 
 	public void customCopyPositionAndRotation(ModelPart modelPart) {
-		super.copyPositionAndRotation(modelPart);
+		super.copyTransform(modelPart);
 		this.pitch = modelPart.pitch;
 		this.yaw = modelPart.yaw;
 		this.roll = modelPart.roll;
@@ -63,7 +57,6 @@ public class CustomModelPart extends ModelPart {
 		this.children.add(part);
 	}
 
-	@Override
 	public CustomModelPart setTextureOffset(int textureOffsetU, int textureOffsetV) {
 		this.textureOffsetU = textureOffsetU;
 		this.textureOffsetV = textureOffsetV;
@@ -161,13 +154,13 @@ public class CustomModelPart extends ModelPart {
 	public void rotate(MatrixStack matrix) {
 		matrix.translate(this.pivotX / 16.0F, this.pivotY / 16.0F, this.pivotZ / 16.0F);
 		if (this.roll != 0.0F) {
-			matrix.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(this.roll));
+			matrix.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(this.roll));
 		}
 		if (this.yaw != 0.0F) {
-			matrix.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(this.yaw));
+			matrix.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(this.yaw));
 		}
 		if (this.pitch != 0.0F) {
-			matrix.multiply(Vector3f.POSITIVE_X.getRadialQuaternion(this.pitch));
+			matrix.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(this.pitch));
 		}
 	}
 
@@ -175,10 +168,10 @@ public class CustomModelPart extends ModelPart {
 			float red, float green, float blue, float alpha) {
 		net.minecraft.util.math.Matrix4f matrix4f = matrices.getModel();
 		net.minecraft.util.math.Matrix3f matrix3f = matrices.getNormal();
-		for (ObjectListIterator<Cuboid> localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
+		for (ObjectListIterator<dev.tr7zw.firstperson.fabric.render.CustomModelPart.Cuboid> localObjectListIterator = this.cuboids.iterator(); localObjectListIterator.hasNext();) {
 			CustomModelPart.Cuboid cuboid = (CustomModelPart.Cuboid) localObjectListIterator.next();
 			for (CustomModelPart.Quad quad : cuboid.getSides()) {
-				Vector3f vector3f = quad.direction.copy();
+				Vec3f vector3f = quad.direction.copy();
 				vector3f.transform(matrix3f);
 
 				float f = vector3f.getX();
@@ -297,7 +290,7 @@ public class CustomModelPart extends ModelPart {
 
 	class Quad {
 		public final CustomModelPart.Vertex[] vertices;
-		public final Vector3f direction;
+		public final Vec3f direction;
 
 		public Quad(CustomModelPart.Vertex[] vertices, float u1, float v1, float u2, float v2, float squishU,
 				float squishV, boolean flip, Direction direction) {
@@ -327,19 +320,19 @@ public class CustomModelPart extends ModelPart {
 	}
 
 	class Vertex {
-		public final Vector3f pos;
+		public final Vec3f pos;
 		public final float u;
 		public final float v;
 
 		public Vertex(float x, float y, float z, float u, float v) {
-			this(new Vector3f(x, y, z), u, v);
+			this(new Vec3f(x, y, z), u, v);
 		}
 
-		public Vertex remap(float u, float v) {
-			return new Vertex(this.pos, u, v);
+		public dev.tr7zw.firstperson.fabric.render.CustomModelPart.Vertex remap(float u, float v) {
+			return new dev.tr7zw.firstperson.fabric.render.CustomModelPart.Vertex(this.pos, u, v);
 		}
 
-		public Vertex(Vector3f pos, float u, float v) {
+		public Vertex(Vec3f pos, float u, float v) {
 			this.pos = pos;
 			this.u = u;
 			this.v = v;

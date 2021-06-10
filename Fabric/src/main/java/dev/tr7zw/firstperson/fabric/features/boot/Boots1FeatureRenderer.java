@@ -1,5 +1,8 @@
 package dev.tr7zw.firstperson.fabric.features.boot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import dev.tr7zw.firstperson.features.Boots;
 import dev.tr7zw.firstperson.util.SettingsUtil;
 import net.minecraft.client.model.ModelPart;
@@ -20,7 +23,9 @@ public class Boots1FeatureRenderer extends FeatureRenderer<AbstractClientPlayerE
 	public Boots1FeatureRenderer(
 			FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
 		super(featureRendererContext);
-		bb_main = new ModelPart(32, 32, 0, 0);
+		bb_main = new ModelPart(new ArrayList(), new HashMap());
+		cube_r1 = new ModelPart(new ArrayList(), new HashMap());
+		/*bb_main = new ModelPart();
 		bb_main.setPivot(0.0F, 12.0F, 0.0F);
 		
 		cube_r1 = new ModelPart(32, 32, 0, 0);
@@ -30,7 +35,7 @@ public class Boots1FeatureRenderer extends FeatureRenderer<AbstractClientPlayerE
 		cube_r1.setTextureOffset(0, 0).addCuboid(-2.0F, -6.0F, -2.0F, 4.0F, 6.0F, 4.0F, 0.2F, false);
 		cube_r1.setTextureOffset(0, 10).addCuboid(-4.0F, -2.0F, -2.0F, 2.0F, 2.0F, 4.0F, 0.0F, false);
 		cube_r1.setTextureOffset(0, 16).addCuboid(-3.0F, -3.0F, -1.0F, 1.0F, 3.0F, 2.0F, 0.0F, false);
-		cube_r1.setTextureOffset(12, 12).addCuboid(1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		cube_r1.setTextureOffset(12, 12).addCuboid(1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);*/
 		
 		texture = new Identifier("firstperson", "textures/features/boots/boot_default.png");
 	}

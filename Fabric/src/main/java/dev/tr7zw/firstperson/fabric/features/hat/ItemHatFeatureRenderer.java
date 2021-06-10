@@ -24,7 +24,6 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.render.model.json.ModelTransformation.Mode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -33,9 +32,10 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityModel<T> & ModelWithHead>
@@ -81,30 +81,9 @@ public class ItemHatFeatureRenderer<T extends LivingEntity, M extends EntityMode
 			}
 
 			((ModelWithHead) this.getContextModel()).getHead().rotate(matrixStack);
-			if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-				matrixStack.scale(1.1875F, -1.1875F, -1.1875F);
-
-				GameProfile gameProfile = null;
-				if (itemStack.hasTag()) {
-					CompoundTag compoundTag = itemStack.getTag();
-					if (compoundTag.contains("SkullOwner", 10)) {
-						gameProfile = NbtHelper.toGameProfile(compoundTag.getCompound("SkullOwner"));
-					} else if (compoundTag.contains("SkullOwner", 8)) {
-						String string = compoundTag.getString("SkullOwner");
-						if (!StringUtils.isBlank(string)) {
-							gameProfile = SkullBlockEntity.loadProperties(new GameProfile((UUID) null, string));
-							compoundTag.put("SkullOwner", NbtHelper.fromGameProfile(new CompoundTag(), gameProfile));
-						}
-					}
-				}
-
-				matrixStack.translate(-0.5D, 0.0D, -0.5D);
-				SkullBlockEntityRenderer.render((Direction) null, 180.0F,
-						((AbstractSkullBlock) ((BlockItem) item).getBlock()).getSkullType(), gameProfile, f,
-						matrixStack, vertexConsumerProvider, i);
-			} else if (!(item instanceof ArmorItem) || ((ArmorItem) item).getSlotType() != EquipmentSlot.HEAD) {
+			if (!(item instanceof ArmorItem) || ((ArmorItem) item).getSlotType() != EquipmentSlot.HEAD) {
 				matrixStack.translate(0.0D, -0.25D, 0.0D);
-				matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
+				matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
 				matrixStack.scale(0.625F, -0.625F, -0.625F);
 
 				MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, itemStack, Mode.HEAD,

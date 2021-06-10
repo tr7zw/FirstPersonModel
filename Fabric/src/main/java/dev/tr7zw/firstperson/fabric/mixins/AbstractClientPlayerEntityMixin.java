@@ -24,9 +24,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +41,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 	private Identifier lastId = null;
 	private String modelOverwrite = null;
 
-	@Inject(method = "getSkinTexture", at = @At("HEAD"), cancellable = true)
+	/*@Inject(method = "getSkinTexture", at = @At("HEAD"), cancellable = true)
 	public Identifier getSkinTexture(CallbackInfoReturnable<Identifier> info) {
 		if(!FirstPersonModelCore.config.firstPerson.playerHeadSkins) {
 			if(lastId != null) {
@@ -57,13 +57,13 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 			GameProfile gameProfile = null;
 			if (itemStack.hasTag()) {
 				String string;
-				CompoundTag compoundTag = itemStack.getTag();
+				NbtCompound compoundTag = itemStack.getTag();
 				if (compoundTag.contains("SkullOwner", 10)) {
-					gameProfile = NbtHelper.toGameProfile((CompoundTag) compoundTag.getCompound("SkullOwner"));
+					gameProfile = NbtHelper.toGameProfile((NbtCompound) compoundTag.getCompound("SkullOwner"));
 				} else if (compoundTag.contains("SkullOwner", 8)
 						&& !StringUtils.isBlank((CharSequence) (string = compoundTag.getString("SkullOwner")))) {
 					gameProfile = SkullBlockEntity.loadProperties((GameProfile) new GameProfile(null, string));
-					compoundTag.put("SkullOwner", (Tag) NbtHelper.fromGameProfile((CompoundTag) new CompoundTag(),
+					compoundTag.put("SkullOwner", (NbtElement) NbtHelper.writeGameProfile((NbtCompound) new NbtCompound(),
 							(GameProfile) gameProfile));
 				}
 				Identifier id = getSkin(gameProfile);
@@ -81,7 +81,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 			clearSettings();
 		}
 		return null;
-	}
+	}*/
 	
 	@Inject(method = "getModel", at = @At("HEAD"), cancellable = true)
 	public String getModel(CallbackInfoReturnable<String> info) {

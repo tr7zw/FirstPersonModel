@@ -1,5 +1,8 @@
 package dev.tr7zw.firstperson.fabric.features;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import dev.tr7zw.firstperson.fabric.render.CustomModelPart;
 import dev.tr7zw.firstperson.features.AbstractCosmetic;
 import dev.tr7zw.firstperson.features.AbstractCosmetic.ModelCreator;
@@ -47,7 +50,7 @@ public class FabricFeature
 					break;
 				}
 				case BODY: {
-					parentModel.torso.rotate(matrices);
+					parentModel.body.rotate(matrices);
 					break;
 				}
 			}
@@ -59,12 +62,12 @@ public class FabricFeature
 
 	@Override
 	public ModelCreator getVanillaModelCreator(int textureWith, int textureHeight, int u, int v) {
-		return getVanillaModelCreator(new ModelPart(textureWith, textureHeight, u, v));
+		return getVanillaModelCreator(new ModelPart(new ArrayList(), new HashMap()));
 	}
 
 	@Override
 	public ModelCreator getVanillaModelCreator(int u, int v) {
-		return getVanillaModelCreator(new ModelPart(parentModel, u, v));
+		return getVanillaModelCreator(new ModelPart(new ArrayList(), new HashMap()));
 	}
 
 	private ModelCreator getVanillaModelCreator(ModelPart modelPart) {
@@ -72,7 +75,7 @@ public class FabricFeature
 
 			@Override
 			public ModelCreator setTextureOffset(int u, int v) {
-				modelPart.setTextureOffset(u, v);
+				//modelPart.setTextureOffset(u, v);
 				return this;
 			}
 
@@ -84,7 +87,7 @@ public class FabricFeature
 			@Override
 			public ModelCreator addCuboid(float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extra,
 					boolean mirror) {
-				modelPart.addCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
+				//modelPart.addCuboid(x, y, z, sizeX, sizeY, sizeZ, extra, mirror);
 				return this;
 			}
 
@@ -96,7 +99,7 @@ public class FabricFeature
 
 			@Override
 			public void addChild(ModelCreator child) {
-				modelPart.addChild((ModelPart) child.getModel());
+				//modelPart.addChild((ModelPart) child.getModel());
 			}
 
 			@Override
@@ -138,7 +141,7 @@ public class FabricFeature
 	@Override
 	public ModelCreator getCustomModelCreator(int u, int v) {
 		return new ModelCreator() {
-			CustomModelPart modelPart = new CustomModelPart(parentModel, u, v);
+			CustomModelPart modelPart = new CustomModelPart(parentModel);
 
 			@Override
 			public ModelCreator setTextureOffset(int u, int v) {
