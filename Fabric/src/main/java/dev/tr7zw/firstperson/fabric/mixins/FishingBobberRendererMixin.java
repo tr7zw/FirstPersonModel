@@ -76,7 +76,7 @@ public class FishingBobberRendererMixin {
 
     @Redirect(method = "render", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/options/GameOptions;getPerspective()Lnet/minecraft/client/options/Perspective;"
+            target = "Lnet/minecraft/client/option/GameOptions;getPerspective()Lnet/minecraft/client/option/Perspective;"
     ))
     private Perspective redirect(GameOptions gameOptions){
         return (doCorrect()) ? Perspective.THIRD_PERSON_BACK : gameOptions.getPerspective();

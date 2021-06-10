@@ -42,8 +42,8 @@ public class ModelPartMixin implements ModelPartBase{
 		}
 	}
 	
-	@Inject(method = "copyPositionAndRotation", at = @At("RETURN"))
-	public void copyPositionAndRotation(ModelPart modelPart, CallbackInfo info) {
+	@Inject(method = "copyTransform", at = @At("RETURN"))
+	public void copyTransform(ModelPart modelPart, CallbackInfo info) {
 		if(moved) {
 			zCopy = pivotZ;
 			this.pivotZ = 5000;

@@ -12,7 +12,7 @@ import net.minecraft.client.texture.PlayerSkinTexture;
 public abstract class PlayerSkinTextureMixin {
 
 	@Inject(method = "remapTexture", at = @At("HEAD"), cancellable = true)
-	private static NativeImage remapTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
+	private NativeImage remapTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
 		boolean bl = image.getHeight() == 32;
 		if (bl) {
 			@SuppressWarnings("resource")

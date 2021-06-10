@@ -68,6 +68,9 @@ public abstract class FirstPersonModelCore {
 	}
 
 	public void onTick() {
+	    if(transliteration == null) { // not ready yet
+	        return;
+	    }
         if(keyBinding.isPressed()) {
         	if(isHeld)return;
         	isHeld = true;

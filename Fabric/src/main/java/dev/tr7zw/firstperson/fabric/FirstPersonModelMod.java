@@ -22,11 +22,11 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	@Override
 	public void onInitialize() {
 		wrapper = new FabricWrapper(MinecraftClient.getInstance());
+	    sharedSetup();
 	    ClientTickEvents.END_CLIENT_TICK.register(e ->
 	    {
 	    	onTick();
 	    });
-	    sharedSetup();
 	    if(FabricLoader.getInstance().isModLoaded("optifabric")) {
 	    	hasOptifabric = true;
 	    	System.out.println("Found optifabric, limiting 3rd party mod compatebility!");
