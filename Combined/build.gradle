@@ -17,6 +17,7 @@ dependencies {
 jar.dependsOn (':Fabric:build', /*':Forge:build'*/)
 
 jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     baseName = "FirstPersonMod-${mod_version}"
     manifest {
         attributes([

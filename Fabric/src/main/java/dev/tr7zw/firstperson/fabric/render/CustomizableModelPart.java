@@ -1,6 +1,8 @@
 package dev.tr7zw.firstperson.fabric.render;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -36,11 +38,11 @@ public class CustomizableModelPart extends ModelPart {
 	private final ObjectList<CustomizableModelPart> children = new ObjectArrayList<CustomizableModelPart>();
 
 	public CustomizableModelPart(Model model) {
-		super(null, null);
+	    super(new ArrayList<>(), new HashMap<>());
 	}
 
 	public CustomizableModelPart(int textureWidth, int textureHeight, int textureOffsetU, int textureOffsetV) {
-	    super(null, null);
+	    super(new ArrayList<>(), new HashMap<>());
 		setTextureSize(textureWidth, textureHeight);
 		setTextureOffset(textureOffsetU, textureOffsetV);
 	}

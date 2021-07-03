@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.fabric.render;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -33,11 +35,11 @@ public class SolidPixelModelPart extends ModelPart {
 	private final ObjectList<SolidPixelModelPart> children = new ObjectArrayList<SolidPixelModelPart>();
 
 	public SolidPixelModelPart() {
-		super(null, null);
+	    super(new ArrayList<>(), new HashMap<>());
 	}
 
 	public SolidPixelModelPart(int textureWidth, int textureHeight, int textureOffsetU, int textureOffsetV) {
-	    super(null, null);
+	    super(new ArrayList<>(), new HashMap<>());
 		setTextureSize(textureWidth, textureHeight);
 		setTextureOffset(textureOffsetU, textureOffsetV);
 	}

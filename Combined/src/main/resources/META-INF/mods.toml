@@ -13,7 +13,7 @@ issueTrackerURL="https://github.com/tr7zw/FirstPersonModel-Fabric/issues"
 license="MIT License"
 [[mods]] #mandatory
 modId="firstpersonmod" #mandatory
-version="2.0.1" #mandatory
+version="2.0.2" #mandatory
 displayName="FirstPersonModel Mod"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/first-person-model/"
 # A file name (in the root of the mod JAR) containing a logo for display
