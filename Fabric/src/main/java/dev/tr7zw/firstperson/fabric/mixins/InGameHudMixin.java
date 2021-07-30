@@ -27,11 +27,11 @@ import net.minecraft.util.math.Vec3f;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
 
-	private final MinecraftClient mc = MinecraftClient.getInstance();
+	private final MinecraftClient fpm_mc = MinecraftClient.getInstance();
 
 	@Inject(at = @At("HEAD"), method = "render")
 	public void render(MatrixStack matrixStack, float delta, CallbackInfo info) {
-		if (FirstPersonModelCore.config.paperDoll.dollEnabled && !mc.options.debugEnabled) {
+		if (FirstPersonModelCore.config.paperDoll.dollEnabled && !fpm_mc.options.debugEnabled) {
 			int xpos = 0;
 			int ypos = 0;
 			switch (FirstPersonModelCore.config.paperDoll.location) {
@@ -40,28 +40,28 @@ public class InGameHudMixin {
 				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
 				break;
 			case TOP_RIGHT:
-				xpos = mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				xpos = fpm_mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
 				ypos = 55 + FirstPersonModelCore.config.paperDoll.dollYOffset;
 				break;
 			case BOTTOM_LEFT:
 				xpos = 25 + FirstPersonModelCore.config.paperDoll.dollXOffset;
-				ypos = mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				ypos = fpm_mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
 				break;
 			case BOTTOM_RIGHT:
-				xpos = mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
-				ypos = mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
+				xpos = fpm_mc.getWindow().getScaledWidth() - (25 + FirstPersonModelCore.config.paperDoll.dollXOffset);
+				ypos = fpm_mc.getWindow().getScaledHeight() - (55 + FirstPersonModelCore.config.paperDoll.dollYOffset);
 				break;
 			}
 			int size = 25 + FirstPersonModelCore.config.paperDoll.dollSize;
 			int lookSides = -FirstPersonModelCore.config.paperDoll.dollLookingSides;
 			int lookUpDown = FirstPersonModelCore.config.paperDoll.dollLookingUpDown;
-			if (mc.player.isFallFlying() || mc.player.isUsingRiptide()) {
+			if (fpm_mc.player.isFallFlying() || fpm_mc.player.isUsingRiptide()) {
 				lookSides = 0;
 				lookUpDown = 40;
 			}
-			LivingEntity playerEntity = mc.player;
-			if (mc.getCameraEntity() != playerEntity && mc.getCameraEntity() instanceof LivingEntity) {
-				playerEntity = (LivingEntity) mc.getCameraEntity();
+			LivingEntity playerEntity = fpm_mc.player;
+			if (fpm_mc.getCameraEntity() != playerEntity && fpm_mc.getCameraEntity() instanceof LivingEntity) {
+				playerEntity = (LivingEntity) fpm_mc.getCameraEntity();
 			}
 			drawEntity(xpos, ypos, size, lookSides, lookUpDown, playerEntity, delta,
 					FirstPersonModelCore.config.paperDoll.dollHeadMode == DollHeadMode.LOCKED);
@@ -116,11 +116,11 @@ public class InGameHudMixin {
 			}
 		}
 	    DiffuseLighting.method_34742();
-		EntityRenderDispatcher entityRenderDispatcher = mc.getEntityRenderDispatcher();
+		EntityRenderDispatcher entityRenderDispatcher = fpm_mc.getEntityRenderDispatcher();
 		quaternion2.conjugate();
 		entityRenderDispatcher.setRotation(quaternion2);
 		entityRenderDispatcher.setRenderShadows(false);
-		VertexConsumerProvider.Immediate immediate = mc.getBufferBuilders().getEntityVertexConsumers();
+		VertexConsumerProvider.Immediate immediate = fpm_mc.getBufferBuilders().getEntityVertexConsumers();
 		// Mc renders the player in the inventory without delta, causing it to look
 		// "laggy". Good luck unseeing this :)
 		entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, delta, matrixStack2, immediate, 15728880);
