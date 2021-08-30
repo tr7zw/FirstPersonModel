@@ -11,8 +11,6 @@ import dev.tr7zw.firstperson.fabric.features.FabricFeature;
 import dev.tr7zw.firstperson.fabric.features.boot.Boots1FeatureRenderer;
 import dev.tr7zw.firstperson.fabric.features.hat.ItemHatFeatureRenderer;
 import dev.tr7zw.firstperson.fabric.features.head.ItemHeadFeatureRenderer;
-import dev.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
-import dev.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
 import dev.tr7zw.firstperson.features.AbstractCosmetic;
 import dev.tr7zw.firstperson.features.FeatureProvider;
 import net.minecraft.client.MinecraftClient;
@@ -48,9 +46,6 @@ public abstract class PlayerEntityRendererMixin
 		this.addFeature(new ItemHatFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new ItemHeadFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>>(this));
 		this.addFeature(new Boots1FeatureRenderer(this));
-
-		this.addFeature(new HeadLayerFeatureRenderer(this));
-		this.addFeature(new BodyLayerFeatureRenderer(this));
 	}
 
 	@Inject(method = "scale", at = @At("HEAD"), cancellable = true)

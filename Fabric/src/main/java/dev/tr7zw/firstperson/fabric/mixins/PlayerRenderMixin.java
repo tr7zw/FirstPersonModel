@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
-import dev.tr7zw.firstperson.fabric.features.layers.BodyLayerFeatureRenderer;
-import dev.tr7zw.firstperson.fabric.features.layers.HeadLayerFeatureRenderer;
 import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -45,7 +43,6 @@ public abstract class PlayerRenderMixin
 			AbstractClientPlayerEntity abstractClientPlayerEntity_1, float f, float g, MatrixStack matrixStack,
 			VertexConsumerProvider vertexConsumerProvider, int i) {
 		setModelPose(abstractClientPlayerEntity);
-		boolean bodyLayer = BodyLayerFeatureRenderer.isEnabled(abstractClientPlayerEntity);
 		if (FirstPersonModelMod.isRenderingPlayer) {
 			PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel_1 = this.getModel();
 			playerEntityModel_1.head.visible = false;
@@ -60,19 +57,13 @@ public abstract class PlayerRenderMixin
 				
 			}
 		} else {
-			playerEntityRenderer.getModel().hat.visible = HeadLayerFeatureRenderer
-					.isEnabled(abstractClientPlayerEntity) ? false : playerEntityRenderer.getModel().hat.visible;
+			playerEntityRenderer.getModel().hat.visible = playerEntityRenderer.getModel().hat.visible;
 		}
-		playerEntityRenderer.getModel().leftSleeve.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().leftSleeve.visible;
-		playerEntityRenderer.getModel().rightSleeve.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().rightSleeve.visible;
-		playerEntityRenderer.getModel().leftPants.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().leftPants.visible;
-		playerEntityRenderer.getModel().rightPants.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().rightPants.visible;
-		playerEntityRenderer.getModel().jacket.visible = bodyLayer ? false
-				: playerEntityRenderer.getModel().jacket.visible;
+		playerEntityRenderer.getModel().leftSleeve.visible = playerEntityRenderer.getModel().leftSleeve.visible;
+		playerEntityRenderer.getModel().rightSleeve.visible = playerEntityRenderer.getModel().rightSleeve.visible;
+		playerEntityRenderer.getModel().leftPants.visible = playerEntityRenderer.getModel().leftPants.visible;
+		playerEntityRenderer.getModel().rightPants.visible = playerEntityRenderer.getModel().rightPants.visible;
+		playerEntityRenderer.getModel().jacket.visible = playerEntityRenderer.getModel().jacket.visible;
 	}
 	
 	@Inject(method = "render", at = @At(value = "RETURN"))

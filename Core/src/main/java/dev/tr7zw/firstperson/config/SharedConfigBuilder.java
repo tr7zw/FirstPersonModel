@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.config;
 
+import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -15,15 +17,12 @@ import dev.tr7zw.firstperson.features.Boots;
 import dev.tr7zw.firstperson.features.Chest;
 import dev.tr7zw.firstperson.features.Hat;
 import dev.tr7zw.firstperson.features.Head;
-import dev.tr7zw.firstperson.features.LayerMode;
 import dev.tr7zw.firstperson.util.PaperDollLocation;
 import dev.tr7zw.transliterationlib.api.config.ConfigBuilder;
 import dev.tr7zw.transliterationlib.api.config.ConfigBuilder.ConfigEntryBuilder;
 import dev.tr7zw.transliterationlib.api.config.ConfigBuilder.ConfigEntryBuilder.ConfigCategory;
 import dev.tr7zw.transliterationlib.api.config.WrappedConfigEntry;
 import dev.tr7zw.transliterationlib.api.wrapper.WrappedScreen;
-
-import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 public abstract class SharedConfigBuilder {
 
@@ -50,9 +49,6 @@ public abstract class SharedConfigBuilder {
 		
 		ConfigCategory cosmetics = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.cosmetics"));
 		setupCosmeticConfig(entryBuilder, cosmetics, config);
-		
-		ConfigCategory skinlayer = builder.getOrCreateCategory(transliteration.getWrapper().getTranslateableText("category.firstperson.skinlayer"));
-		setupSkinLayerConfig(entryBuilder, skinlayer, config);
 		
 		builder.setSavingRunnable(() -> {
 			// on save
@@ -139,17 +135,6 @@ public abstract class SharedConfigBuilder {
 		addEntry(category, createBooleanSetting(entryBuilder, "cosmetic.modifyCameraHeight",
 				config.cosmetic.modifyCameraHeight, false, n -> config.cosmetic.modifyCameraHeight = n));
 		addEntry(category, getPreviewEntry());
-	}
-
-	public void setupSkinLayerConfig(ConfigEntryBuilder entryBuilder, ConfigCategory category, FirstPersonConfig config) {
-		addEntry(category, createEnumSetting(entryBuilder, "skinlayer.headLayerMode", LayerMode.class,
-				config.skinLayer.headLayerMode, LayerMode.VANILLA2D, n -> config.skinLayer.headLayerMode = n));
-		addEntry(category, createIntSetting(entryBuilder, "skinlayer.optimizedLayerDistance",
-				config.skinLayer.optimizedLayerDistance, 16, 8, 32, n -> config.skinLayer.optimizedLayerDistance = n));
-		addEntry(category, createEnumSetting(entryBuilder, "skinlayer.skinLayerMode", LayerMode.class,
-				config.skinLayer.skinLayerMode, LayerMode.VANILLA2D, n -> config.skinLayer.skinLayerMode = n));
-		addEntry(category, createBooleanSetting(entryBuilder, "skinlayer.playerHeadSkins",
-				config.firstPerson.playerHeadSkins, false, n -> config.firstPerson.playerHeadSkins = n));
 	}
 
 	public <T extends Enum<?>> WrappedConfigEntry createEnumSetting(ConfigEntryBuilder entryBuilder, String id, Class<T> type, T value,
