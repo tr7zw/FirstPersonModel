@@ -106,10 +106,5 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 		return (Identifier) DefaultSkinHelper
 				.getTexture((UUID) PlayerEntity.getUuidFromProfile((GameProfile) gameProfile));
 	}
-	
-	private void clearSettings() {
-		((PlayerSettings)this).setupHeadLayers(null);
-		((PlayerSettings)this).setupSkinLayers(null);
-	}
 
 }

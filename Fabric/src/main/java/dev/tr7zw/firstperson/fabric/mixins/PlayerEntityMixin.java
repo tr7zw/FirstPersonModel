@@ -12,7 +12,6 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.PlayerSettings;
 import dev.tr7zw.firstperson.config.CosmeticSettings;
 import dev.tr7zw.firstperson.fabric.FirstPersonModelMod;
-import dev.tr7zw.firstperson.fabric.render.CustomizableModelPart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.EntityDimensions;
@@ -34,8 +33,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 	}
 
 	private CosmeticSettings settings;
-	private CustomizableModelPart headLayer;
-	private CustomizableModelPart[] skinLayer;
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	public void onCreate(CallbackInfo info) {
@@ -45,26 +42,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerSe
 			settings = new CosmeticSettings();
 			FirstPersonModelCore.syncManager.updateSettings(this);
 		}
-	}
-
-	@Override
-	public CustomizableModelPart[] getSkinLayers() {
-		return skinLayer;
-	}
-	
-	@Override
-	public void setupSkinLayers(Object[] box) {
-		this.skinLayer = (CustomizableModelPart[]) box;
-	}
-	
-	@Override
-	public CustomizableModelPart getHeadLayers() {
-		return headLayer;
-	}
-	
-	@Override
-	public void setupHeadLayers(Object box) {
-		this.headLayer = (CustomizableModelPart) box;
 	}
 
 	@Override

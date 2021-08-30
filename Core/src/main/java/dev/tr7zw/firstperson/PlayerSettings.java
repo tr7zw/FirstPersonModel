@@ -5,14 +5,6 @@ import java.util.UUID;
 import dev.tr7zw.firstperson.config.CosmeticSettings;
 
 public interface PlayerSettings {
-
-	public Object getHeadLayers();
-	
-	public void setupHeadLayers(Object box);
-	
-	public Object[] getSkinLayers();
-	
-	public void setupSkinLayers(Object[] box);
 	
 	public void setCosmeticSettings(CosmeticSettings settings);
 	
