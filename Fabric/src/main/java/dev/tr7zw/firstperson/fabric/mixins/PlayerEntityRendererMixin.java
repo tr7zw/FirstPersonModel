@@ -56,7 +56,7 @@ public abstract class PlayerEntityRendererMixin
 			float scaled = 0.9375f * ((float) FirstPersonModelMod.config.cosmetic.playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
-		} else if (abstractClientPlayerEntity != mc.player) {
+		} else if (abstractClientPlayerEntity != null && abstractClientPlayerEntity != mc.player) {
 			float scaled = 0.9375f * ((float) ((PlayerSettings) abstractClientPlayerEntity).getCosmeticSettings().playerSize / 100f);
 			matrixStack.scale(scaled, scaled, scaled);
 			info.cancel();
