@@ -16,7 +16,7 @@ license="MIT License"
 # The modid of the mod
 modId="firstpersonmod" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="${file.jarVersion}" #mandatory
+version="${version}" #mandatory
  # A display name for the mod
 displayName="FirstPersonModel Mod" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
