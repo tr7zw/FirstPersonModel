@@ -6,22 +6,14 @@
   ],
   "client": [
 	"HeldItemRendererMixin",
-	"HeadFeatureRendererMixin",
 	"PlayerRenderMixin",
   "WorldRendererMixin",
   "FishingBobberRendererMixin",
   "RenderDispatcherMixin",
-  "InGameHudMixin",
   "HeldItemFeatureRendererMixin",
-  "PlayerEntityRendererMixin",
-  "PlayerEntityMixin",
-  "PlayerEntityModelMixin",
-  "ClientPlayNetworkHandlerMixin",
-  "PlayerSkinTextureMixin",
   "ModelPartMixin",
   "LivingEntityRendererMixin",
   "FeatureRendererMixin",
-  "AbstractClientPlayerEntityMixin",
   "ArmorFeatureRendererMixin"
   ],
   "injectors": {

@@ -23,7 +23,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ModInit
 	    });
 	    if(FabricLoader.getInstance().isModLoaded("optifabric")) {
 	    	hasOptifabric = true;
-	    	System.out.println("Found optifabric, limiting 3rd party mod compatebility!");
+	    	System.out.println("Found optifabric, limiting 3rd party mod compatebility!"); // TODO does nothing^^
 	    }
 	}
 

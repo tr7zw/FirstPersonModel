@@ -9,9 +9,6 @@ import com.google.gson.Gson;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.config.FirstPersonConfig;
-import dev.tr7zw.firstperson.features.AbstractCosmetic;
-import dev.tr7zw.firstperson.features.FeatureProvider;
-import dev.tr7zw.firstperson.sync.SyncManager;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 
@@ -23,8 +20,6 @@ public abstract class FirstPersonModelCore {
     public static boolean enabled = true;
     public static FirstPersonConfig config = null;
     protected static boolean isHeld = false;
-    public static SyncManager syncManager;
-    public static final String APIHost = "https://firstperson.tr7zw.dev";
     public static KeyMapping keyBinding = new KeyMapping("toggle", 295, "Firstperson");
 
     public static final float sneakBodyOffset = 0.27f;
@@ -49,9 +44,6 @@ public abstract class FirstPersonModelCore {
             config = new FirstPersonConfig();
         }
         enabled = config.firstPerson.enabledByDefault;
-        syncManager = new SyncManager();
-        syncManager.takeSnapshot();
-        FeatureProvider.getFeatures().forEach(AbstractCosmetic::initTextures);
 
         registerKeybinds();
     }

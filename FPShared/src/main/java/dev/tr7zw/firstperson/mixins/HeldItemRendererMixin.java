@@ -5,9 +5,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.mixinbase.HeldItemBase;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  *
  */
 @Mixin(ItemInHandRenderer.class)
-public abstract class HeldItemRendererMixin implements HeldItemBase {
+public abstract class HeldItemRendererMixin {
 
 	@Shadow
 	private EntityRenderDispatcher entityRenderDispatcher;
@@ -50,4 +51,9 @@ public abstract class HeldItemRendererMixin implements HeldItemBase {
 	@Shadow
 	public abstract void renderPlayerArm(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
 			float equipProgress, float swingProgress, HumanoidArm arm);
+	
+   public boolean skip() {
+        return !FirstPersonModelCore.enabled || FirstPersonModelCore.config.firstPerson.vanillaHands;
+    }
+	
 }

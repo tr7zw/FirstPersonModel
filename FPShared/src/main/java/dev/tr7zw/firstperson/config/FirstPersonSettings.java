@@ -10,7 +10,6 @@ public class FirstPersonSettings {
 
 	public boolean vanillaHands = false;
 	public boolean doubleHands = false;
-	public boolean playerHeadSkins = false;
 	public boolean hideCosmeticsButton = false;
 
 	//Make the fixes force active. can solve problems in different renderers, and causing bugs
