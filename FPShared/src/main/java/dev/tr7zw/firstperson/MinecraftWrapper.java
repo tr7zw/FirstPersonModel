@@ -124,7 +124,7 @@ public class MinecraftWrapper {
 					bodyOffset = FirstPersonModelCore.swimDownBodyOffset;
 				}
 			}else if(abstractClientPlayerEntity_1.isShiftKeyDown()){
-				bodyOffset = FirstPersonModelCore.sneakBodyOffset + (FirstPersonModelCore.config.firstPerson.sneakXOffset / 100f);
+				bodyOffset = FirstPersonModelCore.sneakBodyOffset + (FirstPersonModelCore.config.sneakXOffset / 100f);
 			}else if(abstractClientPlayerEntity_1.isPassenger()) {
 				if(abstractClientPlayerEntity_1.getVehicle() instanceof Boat || abstractClientPlayerEntity_1.getVehicle() instanceof Minecart) {
 					realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.yBodyRotO, abstractClientPlayerEntity_1.yBodyRot);
@@ -133,9 +133,9 @@ public class MinecraftWrapper {
 				} else {
 					realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO, abstractClientPlayerEntity_1.getVehicle().getYRot());
 				}
-				bodyOffset = FirstPersonModelCore.inVehicleBodyOffset + (FirstPersonModelCore.config.firstPerson.sitXOffset / 100f);
+				bodyOffset = FirstPersonModelCore.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
 			}else{
-				bodyOffset = 0.25f + (FirstPersonModelCore.config.firstPerson.xOffset / 100f);
+				bodyOffset = 0.25f + (FirstPersonModelCore.config.xOffset / 100f);
 			}
 			x += bodyOffset * Math.sin(Math.toRadians(realYaw));
 			z -= bodyOffset * Math.cos(Math.toRadians(realYaw));

@@ -2,9 +2,12 @@ package dev.tr7zw.firstperson;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.IExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 @Mod(FirstPersonModelMod.MODID)
@@ -29,6 +32,14 @@ public class FirstPersonModelMod extends FirstPersonModelCore
         MinecraftForge.EVENT_BUS.addListener(this::doTick);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        
+        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+                () -> new IExtensionPoint.DisplayTest(
+                        () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
+                        (remote, isServer) -> true));
+        ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
+            return createConfigScreen(screen);
+        }));
 
     }
     

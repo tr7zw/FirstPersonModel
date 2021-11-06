@@ -35,7 +35,7 @@ public abstract class HeldItemRendererMixin {
 			info.cancel();
 			return;
 		}
-		if (!FirstPersonModelCore.config.firstPerson.doubleHands)
+		if (!FirstPersonModelCore.config.doubleHands)
 			return;
 		boolean bl = hand == InteractionHand.MAIN_HAND;
 		HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
@@ -53,7 +53,7 @@ public abstract class HeldItemRendererMixin {
 			float equipProgress, float swingProgress, HumanoidArm arm);
 	
    public boolean skip() {
-        return !FirstPersonModelCore.enabled || FirstPersonModelCore.config.firstPerson.vanillaHands;
+        return !FirstPersonModelCore.enabled || FirstPersonModelCore.config.vanillaHands;
     }
 	
 }

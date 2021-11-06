@@ -29,7 +29,7 @@ RenderLayer<T, M>{
 	@Inject(method = "renderArmorPiece", at = @At("HEAD"))
 	private void renderArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T livingEntity,
 			EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
-		hideShoulders = equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer && FirstPersonModelCore.config.firstPerson.vanillaHands;
+		hideShoulders = equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer && FirstPersonModelCore.config.vanillaHands;
 		hideHelmet = equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.isRenderingPlayer;
 	}
 	
