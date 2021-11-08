@@ -6,7 +6,7 @@ subprojects {
 	apply plugin: "dev.architectury.loom"
 
 	loom {
-		refmapName = "paperdoll.refmap.mixins.json"
+		refmapName = "firstperson.refmap.mixins.json"
 	}
 
 	dependencies {
