@@ -9,6 +9,6 @@ pluginManagement {
 
 include("FPShared")
 include("FPFabric")
-include("FPForge")
+//include("FPForge")
 
 rootProject.name = "FirstPersonModel"

@@ -15,7 +15,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
@@ -23,7 +22,6 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.protocol.game.ServerboundClientInformationPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -69,16 +67,6 @@ public class MinecraftWrapper {
 	public void showToastFailure(String message, String submessage) {
 		client.getToasts().addToast(new SystemToast(SystemToast.SystemToastIds.WORLD_ACCESS_FAILURE, new TextComponent(message), submessage == null ? null : new TextComponent(submessage)));
 	}
-
-	
-	public void sendNoLayerClientSettings() {
-		Options options = client.options;
-		//this blinks the outer layer once, signaling a reload of this player
-		if(this.client.player != null && this.client.player.connection != null)
-			this.client.player.connection.send(new ServerboundClientInformationPacket(options.languageCode, options.renderDistance,
-					options.chatVisibility, options.chatColors, 0, options.mainHand, false));
-	}
-
 	
 	public Object getPlayer() {
 		return client.player;
