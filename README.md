@@ -3,7 +3,6 @@
 [![Downloads](http://cf.way2muchnoise.eu/full_333287_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)
 [![Versions](http://cf.way2muchnoise.eu/versions/333287.svg)](https://www.curseforge.com/minecraft/mc-mods/first-person-model/)
 [![Discord](https://img.shields.io/discord/342814924310970398?color=%237289DA&label=Discord&logo=discord&logoColor=white)](https://discordapp.com/invite/yk4caxM)
-[![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dtr7zw%26type%3Dpatrons&style=for-the-badge)](https://www.patreon.com/tr7zw)
 
 Backend Cosmetics server stats: [![Request counter](https://img.shields.io/badge/dynamic/json?color=GREEN&label=Requests%20the%20last%2060s&query=requestCounter60s&url=https%3A%2F%2Ffirstperson.tr7zw.dev%2Ffirstperson%2Fstats)]() 
 [![UUID counter](https://img.shields.io/badge/dynamic/json?color=GREEN&label=Processed%20UUIDs%20the%20last%2060s&query=uuidCounter60s&url=https%3A%2F%2Ffirstperson.tr7zw.dev%2Ffirstperson%2Fstats)]()
