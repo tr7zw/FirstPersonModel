@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson;
 
+import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.IExtensionPoint;
@@ -7,8 +9,6 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 @Mod(FirstPersonModelMod.MODID)
 public class FirstPersonModelMod extends FirstPersonModelCore
