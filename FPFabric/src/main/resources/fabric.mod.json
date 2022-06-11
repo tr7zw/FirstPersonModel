@@ -26,7 +26,7 @@
     "firstperson.mixins.json"
   ],
   "depends": {
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "fabric": "*"
   }
 }

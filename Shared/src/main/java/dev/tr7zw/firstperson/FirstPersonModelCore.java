@@ -15,7 +15,7 @@ import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Option;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
 
 public abstract class FirstPersonModelCore {
@@ -93,7 +93,7 @@ public abstract class FirstPersonModelCore {
             public void initialize() {
                 getOptions().addBig(getOnOffOption("text.firstperson.option.firstperson.enabledByDefault", () -> config.enabledByDefault, (b) -> config.enabledByDefault = b));
                 
-                List<Option> options = new ArrayList<>();
+                List<OptionInstance<?>> options = new ArrayList<>();
                 options.add(getIntOption("text.firstperson.option.firstperson.xOffset", -40, 40, () -> config.xOffset, (i) -> config.xOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sneakXOffset", -40, 40, () -> config.sneakXOffset, (i) -> config.sneakXOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40, () -> config.sitXOffset, (i) -> config.sitXOffset = i));
@@ -101,7 +101,7 @@ public abstract class FirstPersonModelCore {
                 options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands", () -> config.doubleHands, (b) -> config.doubleHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.forceActive", () -> config.forceActive, (b) -> config.forceActive = b));
                 
-                getOptions().addSmall(options.toArray(new Option[0]));
+                getOptions().addSmall(options.toArray(new OptionInstance[0]));
                 
             }
             
