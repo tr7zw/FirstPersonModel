@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import dev.tr7zw.firstperson.config.CustomConfigScreen;
+import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -107,6 +107,12 @@ public abstract class FirstPersonModelCore {
             
             @Override
             public void save() {
+                writeSettings();
+            }
+
+            @Override
+            public void reset() {
+                config = new FirstPersonSettings();
                 writeSettings();
             }
 

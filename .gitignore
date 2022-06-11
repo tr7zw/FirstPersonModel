@@ -5,6 +5,10 @@ build/
 out/
 classes/
 
+# eclipse
+
+*.launch
+
 # idea
 
 .idea/
@@ -20,8 +24,17 @@ bin/
 .classpath
 .project
 
+# macos
+
+*.DS_Store
+
 # fabric
 
 run/
-**/logs/latest.log
-logs/debug.log
+
+# compose
+
+*.gradle
+*.properties
+gradle/wrapper
+VersionShared
