@@ -8,6 +8,7 @@ public class FirstPersonSettings {
 
 	public int sitXOffset = 0;
 
+	public boolean renderStuckFeatures = true;
 	public boolean vanillaHands = false;
 	public boolean doubleHands = false;
 	public boolean hideCosmeticsButton = false;
