@@ -57,9 +57,6 @@ public abstract class PlayerRenderMixin
 			} else {
 				
 			}
-			if (abstractClientPlayerEntity.isSwimming()) {
-				playerEntityModel_1.body.visible = false;
-			}
 		} else {
 			playerEntityRenderer.getModel().hat.visible = playerEntityRenderer.getModel().hat.visible;
 		}
