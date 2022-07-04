@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/first-person-model",
-    "sources": "https://github.com/tr7zw/FirstPersonModel-Fabric"
+    "sources": "https://github.com/tr7zw/FirstPersonModel-Fabric",
+    "issues": "https://github.com/tr7zw/FirstPersonModel-Fabric/issues"
   },
   "license": "MIT",
   "icon": "assets/firstperson/icon.png",
