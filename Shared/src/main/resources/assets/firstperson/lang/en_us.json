@@ -11,6 +11,8 @@
     "text.firstperson.option.firstperson.enabledByDefault.@Tooltip": "The default state of the FirstPerson mod after starting the game",
     "text.firstperson.option.firstperson.sitXOffset": "Sit X Offset",
     "text.firstperson.option.firstperson.sitXOffset.@Tooltip": "Moves the body relative to the camera back and forth while sitting",
+    "text.firstperson.option.firstperson.renderStuckFeatures": "Render Arrows & Stings",
+    "text.firstperson.option.firstperson.renderStuckFeatures.@Tooltip": "Shows arrows, bee stings or other modded features in first person",
     "text.firstperson.option.firstperson.vanillaHands": "Vanilla Hands",
     "text.firstperson.option.firstperson.vanillaHands.@Tooltip": "Shows the vanilla first person hands, but also the player model(but without arms)",
     "text.firstperson.option.firstperson.doubleHands": "Double Hands",
