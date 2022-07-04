@@ -16,7 +16,8 @@
 	"FeatureRendererMixin",
 	"ArmorFeatureRendererMixin",
 	"DonorAbstractClientPlayerMixin",
-	"StuckInBodyLayerMixin"
+	"StuckInBodyLayerMixin",
+	"ElytraLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
