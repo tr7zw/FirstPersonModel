@@ -7,15 +7,16 @@
   "client": [
 	"HeldItemRendererMixin",
 	"PlayerRenderMixin",
-  "WorldRendererMixin",
-  "FishingBobberRendererMixin",
-  "RenderDispatcherMixin",
-  "HeldItemFeatureRendererMixin",
-  "ModelPartMixin",
-  "LivingEntityRendererMixin",
-  "FeatureRendererMixin",
-  "ArmorFeatureRendererMixin",
-  "DonorAbstractClientPlayerMixin"
+  	"WorldRendererMixin",
+  	"FishingBobberRendererMixin",
+	"RenderDispatcherMixin",
+	"HeldItemFeatureRendererMixin",
+	"ModelPartMixin",
+	"LivingEntityRendererMixin",
+	"FeatureRendererMixin",
+	"ArmorFeatureRendererMixin",
+	"DonorAbstractClientPlayerMixin",
+	"StuckInBodyLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -97,6 +97,7 @@ public abstract class FirstPersonModelCore {
                 options.add(getIntOption("text.firstperson.option.firstperson.xOffset", -40, 40, () -> config.xOffset, (i) -> config.xOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sneakXOffset", -40, 40, () -> config.sneakXOffset, (i) -> config.sneakXOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40, () -> config.sitXOffset, (i) -> config.sitXOffset = i));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures", () -> config.renderStuckFeatures, (b) -> config.renderStuckFeatures = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands", () -> config.vanillaHands, (b) -> config.vanillaHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands", () -> config.doubleHands, (b) -> config.doubleHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.forceActive", () -> config.forceActive, (b) -> config.forceActive = b));
