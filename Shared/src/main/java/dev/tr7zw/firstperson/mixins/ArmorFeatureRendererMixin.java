@@ -1,6 +1,5 @@
 package dev.tr7zw.firstperson.mixins;
 
-import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +23,6 @@ RenderLayer<T, M>{
 		super(context);
 	}
 
-	private boolean hideBody = false;
 	private boolean hideShoulders = false;
 	private boolean hideHelmet = false;
 	
@@ -33,18 +31,12 @@ RenderLayer<T, M>{
 			EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
 		hideShoulders = equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer && FirstPersonModelCore.config.vanillaHands;
 		hideHelmet = equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.isRenderingPlayer;
-		hideBody = equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer && (livingEntity instanceof LocalPlayer player && player.isSwimming());
 	}
 	
 	@Inject(method = "renderModel", at = @At("HEAD"))
 	private void renderArmorParts(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i,
 			ArmorItem armorItem, boolean bl, A bipedEntityModel, boolean bl2, float f, float g, float h,
 			String string, CallbackInfo info) {
-
-		if (hideBody) {
-			bipedEntityModel.body.visible = false;
-		}
-
 		if(hideShoulders) {
 			bipedEntityModel.leftArm.visible = false;
 			bipedEntityModel.rightArm.visible = false;
