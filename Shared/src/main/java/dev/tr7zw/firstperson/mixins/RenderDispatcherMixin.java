@@ -4,10 +4,15 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -27,6 +32,8 @@ import net.minecraft.world.phys.Vec3;
 @Mixin(EntityRenderDispatcher.class)
 public abstract class RenderDispatcherMixin {
 
+    private static Minecraft fpm_mc = Minecraft.getInstance();
+    
     @Shadow
     @Final
     private static RenderType SHADOW_RENDER_TYPE;
@@ -54,40 +61,67 @@ public abstract class RenderDispatcherMixin {
         }
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;renderShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/Entity;FFLnet/minecraft/world/level/LevelReader;F)V"))
-    private void renderRedirect(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity,
-            float opacity, float tickDelta, LevelReader world, float radius) {
-        if (entity instanceof AbstractClientPlayer) {
-            Vec3 offset = (Vec3) FirstPersonModelCore.getWrapper().getOffset();
-            renderOffsetShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius, offset);
-        } else {
-            renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
+//    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;renderShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/Entity;FFLnet/minecraft/world/level/LevelReader;F)V"))
+//    private void renderRedirect(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity,
+//            float opacity, float tickDelta, LevelReader world, float radius) {
+//        if (entity instanceof AbstractClientPlayer) {
+//            Vec3 offset = (Vec3) FirstPersonModelCore.getWrapper().getOffset();
+//            renderOffsetShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius, offset);
+//        } else {
+//            renderShadow(matrices, vertexConsumers, entity, opacity, tickDelta, world, radius);
+//        }
+//    }
+    
+    @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
+    private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack, MultiBufferSource multiBufferSource, Entity entity, float f,
+            float g, LevelReader levelReader, float h) {
+        if(entity == fpm_mc.cameraEntity) {
+            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.getWrapper().getOffset().x;
         }
+        return Mth.lerp(delta, old, cur);
+    }
+    
+    @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 2))
+    private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack, MultiBufferSource multiBufferSource, Entity entity, float f,
+            float g, LevelReader levelReader, float h) {
+        if(entity == fpm_mc.cameraEntity) {
+            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.getWrapper().getOffset().z;
+        }
+        return Mth.lerp(delta, old, cur);
+    }
+    
+    @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = Shift.BEFORE))
+    private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity, float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
+        if(entity != fpm_mc.cameraEntity) {
+            return;
+        }
+        Vec3 offset = FirstPersonModelCore.getWrapper().getOffset();
+        matrices.translate(offset.x, offset.y, offset.z);
     }
 
-    private static void renderOffsetShadow(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity,
-            float opacity, float tickDelta, LevelReader world, float radius, Vec3 offset) {
-        float f = radius;
-        if (entity instanceof Mob mobEntity) {
-            if (mobEntity.isBaby())
-                f *= 0.5F;
-        }
-        double d = Mth.lerp(tickDelta, entity.xOld, entity.getX()) + offset.x;
-        double e = Mth.lerp(tickDelta, entity.yOld, entity.getY()) + offset.y;
-        double g = Mth.lerp(tickDelta, entity.zOld, entity.getZ()) + offset.z;
-        int i = Mth.floor(d - f);
-        int j = Mth.floor(d + f);
-        int k = Mth.floor(e - f);
-        int l = Mth.floor(e);
-        int m = Mth.floor(g - f);
-        int n = Mth.floor(g + f);
-        matrices.translate(offset.x, offset.y, offset.z);
-        matrices.pushPose();
-        PoseStack.Pose entry = matrices.last();
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(SHADOW_RENDER_TYPE);
-        for (BlockPos blockPos : BlockPos.betweenClosed(new BlockPos(i, k, m), new BlockPos(j, l, n)))
-            renderBlockShadow(entry, vertexConsumer, world, blockPos, d, e, g, f, opacity);
-        matrices.popPose();
-    }
+//    private static void renderOffsetShadow(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity,
+//            float opacity, float tickDelta, LevelReader world, float radius, Vec3 offset) {
+//        float f = radius;
+//        if (entity instanceof Mob mobEntity) {
+//            if (mobEntity.isBaby())
+//                f *= 0.5F;
+//        }
+//        double d = Mth.lerp(tickDelta, entity.xOld, entity.getX()) + offset.x;
+//        double e = Mth.lerp(tickDelta, entity.yOld, entity.getY()) + offset.y;
+//        double g = Mth.lerp(tickDelta, entity.zOld, entity.getZ()) + offset.z;
+//        int i = Mth.floor(d - f);
+//        int j = Mth.floor(d + f);
+//        int k = Mth.floor(e - f);
+//        int l = Mth.floor(e);
+//        int m = Mth.floor(g - f);
+//        int n = Mth.floor(g + f);
+//        matrices.translate(offset.x, offset.y, offset.z);
+//        matrices.pushPose();
+//        PoseStack.Pose entry = matrices.last();
+//        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(SHADOW_RENDER_TYPE);
+//        for (BlockPos blockPos : BlockPos.betweenClosed(new BlockPos(i, k, m), new BlockPos(j, l, n)))
+//            renderBlockShadow(entry, vertexConsumer, world, blockPos, d, e, g, f, opacity);
+//        matrices.popPose();
+//    }
 
 }

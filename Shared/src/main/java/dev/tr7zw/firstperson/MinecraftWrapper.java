@@ -142,7 +142,7 @@ public class MinecraftWrapper {
 	}
 
 	
-	public Object getOffset() {
+	public Vec3 getOffset() {
 		return offset;
 	}
 
