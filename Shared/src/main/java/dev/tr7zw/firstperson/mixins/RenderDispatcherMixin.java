@@ -8,8 +8,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -52,6 +54,13 @@ public abstract class RenderDispatcherMixin {
         }
         Vec3 offset = FirstPersonModelCore.getWrapper().getOffset();
         matrices.translate(offset.x, offset.y, offset.z);
+    }
+    
+    @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
+    private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
+        if(entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
+            ci.cancel();
+        }
     }
 
 }
