@@ -7,6 +7,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -20,6 +23,7 @@ import net.minecraft.client.gui.screens.Screen;
 
 public abstract class FirstPersonModelCore {
 
+    public static final Logger LOGGER = LogManager.getLogger("FirstPersonModel");
     public static MinecraftWrapper wrapper;
     public static FirstPersonModelCore instance;
     public static boolean isRenderingPlayer = false;
