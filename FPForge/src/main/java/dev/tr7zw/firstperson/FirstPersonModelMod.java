@@ -1,7 +1,9 @@
 package dev.tr7zw.firstperson;
 
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
+import org.apache.commons.lang3.ArrayUtils;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.IExtensionPoint;
@@ -24,8 +26,6 @@ public class FirstPersonModelMod extends FirstPersonModelCore
             return;
         }
     	instance = this;
-        // Register the setup method for modloading
-       // FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.addListener(new RenderHandEventListener()::onRender);
@@ -37,7 +37,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
                 () -> new IExtensionPoint.DisplayTest(
                         () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
                         (remote, isServer) -> true));
-        ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
             return createConfigScreen(screen);
         }));
 
@@ -53,7 +53,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore
 
     @Override
     public void registerKeybinds() {
-        ClientRegistry.registerKeyBinding(keyBinding);
+        Minecraft.getInstance().options.keyMappings = ArrayUtils.add(Minecraft.getInstance().options.keyMappings, keyBinding);
     }
 
 }
