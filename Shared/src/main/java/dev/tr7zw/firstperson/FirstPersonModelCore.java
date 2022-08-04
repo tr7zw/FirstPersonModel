@@ -43,7 +43,7 @@ public abstract class FirstPersonModelCore {
                 config = new Gson().fromJson(
                         new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
                         FirstPersonSettings.class);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
