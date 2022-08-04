@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -75,9 +76,9 @@ public class MinecraftWrapper {
 	}
 
 	
-	public void updatePositionOffset(Object player, Object defValue, Object matrices) {
-		if(player == client.getCameraEntity() && client.player.isSleeping() || !FirstPersonModelCore.fixBodyShadow((PoseStack) matrices)) {
-			offset = (Vec3) defValue;
+	public void updatePositionOffset(Entity player, Vec3 defValue) {
+		if(player == client.getCameraEntity() && client.player.isSleeping()) {
+			offset = defValue;
 			return;
 		}
 		double x,y,z = x = y = z = 0;
@@ -87,7 +88,7 @@ public class MinecraftWrapper {
 			abstractClientPlayerEntity_1 = (AbstractClientPlayer) player;
 			realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.yRotO, abstractClientPlayerEntity_1.getYRot());
 		}else {
-			offset = (Vec3) defValue;
+			offset = defValue;
 			return;
 		}
 		if (!abstractClientPlayerEntity_1.isLocalPlayer() || client.getCameraEntity() == abstractClientPlayerEntity_1) {
