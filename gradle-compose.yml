@@ -4,7 +4,7 @@ replacements:
   group: "dev.tr7zw"
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.1.1"
+  version: "2.1.2"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.firstperson"
   dependencies: ""
