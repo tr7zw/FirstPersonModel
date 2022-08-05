@@ -36,7 +36,6 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             return;
         }
         if(equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.isRenderingPlayer) {
-            FirstPersonModelCore.LOGGER.warn("Hiding");
             info.cancel();
         }
         if(equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer
