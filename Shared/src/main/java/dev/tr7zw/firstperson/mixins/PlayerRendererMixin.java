@@ -79,7 +79,7 @@ public class PlayerRendererMixin {
                 Vector4f offset = new Vector4f(0, 0, 0, 1);
                 offset.transform(matrix);
 
-                ci.setReturnValue(ci.getReturnValue().add(FirstPersonModelCore.getWrapper().getOffset()).add(offset.x(), /*offset.y()*/ 0, offset.z())); //You may use the Y offset too
+                ci.setReturnValue(ci.getReturnValue().add(offset.x(), /*offset.y()*/ 0, offset.z())); //You may use the Y offset too
             }
 
             ci.setReturnValue(ci.getReturnValue().add(FirstPersonModelCore.getWrapper().getOffset()));
