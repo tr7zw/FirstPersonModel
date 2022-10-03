@@ -33,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
 public class MinecraftWrapper {
 
 	private final Minecraft client;
-	private Vec3 offset; //Current offset used for rendering
+	private Vec3 offset = Vec3.ZERO; //Current offset used for rendering
 	
 	public MinecraftWrapper(Minecraft instance) {
 		this.client = instance;
