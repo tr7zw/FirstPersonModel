@@ -69,7 +69,7 @@ public class PlayerRendererMixin {
 
                 Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
                 matrix.setIdentity();
-                matrix.multiply(Matrix4f.createScaleMatrix(-1, 1, 1)); //WTF mojang?
+                matrix.multiply(Matrix4f.createScaleMatrix(-1, 1, 1)); //What is going on with this?!
 
                 matrix.multiply(new Matrix4f(Vector3f.YP.rotationDegrees(realYaw)));
 
