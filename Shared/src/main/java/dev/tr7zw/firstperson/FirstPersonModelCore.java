@@ -15,7 +15,9 @@ import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.config.CustomConfigScreen;
+import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
+import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
@@ -32,6 +34,7 @@ public abstract class FirstPersonModelCore {
     protected static boolean isHeld = false;
     public static KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private File settingsFile = new File("config", "firstperson.json");
+    private boolean lateInit = true;
 
     public static final float sneakBodyOffset = 0.27f;
     public static final float swimUpBodyOffset = 0.60f;
@@ -39,7 +42,7 @@ public abstract class FirstPersonModelCore {
     public static final float inVehicleBodyOffset = 0.20f;
 
     public void sharedSetup() {
-        System.out.println("Loading FirstPerson Mod");
+        LOGGER.info("Loading FirstPerson Mod");
         wrapper = new MinecraftWrapper(Minecraft.getInstance());
         
         if (settingsFile.exists()) {
@@ -69,8 +72,21 @@ public abstract class FirstPersonModelCore {
     public static boolean fixBodyShadow(PoseStack matrixStack) {
         return (enabled && (config.forceActive || FirstPersonModelCore.isRenderingPlayer));
     }
+    
+    private void lateInit() {
+        if(isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
+            LOGGER.info("Loading PlayerAnimator support!");
+            FirstPersonAPI.registerPlayerOffsetHandler(new PlayerAnimatorSupport());
+        }else {
+            LOGGER.info("PlayerAnimator not found!");
+        }
+    }
 
     public void onTick() {
+        if(lateInit) {
+            lateInit = false;
+            lateInit();
+        }
         if (keyBinding.isDown()) {
             if (isHeld)
                 return;
@@ -124,6 +140,20 @@ public abstract class FirstPersonModelCore {
         };
         
         return screen;
+    }
+    
+    /**
+     * Checks if a class exists or not
+     * @param name
+     * @return
+     */
+    protected static boolean isValidClass(String name) {
+        try {
+            if(Class.forName(name) != null) {
+                return true;
+            }
+        } catch (ClassNotFoundException e) {}
+        return false;
     }
 
 }
