@@ -44,7 +44,7 @@ public abstract class FirstPersonModelCore {
     public void sharedSetup() {
         LOGGER.info("Loading FirstPerson Mod");
         wrapper = new MinecraftWrapper(Minecraft.getInstance());
-        
+
         if (settingsFile.exists()) {
             try {
                 config = new Gson().fromJson(
@@ -72,18 +72,22 @@ public abstract class FirstPersonModelCore {
     public static boolean fixBodyShadow(PoseStack matrixStack) {
         return (enabled && (config.forceActive || FirstPersonModelCore.isRenderingPlayer));
     }
-    
+
     private void lateInit() {
-        if(isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
-            LOGGER.info("Loading PlayerAnimator support!");
-            FirstPersonAPI.registerPlayerOffsetHandler(new PlayerAnimatorSupport());
-        }else {
-            LOGGER.info("PlayerAnimator not found!");
+        try {
+            if (isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
+                LOGGER.info("Loading PlayerAnimator support!");
+                FirstPersonAPI.registerPlayerHandler(new PlayerAnimatorSupport());
+            } else {
+                LOGGER.info("PlayerAnimator not found!");
+            }
+        } catch (Throwable ex) {
+            LOGGER.warn("Error during initialization of mod support.", ex);
         }
     }
 
     public void onTick() {
-        if(lateInit) {
+        if (lateInit) {
             lateInit = false;
             lateInit();
         }
@@ -96,7 +100,7 @@ public abstract class FirstPersonModelCore {
             isHeld = false;
         }
     }
-    
+
     public void writeSettings() {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(config);
         try {
@@ -105,27 +109,35 @@ public abstract class FirstPersonModelCore {
             e.printStackTrace();
         }
     }
-    
+
     public Screen createConfigScreen(Screen parent) {
         CustomConfigScreen screen = new CustomConfigScreen(parent, "text.firstperson.title") {
-            
+
             @Override
             public void initialize() {
-                getOptions().addBig(getOnOffOption("text.firstperson.option.firstperson.enabledByDefault", () -> config.enabledByDefault, (b) -> config.enabledByDefault = b));
-                
+                getOptions().addBig(getOnOffOption("text.firstperson.option.firstperson.enabledByDefault",
+                        () -> config.enabledByDefault, (b) -> config.enabledByDefault = b));
+
                 List<OptionInstance<?>> options = new ArrayList<>();
-                options.add(getIntOption("text.firstperson.option.firstperson.xOffset", -40, 40, () -> config.xOffset, (i) -> config.xOffset = i));
-                options.add(getIntOption("text.firstperson.option.firstperson.sneakXOffset", -40, 40, () -> config.sneakXOffset, (i) -> config.sneakXOffset = i));
-                options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40, () -> config.sitXOffset, (i) -> config.sitXOffset = i));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures", () -> config.renderStuckFeatures, (b) -> config.renderStuckFeatures = b));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands", () -> config.vanillaHands, (b) -> config.vanillaHands = b));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands", () -> config.doubleHands, (b) -> config.doubleHands = b));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.forceActive", () -> config.forceActive, (b) -> config.forceActive = b));
-                
+                options.add(getIntOption("text.firstperson.option.firstperson.xOffset", -40, 40, () -> config.xOffset,
+                        (i) -> config.xOffset = i));
+                options.add(getIntOption("text.firstperson.option.firstperson.sneakXOffset", -40, 40,
+                        () -> config.sneakXOffset, (i) -> config.sneakXOffset = i));
+                options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40,
+                        () -> config.sitXOffset, (i) -> config.sitXOffset = i));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures",
+                        () -> config.renderStuckFeatures, (b) -> config.renderStuckFeatures = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands",
+                        () -> config.vanillaHands, (b) -> config.vanillaHands = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands", () -> config.doubleHands,
+                        (b) -> config.doubleHands = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.forceActive", () -> config.forceActive,
+                        (b) -> config.forceActive = b));
+
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
-                
+
             }
-            
+
             @Override
             public void save() {
                 writeSettings();
@@ -138,21 +150,23 @@ public abstract class FirstPersonModelCore {
             }
 
         };
-        
+
         return screen;
     }
-    
+
     /**
      * Checks if a class exists or not
+     * 
      * @param name
      * @return
      */
     protected static boolean isValidClass(String name) {
         try {
-            if(Class.forName(name) != null) {
+            if (Class.forName(name) != null) {
                 return true;
             }
-        } catch (ClassNotFoundException e) {}
+        } catch (ClassNotFoundException e) {
+        }
         return false;
     }
 

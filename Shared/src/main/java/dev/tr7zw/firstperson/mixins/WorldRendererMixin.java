@@ -10,6 +10,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.api.ActivationHandler;
+import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -38,9 +40,18 @@ public class WorldRendererMixin {
 		double e = vec3d.y();
 		double f = vec3d.z();
 		MultiBufferSource.BufferSource immediate = this.renderBuffers.bufferSource();
-		FirstPersonModelCore.isRenderingPlayer = true;
-		this.renderEntity(camera.getEntity(), d, e, f, tickDelta, matrices, (MultiBufferSource) immediate);
-		FirstPersonModelCore.isRenderingPlayer = false;
+		boolean canRender = true;
+		for(ActivationHandler handler : FirstPersonAPI.getActivationHandlers()) {
+		    if(handler.preventFirstperson()) {
+		        canRender = false;
+		        break;
+		    }
+		}
+		if(canRender) {
+    		FirstPersonModelCore.isRenderingPlayer = true;
+    		this.renderEntity(camera.getEntity(), d, e, f, tickDelta, matrices, (MultiBufferSource) immediate);
+    		FirstPersonModelCore.isRenderingPlayer = false;
+		}
 	}
 
 	@Shadow

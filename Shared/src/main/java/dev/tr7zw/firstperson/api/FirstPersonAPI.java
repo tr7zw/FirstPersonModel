@@ -8,11 +8,12 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 public final class FirstPersonAPI {
 
     private static List<PlayerOffsetHandler> playerOffsetHandlers = new ArrayList<>();
+    private static List<ActivationHandler> activationHandlers = new ArrayList<>();
 
     private FirstPersonAPI() {
         // private
     }
-    
+
     /**
      * The current status of the FirstPerson Mod. If true, the mod will attempt to
      * apply the required modifications during rendering.
@@ -43,12 +44,16 @@ public final class FirstPersonAPI {
     }
 
     /**
-     * Adds a new {@link PlayerOffsetHandler}.
+     * Adds a new handler. Supports: - {@link PlayerOffsetHandler} -
+     * {@link ActivationHandler}
      * 
      * @param handler
      */
-    public static void registerPlayerOffsetHandler(PlayerOffsetHandler handler) {
-        playerOffsetHandlers.add(handler);
+    public static void registerPlayerHandler(Object handler) {
+        if (handler instanceof PlayerOffsetHandler offset)
+            playerOffsetHandlers.add(offset);
+        if (handler instanceof ActivationHandler activation)
+            activationHandlers.add(activation);
     }
 
     /**
@@ -60,6 +65,17 @@ public final class FirstPersonAPI {
      */
     public static List<PlayerOffsetHandler> getPlayerOffsetHandlers() {
         return playerOffsetHandlers;
+    }
+    
+    /**
+     * Get all registered {@link ActivationHandler}. The list is mutable, this
+     * might be used by mods to resolve mod conflicts where one mod includes a fix
+     * for another mod.
+     * 
+     * @return
+     */
+    public static List<ActivationHandler> getActivationHandlers() {
+        return activationHandlers;
     }
 
 }

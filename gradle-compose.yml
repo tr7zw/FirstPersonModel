@@ -15,9 +15,10 @@ subProjects:
   FPFabric:
     template: "Fabric"
     replacements:
-      dependencies: '
-      modImplementation "maven.modrinth:playeranimator:0.4.0-test1-fabric"
-      '
+      dependencies: "
+      modCompileOnly 'maven.modrinth:playeranimator:0.4.0-test1-fabric'\n
+      modCompileOnly 'maven.modrinth:freecam:1.1.6-mc1.19'\n
+      "
   FPForge:
     template: "Forge"
     replacements:
