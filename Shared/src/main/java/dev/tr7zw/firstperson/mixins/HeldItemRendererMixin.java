@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Hides the normal first person hands and handels map rendering
@@ -35,7 +36,7 @@ public abstract class HeldItemRendererMixin {
 			info.cancel();
 			return;
 		}
-		if (!FirstPersonModelCore.config.doubleHands)
+		if (!FirstPersonModelCore.config.doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP || player.isScoping())
 			return;
 		boolean bl = hand == InteractionHand.MAIN_HAND;
 		HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
