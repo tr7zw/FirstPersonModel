@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.config.CustomConfigScreen;
+import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
 import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
@@ -84,6 +85,13 @@ public abstract class FirstPersonModelCore {
         } catch (Throwable ex) {
             LOGGER.warn("Error during initialization of mod support.", ex);
         }
+        FirstPersonAPI.registerPlayerHandler(new ActivationHandler() {
+            
+            @Override
+            public boolean preventFirstperson() {
+                return Minecraft.getInstance().player.isScoping();
+            }
+        });
     }
 
     public void onTick() {
