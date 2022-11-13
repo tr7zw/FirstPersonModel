@@ -16,11 +16,11 @@ subProjects:
     template: "Fabric"
     replacements:
       dependencies: '
-      modImplementation "maven.modrinth:playeranimator:0.4.0-test1-fabric"
+      modImplementation "maven.modrinth:playeranimator:0.4.0-test1+1.18-fabric"
       '
   FPForge:
     template: "Forge"
     replacements:
       dependencies: '
-      modImplementation "maven.modrinth:playeranimator:0.4.0-test1-forge"
+      modImplementation "maven.modrinth:playeranimator:0.4.0-test1+1.18-forge"
       '
