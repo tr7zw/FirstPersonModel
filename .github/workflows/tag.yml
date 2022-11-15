@@ -28,7 +28,7 @@ jobs:
       - name: Publish-Forge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          curseforge-id: $curseforgeid$
+          curseforge-id: 333287
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
           loaders: forge
           name: ${{github.ref_name}} - Forge
@@ -37,7 +37,7 @@ jobs:
       - name: Publish-Forge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          modrinth-id: $modrinthid$
+          modrinth-id: H5XMjpHi
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           loaders: forge
           name: ${{github.ref_name}} - Forge
@@ -45,9 +45,9 @@ jobs:
       - name: Publish-Fabric
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          modrinth-id: $modrinthid$
+          modrinth-id: H5XMjpHi
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: $curseforgeid$
+          curseforge-id: 333287
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
           loaders: fabric
           name: ${{github.ref_name}} - Fabric

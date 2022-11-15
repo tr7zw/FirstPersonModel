@@ -4,11 +4,13 @@ replacements:
   group: "dev.tr7zw"
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.2.0"
+  version: "2.2.1"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.firstperson"
   dependencies: ""
   licensename: "LICENSE"
+  curseforgeid: 333287
+  modrinthid: H5XMjpHi
 rootProject:
   template: "."
 subProjects:
