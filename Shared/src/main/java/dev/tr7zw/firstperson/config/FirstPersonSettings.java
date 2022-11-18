@@ -16,4 +16,7 @@ public class FirstPersonSettings {
 	//on -> no OF compatibility, Hidden heads in Immersive portal mirrors...
 	public boolean forceActive = false;
 	
+	public boolean offsetCamera = false;
+	public double cameraOffsetMultiplier = 1;
+	
 }

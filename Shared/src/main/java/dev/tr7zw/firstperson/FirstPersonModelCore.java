@@ -121,6 +121,8 @@ public abstract class FirstPersonModelCore {
                 options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands", () -> config.vanillaHands, (b) -> config.vanillaHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands", () -> config.doubleHands, (b) -> config.doubleHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.forceActive", () -> config.forceActive, (b) -> config.forceActive = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.offsetCamera", () -> config.offsetCamera, (b) -> config.offsetCamera = b));
+                options.add(getDoubleOption("text.firstperson.option.firstperson.cameraOffsetMultiplier", 0.1f, 1.5f, 0.01f, () -> config.cameraOffsetMultiplier, (i) -> config.cameraOffsetMultiplier = i));
                 
                 getOptions().addSmall(options.toArray(new Option[0]));
                 

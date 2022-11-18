@@ -18,7 +18,8 @@
 	"DonorAbstractClientPlayerMixin",
 	"StuckInBodyLayerMixin",
 	"ElytraLayerMixin",
-	"PlayerRendererMixin"
+	"PlayerRendererMixin",
+	"CameraMixin"
   ],
   "injectors": {
     "defaultRequire": 1

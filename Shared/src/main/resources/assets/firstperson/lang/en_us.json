@@ -18,5 +18,7 @@
     "text.firstperson.option.firstperson.doubleHands": "Double Hands",
     "text.firstperson.option.firstperson.doubleHands.@Tooltip": "When using Vanilla hands it will always show both hands",
     "text.firstperson.option.firstperson.forceActive": "Force Active",
-    "text.firstperson.option.firstperson.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)"
+    "text.firstperson.option.firstperson.forceActive.@Tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)",
+    "text.firstperson.option.firstperson.offsetCamera": "Offset Camera",
+    "text.firstperson.option.firstperson.cameraOffsetMultiplier": "Camera Offset Multiplier"
   }
