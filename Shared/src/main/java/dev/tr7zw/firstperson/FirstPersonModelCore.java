@@ -18,7 +18,6 @@ import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
-import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
@@ -75,16 +74,16 @@ public abstract class FirstPersonModelCore {
     }
 
     private void lateInit() {
-        try {
-            if (isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
-                LOGGER.info("Loading PlayerAnimator support!");
-                FirstPersonAPI.registerPlayerHandler(new PlayerAnimatorSupport());
-            } else {
-                LOGGER.info("PlayerAnimator not found!");
-            }
-        } catch (Throwable ex) {
-            LOGGER.warn("Error during initialization of mod support.", ex);
-        }
+//        try {
+//            if (isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
+//                LOGGER.info("Loading PlayerAnimator support!");
+//                FirstPersonAPI.registerPlayerHandler(new PlayerAnimatorSupport());
+//            } else {
+//                LOGGER.info("PlayerAnimator not found!");
+//            }
+//        } catch (Throwable ex) {
+//            LOGGER.warn("Error during initialization of mod support.", ex);
+//        }
         FirstPersonAPI.registerPlayerHandler(new ActivationHandler() {
             
             @Override

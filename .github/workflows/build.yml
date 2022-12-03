@@ -36,4 +36,3 @@ jobs:
           name: Artifacts
           path: |
             FPFabric/build/libs/*
-            FPForge/build/libs/*

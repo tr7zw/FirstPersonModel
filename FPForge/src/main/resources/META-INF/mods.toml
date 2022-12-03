@@ -49,6 +49,6 @@ Enables the third person Model in firstperson
 [[dependencies.firstpersonmod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18,)"
+    versionRange="[1.19.3,)"
     ordering="NONE"
     side="CLIENT"
