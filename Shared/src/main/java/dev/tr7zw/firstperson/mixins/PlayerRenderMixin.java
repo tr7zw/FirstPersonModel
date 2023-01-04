@@ -49,7 +49,7 @@ public abstract class PlayerRenderMixin
 			playerEntityModel_1.head.visible = false;
 			playerEntityModel_1.hat.visible = false;
 			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
-			if (FirstPersonModelCore.config.vanillaHands) {
+			if (FirstPersonModelCore.instance.showVanillaHands()) {
 				playerEntityModel_1.leftArm.visible = false;
 				playerEntityModel_1.leftSleeve.visible = false;
 				playerEntityModel_1.rightArm.visible = false;
