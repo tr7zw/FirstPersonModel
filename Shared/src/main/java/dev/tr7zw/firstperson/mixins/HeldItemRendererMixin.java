@@ -31,7 +31,7 @@ public abstract class HeldItemRendererMixin {
 	public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
 			float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
 			MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
-		if (!skip()) {
+		if (disableRendering()) {
 			info.cancel();
 			return;
 		}
@@ -52,8 +52,8 @@ public abstract class HeldItemRendererMixin {
 	public abstract void renderPlayerArm(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
 			float equipProgress, float swingProgress, HumanoidArm arm);
 	
-   public boolean skip() {
-        return !FirstPersonModelCore.enabled || FirstPersonModelCore.instance.showVanillaHands();
+   public boolean disableRendering() {
+        return FirstPersonModelCore.enabled && !FirstPersonModelCore.instance.showVanillaHands();
     }
 	
 }

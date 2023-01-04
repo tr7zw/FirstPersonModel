@@ -7,7 +7,7 @@ public class RenderHandEventListener {
 
 	@SubscribeEvent
 	public void onRender(RenderHandEvent e) {
-		if(FirstPersonModelCore.enabled && !FirstPersonModelCore.config.vanillaHands) {
+		if(FirstPersonModelCore.enabled && !FirstPersonModelCore.instance.showVanillaHands()) {
 			e.setCanceled(true);
 		}
 	}

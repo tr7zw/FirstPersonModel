@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Stops items in the hand from rendering while in first person.
+ * Stops items in the hand from rendering while in first person with vanilla hands
  *
  */
 @Mixin(ItemInHandLayer.class)
