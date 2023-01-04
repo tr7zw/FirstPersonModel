@@ -79,7 +79,7 @@ public abstract class FirstPersonModelCore {
     public static boolean fixBodyShadow(PoseStack matrixStack) {
         return (enabled && (config.forceActive || FirstPersonModelCore.isRenderingPlayer));
     }
-    
+
     private void lateInit() {
         if(isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
             LOGGER.info("Loading PlayerAnimator support!");
@@ -87,10 +87,7 @@ public abstract class FirstPersonModelCore {
         }else {
             LOGGER.info("PlayerAnimator not found!");
         }
-    }
-
-    private void lateInit() {
-
+        
         autoVanillaHandItems.clear();
         Item invalid = Registry.ITEM.get(new ResourceLocation("minecraft", "air"));
         for (String itemId : config.autoVanillaHands) {
