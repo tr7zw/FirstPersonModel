@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +22,10 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Option;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 
 public abstract class FirstPersonModelCore {
 
@@ -32,6 +38,8 @@ public abstract class FirstPersonModelCore {
     protected static boolean isHeld = false;
     public static KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private File settingsFile = new File("config", "firstperson.json");
+    private boolean lateInit = true;
+    private Set<Item> autoVanillaHandItems = new HashSet<>();
 
     public static final float sneakBodyOffset = 0.27f;
     public static final float swimUpBodyOffset = 0.60f;
@@ -70,7 +78,26 @@ public abstract class FirstPersonModelCore {
         return (enabled && (config.forceActive || FirstPersonModelCore.isRenderingPlayer));
     }
 
+    private void lateInit() {
+
+        autoVanillaHandItems.clear();
+        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
+        for (String itemId : config.autoVanillaHands) {
+            try {
+                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                if (invalid != item)
+                    autoVanillaHandItems.add(item);
+            } catch (Exception ex) {
+                LOGGER.info("Unknown item to add to the auto vanilla hold list: " + itemId);
+            }
+        }
+    }
+
     public void onTick() {
+        if (lateInit) {
+            lateInit = false;
+            lateInit();
+        }        
         if (keyBinding.isDown()) {
             if (isHeld)
                 return;
@@ -124,6 +151,12 @@ public abstract class FirstPersonModelCore {
         };
         
         return screen;
+    }
+    
+    public boolean showVanillaHands() {
+        Player player = Minecraft.getInstance().player;
+        return config.vanillaHands || autoVanillaHandItems.contains(player.getMainHandItem().getItem())
+                || autoVanillaHandItems.contains(player.getOffhandItem().getItem());
     }
 
 }

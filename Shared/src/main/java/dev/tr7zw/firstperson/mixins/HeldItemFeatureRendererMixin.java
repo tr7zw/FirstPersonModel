@@ -26,7 +26,7 @@ public class HeldItemFeatureRendererMixin {
 	@Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
 	private void renderItem(LivingEntity livingEntity, ItemStack itemStack, ItemTransforms.TransformType transformType, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
 		if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.isRenderingPlayer
-				&& FirstPersonModelCore.config.vanillaHands) {
+				&& FirstPersonModelCore.instance.showVanillaHands()) {
 			ci.cancel();
 			return;
 		}
