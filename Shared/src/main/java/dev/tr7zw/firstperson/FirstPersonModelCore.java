@@ -17,7 +17,9 @@ import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.config.CustomConfigScreen;
+import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.config.FirstPersonSettings;
+import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Option;
@@ -47,7 +49,7 @@ public abstract class FirstPersonModelCore {
     public static final float inVehicleBodyOffset = 0.20f;
 
     public void sharedSetup() {
-        System.out.println("Loading FirstPerson Mod");
+        LOGGER.info("Loading FirstPerson Mod");
         wrapper = new MinecraftWrapper(Minecraft.getInstance());
         
         if (settingsFile.exists()) {
@@ -77,6 +79,15 @@ public abstract class FirstPersonModelCore {
     public static boolean fixBodyShadow(PoseStack matrixStack) {
         return (enabled && (config.forceActive || FirstPersonModelCore.isRenderingPlayer));
     }
+    
+    private void lateInit() {
+        if(isValidClass("dev.kosmx.playerAnim.core.impl.AnimationProcessor")) {
+            LOGGER.info("Loading PlayerAnimator support!");
+            FirstPersonAPI.registerPlayerOffsetHandler(new PlayerAnimatorSupport());
+        }else {
+            LOGGER.info("PlayerAnimator not found!");
+        }
+    }
 
     private void lateInit() {
 
@@ -94,10 +105,10 @@ public abstract class FirstPersonModelCore {
     }
 
     public void onTick() {
-        if (lateInit) {
+        if(lateInit) {
             lateInit = false;
             lateInit();
-        }        
+        }
         if (keyBinding.isDown()) {
             if (isHeld)
                 return;
@@ -157,6 +168,20 @@ public abstract class FirstPersonModelCore {
         Player player = Minecraft.getInstance().player;
         return config.vanillaHands || autoVanillaHandItems.contains(player.getMainHandItem().getItem())
                 || autoVanillaHandItems.contains(player.getOffhandItem().getItem());
+    }
+    
+    /**
+     * Checks if a class exists or not
+     * @param name
+     * @return
+     */
+    protected static boolean isValidClass(String name) {
+        try {
+            if(Class.forName(name) != null) {
+                return true;
+            }
+        } catch (ClassNotFoundException e) {}
+        return false;
     }
 
 }

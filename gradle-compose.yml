@@ -1,18 +1,28 @@
 version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.18.2-shared/"
+source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.18.2-mcpublish/"
 replacements:
   group: "dev.tr7zw"
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.1.2"
+  version: "2.2.1"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.firstperson"
   dependencies: ""
   licensename: "LICENSE"
+  curseforgeid: 333287
+  modrinthid: H5XMjpHi
 rootProject:
   template: "."
 subProjects:
   FPFabric:
     template: "Fabric"
+    replacements:
+      dependencies: '
+      modImplementation "maven.modrinth:playeranimator:0.4.0-test1+1.18-fabric"
+      '
   FPForge:
     template: "Forge"
+    replacements:
+      dependencies: '
+      modImplementation "maven.modrinth:playeranimator:0.4.0-test1+1.18-forge"
+      '
