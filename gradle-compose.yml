@@ -9,6 +9,8 @@ replacements:
   relocationpackage: "dev.tr7zw.firstperson"
   dependencies: ""
   licensename: "LICENSE"
+  curseforgeid: "333287"
+  modrinthid: "H5XMjpHi"
 rootProject:
   template: "."
 subProjects:
