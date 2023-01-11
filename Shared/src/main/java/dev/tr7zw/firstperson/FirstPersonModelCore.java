@@ -25,7 +25,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -101,10 +101,10 @@ public abstract class FirstPersonModelCore {
         });
         
         autoVanillaHandItems.clear();
-        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
+        Item invalid = Registry.ITEM.get(new ResourceLocation("minecraft", "air"));
         for (String itemId : config.autoVanillaHands) {
             try {
-                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = Registry.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     autoVanillaHandItems.add(item);
             } catch (Exception ex) {
