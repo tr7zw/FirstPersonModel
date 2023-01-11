@@ -1,6 +1,8 @@
 name: Create Release
 
-on: create
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -27,7 +29,6 @@ jobs:
         run: ./gradlecw build
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             FPFabric/build/libs/*
