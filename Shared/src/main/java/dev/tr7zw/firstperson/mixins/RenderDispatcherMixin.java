@@ -32,7 +32,7 @@ public abstract class RenderDispatcherMixin {
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack, MultiBufferSource multiBufferSource, Entity entity, float f,
             float g, LevelReader levelReader, float h) {
-        if(entity == fpm_mc.cameraEntity) {
+        if(entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
             return Mth.lerp(delta, old, cur) + FirstPersonModelCore.getWrapper().getOffset().x;
         }
         return Mth.lerp(delta, old, cur);
@@ -41,7 +41,7 @@ public abstract class RenderDispatcherMixin {
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 2))
     private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack, MultiBufferSource multiBufferSource, Entity entity, float f,
             float g, LevelReader levelReader, float h) {
-        if(entity == fpm_mc.cameraEntity) {
+        if(entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
             return Mth.lerp(delta, old, cur) + FirstPersonModelCore.getWrapper().getOffset().z;
         }
         return Mth.lerp(delta, old, cur);
@@ -49,7 +49,7 @@ public abstract class RenderDispatcherMixin {
     
     @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = Shift.BEFORE))
     private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity, float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
-        if(entity != fpm_mc.cameraEntity) {
+        if(entity != fpm_mc.cameraEntity || fpm_mc.options.getCameraType() != CameraType.FIRST_PERSON) {
             return;
         }
         Vec3 offset = FirstPersonModelCore.getWrapper().getOffset();
