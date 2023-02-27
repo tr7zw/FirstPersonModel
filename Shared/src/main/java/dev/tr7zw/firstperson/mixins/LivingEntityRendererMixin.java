@@ -10,6 +10,7 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -23,7 +24,8 @@ public abstract class LivingEntityRendererMixin {
 	public void renderHead(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
 			MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
 		if(livingEntity instanceof Shulker)return;//No need to mess with
-		if (FirstPersonModelCore.isRenderingPlayer) {
+		// only run when the player is rendering, and it's not a "Humanoid" model(it otherwise gets handeled in HumanoidModelMixin)
+		if (FirstPersonModelCore.isRenderingPlayer && !(getModel() instanceof HumanoidModel)) {
 			EntityModel<LivingEntity> model = getModel();
 			if(!(model instanceof HeadedModel)) {
 				FirstPersonModelCore.isRenderingPlayer = false;
