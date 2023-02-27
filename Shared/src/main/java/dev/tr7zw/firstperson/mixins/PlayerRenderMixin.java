@@ -38,6 +38,8 @@ public abstract class PlayerRenderMixin
         super(ctx, model, shadowRadius);
     } 
     
+	
+	
 	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V"))
 	private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer,
 			AbstractClientPlayer abstractClientPlayerEntity,
@@ -46,9 +48,10 @@ public abstract class PlayerRenderMixin
 	    setModelProperties(abstractClientPlayerEntity);
 		if (FirstPersonModelCore.isRenderingPlayer) {
 			PlayerModel<AbstractClientPlayer> playerEntityModel_1 = this.getModel();
-			playerEntityModel_1.head.visible = false;
-			playerEntityModel_1.hat.visible = false;
-			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
+	        playerEntityModel_1.head.visible = false;
+	        playerEntityModel_1.hat.visible = false;
+	        // Moved to HumanoidModelMixin to be called during setupAnim
+//			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
 			if (FirstPersonModelCore.instance.showVanillaHands()) {
 				playerEntityModel_1.leftArm.visible = false;
 				playerEntityModel_1.leftSleeve.visible = false;
@@ -61,6 +64,7 @@ public abstract class PlayerRenderMixin
 				playerEntityModel_1.body.visible = false;
 			}
 		} else {
+		    // FIXME: wtf is this code
 			playerEntityRenderer.getModel().hat.visible = playerEntityRenderer.getModel().hat.visible;
 		}
 		playerEntityRenderer.getModel().leftSleeve.visible = playerEntityRenderer.getModel().leftSleeve.visible;
@@ -81,7 +85,5 @@ public abstract class PlayerRenderMixin
 
 	@Shadow
 	abstract void setModelProperties(AbstractClientPlayer abstractClientPlayerEntity_1);
-
-	// @Inject(at = @At("HEAD"), method = "getPositionOffset", cancellable = true)
 
 }
