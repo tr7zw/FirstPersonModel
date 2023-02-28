@@ -63,17 +63,12 @@ public abstract class PlayerRenderMixin
 			if (abstractClientPlayerEntity.isSwimming()) {
 				playerEntityModel_1.body.visible = false;
 			}
-		} else {
-		    // FIXME: wtf is this code
-			playerEntityRenderer.getModel().hat.visible = playerEntityRenderer.getModel().hat.visible;
 		}
-		playerEntityRenderer.getModel().leftSleeve.visible = playerEntityRenderer.getModel().leftSleeve.visible;
-		playerEntityRenderer.getModel().rightSleeve.visible = playerEntityRenderer.getModel().rightSleeve.visible;
-		playerEntityRenderer.getModel().leftPants.visible = playerEntityRenderer.getModel().leftPants.visible;
-		playerEntityRenderer.getModel().rightPants.visible = playerEntityRenderer.getModel().rightPants.visible;
-		playerEntityRenderer.getModel().jacket.visible = playerEntityRenderer.getModel().jacket.visible;
 	}
 	
+	/**
+	 * Undo the forced head hiding flag set during HumanoidModelMixin
+	 */
 	@Inject(method = "render", at = @At(value = "RETURN"))
 	public void render(AbstractClientPlayer abstractClientPlayerEntity, float f, float g, PoseStack matrixStack,
 			MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
