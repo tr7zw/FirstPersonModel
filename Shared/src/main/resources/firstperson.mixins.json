@@ -15,7 +15,6 @@
 	"LivingEntityRendererMixin",
 	"FeatureRendererMixin",
 	"ArmorFeatureRendererMixin",
-	"DonorAbstractClientPlayerMixin",
 	"StuckInBodyLayerMixin",
 	"ElytraLayerMixin",
 	"PlayerRendererMixin",

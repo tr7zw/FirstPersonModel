@@ -1,7 +1,6 @@
 package dev.tr7zw.firstperson.modsupport;
 
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import com.mojang.math.Axis;
