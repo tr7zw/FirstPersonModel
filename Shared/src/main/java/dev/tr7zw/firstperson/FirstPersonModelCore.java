@@ -43,6 +43,7 @@ public abstract class FirstPersonModelCore {
     private boolean lateInit = true;
     private Set<Item> autoVanillaHandItems = new HashSet<>();
 
+    // FIXME: move these values where they belong
     public static final float sneakBodyOffset = 0.27f;
     public static final float swimUpBodyOffset = 0.60f;
     public static final float swimDownBodyOffset = 0.50f;
