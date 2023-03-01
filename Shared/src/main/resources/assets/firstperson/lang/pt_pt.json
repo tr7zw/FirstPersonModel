@@ -4,19 +4,19 @@
 
     "category.firstperson.firstperson": "FirstPerson",
     "text.firstperson.option.firstperson.xOffset": "Posicionamento do corpo levantado",
-    "text.firstperson.option.firstperson.xOffset.@Tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
     "text.firstperson.option.firstperson.sneakXOffset": "Posicionamento do corpo agachado",
-    "text.firstperson.option.firstperson.sneakXOffset.@Tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
     "text.firstperson.option.firstperson.enabledByDefault": "Ativado por padrão",
-    "text.firstperson.option.firstperson.enabledByDefault.@Tooltip": "O modo padrão do mod quando o jogo inicia",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "O modo padrão do mod quando o jogo inicia",
     "text.firstperson.option.firstperson.sitXOffset": "Posicionamento do corpo sentado",
-    "text.firstperson.option.firstperson.sitXOffset.@Tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
+    "text.firstperson.option.firstperson.sitXOffset.tooltip": "Posiciona o corpo em relação à câmera para a frente/trás",
     "text.firstperson.option.firstperson.renderStuckFeatures": "Mostrar flechas e picos de abelhas",
-    "text.firstperson.option.firstperson.renderStuckFeatures.@Tooltip": "Mostra flechas, picos de abelhas ou outroas adições de outros mods em primeira pessoa",
+    "text.firstperson.option.firstperson.renderStuckFeatures.tooltip": "Mostra flechas, picos de abelhas ou outroas adições de outros mods em primeira pessoa",
     "text.firstperson.option.firstperson.vanillaHands": "Mãos Vanilla",
-    "text.firstperson.option.firstperson.vanillaHands.@Tooltip": "Mostra as mãos Vanilla em primeira pessoa, mas também o corpo do jogador (sem braços)",
+    "text.firstperson.option.firstperson.vanillaHands.tooltip": "Mostra as mãos Vanilla em primeira pessoa, mas também o corpo do jogador (sem braços)",
     "text.firstperson.option.firstperson.doubleHands": "Mãos Duplas",
-    "text.firstperson.option.firstperson.doubleHands.@Tooltip": "Quando usa mãos Vanilla vai sempre mostrar ambas as mãos",
+    "text.firstperson.option.firstperson.doubleHands.tooltip": "Quando usa mãos Vanilla vai sempre mostrar ambas as mãos",
     "text.firstperson.option.firstperson.forceActive": "Forçar Ativação",
-    "text.firstperson.option.firstperson.forceActive.@Tooltip": "Força o FirstPerson Mod quando outros mods mudam a renderização do player, mas vai causar problemas (por exemplo, o corpo do jogador sem cabeça)"
+    "text.firstperson.option.firstperson.forceActive.tooltip": "Força o FirstPerson Mod quando outros mods mudam a renderização do player, mas vai causar problemas (por exemplo, o corpo do jogador sem cabeça)"
   }
