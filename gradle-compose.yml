@@ -1,16 +1,18 @@
-version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.18.2-mcpublish/"
+version: '0.0.2'
+source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.18.2"
 replacements:
-  group: "dev.tr7zw"
   name: "FirstPerson"
   id: "firstperson"
   version: "2.2.3"
-  author: "tr7zw"
   relocationpackage: "dev.tr7zw.firstperson"
-  dependencies: ""
-  licensename: "LICENSE"
-  curseforgeid: 333287
-  modrinthid: H5XMjpHi
+  curseforgeid: "333287"
+  modrinthid: "H5XMjpHi"
+enabledFlags:
+  - autopublish
+  - publishFabric
+  - publishForge
+  - modrinth
+  - curseforge
 rootProject:
   template: "."
 subProjects:
