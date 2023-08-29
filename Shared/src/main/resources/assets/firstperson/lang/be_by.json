@@ -1,0 +1,22 @@
+{
+    "text.firstperson.title": "Налады FirstPerson",
+    "key.firstperson.toggle": "Уключыць Firstperson",
+
+    "category.firstperson.firstperson": "FirstPerson",
+    "text.firstperson.option.firstperson.xOffset": "Змяшчэнне стойкі",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "Перамяшчае цела адносна камеры назад ці ўперад",
+    "text.firstperson.option.firstperson.sneakXOffset": "Змяшчэнне употайкі",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "Перамяшчае цела адносна камеры назад ці ўперад, калі вы крадзёцеся",
+    "text.firstperson.option.firstperson.enabledByDefault": "Па змаўчанні",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "Стан па-змаўчанні мода FirstPerson пасля запуску гульні",
+    "text.firstperson.option.firstperson.sitXOffset": "Змяшчэнне седзячы",
+    "text.firstperson.option.firstperson.sitXOffset.tooltip": "Перамяшчае цела адносна камеры назад ці ўперад while sitting",
+    "text.firstperson.option.firstperson.renderStuckFeatures": "Рэндэр стрэл і нітак",
+    "text.firstperson.option.firstperson.renderStuckFeatures.tooltip": "Паказвае стрэлы, ніткі ці іншыя мадыфіцыраваныя функцыі ад першай асобы",
+    "text.firstperson.option.firstperson.vanillaHands": "Ванільныя рукі",
+    "text.firstperson.option.firstperson.vanillaHands.tooltip": "Паказвае ванільныя рукі ад першай асобы, але і мадэль гульца (але без рук)",
+    "text.firstperson.option.firstperson.doubleHands": "Двайныя рукі",
+    "text.firstperson.option.firstperson.doubleHands.tooltip": "Калі вы выкарыстоўваеце Ванільныя рукі, заўсёды паказваюцца дзве рукі",
+    "text.firstperson.option.firstperson.forceActive": "Прымушальная сумяшчальнасць",
+    "text.firstperson.option.firstperson.forceActive.tooltip": "Прымушае FirstPerson працаваць з іншымі модамі, якія змяняюць рэндэр, але гэта выклікае візуальныя памылкі(напрыклад пачнуць прападаць голавы гульцоў)"
+  }
