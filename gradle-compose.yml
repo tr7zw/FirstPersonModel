@@ -1,5 +1,5 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20"
+source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20.2"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
@@ -20,12 +20,12 @@ subProjects:
     template: "Fabric"
     replacements:
       dependencies: "
-      modCompileOnly 'maven.modrinth:playeranimator:0.4.0-test1-fabric'\n
+      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
       modCompileOnly 'maven.modrinth:freecam:1.1.6-mc1.19'\n
       "
   FPForge:
     template: "Forge"
     replacements:
       dependencies: '
-      modImplementation "maven.modrinth:playeranimator:0.4.0-test1-forge"
+      modCompileOnly "maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge"
       '
