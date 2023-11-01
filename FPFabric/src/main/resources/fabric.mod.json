@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "firstperson",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "name": "FirstpersonModel",
   "description": "Enables the third person Model in firstperson",
   "authors": [

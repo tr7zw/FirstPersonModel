@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20.2"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.2.3"
+  version: "2.2.4"
   relocationpackage: "dev.tr7zw.firstperson"
   curseforgeid: "333287"
   modrinthid: "H5XMjpHi"
