@@ -18,7 +18,8 @@
 	"StuckInBodyLayerMixin",
 	"ElytraLayerMixin",
 	"PlayerRendererMixin",
-	"HumanoidModelMixin"
+	"HumanoidModelMixin",
+	"CustomHeadLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
