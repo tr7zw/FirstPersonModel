@@ -21,4 +21,4 @@
   "text.firstperson.option.firstperson.forceActive.tooltip": "Принудительное использование мода в тех случаях, когда другие моды изменяют рендеринг, но при этом возникают визуальные проблемы (например, пропадает голова игрока)",
   "modmenu.summaryTranslation.firstperson": "Включает модель третьего лица в первом лице",
   "modmenu.descriptionTranslation.firstperson": "Включает модель третьего лица в первом лице"
-}
+  }
