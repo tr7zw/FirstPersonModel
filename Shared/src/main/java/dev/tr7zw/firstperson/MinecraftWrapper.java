@@ -59,7 +59,6 @@ public class MinecraftWrapper {
 				} else if(abstractClientPlayerEntity_1.getVehicle() instanceof LivingEntity){
 					realYaw = Mth.rotLerp(client.getFrameTime(), ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).yBodyRotO, ((LivingEntity)abstractClientPlayerEntity_1.getVehicle()).yBodyRot);
 				} else {
-					realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO, abstractClientPlayerEntity_1.getVehicle().getYRot());
 				}
 				bodyOffset = FirstPersonModelCore.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
 			}else{
