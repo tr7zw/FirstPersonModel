@@ -1,0 +1,12 @@
+{
+    "text.firstperson.title": "FirstPerson (BirinciŞahıs) Ayarları",
+    "text.firstperson.option.firstperson.xOffset": "Dik Dururkenki X Göreli Konumu",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "Kameraya göre vücudu ileri geriye hareket ettirir",
+    "text.firstperson.option.firstperson.sneakXOffset": "Eğilirkenki X Göreli Konumu",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "Kameraya göre eğilirken vücudu ileri geriye hareket ettirir",
+    "key.firstperson.toggle": "Birinci Şahsı Aç/Kapa",
+    "text.firstperson.option.firstperson.improvedCompatibility": "Gelişmiş Mod Uyumluluğu",
+    "text.firstperson.option.firstperson.improvedCompatibility.tooltip": "Immersive Portals, Mirrors gibi modlardaki ofset sorununu çözer",
+    "text.firstperson.option.firstperson.enabledByDefault": "Varsayılan olarak etkin",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "Oyunu başlattıktan sonraki FirstPerson modunun varsayılan durumu"
+}

@@ -1,0 +1,19 @@
+{
+    "text.firstperson.title": "第一人称模型设置 §7（First Person Model）",
+    "key.firstperson.toggle": "切换第一人称",
+    "category.firstperson.firstperson": "第一人称",
+    "text.firstperson.option.firstperson.xOffset": "站立时的 X 轴补偿",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "前后调节站立时身体相对于镜头的位置",
+    "text.firstperson.option.firstperson.sneakXOffset": "潜行时的 X 轴补偿",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "前后调节潜行时身体相对于镜头的位置",
+    "text.firstperson.option.firstperson.enabledByDefault": "默认启用",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "开始游戏后是否默认启用第一人称模型",
+    "text.firstperson.option.firstperson.lockBodyOnItems": "拿着某些物品时锁定身体旋转",
+    "text.firstperson.option.firstperson.lockBodyOnItems.tooltip": "拿着地图或指南针时将身体旋转同步为头部旋转，以便更好使用物品",
+    "text.firstperson.option.firstperson.sitXOffset": "坐下时的 X 轴补偿",
+    "text.firstperson.option.firstperson.sitXOffset.tooltip": "前后调节坐下时身体相对于镜头的位置",
+    "text.firstperson.option.firstperson.vanillaHands": "原版的手部显示效果",
+    "text.firstperson.option.firstperson.vanillaHands.tooltip": "显示原版第一人称手的显示效果，但同时也显示玩家模型（没有手臂）",
+    "text.firstperson.option.firstperson.forceActive": "强制使用",
+    "text.firstperson.option.firstperson.forceActive.tooltip": "当其他模组修改渲染时强制使用第一人称模型，但会导致视觉问题（例如玩家头部缺失）"
+}

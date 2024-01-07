@@ -1,31 +1,54 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20.2"
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
   version: "2.2.4"
+  description: "Enables the third person Model in firstperson"
+  homepageUrl: "https://modrinth.com/mod/not-enough-animations"
+  sourcesUrl: "https://github.com/tr7zw/FirstPersonModel"
+  issuesUrl: "https://github.com/tr7zw/FirstPersonModel/issues"
+  fabric_entrypoint: "dev.tr7zw.firstperson.fabric.FirstPersonModelMod"
+  fabric_modmenu_entrypoint: "dev.tr7zw.firstperson.fabric.config.FirstPersonModMenu"
   relocationpackage: "dev.tr7zw.firstperson"
   curseforgeid: "333287"
   modrinthid: "H5XMjpHi"
+  versionlessname: "FPVersionless"
+  fabric_dependencies: "
+      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
+      modCompileOnly 'maven.modrinth:freecam:1.1.6-mc1.19'\n
+      "
+  forge_dependencies: "
+      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge'\n
+      "
 enabledFlags:
   - autopublish
   - publishFabric
   - publishForge
   - modrinth
   - curseforge
+  - versionless
 rootProject:
   template: "."
 subProjects:
-  FPFabric:
-    template: "Fabric"
-    replacements:
-      dependencies: "
-      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
-      modCompileOnly 'maven.modrinth:freecam:1.1.6-mc1.19'\n
-      "
-  FPForge:
-    template: "Forge"
+  FPVersionless:
+    template: "Versionless"
     replacements:
       dependencies: '
-      modCompileOnly "maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge"
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
       '
+#  FPFabric:
+#    template: "Fabric"
+#    replacements:
+#      dependencies: "
+#      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
+#      modCompileOnly 'maven.modrinth:freecam:1.1.6-mc1.19'\n
+#      "
+#  FPForge:
+#    template: "Forge"
+#    replacements:
+#      dependencies: '
+#      modCompileOnly "maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge"
+#      '
