@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
+import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;

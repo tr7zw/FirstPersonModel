@@ -21,8 +21,8 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
 
     @Override
     public Vec3 applyOffset(AbstractClientPlayer entity, float delta, Vec3 original, Vec3 current) {
-        if (entity instanceof IAnimatedPlayer player && player.getAnimation().isActive()) {
-            AnimationProcessor anim = player.getAnimation();
+        if (entity instanceof IAnimatedPlayer player && player.playerAnimator_getAnimation().isActive()) {
+            AnimationProcessor anim = player.playerAnimator_getAnimation();
             anim.setTickDelta(delta); // Probably the tick is done, set tick delta.
 
             // get required data

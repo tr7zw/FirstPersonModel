@@ -1,4 +1,4 @@
-package dev.tr7zw.firstperson.fabric.modsupport;
+package dev.tr7zw.firstperson.modsupport;
 
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import net.xolt.freecam.Freecam;

@@ -1,16 +1,16 @@
-package dev.tr7zw.firstperson.fabric.config;
+package dev.tr7zw.firstperson.fabric;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
-import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.config.ConfigScreenProvider;
 
-public class FirstPersonModMenu implements ModMenuApi {
+public class FPModMenuProvider implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> {
-            return FirstPersonModelCore.instance.createConfigScreen(parent);
+            return ConfigScreenProvider.createConfigScreen(parent);
         };
     }
 

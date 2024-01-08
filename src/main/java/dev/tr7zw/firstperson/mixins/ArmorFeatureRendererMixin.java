@@ -43,7 +43,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             info.cancel();
         }
         if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer
-                && FirstPersonModelCore.instance.showVanillaHands()) {
+                && FirstPersonModelCore.instance.getWrapper().showVanillaHands()) {
             info.cancel();
         }
     }

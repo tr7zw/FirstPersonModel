@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.mixinbase.ModelPartBase;
+import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -48,7 +48,7 @@ public abstract class PlayerRenderMixin
             playerEntityModel_1.hat.visible = false;
             // Moved to HumanoidModelMixin to be called during setupAnim
 //			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
-            if (FirstPersonModelCore.instance.showVanillaHands()) {
+            if (FirstPersonModelCore.instance.getWrapper().showVanillaHands()) {
                 playerEntityModel_1.leftArm.visible = false;
                 playerEntityModel_1.leftSleeve.visible = false;
                 playerEntityModel_1.rightArm.visible = false;

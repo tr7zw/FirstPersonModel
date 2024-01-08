@@ -1,5 +1,10 @@
 package dev.tr7zw.firstperson;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import dev.tr7zw.firstperson.api.ActivationHandler;
+import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -8,12 +13,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 
 public class MinecraftWrapper {
 
     private final Minecraft client;
     private Vec3 offset = Vec3.ZERO; // Current offset used for rendering
+    private Set<Item> autoVanillaHandItems = new HashSet<>();
 
     public MinecraftWrapper(Minecraft instance) {
         this.client = instance;
@@ -26,6 +33,11 @@ public class MinecraftWrapper {
             return false;
         if (client.player.getSwimAmount(1f) != 0 && !client.player.isVisuallySwimming())
             return false;
+        for (ActivationHandler handler : FirstPersonAPI.getActivationHandlers()) {
+            if (handler.preventFirstperson()) {
+                return false;
+            }
+        }
         if (!FirstPersonModelCore.enabled || thirdPerson)
             return false;
         return true;
@@ -94,6 +106,20 @@ public class MinecraftWrapper {
 
     public Vec3 getOffset() {
         return offset;
+    }
+
+    public boolean showVanillaHands() {
+        return FirstPersonModelMod.config.vanillaHands
+                || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
+                || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem());
+    }
+
+    public void addAutoVanillaHandsItem(Item item) {
+        this.autoVanillaHandItems.add(item);
+    }
+
+    public void clearAutoVanillaHandsList() {
+        this.autoVanillaHandItems.clear();
     }
 
 }

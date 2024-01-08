@@ -55,7 +55,7 @@ public abstract class HeldItemRendererMixin {
             float equipProgress, float swingProgress, HumanoidArm arm);
 
     public boolean skip() {
-        return !FirstPersonModelCore.enabled || FirstPersonModelCore.instance.showVanillaHands();
+        return !FirstPersonModelCore.enabled || FirstPersonModelCore.instance.getWrapper().showVanillaHands();
     }
 
 }

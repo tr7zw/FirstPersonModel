@@ -1,4 +1,4 @@
-package dev.tr7zw.firstperson.mixinbase;
+package dev.tr7zw.firstperson.versionless.mixinbase;
 
 public interface ModelPartBase {
 
