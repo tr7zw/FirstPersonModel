@@ -32,7 +32,7 @@ public class WorldRendererMixin {
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
     public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
             GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
-        if (camera.isDetached() || !FirstPersonModelCore.instance.getWrapper().applyThirdPerson(false))
+        if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false))
             return;
         Vec3 vec3d = camera.getPosition();
         double d = vec3d.x();

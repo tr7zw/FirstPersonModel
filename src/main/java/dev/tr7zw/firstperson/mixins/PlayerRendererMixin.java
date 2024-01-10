@@ -27,9 +27,9 @@ public class PlayerRendererMixin {
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
     public void getRenderOffset(AbstractClientPlayer entity, float f, CallbackInfoReturnable<Vec3> ci) {
         if (entity == fpm_mc.cameraEntity && FirstPersonModelCore.isRenderingPlayer) {
-            FirstPersonModelCore.instance.getWrapper().updatePositionOffset(entity, Vec3.ZERO);
+            FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, Vec3.ZERO);
 
-            Vec3 offset = ci.getReturnValue().add(FirstPersonModelCore.instance.getWrapper().getOffset());
+            Vec3 offset = ci.getReturnValue().add(FirstPersonModelCore.instance.getLogicHandler().getOffset());
 
             for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
                 offset = handler.applyOffset(entity, f, ci.getReturnValue(), offset);

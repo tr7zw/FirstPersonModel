@@ -27,7 +27,7 @@ public class HeldItemFeatureRendererMixin {
     private void renderItem(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext,
             HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
         if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.isRenderingPlayer
-                && FirstPersonModelCore.instance.getWrapper().showVanillaHands()) {
+                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
             ci.cancel();
             return;
         }

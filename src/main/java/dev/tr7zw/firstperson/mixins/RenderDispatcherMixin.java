@@ -33,7 +33,7 @@ public abstract class RenderDispatcherMixin {
     private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
         if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
-            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getWrapper().getOffset().x;
+            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().x;
         }
         return Mth.lerp(delta, old, cur);
     }
@@ -42,7 +42,7 @@ public abstract class RenderDispatcherMixin {
     private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
         if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
-            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getWrapper().getOffset().z;
+            return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().z;
         }
         return Mth.lerp(delta, old, cur);
     }
@@ -53,7 +53,7 @@ public abstract class RenderDispatcherMixin {
         if (entity != fpm_mc.cameraEntity || fpm_mc.options.getCameraType() != CameraType.FIRST_PERSON) {
             return;
         }
-        Vec3 offset = FirstPersonModelCore.instance.getWrapper().getOffset();
+        Vec3 offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
         matrices.translate(offset.x, offset.y, offset.z);
     }
 

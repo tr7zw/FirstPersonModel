@@ -29,8 +29,8 @@ public abstract class FeatureRendererMixin {
                 return;
             }
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).setHidden();
-            if (model instanceof VillagerHeadModel) {
-                ((VillagerHeadModel) model).hatVisible(false);
+            if (model instanceof VillagerHeadModel villager) {
+                villager.hatVisible(false);
             }
         }
     }
@@ -41,8 +41,8 @@ public abstract class FeatureRendererMixin {
             float blue, CallbackInfo ci) {
         if (model instanceof HeadedModel) {
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).showAgain();
-            if (model instanceof VillagerHeadModel) {
-                ((VillagerHeadModel) model).hatVisible(true);
+            if (model instanceof VillagerHeadModel villager) {
+                villager.hatVisible(true);
             }
         }
     }

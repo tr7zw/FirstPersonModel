@@ -14,6 +14,8 @@ public class ModelPartMixin implements ModelPartBase {
 
     @Shadow
     public float z;
+    @Shadow
+    public boolean visible;
 
     private float zCopy = 0;
     private boolean moved = false;
@@ -24,6 +26,7 @@ public class ModelPartMixin implements ModelPartBase {
             zCopy = z;
         z = 5000;
         moved = true;
+        visible = false;
     }
 
     @Override
@@ -31,6 +34,7 @@ public class ModelPartMixin implements ModelPartBase {
         if (moved) {
             z = zCopy;
             moved = false;
+            visible = true;
         }
     }
 

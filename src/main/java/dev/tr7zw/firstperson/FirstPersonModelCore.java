@@ -4,6 +4,7 @@ import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
+import lombok.Getter;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,16 +13,12 @@ import net.minecraft.world.item.Item;
 
 public abstract class FirstPersonModelCore extends FirstPersonBase {
 
-    private MinecraftWrapper wrapper;
+    @Getter
+    private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
-    protected static boolean isHeld = false;
-    public static KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
+    private boolean isHeld = false;
+    protected KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private boolean lateInit = true;
-    // FIXME: move these values where they belong
-    public static final float sneakBodyOffset = 0.27f;
-    public static final float swimUpBodyOffset = 0.60f;
-    public static final float swimDownBodyOffset = 0.50f;
-    public static final float inVehicleBodyOffset = 0.20f;
 
     public FirstPersonModelCore() {
         instance = this;
@@ -29,7 +26,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     public void sharedSetup() {
         LOGGER.info("Loading FirstPerson Mod");
-        wrapper = new MinecraftWrapper(Minecraft.getInstance());
+        logicHandler = new LogicHandler(Minecraft.getInstance());
 
         super.loadConfig();
 
@@ -37,10 +34,6 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     }
 
     public abstract void registerKeybinds();
-
-    public MinecraftWrapper getWrapper() {
-        return wrapper;
-    }
 
     private void lateInit() {
         try {
@@ -53,22 +46,16 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         } catch (Throwable ex) {
             LOGGER.warn("Error during initialization of mod support.", ex);
         }
-        FirstPersonAPI.registerPlayerHandler(new ActivationHandler() {
 
-            @Override
-            public boolean preventFirstperson() {
-                return Minecraft.getInstance().player.isScoping();
-            }
-        });
-
-        wrapper.clearAutoVanillaHandsList();
+        logicHandler.registerDefaultHandlers();
+        logicHandler.clearAutoVanillaHandsList();
         Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
         for (String itemId : config.autoVanillaHands) {
             try {
                 Item item = BuiltInRegistries.ITEM
                         .get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
-                    wrapper.addAutoVanillaHandsItem(item);
+                    logicHandler.addAutoVanillaHandsItem(item);
             } catch (Exception ex) {
                 LOGGER.info("Unknown item to add to the auto vanilla hold list: " + itemId);
             }

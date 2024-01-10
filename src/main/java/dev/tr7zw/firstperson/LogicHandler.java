@@ -5,6 +5,8 @@ import java.util.Set;
 
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
+import dev.tr7zw.firstperson.versionless.Constants;
+import lombok.Getter;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -16,34 +18,48 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 
-public class MinecraftWrapper {
+public class LogicHandler {
 
     private final Minecraft client;
+    @Getter
     private Vec3 offset = Vec3.ZERO; // Current offset used for rendering
     private Set<Item> autoVanillaHandItems = new HashSet<>();
 
-    public MinecraftWrapper(Minecraft instance) {
+    public LogicHandler(Minecraft instance) {
         this.client = instance;
     }
 
-    public boolean applyThirdPerson(boolean thirdPerson) {
-        if (client.player.isAutoSpinAttack())
-            return false;
-        if (client.player.isFallFlying())
-            return false;
-        if (client.player.getSwimAmount(1f) != 0 && !client.player.isVisuallySwimming())
+    void registerDefaultHandlers() {
+        FirstPersonAPI.registerPlayerHandler(new ActivationHandler() {
+
+            @Override
+            public boolean preventFirstperson() {
+                if (client.player.isAutoSpinAttack())
+                    return true;
+                if (client.player.isFallFlying())
+                    return true;
+                if (client.player.getSwimAmount(1f) != 0 && !client.player.isVisuallySwimming())
+                    return true;
+                if (client.player.isScoping())
+                    return true;
+                return false;
+            }
+        });
+    }
+
+    public boolean shouldApplyThirdPerson(boolean thirdPerson) {
+        if (!FirstPersonModelCore.enabled || thirdPerson)
             return false;
         for (ActivationHandler handler : FirstPersonAPI.getActivationHandlers()) {
             if (handler.preventFirstperson()) {
                 return false;
             }
         }
-        if (!FirstPersonModelCore.enabled || thirdPerson)
-            return false;
         return true;
     }
 
     public void updatePositionOffset(Entity player, Vec3 defValue) {
+        // handle sleeping
         if (player == client.getCameraEntity() && client.player.isSleeping()) {
             offset = defValue;
             return;
@@ -65,12 +81,12 @@ public class MinecraftWrapper {
             if (client.player.isVisuallySwimming()) {
                 abstractClientPlayerEntity_1.yBodyRot = abstractClientPlayerEntity_1.yHeadRot;
                 if (abstractClientPlayerEntity_1.xRotO > 0) {
-                    bodyOffset = FirstPersonModelCore.swimUpBodyOffset;
+                    bodyOffset = Constants.swimUpBodyOffset;
                 } else {
-                    bodyOffset = FirstPersonModelCore.swimDownBodyOffset;
+                    bodyOffset = Constants.swimDownBodyOffset;
                 }
-            } else if (abstractClientPlayerEntity_1.isShiftKeyDown()) {
-                bodyOffset = FirstPersonModelCore.sneakBodyOffset + (FirstPersonModelCore.config.sneakXOffset / 100f);
+            } else if (abstractClientPlayerEntity_1.isCrouching()) {
+                bodyOffset = Constants.sneakBodyOffset + (FirstPersonModelCore.config.sneakXOffset / 100f);
             } else if (abstractClientPlayerEntity_1.isPassenger()) {
                 if (abstractClientPlayerEntity_1.getVehicle() instanceof Boat
                         || abstractClientPlayerEntity_1.getVehicle() instanceof Minecart) {
@@ -84,7 +100,7 @@ public class MinecraftWrapper {
                     realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO,
                             abstractClientPlayerEntity_1.getVehicle().getYRot());
                 }
-                bodyOffset = FirstPersonModelCore.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
+                bodyOffset = Constants.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
             } else {
                 bodyOffset = 0.25f + (FirstPersonModelCore.config.xOffset / 100f);
             }
@@ -99,13 +115,7 @@ public class MinecraftWrapper {
             }
 
         }
-        Vec3 vec = new Vec3(x, y, z);
-        abstractClientPlayerEntity_1 = null;
-        offset = vec;
-    }
-
-    public Vec3 getOffset() {
-        return offset;
+        offset = new Vec3(x, y, z);
     }
 
     public boolean showVanillaHands() {

@@ -48,7 +48,7 @@ public abstract class PlayerRenderMixin
             playerEntityModel_1.hat.visible = false;
             // Moved to HumanoidModelMixin to be called during setupAnim
 //			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
-            if (FirstPersonModelCore.instance.getWrapper().showVanillaHands()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
                 playerEntityModel_1.leftArm.visible = false;
                 playerEntityModel_1.leftSleeve.visible = false;
                 playerEntityModel_1.rightArm.visible = false;
