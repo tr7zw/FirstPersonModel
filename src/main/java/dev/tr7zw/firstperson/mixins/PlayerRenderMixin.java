@@ -39,25 +39,25 @@ public abstract class PlayerRenderMixin
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V"))
     private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer,
-            AbstractClientPlayer abstractClientPlayerEntity, AbstractClientPlayer abstractClientPlayerEntity_1, float f,
+            AbstractClientPlayer player, AbstractClientPlayer abstractClientPlayerEntity_1, float f,
             float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
-        setModelProperties(abstractClientPlayerEntity);
+        setModelProperties(player);
         if (FirstPersonModelCore.isRenderingPlayer) {
-            PlayerModel<AbstractClientPlayer> playerEntityModel_1 = this.getModel();
-            playerEntityModel_1.head.visible = false;
-            playerEntityModel_1.hat.visible = false;
+            PlayerModel<AbstractClientPlayer> model = this.getModel();
+            model.head.visible = false;
+            model.hat.visible = false;
             // Moved to HumanoidModelMixin to be called during setupAnim
 //			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
             if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-                playerEntityModel_1.leftArm.visible = false;
-                playerEntityModel_1.leftSleeve.visible = false;
-                playerEntityModel_1.rightArm.visible = false;
-                playerEntityModel_1.rightSleeve.visible = false;
+                model.leftArm.visible = false;
+                model.leftSleeve.visible = false;
+                model.rightArm.visible = false;
+                model.rightSleeve.visible = false;
             } else {
 
             }
-            if (abstractClientPlayerEntity.isSwimming()) {
-                playerEntityModel_1.body.visible = false;
+            if (FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
+                model.body.visible = false;
             }
         }
     }

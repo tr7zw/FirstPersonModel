@@ -35,12 +35,9 @@ public class WorldRendererMixin {
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false))
             return;
         Vec3 vec3d = camera.getPosition();
-        double d = vec3d.x();
-        double e = vec3d.y();
-        double f = vec3d.z();
         MultiBufferSource.BufferSource immediate = this.renderBuffers.bufferSource();
         FirstPersonModelCore.isRenderingPlayer = true;
-        this.renderEntity(camera.getEntity(), d, e, f, tickDelta, matrices, (MultiBufferSource) immediate);
+        this.renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, (MultiBufferSource) immediate);
         FirstPersonModelCore.isRenderingPlayer = false;
     }
 

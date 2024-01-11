@@ -23,7 +23,7 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
             float g, float h, float j, float k, float l, CallbackInfo ci) {
         if (FirstPersonModelCore.isRenderingPlayer && livingEntity instanceof LocalPlayer player
-                && player.isSwimming()) {
+                && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ci.cancel();
         }
     }

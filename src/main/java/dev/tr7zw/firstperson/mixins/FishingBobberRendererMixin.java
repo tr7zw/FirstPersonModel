@@ -28,7 +28,6 @@ public class FishingBobberRendererMixin {
                 && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON;
     }
 
-
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
     private CameraType redirect(Options gameOptions) {
         return (doCorrect()) ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();

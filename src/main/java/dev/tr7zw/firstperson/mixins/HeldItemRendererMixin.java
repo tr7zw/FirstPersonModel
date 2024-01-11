@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 /**
- * Hides the normal first person hands and handels map rendering
+ * Hides the normal first person hands
  *
  */
 @Mixin(ItemInHandRenderer.class)

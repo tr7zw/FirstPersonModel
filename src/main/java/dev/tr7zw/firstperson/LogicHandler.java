@@ -10,9 +10,12 @@ import lombok.Getter;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.Item;
@@ -38,7 +41,7 @@ public class LogicHandler {
                     return true;
                 if (client.player.isFallFlying())
                     return true;
-                if (client.player.getSwimAmount(1f) != 0 && !client.player.isVisuallySwimming())
+                if (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))
                     return true;
                 if (client.player.isScoping())
                     return true;
@@ -78,7 +81,7 @@ public class LogicHandler {
         }
         if (!abstractClientPlayerEntity_1.isLocalPlayer() || client.getCameraEntity() == abstractClientPlayerEntity_1) {
             float bodyOffset;
-            if (client.player.isVisuallySwimming()) {
+            if (isCrawlingOrSwimming(client.player)) {
                 abstractClientPlayerEntity_1.yBodyRot = abstractClientPlayerEntity_1.yHeadRot;
                 if (abstractClientPlayerEntity_1.xRotO > 0) {
                     bodyOffset = Constants.swimUpBodyOffset;
@@ -106,7 +109,7 @@ public class LogicHandler {
             }
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-            if (client.player.isVisuallySwimming()) {
+            if (isCrawlingOrSwimming(client.player)) {
                 if (abstractClientPlayerEntity_1.xRotO > 0 && abstractClientPlayerEntity_1.isUnderWater()) {
                     y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.xRotO));
                 } else {
@@ -118,6 +121,26 @@ public class LogicHandler {
         offset = new Vec3(x, y, z);
     }
 
+    /**
+     * Util method to quicker find where swimming is referenced
+     * 
+     * @param player
+     * @return
+     */
+    public boolean isSwimming(Player player) {
+    	return player.isSwimming();
+    }
+    
+    /**
+     * Util method to quicker find where the crawling/swimming animation is referenced
+     * 
+     * @param player
+     * @return
+     */
+    public boolean isCrawlingOrSwimming(Player player) {
+    	return player.isVisuallySwimming();
+    }
+    
     public boolean showVanillaHands() {
         return FirstPersonModelMod.config.vanillaHands
                 || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
@@ -130,6 +153,21 @@ public class LogicHandler {
 
     public void clearAutoVanillaHandsList() {
         this.autoVanillaHandItems.clear();
+    }
+    
+    public void reloadAutoVanillaHandsSettings() {
+        clearAutoVanillaHandsList();
+        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
+        for (String itemId : FirstPersonModelCore.config.autoVanillaHands) {
+            try {
+                Item item = BuiltInRegistries.ITEM
+                        .get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                if (invalid != item)
+                    addAutoVanillaHandsItem(item);
+            } catch (Exception ex) {
+                FirstPersonModelCore.LOGGER.info("Unknown item to add to the auto vanilla hold list: " + itemId);
+            }
+        }
     }
 
 }
