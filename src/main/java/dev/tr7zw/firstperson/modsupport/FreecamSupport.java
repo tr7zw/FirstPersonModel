@@ -1,3 +1,4 @@
+//#if FABRIC
 package dev.tr7zw.firstperson.modsupport;
 
 import dev.tr7zw.firstperson.api.ActivationHandler;
@@ -16,3 +17,4 @@ public class FreecamSupport implements ActivationHandler {
     }
 
 }
+//#endif

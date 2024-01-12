@@ -1,3 +1,4 @@
+//#if FABRIC
 package dev.tr7zw.firstperson.fabric;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -15,3 +16,4 @@ public class FPModMenuProvider implements ModMenuApi {
     }
 
 }
+//#endif

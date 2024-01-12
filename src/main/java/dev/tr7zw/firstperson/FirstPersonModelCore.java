@@ -1,8 +1,11 @@
 package dev.tr7zw.firstperson;
 
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
+import dev.tr7zw.firstperson.config.ConfigScreenProvider;
+import dev.tr7zw.firstperson.modsupport.ModSupportLoader;
 import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
+import dev.tr7zw.util.ModLoaderUtil;
 import lombok.Getter;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -18,6 +21,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     public FirstPersonModelCore() {
         instance = this;
+        ModLoaderUtil.disableDisplayTest();
+        ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
     }
 
     public void sharedSetup() {
@@ -26,10 +31,11 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
         super.loadConfig();
 
-        registerKeybinds();
-    }
+        ModLoaderUtil.registerKeybind(keyBinding);
+        ModLoaderUtil.registerClientTickListener(this::onTick);
 
-    public abstract void registerKeybinds();
+        ModSupportLoader.loadSupport();
+    }
 
     private void lateInit() {
         try {

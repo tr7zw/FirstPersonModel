@@ -1,5 +1,7 @@
 {
     "versions": [
+        "1.20.4-forge",
+        "1.20.4-neoforge",
         "1.20.4-fabric"
     ]
 }

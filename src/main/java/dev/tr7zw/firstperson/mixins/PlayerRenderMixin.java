@@ -38,9 +38,9 @@ public abstract class PlayerRenderMixin
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V"))
-    private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer,
-            AbstractClientPlayer player, AbstractClientPlayer abstractClientPlayerEntity_1, float f,
-            float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer, AbstractClientPlayer player,
+            AbstractClientPlayer abstractClientPlayerEntity_1, float f, float g, PoseStack matrixStack,
+            MultiBufferSource vertexConsumerProvider, int i) {
         setModelProperties(player);
         if (FirstPersonModelCore.isRenderingPlayer) {
             PlayerModel<AbstractClientPlayer> model = this.getModel();

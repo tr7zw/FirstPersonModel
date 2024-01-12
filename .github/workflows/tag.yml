@@ -20,6 +20,44 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: 'versions/**/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+      - name: Publish-1.20.4-forge-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          curseforge-id: 333287
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          loaders: forge
+          name: ${{github.ref_name}}-1.20.4 - Forge
+          version-type: beta
+          files: 'versions/1.20.4-forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.4
+      - name: Publish-1.20.4-forge-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: H5XMjpHi
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: forge
+          name: ${{github.ref_name}}-1.20.4 - Forge
+          files: 'versions/1.20.4-forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.4
+      - name: Publish-1.20.4-neoforge-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          curseforge-id: 333287
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          loaders: neoforge
+          name: ${{github.ref_name}}-1.20.4 - NeoForge
+          version-type: beta
+          files: 'versions/1.20.4-neoforge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.4
+      - name: Publish-1.20.4-neoforge-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: H5XMjpHi
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: neoforge
+          name: ${{github.ref_name}}-1.20.4 - NeoForge
+          files: 'versions/1.20.4-neoforge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.4
       - name: Publish-1.20.4-fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.2
         with:

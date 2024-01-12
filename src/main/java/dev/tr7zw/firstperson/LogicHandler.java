@@ -128,19 +128,20 @@ public class LogicHandler {
      * @return
      */
     public boolean isSwimming(Player player) {
-    	return player.isSwimming();
+        return player.isSwimming();
     }
-    
+
     /**
-     * Util method to quicker find where the crawling/swimming animation is referenced
+     * Util method to quicker find where the crawling/swimming animation is
+     * referenced
      * 
      * @param player
      * @return
      */
     public boolean isCrawlingOrSwimming(Player player) {
-    	return player.isVisuallySwimming();
+        return player.isVisuallySwimming();
     }
-    
+
     public boolean showVanillaHands() {
         return FirstPersonModelMod.config.vanillaHands
                 || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
@@ -154,7 +155,7 @@ public class LogicHandler {
     public void clearAutoVanillaHandsList() {
         this.autoVanillaHandItems.clear();
     }
-    
+
     public void reloadAutoVanillaHandsSettings() {
         clearAutoVanillaHandsList();
         Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));

@@ -37,7 +37,8 @@ public class WorldRendererMixin {
         Vec3 vec3d = camera.getPosition();
         MultiBufferSource.BufferSource immediate = this.renderBuffers.bufferSource();
         FirstPersonModelCore.isRenderingPlayer = true;
-        this.renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, (MultiBufferSource) immediate);
+        this.renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices,
+                (MultiBufferSource) immediate);
         FirstPersonModelCore.isRenderingPlayer = false;
     }
 
