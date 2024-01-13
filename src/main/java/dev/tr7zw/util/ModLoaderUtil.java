@@ -21,7 +21,17 @@ import net.fabricmc.loader.api.FabricLoader;
 //$$ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
 //$$ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 //$$ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+//$$ import net.minecraftforge.eventbus.api.Event;
 //#elseif NEOFORGE
+//$$ import net.minecraft.client.Minecraft;
+//$$ import org.apache.commons.lang3.ArrayUtils;
+//$$ import java.util.function.Consumer;
+//$$ import net.neoforged.fml.ModLoadingContext;
+//$$ import net.neoforged.fml.IExtensionPoint;
+//$$ import net.neoforged.bus.api.Event;
+//$$ import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+//$$ import net.neoforged.neoforge.common.NeoForge;
+//$$ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 //#endif
 //spotless:on
 
@@ -106,5 +116,17 @@ public class ModLoaderUtil {
     	//#endif
     	//spotless:on
     }
+
+    // spotless:off
+	//#if FORGE
+  //$$     public static <T extends Event> void registerForgeEvent(Consumer<T> handler) {
+    	//$$     	MinecraftForge.EVENT_BUS.addListener(handler);
+  //$$     }
+	//#elseif NEOFORGE
+    //$$    public static <T extends Event> void registerForgeEvent(Consumer<T> handler) {
+    //$$    	NeoForge.EVENT_BUS.addListener(handler);
+    //$$    }
+	//#endif
+	//spotless:on
 
 }

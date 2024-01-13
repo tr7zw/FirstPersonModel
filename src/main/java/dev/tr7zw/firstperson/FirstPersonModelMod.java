@@ -12,9 +12,11 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ClientM
 	}
 //#else
 //$$ import dev.tr7zw.util.ModLoaderUtil;
+//$$ import dev.tr7zw.firstperson.forge.RenderHandEventListener;
 //$$ public class FirstPersonModelMod extends FirstPersonModelCore {
 //$$ public FirstPersonModelMod() {
 //$$ 	ModLoaderUtil.registerClientSetupListener(this::sharedSetup);
+//$$	ModLoaderUtil.registerForgeEvent(new RenderHandEventListener()::onRender);
 //$$ }
 //#endif
 //spotless:on
