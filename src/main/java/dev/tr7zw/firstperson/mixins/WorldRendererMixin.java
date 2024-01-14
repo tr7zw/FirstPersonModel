@@ -1,6 +1,5 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,6 +17,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+// spotless:off
+//#if MC >= 11903
+import org.joml.Matrix4f;
+//#else
+//$$ import com.mojang.math.Matrix4f;
+//#endif
+//spotless:on
 
 /**
  * Detects when the player is rendered and triggers the correct changes

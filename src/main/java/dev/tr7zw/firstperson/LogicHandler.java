@@ -6,11 +6,11 @@ import java.util.Set;
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.Constants;
+import dev.tr7zw.util.NMSHelper;
 import lombok.Getter;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -158,11 +158,10 @@ public class LogicHandler {
 
     public void reloadAutoVanillaHandsSettings() {
         clearAutoVanillaHandsList();
-        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
+        Item invalid = NMSHelper.getItem(new ResourceLocation("minecraft", "air"));
         for (String itemId : FirstPersonModelCore.config.autoVanillaHands) {
             try {
-                Item item = BuiltInRegistries.ITEM
-                        .get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     addAutoVanillaHandsItem(item);
             } catch (Exception ex) {
