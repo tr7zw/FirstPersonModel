@@ -32,6 +32,8 @@ import net.fabricmc.loader.api.FabricLoader;
 //$$ import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 //$$ import net.neoforged.neoforge.common.NeoForge;
 //$$ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+//$$ import net.neoforged.neoforge.event.TickEvent.ClientTickEvent;
+//$$ import net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory;
 //#endif
 //spotless:on
 
@@ -42,9 +44,8 @@ public class ModLoaderUtil {
         // spotless:off
     	//#if FABRIC
     	KeyBindingHelper.registerKeyBinding(keyBinding);
-    	//#elseif FORGE
+    	//#elseif FORGE || NEOFORGE
     	//$$ Minecraft.getInstance().options.keyMappings = ArrayUtils.add(Minecraft.getInstance().options.keyMappings, keyBinding);
-    	//#elseif NEOFORGE
     	//#endif
     	//spotless:on
 
@@ -66,6 +67,14 @@ public class ModLoaderUtil {
       //$$ 	
       //$$ });
     	//#elseif NEOFORGE
+      //$$  NeoForge.EVENT_BUS.addListener(new Consumer<ClientTickEvent>() {
+      //$$     
+      //$$    	@Override
+      //$$    	public void accept(ClientTickEvent t) {
+      //$$    		runnable.run();
+      //$$     	}
+      //$$     	
+      //$$    });
     	//#endif
     	//spotless:on
     }
@@ -82,7 +91,7 @@ public class ModLoaderUtil {
 
     public static void disableDisplayTest() {
         // spotless:off
-    	//#if FORGE
+    	//#if FORGE || NEOFORGE
         //$$ ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         //$$        () -> new IExtensionPoint.DisplayTest(
         //$$                () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
@@ -93,7 +102,7 @@ public class ModLoaderUtil {
 
     public static void registerConfigScreen(Function<Screen, Screen> createScreen) {
         // spotless:off
-    	//#if FORGE
+    	//#if FORGE || NEOFORGE
         //$$ ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
         //$$     return createScreen.apply(screen);
         //$$ }));
@@ -103,7 +112,7 @@ public class ModLoaderUtil {
 
     public static void registerClientSetupListener(Runnable runnable) {
         // spotless:off
-    	//#if FORGE
+    	//#if FORGE || NEOFORGE
       //$$ FMLJavaModLoadingContext.get().getModEventBus().addListener(new Consumer<FMLClientSetupEvent>() {
       //$$ 
       //$$ 	@Override
@@ -112,7 +121,6 @@ public class ModLoaderUtil {
       //$$ 	}
       //$$ 	
       //$$ });
-    	//#elseif NEOFORGE
     	//#endif
     	//spotless:on
     }
