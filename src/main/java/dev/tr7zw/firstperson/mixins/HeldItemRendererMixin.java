@@ -37,7 +37,13 @@ public abstract class HeldItemRendererMixin {
             return;
         }
         if (!FirstPersonModelCore.config.doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP
+        //spotless:off
+            //#if MC >= 11700
                 || player.isScoping())
+        	//#else
+        	//$$|| false)
+            //#endif
+            //spotless:on
             return;
         boolean bl = hand == InteractionHand.MAIN_HAND;
         HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();

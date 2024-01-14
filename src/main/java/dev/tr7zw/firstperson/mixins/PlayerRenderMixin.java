@@ -14,9 +14,15 @@ import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+//spotless:off
+//#if MC >= 11700
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+//#else
+//$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+//#endif
+//spotless:on
 
 /**
  * Hides body parts and layers where needed
@@ -26,6 +32,8 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 public abstract class PlayerRenderMixin
         extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
+    // spotless:off
+    //#if MC >= 11700
     /**
      * Just needed because of the extends
      * 
@@ -36,6 +44,12 @@ public abstract class PlayerRenderMixin
     public PlayerRenderMixin(Context ctx, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
+    //#else
+  //$$ public PlayerRenderMixin(EntityRenderDispatcher entityRenderDispatcher) {
+  //$$	super(null, null, 0);
+  //$$ }
+	//#endif
+	//spotless:on
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V"))
     private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer, AbstractClientPlayer player,

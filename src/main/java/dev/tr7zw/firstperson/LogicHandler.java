@@ -43,8 +43,12 @@ public class LogicHandler {
                     return true;
                 if (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))
                     return true;
+                // spotless:off
+              //#if MC >= 11700
                 if (client.player.isScoping())
                     return true;
+              //#endif
+              //spotless:on
                 return false;
             }
         });
@@ -101,7 +105,13 @@ public class LogicHandler {
                             ((LivingEntity) abstractClientPlayerEntity_1.getVehicle()).yBodyRot);
                 } else {
                     realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO,
+                            // spotless:off
+                            //#if MC >= 11700
                             abstractClientPlayerEntity_1.getVehicle().getYRot());
+		                    //#else
+		                    //$$ abstractClientPlayerEntity_1.getVehicle().yRot);
+		                    //#endif
+		                    //spotless:on
                 }
                 bodyOffset = Constants.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
             } else {

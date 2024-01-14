@@ -58,8 +58,14 @@ public abstract class RenderDispatcherMixin {
     }
 
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
+    //spotless:off
+    //#if MC >= 11700
     private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
             CallbackInfo ci) {
+	//#else
+	//$$  private void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
+	//#endif
+	//spotless:on
         if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
             ci.cancel();
         }

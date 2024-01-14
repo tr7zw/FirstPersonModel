@@ -71,7 +71,7 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
 
             Vector4f offset = new Vector4f(0, 0, 0, 1);
             offset.mul(matrix);
-          //#else
+          //#elseif MC > 11700
           //$$    Matrix4f relativeTranslation = new Matrix4f();
           //$$    relativeTranslation.setIdentity();
           //$$   relativeTranslation.multiply(-1f); // 0.935 scaling is not even needed :D
@@ -105,6 +105,40 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
           //$$
           //$$            Vector4f offset = new Vector4f(0, 0, 0, 1);
            //$$           offset.transform(matrix);
+            //#else
+          //$$  Matrix4f relativeTranslation = new Matrix4f();
+          //$$  relativeTranslation.setIdentity();
+          //$$ relativeTranslation.multiply(-1f); // 0.935 scaling is not even needed :D
+          //$$  final float bodyOffset = 0.8f; // Distance from the base origin to the head pivot
+          //$$   relativeTranslation.multiply(Matrix4f.createTranslateMatrix(0, -bodyOffset, 0)); // Shift matrix down
+          //$$
+          //$$ relativeTranslation.multiply(Matrix4f.createTranslateMatrix(pos.getX(), pos.getY(), pos.getZ())); // Apply torso
+          //$$                                                                                    // transformation
+          //$$
+          //$$  relativeTranslation.multiply(NMSHelper.ZP.rotation(rot.getZ()));
+          //$$  relativeTranslation.multiply(NMSHelper.YP.rotation(rot.getY()));
+          //$$   relativeTranslation.multiply(NMSHelper.XP.rotation(rot.getX()));
+          //$$   // relativeTranslation.multiply(Quaternion.fromXYZ(rot.getX(), rot.getY(),
+          //$$   // rot.getZ()));
+          //$$
+          //$$   relativeTranslation.multiply(Matrix4f.createTranslateMatrix(-headPos.getX(), -headPos.getY(), headPos.getZ()));
+          //$$
+          //$$  relativeTranslation.multiply(Matrix4f.createTranslateMatrix(0, bodyOffset, 0)); // Roll back the first [0,1,0] translation.
+          //$$
+          //$$    // calculate the actual rotations and
+          //$$    float realYaw = Mth.rotLerp(minecraft.getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
+          //$$
+          //$$    Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
+          //$$    matrix.setIdentity();
+          //$$    matrix.multiply(Matrix4f.createScaleMatrix(-1, 1, 1)); // What is going on with this?!
+          //$$
+          //$$     matrix.multiply(new Matrix4f(NMSHelper.YP.rotationDegrees(realYaw)));
+          //$$
+          //$$      matrix.multiply(Matrix4f.createScaleMatrix(1, 1, -1));
+          //$$        matrix.multiply(relativeTranslation);
+          //$$
+          //$$          Vector4f offset = new Vector4f(0, 0, 0, 1);
+          //$$          offset.transform(matrix);
           //#endif
           //spotless:on
 
