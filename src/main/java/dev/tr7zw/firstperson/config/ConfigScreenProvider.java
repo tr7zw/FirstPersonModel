@@ -6,8 +6,14 @@ import java.util.List;
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.FirstPersonModelMod;
 import dev.tr7zw.firstperson.versionless.config.FirstPersonSettings;
-import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
+//spotless:off 
+//#if MC >= 11900
+import net.minecraft.client.OptionInstance;
+//#else
+//$$ import net.minecraft.client.Option;
+//#endif
+//spotless:on
 
 public class ConfigScreenProvider {
 
@@ -38,7 +44,13 @@ public class ConfigScreenProvider {
                         () -> FirstPersonModelMod.config.doubleHands,
                         (b) -> FirstPersonModelMod.config.doubleHands = b));
 
+                // spotless:off
+                //#if MC >= 11900
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
+                //#else
+                //$$getOptions().addSmall(options.toArray(new Option[0]));
+                //#endif
+                // spotless:on
 
             }
 

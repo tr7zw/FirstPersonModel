@@ -17,11 +17,23 @@ import net.fabricmc.loader.api.FabricLoader;
 //$$ import net.minecraftforge.event.TickEvent.ClientTickEvent;
 //$$ import java.util.function.Consumer;
 //$$ import net.minecraftforge.fml.ModLoadingContext;
-//$$ import net.minecraftforge.fml.IExtensionPoint;
-//$$ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
 //$$ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 //$$ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 //$$ import net.minecraftforge.eventbus.api.Event;
+//#if MC <= 11605
+//$$ import net.minecraftforge.fml.ExtensionPoint;
+//$$ import net.minecraftforge.fml.network.FMLNetworkConstants;
+//$$ import org.apache.commons.lang3.tuple.Pair;
+//#elseif MC <= 11701
+//$$ import net.minecraftforge.fml.IExtensionPoint;
+//$$ import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
+//#elseif MC <= 11802
+//$$ import net.minecraftforge.fml.IExtensionPoint;
+//$$ import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
+//#else
+//$$ import net.minecraftforge.fml.IExtensionPoint;
+//$$ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
+//#endif
 //#elseif NEOFORGE
 //$$ import net.minecraft.client.Minecraft;
 //$$ import org.apache.commons.lang3.ArrayUtils;
@@ -92,10 +104,15 @@ public class ModLoaderUtil {
     public static void disableDisplayTest() {
         // spotless:off
     	//#if FORGE || NEOFORGE
-        //$$ ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        //$$        () -> new IExtensionPoint.DisplayTest(
-        //$$                () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
-        //$$                (remote, isServer) -> true));
+    	//#if MC <= 11605
+    	//$$ ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+    	//$$ () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
+    	//#else
+    	//$$        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+    	//$$                () -> new IExtensionPoint.DisplayTest(
+    	//$$                       () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
+    	//$$                        (remote, isServer) -> true));
+    	//#endif
     	//#endif
     	//spotless:on
     }
@@ -103,9 +120,20 @@ public class ModLoaderUtil {
     public static void registerConfigScreen(Function<Screen, Screen> createScreen) {
         // spotless:off
     	//#if FORGE || NEOFORGE
-        //$$ ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
-        //$$     return createScreen.apply(screen);
-        //$$ }));
+    	//#if MC <= 11605
+    	//$$         ModLoadingContext.get().registerExtensionPoint(
+    	//$$ ExtensionPoint.CONFIGGUIFACTORY,
+    	//$$ () -> (mc, screen) -> createScreen.apply(screen));
+    	//#elseif MC <= 11802
+    	//$$ ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, ()
+    	//$$ -> new ConfigGuiFactory((mc, screen) -> {
+    	//$$            return createScreen.apply(screen);
+    	//$$        }));
+    	//#else
+    	//$$ ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
+    	//$$            return createScreen.apply(screen);
+    	//$$        }));
+    	//#endif 
     	//#endif
     	//spotless:on
     }
