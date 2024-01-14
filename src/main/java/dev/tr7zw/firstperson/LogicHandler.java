@@ -105,13 +105,7 @@ public class LogicHandler {
                             ((LivingEntity) abstractClientPlayerEntity_1.getVehicle()).yBodyRot);
                 } else {
                     realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO,
-                            // spotless:off
-                            //#if MC >= 11700
-                            abstractClientPlayerEntity_1.getVehicle().getYRot());
-		                    //#else
-		                    //$$ abstractClientPlayerEntity_1.getVehicle().yRot);
-		                    //#endif
-		                    //spotless:on
+                            NMSHelper.getYRot(abstractClientPlayerEntity_1.getVehicle()));
                 }
                 bodyOffset = Constants.inVehicleBodyOffset + (FirstPersonModelCore.config.sitXOffset / 100f);
             } else {
