@@ -23,6 +23,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         instance = this;
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
+        ModLoaderUtil.registerClientSetupListener(this::sharedSetup);
     }
 
     public void sharedSetup() {
