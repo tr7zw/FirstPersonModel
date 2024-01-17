@@ -172,6 +172,7 @@ public class LogicHandler {
                 FirstPersonModelCore.LOGGER.info("Unknown item to add to the auto vanilla hold list: " + itemId);
             }
         }
+        FirstPersonModelCore.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
     }
 
 }
