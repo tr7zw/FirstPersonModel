@@ -18,7 +18,8 @@
         "ElytraLayerMixin",
         "PlayerRendererMixin",
         "HumanoidModelMixin",
-        "CustomHeadLayerMixin"
+        "CustomHeadLayerMixin",
+        "PlayerModelMixin"
     ],
     "injectors": {
         "defaultRequire": 1

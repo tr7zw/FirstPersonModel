@@ -58,7 +58,7 @@ public abstract class RenderDispatcherMixin {
     }
 
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
-    //spotless:off
+    // spotless:off
     //#if MC >= 11700
     private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
             CallbackInfo ci) {

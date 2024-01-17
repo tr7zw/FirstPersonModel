@@ -37,7 +37,7 @@ public abstract class HeldItemRendererMixin {
             return;
         }
         if (!FirstPersonModelCore.config.doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP
-        //spotless:off
+        // spotless:off
             //#if MC >= 11700
                 || player.isScoping())
         	//#else

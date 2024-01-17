@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.access.PlayerModelAccess;
 import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -72,6 +73,7 @@ public abstract class PlayerRenderMixin
             }
             if (FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
                 model.body.visible = false;
+                ((PlayerModelAccess) model).getCloak().visible = false;
             }
         }
     }
@@ -80,11 +82,14 @@ public abstract class PlayerRenderMixin
      * Undo the forced head hiding flag set during HumanoidModelMixin
      */
     @Inject(method = "render", at = @At(value = "RETURN"))
-    public void render(AbstractClientPlayer abstractClientPlayerEntity, float f, float g, PoseStack matrixStack,
+    public void render(AbstractClientPlayer player, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
         ((ModelPartBase) (Object) this.getModel().head).showAgain();
         if (FirstPersonModelCore.isRenderingPlayer) {
             FirstPersonModelCore.isRenderingPlayer = false;
+            if (FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
+                ((PlayerModelAccess) model).getCloak().visible = true;
+            }
         }
     }
 
