@@ -59,22 +59,9 @@ public abstract class PlayerRenderMixin
         setModelProperties(player);
         if (FirstPersonModelCore.isRenderingPlayer) {
             PlayerModel<AbstractClientPlayer> model = this.getModel();
-            model.head.visible = false;
-            model.hat.visible = false;
             // Moved to HumanoidModelMixin to be called during setupAnim
 //			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
-            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-                model.leftArm.visible = false;
-                model.leftSleeve.visible = false;
-                model.rightArm.visible = false;
-                model.rightSleeve.visible = false;
-            } else {
-
-            }
-            if (FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
-                model.body.visible = false;
-                ((PlayerModelAccess) model).getCloak().visible = false;
-            }
+            // Swimming hiding also moved to HumanoidModelMixin
         }
     }
 
@@ -85,11 +72,15 @@ public abstract class PlayerRenderMixin
     public void render(AbstractClientPlayer player, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
         ((ModelPartBase) (Object) this.getModel().head).showAgain();
+        ((ModelPartBase) (Object) this.getModel().hat).showAgain();
+        ((ModelPartBase) (Object) this.getModel().leftArm).showAgain();
+        ((ModelPartBase) (Object) this.getModel().rightArm).showAgain();
+        ((ModelPartBase) (Object) this.getModel().leftSleeve).showAgain();
+        ((ModelPartBase) (Object) this.getModel().rightSleeve).showAgain();
+        ((ModelPartBase) (Object) this.getModel().body).showAgain();
+        ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
         if (FirstPersonModelCore.isRenderingPlayer) {
             FirstPersonModelCore.isRenderingPlayer = false;
-            if (FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
-                ((PlayerModelAccess) model).getCloak().visible = true;
-            }
         }
     }
 
