@@ -52,19 +52,6 @@ public abstract class PlayerRenderMixin
 	//#endif
 	//spotless:on
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;setModelProperties(Lnet/minecraft/client/player/AbstractClientPlayer;)V"))
-    private void setModelPoseRedirect(PlayerRenderer playerEntityRenderer, AbstractClientPlayer player,
-            AbstractClientPlayer abstractClientPlayerEntity_1, float f, float g, PoseStack matrixStack,
-            MultiBufferSource vertexConsumerProvider, int i) {
-        setModelProperties(player);
-        if (FirstPersonModelCore.isRenderingPlayer) {
-            PlayerModel<AbstractClientPlayer> model = this.getModel();
-            // Moved to HumanoidModelMixin to be called during setupAnim
-//			((ModelPartBase)(Object)playerEntityModel_1.head).setHidden();
-            // Swimming hiding also moved to HumanoidModelMixin
-        }
-    }
-
     /**
      * Undo the forced head hiding flag set during HumanoidModelMixin
      */
