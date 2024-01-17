@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dev.tr7zw.firstperson.versionless.config.ConfigUpgrader;
 import dev.tr7zw.firstperson.versionless.config.FirstPersonSettings;
 
 public class FirstPersonBase {
@@ -34,6 +35,7 @@ public class FirstPersonBase {
         if (config == null) {
             config = new FirstPersonSettings();
         }
+        ConfigUpgrader.upgradeConfig(config);
         writeSettings();
         enabled = config.enabledByDefault;
     }
