@@ -14,7 +14,7 @@
 //$$ 
 //$$ 	@SubscribeEvent
 //$$ 	public void onRender(RenderHandEvent e) {
-//$$ 		if(FirstPersonModelCore.enabled && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
+//$$ 		if(FirstPersonModelCore.instance.isEnabled() && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
 //$$ 			e.setCanceled(true);
 //$$ 		}
 //$$ 	}

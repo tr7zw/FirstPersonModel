@@ -44,11 +44,11 @@ public class LogicHandler {
                 if (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))
                     return true;
                 // spotless:off
-				// #if MC >= 11700
+				//#if MC >= 11700
 				if (client.player.isScoping())
 					return true;
-				// #endif
-				// spotless:on
+				//#endif
+				//spotless:on
                 return false;
             }
         });
