@@ -36,7 +36,7 @@ public class FirstPersonBase {
                         new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
                         FirstPersonSettings.class);
             } catch (Exception ex) {
-                ex.printStackTrace();
+            	LOGGER.warn("Unable to load the config, creating a new one.", ex);
             }
         }
         if (config == null) {
@@ -52,7 +52,7 @@ public class FirstPersonBase {
         try {
             Files.write(settingsFile.toPath(), json.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            e.printStackTrace();
+        	LOGGER.warn("Error while saving the config!", e);
         }
     }
 
