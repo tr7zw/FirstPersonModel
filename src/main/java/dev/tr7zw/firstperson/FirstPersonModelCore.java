@@ -14,7 +14,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     @Getter
     private LogicHandler logicHandler;
-    public static FirstPersonModelCore instance;
+    public static FirstPersonModelCore instance = new Fir;
     private boolean isHeld = false;
     private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private boolean lateInit = true;

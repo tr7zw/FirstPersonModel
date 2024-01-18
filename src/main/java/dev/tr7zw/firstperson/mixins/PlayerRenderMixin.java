@@ -1,7 +1,6 @@
 package dev.tr7zw.firstperson.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -41,7 +40,7 @@ public abstract class PlayerRenderMixin
      * @param model
      * @param shadowRadius
      */
-    public PlayerRenderMixin(Context ctx, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
+    protected PlayerRenderMixin(Context ctx, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
     //#else
@@ -67,8 +66,5 @@ public abstract class PlayerRenderMixin
         ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
         FirstPersonModelCore.instance.setRenderingPlayer(false);
     }
-
-    @Shadow
-    abstract void setModelProperties(AbstractClientPlayer abstractClientPlayerEntity_1);
 
 }

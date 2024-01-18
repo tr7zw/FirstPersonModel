@@ -55,10 +55,10 @@ public class FirstPersonBase {
             e.printStackTrace();
         }
     }
-    
-	public void resetSettings() {
-		config = new FirstPersonSettings();
-	}
+
+    public void resetSettings() {
+        config = new FirstPersonSettings();
+    }
 
     /**
      * Checks if a class exists or not
@@ -72,6 +72,7 @@ public class FirstPersonBase {
                 return true;
             }
         } catch (ClassNotFoundException e) {
+            // ignored
         }
         return false;
     }

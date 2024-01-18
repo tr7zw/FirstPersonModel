@@ -22,11 +22,11 @@ import net.minecraft.world.phys.Vec3;
 @Mixin(PlayerRenderer.class)
 public class PlayerRendererMixin {
 
-    private static Minecraft fpm_mc = Minecraft.getInstance();
+    private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
     public void getRenderOffset(AbstractClientPlayer entity, float f, CallbackInfoReturnable<Vec3> ci) {
-        if (entity == fpm_mc.cameraEntity && FirstPersonModelCore.instance.isRenderingPlayer()) {
+        if (entity == fpmMcInstance.cameraEntity && FirstPersonModelCore.instance.isRenderingPlayer()) {
             FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, Vec3.ZERO);
 
             Vec3 offset = ci.getReturnValue().add(FirstPersonModelCore.instance.getLogicHandler().getOffset());

@@ -11,6 +11,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,14 +27,15 @@ import net.minecraft.world.phys.Vec3;
  *
  */
 @Mixin(EntityRenderDispatcher.class)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class RenderDispatcherMixin {
 
-    private static Minecraft fpm_mc = Minecraft.getInstance();
+    private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
-        if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
+        if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
             return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().x;
         }
         return Mth.lerp(delta, old, cur);
@@ -41,7 +44,7 @@ public abstract class RenderDispatcherMixin {
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 2))
     private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
-        if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
+        if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
             return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().z;
         }
         return Mth.lerp(delta, old, cur);
@@ -50,7 +53,7 @@ public abstract class RenderDispatcherMixin {
     @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = Shift.BEFORE))
     private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity,
             float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
-        if (entity != fpm_mc.cameraEntity || fpm_mc.options.getCameraType() != CameraType.FIRST_PERSON) {
+        if (entity != fpmMcInstance.cameraEntity || fpmMcInstance.options.getCameraType() != CameraType.FIRST_PERSON) {
             return;
         }
         Vec3 offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
@@ -66,7 +69,7 @@ public abstract class RenderDispatcherMixin {
 	//$$  private void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
 	//#endif
 	//spotless:on
-        if (entity == fpm_mc.cameraEntity && fpm_mc.options.getCameraType() == CameraType.FIRST_PERSON) {
+        if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
             ci.cancel();
         }
     }

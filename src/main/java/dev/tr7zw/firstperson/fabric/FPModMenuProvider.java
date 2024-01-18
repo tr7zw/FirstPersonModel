@@ -10,9 +10,7 @@ public class FPModMenuProvider implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> {
-            return ConfigScreenProvider.createConfigScreen(parent);
-        };
+        return ConfigScreenProvider::createConfigScreen;
     }
 
 }

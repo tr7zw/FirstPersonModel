@@ -36,8 +36,9 @@ public abstract class HeldItemRendererMixin {
             info.cancel();
             return;
         }
-        if (!FirstPersonModelCore.instance.getConfig().doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP
-        // spotless:off
+        if (!FirstPersonModelCore.instance.getConfig().doubleHands
+                || player.getMainHandItem().getItem() == Items.FILLED_MAP
+                // spotless:off
             //#if MC >= 11700
                 || player.isScoping())
         	//#else
@@ -48,10 +49,8 @@ public abstract class HeldItemRendererMixin {
         boolean bl = hand == InteractionHand.MAIN_HAND;
         HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
         matrices.pushPose();
-        if (item.isEmpty()) {
-            if (!bl && !player.isInvisible()) {
-                this.renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
-            }
+        if (item.isEmpty() && !bl && !player.isInvisible()) {
+            this.renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
         }
         matrices.popPose();
     }
@@ -61,7 +60,8 @@ public abstract class HeldItemRendererMixin {
             float equipProgress, float swingProgress, HumanoidArm arm);
 
     public boolean skip() {
-        return !FirstPersonModelCore.instance.isEnabled() || FirstPersonModelCore.instance.getLogicHandler().showVanillaHands();
+        return !FirstPersonModelCore.instance.isEnabled()
+                || FirstPersonModelCore.instance.getLogicHandler().showVanillaHands();
     }
 
 }

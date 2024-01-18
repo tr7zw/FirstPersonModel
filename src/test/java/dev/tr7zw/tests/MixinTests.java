@@ -33,13 +33,13 @@ public class MixinTests {
     }
 
     @Test
-    public void testInjectedInterfaces() {
+    void testInjectedInterfaces() {
         Objenesis objenesis = new ObjenesisStd();
         assertTrue((Object) objenesis.newInstance(ModelPart.class) instanceof ModelPartBase);
     }
 
     @Test
-    public void testMixins() {
+    void testMixins() {
         Objenesis objenesis = new ObjenesisStd();
         objenesis.newInstance(HumanoidArmorLayer.class);
         objenesis.newInstance(ElytraLayer.class);

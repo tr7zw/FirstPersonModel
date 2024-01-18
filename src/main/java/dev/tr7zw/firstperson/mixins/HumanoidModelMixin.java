@@ -42,14 +42,14 @@ public class HumanoidModelMixin<T extends LivingEntity> {
                 ((ModelPartBase) (Object) rightArm).setHidden();
             }
         }
-        if (FirstPersonModelCore.instance.isRenderingPlayer() && (Object) this instanceof PlayerModel playerModel) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && (Object) this instanceof PlayerModel<?> playerModel) {
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
             if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
                 ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                 ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
             }
         }
-        if (livingEntity instanceof AbstractClientPlayer player && (Object) this instanceof PlayerModel playerModel
+        if (livingEntity instanceof AbstractClientPlayer player && (Object) this instanceof PlayerModel<?> playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
             ((ModelPartBase) (Object) ((PlayerModelAccess) this).getCloak()).setHidden();

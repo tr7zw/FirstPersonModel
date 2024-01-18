@@ -23,16 +23,16 @@ import net.minecraft.world.entity.LivingEntity;
 public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>>
         extends RenderLayer<T, M> {
 
-    private static Minecraft fpm_mc = Minecraft.getInstance();
+    private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
-    public ArmorFeatureRendererMixin(RenderLayerParent<T, M> context) {
+    protected ArmorFeatureRendererMixin(RenderLayerParent<T, M> context) {
         super(context);
     }
 
     @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
     private void renderArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T livingEntity,
             EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
-        if (livingEntity != fpm_mc.cameraEntity) {
+        if (livingEntity != fpmMcInstance.cameraEntity) {
             return;
         }
         if (equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.instance.isRenderingPlayer()) {

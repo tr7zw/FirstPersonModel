@@ -9,6 +9,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerHeadModel;
@@ -18,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 @Mixin(RenderLayer.class)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class FeatureRendererMixin {
     @Inject(method = "renderColoredCutoutModel", at = @At("HEAD"), cancellable = true)
     private static <T extends LivingEntity> void removeHead(EntityModel<T> model, ResourceLocation texture,

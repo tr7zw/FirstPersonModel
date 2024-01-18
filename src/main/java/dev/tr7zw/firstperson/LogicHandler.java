@@ -6,6 +6,7 @@ import java.util.Set;
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.Constants;
+import dev.tr7zw.firstperson.versionless.FirstPersonBase;
 import dev.tr7zw.util.NMSHelper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -43,11 +44,11 @@ public class LogicHandler {
                 if (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))
                     return true;
                 // spotless:off
-              //#if MC >= 11700
-                if (client.player.isScoping())
-                    return true;
-              //#endif
-              //spotless:on
+				// #if MC >= 11700
+				if (client.player.isScoping())
+					return true;
+				// #endif
+				// spotless:on
                 return false;
             }
         });
@@ -64,47 +65,44 @@ public class LogicHandler {
         return true;
     }
 
-    public void updatePositionOffset(Entity player, Vec3 defValue) {
+    public void updatePositionOffset(Entity entity, Vec3 defValue) {
         // handle sleeping
-        if (player == client.getCameraEntity() && client.player.isSleeping()) {
+        if (entity == client.getCameraEntity() && client.player.isSleeping()) {
             offset = defValue;
             return;
         }
-        double x, y, z = x = y = z = 0;
-        AbstractClientPlayer abstractClientPlayerEntity_1;
+        double x = 0;
+        double y = 0;
+        double z = 0;
+        AbstractClientPlayer player;
         double realYaw;
-        if (player == client.player && client.options.getCameraType() == CameraType.FIRST_PERSON
+        if (entity == client.player && client.options.getCameraType() == CameraType.FIRST_PERSON
                 && fpm.isRenderingPlayer()) {
-            abstractClientPlayerEntity_1 = (AbstractClientPlayer) player;
-            realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.yBodyRotO,
-                    abstractClientPlayerEntity_1.yBodyRot);
+            player = (AbstractClientPlayer) entity;
+            realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
         } else {
             offset = defValue;
             return;
         }
-        if (!abstractClientPlayerEntity_1.isLocalPlayer() || client.getCameraEntity() == abstractClientPlayerEntity_1) {
+        if (!player.isLocalPlayer() || client.getCameraEntity() == player) {
             float bodyOffset;
             if (isCrawlingOrSwimming(client.player)) {
-                abstractClientPlayerEntity_1.yBodyRot = abstractClientPlayerEntity_1.yHeadRot;
-                if (abstractClientPlayerEntity_1.xRotO > 0) {
+                player.yBodyRot = player.yHeadRot;
+                if (player.xRotO > 0) {
                     bodyOffset = Constants.SWIM_UP_BODY_OFFSET;
                 } else {
                     bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
                 }
-            } else if (abstractClientPlayerEntity_1.isCrouching()) {
+            } else if (player.isCrouching()) {
                 bodyOffset = Constants.SNEAK_BODY_OFFSET + (fpm.getConfig().sneakXOffset / 100f);
-            } else if (abstractClientPlayerEntity_1.isPassenger()) {
-                if (abstractClientPlayerEntity_1.getVehicle() instanceof Boat
-                        || abstractClientPlayerEntity_1.getVehicle() instanceof Minecart) {
-                    realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.yBodyRotO,
-                            abstractClientPlayerEntity_1.yBodyRot);
-                } else if (abstractClientPlayerEntity_1.getVehicle() instanceof LivingEntity) {
-                    realYaw = Mth.rotLerp(client.getFrameTime(),
-                            ((LivingEntity) abstractClientPlayerEntity_1.getVehicle()).yBodyRotO,
-                            ((LivingEntity) abstractClientPlayerEntity_1.getVehicle()).yBodyRot);
+            } else if (player.isPassenger()) {
+                if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
+                    realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
+                } else if (player.getVehicle() instanceof LivingEntity living) {
+                    realYaw = Mth.rotLerp(client.getFrameTime(), living.yBodyRotO, living.yBodyRot);
                 } else {
-                    realYaw = Mth.rotLerp(client.getFrameTime(), abstractClientPlayerEntity_1.getVehicle().yRotO,
-                            NMSHelper.getYRot(abstractClientPlayerEntity_1.getVehicle()));
+                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
+                            NMSHelper.getYRot(player.getVehicle()));
                 }
                 bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + (fpm.getConfig().sitXOffset / 100f);
             } else {
@@ -113,10 +111,10 @@ public class LogicHandler {
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
             if (isCrawlingOrSwimming(client.player)) {
-                if (abstractClientPlayerEntity_1.xRotO > 0 && abstractClientPlayerEntity_1.isUnderWater()) {
-                    y += 0.6f * Math.sin(Math.toRadians(abstractClientPlayerEntity_1.xRotO));
+                if (player.xRotO > 0 && player.isUnderWater()) {
+                    y += 0.6f * Math.sin(Math.toRadians(player.xRotO));
                 } else {
-                    y += 0.01f * -Math.sin(Math.toRadians(abstractClientPlayerEntity_1.xRotO));
+                    y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
                 }
             }
 
@@ -146,8 +144,7 @@ public class LogicHandler {
     }
 
     public boolean showVanillaHands() {
-        return fpm.getConfig().vanillaHands
-                || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
+        return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
                 || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem());
     }
 
@@ -168,10 +165,10 @@ public class LogicHandler {
                 if (invalid != item)
                     addAutoVanillaHandsItem(item);
             } catch (Exception ex) {
-                FirstPersonModelCore.LOGGER.info("Unknown item to add to the auto vanilla hold list: " + itemId);
+                FirstPersonBase.LOGGER.info("Unknown item to add to the auto vanilla hold list: {}", itemId);
             }
         }
-        FirstPersonModelCore.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
+        FirstPersonBase.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
     }
 
 }

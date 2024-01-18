@@ -42,7 +42,6 @@ public class HeldItemFeatureRendererMixin {
         if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.instance.isRenderingPlayer()
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
             ci.cancel();
-            return;
         }
     }
 
