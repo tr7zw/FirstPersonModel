@@ -1,4 +1,4 @@
-![](http://tr7zw.de/u/1564671640.jpg)
+![](https://trsha.re/1679269573.png)
 
 [![Discord](https://tr7zw.dev/curse/Discord-long.png)](https://discord.gg/55zrqwHA9C)
 
@@ -12,7 +12,6 @@ Requires ModMenu(used to change settings).
 
 ### Dependencies
 
-- [TRansliterationLib (Forge&Fabric)](https://www.curseforge.com/minecraft/mc-mods/transliterationlib)
 - [Not Enough Animations (Forge&Fabric)](https://www.curseforge.com/minecraft/mc-mods/not-enough-animations)
 - [Fabric API (Fabric)](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 - [ModMenu (Fabric)](https://www.curseforge.com/minecraft/mc-mods/modmenu)
@@ -22,6 +21,7 @@ Requires ModMenu(used to change settings).
 - Epic Fight mod
 - Optifine emissive textures
 - Sitting on modded chairs/mounts doesn't look right
+- Any mods replacing the player model might not work correctly
 
 ### Help, where did feature X go?
 
@@ -32,4 +32,4 @@ Since this mod became too large, I started cutting it into smaller, more managea
 - [Not Enough Animations](https://www.curseforge.com/minecraft/mc-mods/not-enough-animations) brings first-person animations to the third-person, like eating, drinking and holding maps.
 - [Wavey Capes](https://www.curseforge.com/minecraft/mc-mods/waveycapes) turns the slab of a cape into something more dynamic and pleasant to look at.
 
-Support via [![Discord](https://tr7zw.dev/curse/Discord.png)](https://discord.gg/55zrqwHA9C) or [Github](https://github.com/tr7zw/FirstPersonModel-Fabric)! The comments are not there to report bugs/crashes/ask questions.
+Support via [![Discord](https://tr7zw.dev/curse/Discord.png)](https://discord.gg/55zrqwHA9C) or [Github](https://github.com/tr7zw/FirstPersonModel-Fabric)!
