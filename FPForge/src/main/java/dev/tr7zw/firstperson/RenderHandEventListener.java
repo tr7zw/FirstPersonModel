@@ -5,11 +5,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RenderHandEventListener {
 
-	@SubscribeEvent
-	public void onRender(RenderHandEvent e) {
-		if(FirstPersonModelCore.enabled && !FirstPersonModelCore.instance.showVanillaHands()) {
-			e.setCanceled(true);
-		}
-	}
-	
+    @SubscribeEvent
+    public void onRender(RenderHandEvent e) {
+        if (FirstPersonModelCore.enabled && !FirstPersonModelCore.instance.showVanillaHands()) {
+            e.setCanceled(true);
+        }
+    }
+
 }

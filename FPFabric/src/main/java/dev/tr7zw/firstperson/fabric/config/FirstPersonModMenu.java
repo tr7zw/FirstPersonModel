@@ -12,6 +12,6 @@ public class FirstPersonModMenu implements ModMenuApi {
         return parent -> {
             return FirstPersonModelCore.instance.createConfigScreen(parent);
         };
-    }  
-    
+    }
+
 }

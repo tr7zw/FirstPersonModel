@@ -1,0 +1,27 @@
+{
+    "required": true,
+    "package": "dev.tr7zw.firstperson.mixins",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [],
+    "client": [
+        "HeldItemRendererMixin",
+        "PlayerRenderMixin",
+        "WorldRendererMixin",
+        "FishingBobberRendererMixin",
+        "RenderDispatcherMixin",
+        "HeldItemFeatureRendererMixin",
+        "ModelPartMixin",
+        "LivingEntityRendererMixin",
+        "FeatureRendererMixin",
+        "ArmorFeatureRendererMixin",
+        "StuckInBodyLayerMixin",
+        "ElytraLayerMixin",
+        "PlayerRendererMixin",
+        "HumanoidModelMixin",
+        "CustomHeadLayerMixin",
+        "PlayerModelMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

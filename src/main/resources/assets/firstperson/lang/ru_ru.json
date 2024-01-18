@@ -1,0 +1,23 @@
+{
+    "text.firstperson.title": "Настройки FirstPerson",
+    "key.firstperson.toggle": "Переключение вида от первого лица",
+    "category.firstperson.firstperson": "FirstPerson",
+    "text.firstperson.option.firstperson.xOffset": "Стояние: смещение по X",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "Смещение тела относительно камеры вперед-назад",
+    "text.firstperson.option.firstperson.sneakXOffset": "Подкрадывание: смещение по X",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "Смещение тела относительно камеры вперед и назад во время подкрадывания",
+    "text.firstperson.option.firstperson.enabledByDefault": "Включено по умолчанию",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "Состояние мода по умолчанию после запуска игры",
+    "text.firstperson.option.firstperson.sitXOffset": "Сидение: смещение по X",
+    "text.firstperson.option.firstperson.sitXOffset.tooltip": "Смещение относительно камеры вперед-назад в положении сидя",
+    "text.firstperson.option.firstperson.renderStuckFeatures": "Отображение стрел и жал",
+    "text.firstperson.option.firstperson.renderStuckFeatures.tooltip": "Показывает стрелы, пчелиные жала или другие модифицированные функции от первого лица",
+    "text.firstperson.option.firstperson.vanillaHands": "Ванильные руки",
+    "text.firstperson.option.firstperson.vanillaHands.tooltip": "Показывает ванильные руки от первого лица, а также модель игрока (но без рук)",
+    "text.firstperson.option.firstperson.doubleHands": "Двойные руки",
+    "text.firstperson.option.firstperson.doubleHands.tooltip": "При использовании ванильных рук всегда будут показаны обе руки",
+    "text.firstperson.option.firstperson.forceActive": "Принудительная активация",
+    "text.firstperson.option.firstperson.forceActive.tooltip": "Принудительное использование мода в тех случаях, когда другие моды изменяют рендеринг, но при этом возникают визуальные проблемы (например, пропадает голова игрока)",
+    "modmenu.summaryTranslation.firstperson": "Включает модель третьего лица в первом лице",
+    "modmenu.descriptionTranslation.firstperson": "Включает модель третьего лица в первом лице"
+}
