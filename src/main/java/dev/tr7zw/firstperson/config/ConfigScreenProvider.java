@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.tr7zw.config.CustomConfigScreen;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.FirstPersonModelMod;
-import dev.tr7zw.firstperson.versionless.config.FirstPersonSettings;
-import net.minecraft.client.gui.screens.Screen;
 //spotless:off 
 //#if MC >= 11900
 import net.minecraft.client.OptionInstance;
@@ -14,6 +13,7 @@ import net.minecraft.client.OptionInstance;
 //$$ import net.minecraft.client.Option;
 //#endif
 //spotless:on
+import net.minecraft.client.gui.screens.Screen;
 
 public class ConfigScreenProvider {
 
@@ -22,27 +22,28 @@ public class ConfigScreenProvider {
 
             @Override
             public void initialize() {
+            	FirstPersonModelCore fpm = FirstPersonModelMod.instance;
                 getOptions().addBig(getOnOffOption("text.firstperson.option.firstperson.enabledByDefault",
-                        () -> FirstPersonModelMod.config.enabledByDefault,
-                        (b) -> FirstPersonModelMod.config.enabledByDefault = b));
+                        () -> fpm.getConfig().enabledByDefault,
+                        (b) -> fpm.getConfig().enabledByDefault = b));
 
                 List<Object> options = new ArrayList<>();
                 options.add(getIntOption("text.firstperson.option.firstperson.xOffset", -40, 40,
-                        () -> FirstPersonModelMod.config.xOffset, (i) -> FirstPersonModelMod.config.xOffset = i));
+                        () -> fpm.getConfig().xOffset, (i) -> fpm.getConfig().xOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sneakXOffset", -40, 40,
-                        () -> FirstPersonModelMod.config.sneakXOffset,
-                        (i) -> FirstPersonModelMod.config.sneakXOffset = i));
+                        () -> fpm.getConfig().sneakXOffset,
+                        (i) -> fpm.getConfig().sneakXOffset = i));
                 options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40,
-                        () -> FirstPersonModelMod.config.sitXOffset, (i) -> FirstPersonModelMod.config.sitXOffset = i));
+                        () -> fpm.getConfig().sitXOffset, (i) -> fpm.getConfig().sitXOffset = i));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures",
-                        () -> FirstPersonModelMod.config.renderStuckFeatures,
-                        (b) -> FirstPersonModelMod.config.renderStuckFeatures = b));
+                        () -> fpm.getConfig().renderStuckFeatures,
+                        (b) -> fpm.getConfig().renderStuckFeatures = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands",
-                        () -> FirstPersonModelMod.config.vanillaHands,
-                        (b) -> FirstPersonModelMod.config.vanillaHands = b));
+                        () -> fpm.getConfig().vanillaHands,
+                        (b) -> fpm.getConfig().vanillaHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands",
-                        () -> FirstPersonModelMod.config.doubleHands,
-                        (b) -> FirstPersonModelMod.config.doubleHands = b));
+                        () -> fpm.getConfig().doubleHands,
+                        (b) -> fpm.getConfig().doubleHands = b));
 
                 // spotless:off
                 //#if MC >= 11900
@@ -61,7 +62,7 @@ public class ConfigScreenProvider {
 
             @Override
             public void reset() {
-                FirstPersonModelMod.config = new FirstPersonSettings();
+            	FirstPersonModelMod.instance.resetSettings();
                 FirstPersonModelMod.instance.writeSettings();
             }
 

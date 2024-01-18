@@ -4,7 +4,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,8 +14,6 @@ import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 //spotless:off
 //#if MC >= 11700
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -24,6 +21,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 //#endif
 //spotless:on
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 
 /**
  * Hides body parts and layers where needed
@@ -66,9 +65,7 @@ public abstract class PlayerRenderMixin
         ((ModelPartBase) (Object) this.getModel().rightSleeve).showAgain();
         ((ModelPartBase) (Object) this.getModel().body).showAgain();
         ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
-        if (FirstPersonModelCore.isRenderingPlayer) {
-            FirstPersonModelCore.isRenderingPlayer = false;
-        }
+        FirstPersonModelCore.instance.setRenderingPlayer(false);
     }
 
     @Shadow

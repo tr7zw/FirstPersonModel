@@ -35,14 +35,14 @@ public class HumanoidModelMixin<T extends LivingEntity> {
 
     @Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V"))
     public void hideHead(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (FirstPersonModelCore.isRenderingPlayer) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             ((ModelPartBase) (Object) head).setHidden();
             if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
                 ((ModelPartBase) (Object) leftArm).setHidden();
                 ((ModelPartBase) (Object) rightArm).setHidden();
             }
         }
-        if (FirstPersonModelCore.isRenderingPlayer && (Object) this instanceof PlayerModel playerModel) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && (Object) this instanceof PlayerModel playerModel) {
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
             if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
                 ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();

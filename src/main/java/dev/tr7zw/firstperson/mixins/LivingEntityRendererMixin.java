@@ -29,10 +29,10 @@ public abstract class LivingEntityRendererMixin {
             return;// No need to mess with
         // only run when the player is rendering, and it's not a "Humanoid" model(it
         // otherwise gets handeled in HumanoidModelMixin)
-        if (FirstPersonModelCore.isRenderingPlayer && !(getModel() instanceof HumanoidModel)) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && !(getModel() instanceof HumanoidModel)) {
             EntityModel<LivingEntity> model = getModel();
             if (!(model instanceof HeadedModel)) {
-                FirstPersonModelCore.isRenderingPlayer = false;
+                FirstPersonModelCore.instance.setRenderingPlayer(false);
                 info.cancel();
                 return;
             }
@@ -46,7 +46,7 @@ public abstract class LivingEntityRendererMixin {
     @Inject(method = "render", at = @At("RETURN"))
     public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        if (FirstPersonModelCore.isRenderingPlayer) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             EntityModel<LivingEntity> model = getModel();
             if (model instanceof HeadedModel) {
                 ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).showAgain();
@@ -55,7 +55,7 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-        FirstPersonModelCore.isRenderingPlayer = false;
+        FirstPersonModelCore.instance.setRenderingPlayer(false);
     }
 
     @Shadow

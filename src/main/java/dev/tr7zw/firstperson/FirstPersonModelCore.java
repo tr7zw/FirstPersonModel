@@ -16,10 +16,10 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
     private boolean isHeld = false;
-    protected KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
+    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private boolean lateInit = true;
 
-    public FirstPersonModelCore() {
+    protected FirstPersonModelCore() {
         instance = this;
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
@@ -28,7 +28,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     public void sharedSetup() {
         LOGGER.info("Loading FirstPerson Mod");
-        logicHandler = new LogicHandler(Minecraft.getInstance());
+        logicHandler = new LogicHandler(Minecraft.getInstance(), this);
 
         super.loadConfig();
 
@@ -63,7 +63,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
             if (isHeld)
                 return;
             isHeld = true;
-            enabled = !enabled;
+            setEnabled(!isEnabled());
         } else {
             isHeld = false;
         }

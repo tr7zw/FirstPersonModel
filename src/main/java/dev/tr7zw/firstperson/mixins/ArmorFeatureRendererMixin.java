@@ -35,15 +35,15 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         if (livingEntity != fpm_mc.cameraEntity) {
             return;
         }
-        if (equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.isRenderingPlayer) {
+        if (equipmentSlot == EquipmentSlot.HEAD && FirstPersonModelCore.instance.isRenderingPlayer()) {
             info.cancel();
         }
-        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer
+        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()
                 && (livingEntity instanceof LocalPlayer player
                         && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player))) {
             info.cancel();
         }
-        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.isRenderingPlayer
+        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
             info.cancel();
         }

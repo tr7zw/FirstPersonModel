@@ -21,7 +21,7 @@ public final class FirstPersonAPI {
      * @return true if the mod is intended to be running right now
      */
     public static boolean isEnabled() {
-        return FirstPersonModelCore.enabled;
+        return FirstPersonModelCore.instance.isEnabled();
     }
 
     /**
@@ -30,7 +30,7 @@ public final class FirstPersonAPI {
      * @param enabled
      */
     public static void setEnabled(boolean enabled) {
-        FirstPersonModelCore.enabled = enabled;
+        FirstPersonModelCore.instance.setEnabled(enabled);
     }
 
     /**
@@ -40,7 +40,7 @@ public final class FirstPersonAPI {
      * @return
      */
     public static boolean isRenderingPlayer() {
-        return FirstPersonModelCore.isRenderingPlayer;
+        return FirstPersonModelCore.instance.isRenderingPlayer();
     }
 
     /**

@@ -42,10 +42,10 @@ public class WorldRendererMixin {
             return;
         Vec3 vec3d = camera.getPosition();
         MultiBufferSource.BufferSource immediate = this.renderBuffers.bufferSource();
-        FirstPersonModelCore.isRenderingPlayer = true;
+        FirstPersonModelCore.instance.setRenderingPlayer(true);
         this.renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices,
                 (MultiBufferSource) immediate);
-        FirstPersonModelCore.isRenderingPlayer = false;
+        FirstPersonModelCore.instance.setRenderingPlayer(false);
     }
 
     @Shadow

@@ -13,13 +13,20 @@ import com.google.gson.GsonBuilder;
 
 import dev.tr7zw.firstperson.versionless.config.ConfigUpgrader;
 import dev.tr7zw.firstperson.versionless.config.FirstPersonSettings;
+import lombok.Getter;
+import lombok.Setter;
 
 public class FirstPersonBase {
 
     public static final Logger LOGGER = LogManager.getLogger("FirstPersonModel");
-    public static boolean isRenderingPlayer = false;
-    public static boolean enabled = true;
-    public static FirstPersonSettings config = null;
+    @Getter
+    @Setter
+    private boolean isRenderingPlayer = false;
+    @Getter
+    @Setter
+    private boolean enabled = true;
+    @Getter
+    private FirstPersonSettings config = null;
     private File settingsFile = new File("config", "firstperson.json");
 
     public void loadConfig() {
@@ -48,6 +55,10 @@ public class FirstPersonBase {
             e.printStackTrace();
         }
     }
+    
+	public void resetSettings() {
+		config = new FirstPersonSettings();
+	}
 
     /**
      * Checks if a class exists or not

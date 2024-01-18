@@ -24,7 +24,7 @@ public class FishingBobberRendererMixin {
     private Vec3 offsetvec3d = Vec3.ZERO; // to not create @Nullable
 
     private boolean doCorrect() {
-        return FirstPersonModelCore.enabled
+        return FirstPersonModelCore.instance.isEnabled()
                 && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON;
     }
 

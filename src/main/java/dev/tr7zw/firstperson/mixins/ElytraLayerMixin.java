@@ -22,7 +22,7 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
             float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (FirstPersonModelCore.isRenderingPlayer && livingEntity instanceof LocalPlayer player
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && livingEntity instanceof LocalPlayer player
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ci.cancel();
         }

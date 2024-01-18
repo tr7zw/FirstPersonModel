@@ -19,7 +19,7 @@ public class CustomHeadLayerMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity,
             float f, float g, float h, float j, float k, float l, CallbackInfo info) {
-        if (FirstPersonModelCore.isRenderingPlayer) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             info.cancel();
         }
     }

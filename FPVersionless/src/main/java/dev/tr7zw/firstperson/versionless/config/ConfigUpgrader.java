@@ -3,6 +3,9 @@ package dev.tr7zw.firstperson.versionless.config;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class ConfigUpgrader {
 
     public static void upgradeConfig(FirstPersonSettings conf) {

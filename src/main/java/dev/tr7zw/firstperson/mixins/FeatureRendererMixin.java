@@ -23,7 +23,7 @@ public abstract class FeatureRendererMixin {
     private static <T extends LivingEntity> void removeHead(EntityModel<T> model, ResourceLocation texture,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
             float blue, CallbackInfo ci) {
-        if (FirstPersonModelCore.isRenderingPlayer) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             if (!(model instanceof HeadedModel)) {
                 ci.cancel();
                 return;

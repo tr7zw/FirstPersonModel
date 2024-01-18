@@ -36,7 +36,7 @@ public abstract class HeldItemRendererMixin {
             info.cancel();
             return;
         }
-        if (!FirstPersonModelCore.config.doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP
+        if (!FirstPersonModelCore.instance.getConfig().doubleHands || player.getMainHandItem().getItem() == Items.FILLED_MAP
         // spotless:off
             //#if MC >= 11700
                 || player.isScoping())
@@ -61,7 +61,7 @@ public abstract class HeldItemRendererMixin {
             float equipProgress, float swingProgress, HumanoidArm arm);
 
     public boolean skip() {
-        return !FirstPersonModelCore.enabled || FirstPersonModelCore.instance.getLogicHandler().showVanillaHands();
+        return !FirstPersonModelCore.instance.isEnabled() || FirstPersonModelCore.instance.getLogicHandler().showVanillaHands();
     }
 
 }
