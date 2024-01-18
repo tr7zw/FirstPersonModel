@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class FirstPersonSettings {
 
-	public int configVersion = 1;
+    public int configVersion = 1;
     public boolean enabledByDefault = true;
     public int xOffset = 0;
     public int sneakXOffset = 0;
