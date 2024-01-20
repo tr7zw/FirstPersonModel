@@ -37,8 +37,8 @@ public abstract class LivingEntityRendererMixin {
                 return;
             }
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).setHidden();
-            if (model instanceof VillagerHeadModel) {
-                ((VillagerHeadModel) model).hatVisible(false);
+            if (model instanceof VillagerHeadModel villaterHead) {
+                villaterHead.hatVisible(false);
             }
         }
     }
@@ -50,8 +50,8 @@ public abstract class LivingEntityRendererMixin {
             EntityModel<LivingEntity> model = getModel();
             if (model instanceof HeadedModel) {
                 ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).showAgain();
-                if (model instanceof VillagerHeadModel) {
-                    ((VillagerHeadModel) model).hatVisible(true);
+                if (model instanceof VillagerHeadModel villaterHead) {
+                    villaterHead.hatVisible(true);
                 }
             }
         }
