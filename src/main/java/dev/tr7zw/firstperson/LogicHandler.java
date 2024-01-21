@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -93,7 +94,8 @@ public class LogicHandler {
                 } else {
                     bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
                 }
-            } else if (player.isCrouching()) {
+             // some mods seem to break the isCrouching method
+            } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) { 
                 bodyOffset = Constants.SNEAK_BODY_OFFSET + (fpm.getConfig().sneakXOffset / 100f);
             } else if (player.isPassenger()) {
                 if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
