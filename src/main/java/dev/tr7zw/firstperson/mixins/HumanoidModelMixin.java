@@ -49,7 +49,8 @@ public class HumanoidModelMixin<T extends LivingEntity> {
                 ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
             }
         }
-        if (livingEntity instanceof AbstractClientPlayer player && (Object) this instanceof PlayerModel<?> playerModel
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && livingEntity instanceof AbstractClientPlayer player
+                && (Object) this instanceof PlayerModel<?> playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
             ((ModelPartBase) (Object) ((PlayerModelAccess) this).getCloak()).setHidden();
