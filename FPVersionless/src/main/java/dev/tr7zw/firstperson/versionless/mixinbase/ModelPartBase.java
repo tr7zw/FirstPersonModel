@@ -2,10 +2,10 @@ package dev.tr7zw.firstperson.versionless.mixinbase;
 
 public interface ModelPartBase {
 
-    public void setHidden();
+    void setHidden();
 
-    public void showAgain();
+    void showAgain();
 
-    public boolean isHidden();
+    boolean isHidden();
 
 }

@@ -40,17 +40,18 @@ public abstract class HeldItemRendererMixin {
                 || player.getMainHandItem().getItem() == Items.FILLED_MAP
                 // spotless:off
             //#if MC >= 11700
-                || player.isScoping())
-        	//#else
-        	//$$|| false)
+                || player.isScoping()) {
+            //#else
+        	//$$|| false) {
             //#endif
             //spotless:on
             return;
+        }
         boolean bl = hand == InteractionHand.MAIN_HAND;
         HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
         matrices.pushPose();
         if (item.isEmpty() && !bl && !player.isInvisible()) {
-            this.renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
+            renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
         }
         matrices.popPose();
     }

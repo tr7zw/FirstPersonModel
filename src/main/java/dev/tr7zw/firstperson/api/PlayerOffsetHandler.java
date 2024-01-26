@@ -17,6 +17,6 @@ public interface PlayerOffsetHandler {
      * @param current
      * @return
      */
-    public Vec3 applyOffset(AbstractClientPlayer entity, float delta, Vec3 original, Vec3 current);
+    Vec3 applyOffset(AbstractClientPlayer entity, float delta, Vec3 original, Vec3 current);
 
 }

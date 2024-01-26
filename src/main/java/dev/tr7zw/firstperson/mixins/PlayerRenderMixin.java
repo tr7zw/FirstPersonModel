@@ -56,13 +56,13 @@ public abstract class PlayerRenderMixin
     @Inject(method = "render", at = @At(value = "RETURN"))
     public void render(AbstractClientPlayer player, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        ((ModelPartBase) (Object) this.getModel().head).showAgain();
-        ((ModelPartBase) (Object) this.getModel().hat).showAgain();
-        ((ModelPartBase) (Object) this.getModel().leftArm).showAgain();
-        ((ModelPartBase) (Object) this.getModel().rightArm).showAgain();
-        ((ModelPartBase) (Object) this.getModel().leftSleeve).showAgain();
-        ((ModelPartBase) (Object) this.getModel().rightSleeve).showAgain();
-        ((ModelPartBase) (Object) this.getModel().body).showAgain();
+        ((ModelPartBase) (Object) getModel().head).showAgain();
+        ((ModelPartBase) (Object) getModel().hat).showAgain();
+        ((ModelPartBase) (Object) getModel().leftArm).showAgain();
+        ((ModelPartBase) (Object) getModel().rightArm).showAgain();
+        ((ModelPartBase) (Object) getModel().leftSleeve).showAgain();
+        ((ModelPartBase) (Object) getModel().rightSleeve).showAgain();
+        ((ModelPartBase) (Object) getModel().body).showAgain();
         ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
         FirstPersonModelCore.instance.setRenderingPlayer(false);
     }

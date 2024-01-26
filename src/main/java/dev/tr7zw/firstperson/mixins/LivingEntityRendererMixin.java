@@ -25,8 +25,9 @@ public abstract class LivingEntityRendererMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void renderHead(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        if (livingEntity instanceof Shulker)
+        if (livingEntity instanceof Shulker) {
             return;// No need to mess with
+        }
         // only run when the player is rendering, and it's not a "Humanoid" model(it
         // otherwise gets handeled in HumanoidModelMixin)
         if (FirstPersonModelCore.instance.isRenderingPlayer() && !(getModel() instanceof HumanoidModel)) {

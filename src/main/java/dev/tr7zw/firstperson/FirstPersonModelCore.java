@@ -60,8 +60,9 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
             lateInit();
         }
         if (keyBinding.isDown()) {
-            if (isHeld)
+            if (isHeld) {
                 return;
+            }
             isHeld = true;
             setEnabled(!isEnabled());
         } else {

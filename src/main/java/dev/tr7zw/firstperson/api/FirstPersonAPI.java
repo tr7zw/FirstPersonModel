@@ -50,10 +50,12 @@ public final class FirstPersonAPI {
      * @param handler
      */
     public static void registerPlayerHandler(Object handler) {
-        if (handler instanceof PlayerOffsetHandler offset)
+        if (handler instanceof PlayerOffsetHandler offset) {
             playerOffsetHandlers.add(offset);
-        if (handler instanceof ActivationHandler activation)
+        }
+        if (handler instanceof ActivationHandler activation) {
             activationHandlers.add(activation);
+        }
     }
 
     /**

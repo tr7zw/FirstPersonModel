@@ -30,29 +30,29 @@ public class FishingBobberRendererMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
     private CameraType redirect(Options gameOptions) {
-        return (doCorrect()) ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
+        return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
 
     @Inject(method = "render", at = @At("HEAD"))
     private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
         if (fishingBobberEntity.getOwner() instanceof Player) {
-            this.offsetvec3d = FirstPersonModelCore.instance.getLogicHandler().getOffset();// getPositionOffset((Player)
-                                                                                           // fishingBobberEntity.getOwner(),
-                                                                                           // matrixStack);
+            offsetvec3d = FirstPersonModelCore.instance.getLogicHandler().getOffset();// getPositionOffset((Player)
+                                                                                      // fishingBobberEntity.getOwner(),
+                                                                                      // matrixStack);
         } else {
-            this.offsetvec3d = new Vec3(0, 0, 0);
+            offsetvec3d = new Vec3(0, 0, 0);
         }
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
     private double offsetX(Player playerEntity) {
-        return playerEntity.getX() + this.offsetvec3d.x();
+        return playerEntity.getX() + offsetvec3d.x();
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getZ()D"))
     private double offsetZ(Player playerEntity) {
-        return playerEntity.getZ() + this.offsetvec3d.z();
+        return playerEntity.getZ() + offsetvec3d.z();
     }
 
     @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;xo:D"))

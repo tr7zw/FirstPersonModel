@@ -22,8 +22,9 @@ public class ModelPartMixin implements ModelPartBase {
 
     @Override
     public void setHidden() {
-        if (!moved)
+        if (!moved) {
             zCopy = z;
+        }
         z = 5000;
         moved = true;
         visible = false;
@@ -50,7 +51,7 @@ public class ModelPartMixin implements ModelPartBase {
     public void copyTransform(ModelPart modelPart, CallbackInfo info) {
         if (moved) {
             zCopy = z;
-            this.z = 5000;
+            z = 5000;
         }
     }
 

@@ -34,30 +34,26 @@ public class LogicHandler {
     private Set<Item> autoVanillaHandItems = new HashSet<>();
 
     void registerDefaultHandlers() {
-        FirstPersonAPI.registerPlayerHandler(new ActivationHandler() {
-
-            @Override
-            public boolean preventFirstperson() {
-                if (client.player.isAutoSpinAttack())
-                    return true;
-                if (client.player.isFallFlying())
-                    return true;
-                if (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))
-                    return true;
-                // spotless:off
-				//#if MC >= 11700
-				if (client.player.isScoping())
-					return true;
-				//#endif
-				//spotless:on
-                return false;
+        FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
+            if (client.player.isAutoSpinAttack() || client.player.isFallFlying()
+                    || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
+                return true;
             }
+            // spotless:off
+        	//#if MC >= 11700
+        	if (client.player.isScoping()) {
+                return true;
+            }
+        	//#endif
+        	//spotless:on
+            return false;
         });
     }
 
     public boolean shouldApplyThirdPerson(boolean thirdPerson) {
-        if (!fpm.isEnabled() || thirdPerson)
+        if (!fpm.isEnabled() || thirdPerson) {
             return false;
+        }
         for (ActivationHandler handler : FirstPersonAPI.getActivationHandlers()) {
             if (handler.preventFirstperson()) {
                 return false;
@@ -77,14 +73,13 @@ public class LogicHandler {
         double z = 0;
         AbstractClientPlayer player;
         double realYaw;
-        if (entity == client.player && client.options.getCameraType() == CameraType.FIRST_PERSON
-                && fpm.isRenderingPlayer()) {
-            player = (AbstractClientPlayer) entity;
-            realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
-        } else {
+        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)
+                || !fpm.isRenderingPlayer()) {
             offset = defValue;
             return;
         }
+        player = (AbstractClientPlayer) entity;
+        realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
         if (!player.isLocalPlayer() || client.getCameraEntity() == player) {
             float bodyOffset;
             if (isCrawlingOrSwimming(client.player)) {
@@ -94,9 +89,9 @@ public class LogicHandler {
                 } else {
                     bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
                 }
-             // some mods seem to break the isCrouching method
-            } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) { 
-                bodyOffset = Constants.SNEAK_BODY_OFFSET + (fpm.getConfig().sneakXOffset / 100f);
+                // some mods seem to break the isCrouching method
+            } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) {
+                bodyOffset = Constants.SNEAK_BODY_OFFSET + fpm.getConfig().sneakXOffset / 100f;
             } else if (player.isPassenger()) {
                 if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
                     realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
@@ -106,9 +101,9 @@ public class LogicHandler {
                     realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
                             NMSHelper.getYRot(player.getVehicle()));
                 }
-                bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + (fpm.getConfig().sitXOffset / 100f);
+                bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
             } else {
-                bodyOffset = 0.25f + (fpm.getConfig().xOffset / 100f);
+                bodyOffset = 0.25f + fpm.getConfig().xOffset / 100f;
             }
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
@@ -151,11 +146,11 @@ public class LogicHandler {
     }
 
     public void addAutoVanillaHandsItem(Item item) {
-        this.autoVanillaHandItems.add(item);
+        autoVanillaHandItems.add(item);
     }
 
     public void clearAutoVanillaHandsList() {
-        this.autoVanillaHandItems.clear();
+        autoVanillaHandItems.clear();
     }
 
     public void reloadAutoVanillaHandsSettings() {
@@ -164,8 +159,9 @@ public class LogicHandler {
         for (String itemId : fpm.getConfig().autoVanillaHands) {
             try {
                 Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
-                if (invalid != item)
+                if (invalid != item) {
                     addAutoVanillaHandsItem(item);
+                }
             } catch (Exception ex) {
                 FirstPersonBase.LOGGER.info("Unknown item to add to the auto vanilla hold list: {}", itemId);
             }
