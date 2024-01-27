@@ -17,6 +17,10 @@ public class ConfigUpgrader {
                             "create:extendo_grip", "create:handheld_worldshaper", "map_atlases:atlas")));
             conf.configVersion = 1;
         }
+        if (conf.configVersion < 2) {
+            conf.autoToggleModItems.add("exposure:camera");
+            conf.configVersion = 2; 
+        }
     }
 
 }

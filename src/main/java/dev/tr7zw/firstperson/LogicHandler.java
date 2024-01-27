@@ -33,6 +33,7 @@ public class LogicHandler {
     @Getter
     private Vec3 offset = Vec3.ZERO; // Current offset used for rendering
     private Set<Item> autoVanillaHandItems = new HashSet<>();
+    private Set<Item> autoDisableItems = new HashSet<>();
 
     void registerDefaultHandlers() {
         FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
@@ -40,13 +41,17 @@ public class LogicHandler {
                     || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
                 return true;
             }
-            // spotless:off
-        	//#if MC >= 11700
-        	if (client.player.isScoping()) {
+            if (autoDisableItems.contains(client.player.getMainHandItem().getItem())
+                    || autoDisableItems.contains(client.player.getOffhandItem().getItem())) {
                 return true;
             }
-        	//#endif
-        	//spotless:on
+            // spotless:off
+            //#if MC >= 11700
+            if (client.player.isScoping()) {
+                return true;
+            }
+            //#endif
+            //spotless:on
             return false;
         });
     }
@@ -143,24 +148,28 @@ public class LogicHandler {
 
     public boolean showVanillaHands() {
         return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
-                || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem());
+                || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem())
+                || autoDisableItems.contains(client.player.getMainHandItem().getItem())
+                || autoDisableItems.contains(client.player.getOffhandItem().getItem());
     }
-    
+
     public boolean showVanillaHands(ItemStack mainhand, ItemStack offhand) {
         return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(mainhand.getItem())
-                || autoVanillaHandItems.contains(offhand.getItem());
+                || autoVanillaHandItems.contains(offhand.getItem()) || autoDisableItems.contains(mainhand.getItem())
+                || autoDisableItems.contains(offhand.getItem());
     }
 
     public void addAutoVanillaHandsItem(Item item) {
         autoVanillaHandItems.add(item);
     }
 
-    public void clearAutoVanillaHandsList() {
-        autoVanillaHandItems.clear();
+    public void addAutoDisableItem(Item item) {
+        autoDisableItems.add(item);
     }
 
     public void reloadAutoVanillaHandsSettings() {
-        clearAutoVanillaHandsList();
+        autoVanillaHandItems.clear();
+        autoDisableItems.clear();
         Item invalid = NMSHelper.getItem(new ResourceLocation("minecraft", "air"));
         for (String itemId : fpm.getConfig().autoVanillaHands) {
             try {
@@ -173,6 +182,17 @@ public class LogicHandler {
             }
         }
         FirstPersonBase.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
+        for (String itemId : fpm.getConfig().autoToggleModItems) {
+            try {
+                Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                if (invalid != item) {
+                    addAutoDisableItem(item);
+                }
+            } catch (Exception ex) {
+                FirstPersonBase.LOGGER.info("Unknown item to add to the auto disable list: {}", itemId);
+            }
+        }
+        FirstPersonBase.LOGGER.info("Loaded Auto Disable items: {}", autoDisableItems);
     }
 
 }
