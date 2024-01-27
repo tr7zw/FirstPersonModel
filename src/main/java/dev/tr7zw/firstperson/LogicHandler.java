@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 @RequiredArgsConstructor
@@ -143,6 +144,11 @@ public class LogicHandler {
     public boolean showVanillaHands() {
         return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
                 || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem());
+    }
+    
+    public boolean showVanillaHands(ItemStack mainhand, ItemStack offhand) {
+        return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(mainhand.getItem())
+                || autoVanillaHandItems.contains(offhand.getItem());
     }
 
     public void addAutoVanillaHandsItem(Item item) {

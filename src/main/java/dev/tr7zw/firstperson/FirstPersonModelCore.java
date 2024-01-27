@@ -18,6 +18,10 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private boolean isHeld = false;
     private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "Firstperson");
     private boolean lateInit = true;
+    @Deprecated
+    public static boolean enabled = true;
+    @Deprecated
+    public static boolean isRenderingPlayer = false;
 
     protected FirstPersonModelCore() {
         instance = this;
@@ -68,6 +72,18 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         } else {
             isHeld = false;
         }
+    }
+
+    @Override
+    public void setRenderingPlayer(boolean isRenderingPlayer) {
+        super.setRenderingPlayer(isRenderingPlayer);
+        FirstPersonModelCore.isRenderingPlayer = isRenderingPlayer;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        FirstPersonModelCore.enabled = enabled;
     }
 
 }

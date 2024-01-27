@@ -44,7 +44,7 @@ public class FirstPersonBase {
         }
         ConfigUpgrader.upgradeConfig(config);
         writeSettings();
-        enabled = config.enabledByDefault;
+        setEnabled(config.enabledByDefault);
     }
 
     public void writeSettings() {

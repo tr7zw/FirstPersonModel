@@ -19,7 +19,8 @@
         "PlayerRendererMixin",
         "HumanoidModelMixin",
         "CustomHeadLayerMixin",
-        "PlayerModelMixin"
+        "PlayerModelMixin",
+        "PlayerMixin"
     ],
     "injectors": {
         "defaultRequire": 1
