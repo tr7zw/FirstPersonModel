@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +21,7 @@ public class PlayerMixin {
     
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
-        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()) {
             if (slot == EquipmentSlot.HEAD) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
