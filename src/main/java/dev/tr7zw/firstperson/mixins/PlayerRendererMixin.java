@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
  * @author tr7zw
  *
  */
-@Mixin(PlayerRenderer.class)
+@Mixin(value = PlayerRenderer.class, priority = 500)
 public class PlayerRendererMixin {
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
