@@ -18,7 +18,7 @@ public class PlayerMixin {
 
     @Shadow
     private Inventory inventory;
-    
+
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()) {
@@ -26,7 +26,8 @@ public class PlayerMixin {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
-            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(this.inventory.getSelected(), this.inventory.offhand.get(0))) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(this.inventory.getSelected(),
+                    this.inventory.offhand.get(0))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }

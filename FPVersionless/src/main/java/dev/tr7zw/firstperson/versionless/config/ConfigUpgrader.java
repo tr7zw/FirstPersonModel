@@ -19,7 +19,7 @@ public class ConfigUpgrader {
         }
         if (conf.configVersion < 2) {
             conf.autoToggleModItems.add("exposure:camera");
-            conf.configVersion = 2; 
+            conf.configVersion = 2;
         }
     }
 

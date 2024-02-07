@@ -5,7 +5,6 @@
     "mixins": [],
     "client": [
         "HeldItemRendererMixin",
-        "PlayerRenderMixin",
         "WorldRendererMixin",
         "FishingBobberRendererMixin",
         "RenderDispatcherMixin",
@@ -17,10 +16,10 @@
         "StuckInBodyLayerMixin",
         "ElytraLayerMixin",
         "PlayerRendererMixin",
-        "HumanoidModelMixin",
         "CustomHeadLayerMixin",
         "PlayerModelMixin",
-        "PlayerMixin"
+        "PlayerMixin",
+        "AgeableListModelMixin"
     ],
     "injectors": {
         "defaultRequire": 1
