@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.access.PlayerAccess;
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,9 +16,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(Player.class)
-public class PlayerMixin {
+public class PlayerMixin implements PlayerAccess {
 
     @Shadow
+    @Getter
     private Inventory inventory;
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
@@ -26,7 +29,7 @@ public class PlayerMixin {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
-            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(this.inventory.getSelected(),
+            if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(this.inventory.getSelected(),
                     this.inventory.offhand.get(0))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;

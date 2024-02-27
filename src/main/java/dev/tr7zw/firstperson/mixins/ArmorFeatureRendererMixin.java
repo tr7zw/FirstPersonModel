@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
@@ -45,7 +46,11 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         }
         if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-            info.cancel();
+            ((ModelPartBase)(Object) bipedEntityModel.leftArm).setHidden();
+            ((ModelPartBase)(Object) bipedEntityModel.rightArm).setHidden();
+        } else {
+            ((ModelPartBase)(Object) bipedEntityModel.leftArm).showAgain();
+            ((ModelPartBase)(Object) bipedEntityModel.rightArm).showAgain();
         }
     }
 
