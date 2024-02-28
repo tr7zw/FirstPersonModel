@@ -5,5 +5,5 @@ import net.minecraft.world.entity.player.Inventory;
 public interface PlayerAccess {
 
     Inventory getInventory();
-    
+
 }

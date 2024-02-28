@@ -46,11 +46,11 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         }
         if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-            ((ModelPartBase)(Object) bipedEntityModel.leftArm).setHidden();
-            ((ModelPartBase)(Object) bipedEntityModel.rightArm).setHidden();
+            ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
+            ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
         } else {
-            ((ModelPartBase)(Object) bipedEntityModel.leftArm).showAgain();
-            ((ModelPartBase)(Object) bipedEntityModel.rightArm).showAgain();
+            ((ModelPartBase) (Object) bipedEntityModel.leftArm).showAgain();
+            ((ModelPartBase) (Object) bipedEntityModel.rightArm).showAgain();
         }
     }
 

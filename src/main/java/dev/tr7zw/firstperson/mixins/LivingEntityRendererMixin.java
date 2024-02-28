@@ -49,7 +49,8 @@ public abstract class LivingEntityRendererMixin {
             headShouldBeHidden = true;
         }
         if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof PlayerAccess playerAccess
-                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
+                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
+                        playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
             ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
             ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
         }
@@ -59,7 +60,9 @@ public abstract class LivingEntityRendererMixin {
         if (model instanceof PlayerModel<?> playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
-            if (livingEntity instanceof PlayerAccess playerAccess && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
+            if (livingEntity instanceof PlayerAccess playerAccess
+                    && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
+                            playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
                 ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                 ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
             }

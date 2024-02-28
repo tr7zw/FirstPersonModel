@@ -29,8 +29,8 @@ public class PlayerMixin implements PlayerAccess {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
-            if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(this.inventory.getSelected(),
-                    this.inventory.offhand.get(0))) {
+            if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) && FirstPersonModelCore.instance
+                    .getLogicHandler().showVanillaHands(this.inventory.getSelected(), this.inventory.offhand.get(0))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
