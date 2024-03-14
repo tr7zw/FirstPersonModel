@@ -54,7 +54,6 @@ public abstract class LivingEntityRendererMixin {
             headShouldBeHidden = true;
         }
         if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof PlayerAccess playerAccess) {
-
             if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
                     playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))
                     && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {

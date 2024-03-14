@@ -1,5 +1,6 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,8 +48,9 @@ public abstract class HeldItemRendererMixin {
             info.cancel();
             return;
         }
-        if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem() && item.isEmpty() //TODO VANILLA HANDS ITEM
-                || (FirstPersonModelCore.instance.getConfig().dynamicHands && pitch > 35)) {//TODO DYNAMIC HAND
+        if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem() &&
+                (item.isEmpty() //TODO VANILLA HANDS ITEM
+                || (FirstPersonModelCore.instance.getConfig().dynamicHands && pitch > 35))) {//TODO DYNAMIC HAND
             info.cancel();
             return;
         }
