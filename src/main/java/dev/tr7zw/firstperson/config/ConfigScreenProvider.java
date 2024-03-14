@@ -40,6 +40,10 @@ public class ConfigScreenProvider {
                         () -> fpm.getConfig().vanillaHands, b -> fpm.getConfig().vanillaHands = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands",
                         () -> fpm.getConfig().doubleHands, b -> fpm.getConfig().doubleHands = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHandsItem",
+                        () -> fpm.getConfig().vanillaHandsItem, b -> fpm.getConfig().vanillaHandsItem = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.dynamicHands",
+                        () -> fpm.getConfig().dynamicHands, b -> fpm.getConfig().dynamicHands = b));
 
                 // spotless:off
                 //#if MC >= 11900
