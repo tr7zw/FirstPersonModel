@@ -39,9 +39,11 @@ public class HeldItemFeatureRendererMixin {
     	//$$     			HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
       	//#endif
       	//spotless:on
-        if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.instance.isRenderingPlayer()
-                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands() && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
-            ci.cancel();
+        if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.instance.isRenderingPlayer()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
+                if (!FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) ci.cancel();
+                else if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) ci.cancel();
+            }
         }
     }
 
