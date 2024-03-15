@@ -19,7 +19,7 @@
     "text.firstperson.option.firstperson.vanillaHandsItem": "Vanilla Hands Item",
     "text.firstperson.option.firstperson.vanillaHandsItem.tooltip": "Shows the vanilla first person hands if have item",
     "text.firstperson.option.firstperson.dynamicHands": "Dynamic Hands",
-    "text.firstperson.option.firstperson.dynamicHands.tooltip": "Dynamically changes the hands <vanilla <-> first person> when the viewing angle changes (need Vanilla Hands Item)",
+    "text.firstperson.option.firstperson.dynamicHands.tooltip": "Dynamically changes the hands when the viewing angle changes (need Vanilla Hands Item)",
     "text.firstperson.option.firstperson.forceActive": "Force Active",
     "text.firstperson.option.firstperson.forceActive.tooltip": "Forces the FirstPerson Mod when other mods modify the rendering, but will cause visual issues(for example the players head is missing)",
     "modmenu.summaryTranslation.firstperson": "Enables the third-person Model in first-person",

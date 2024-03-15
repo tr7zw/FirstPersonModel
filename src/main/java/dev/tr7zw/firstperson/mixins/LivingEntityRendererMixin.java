@@ -60,9 +60,9 @@ public abstract class LivingEntityRendererMixin {
                 ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
                 ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
             } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
-                float test = Mth.clamp(-Minecraft.getInstance().player.getXRot() / 20 + 2, -0.0f, 2.5f);
-                humanModel.rightArm.offsetRotation(new Vector3f(test, 0, 0));
-                humanModel.leftArm.offsetRotation(new Vector3f(test, 0, 0));
+                float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot() / 20 + 2, -0.0f, 0.7f);
+                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
+                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
                 if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) {//TODO DYNAMIC HAND
                     if (!playerAccess.getInventory().offhand.get(0).isEmpty() || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
@@ -87,9 +87,9 @@ public abstract class LivingEntityRendererMixin {
                     ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                     ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
                 } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
-                    float test = Mth.clamp(-Minecraft.getInstance().player.getXRot()/20+2,-0.0f,2.5f);
-                    playerModel.rightSleeve.offsetRotation(new Vector3f(test,0,0));
-                    playerModel.leftSleeve.offsetRotation(new Vector3f(test,0,0));
+                    float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot()/20+2,-0.0f,0.7f);
+                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset,0,0));
+                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset,0,0));
 
                     if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) {//TODO DYNAMIC HAND
                         if (!playerAccess.getInventory().offhand.get(0).isEmpty() || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
