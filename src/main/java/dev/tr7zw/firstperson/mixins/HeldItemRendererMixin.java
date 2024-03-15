@@ -48,8 +48,7 @@ public abstract class HeldItemRendererMixin {
             return;
         }
         if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem() &&
-                (item.isEmpty() //TODO VANILLA HANDS ITEM
-                || (FirstPersonModelCore.instance.getConfig().dynamicHands && pitch > 35))) {//TODO DYNAMIC HAND
+                (item.isEmpty() /*TODO VANILLA HANDS ITEM*/|| (FirstPersonModelCore.instance.getConfig().dynamicHands && pitch > 45))) { //TODO DYNAMIC HAND
             info.cancel();
             return;
         }
@@ -93,16 +92,13 @@ public abstract class HeldItemRendererMixin {
                     this.mainHandHeight = 15/f;
                     this.offHandHeight = 15/f;
                 } else {
-                    if(this.mainHandHeight > 0.2) {
-                        this.mainHandHeight -= 0.1f;
-                        this.offHandHeight -= 0.1f;
-                    }
+                    this.mainHandHeight -= this.mainHandHeight > -0.1f ? 0.1f : 0;
+                    this.offHandHeight -= this.offHandHeight > -0.1f ? 0.1f : 0;
                 }
                 ci.cancel();
                 this.mainHandItem = localPlayer.getMainHandItem();
                 this.offHandItem = localPlayer.getOffhandItem();
             }
-        }
     }
 
 }
