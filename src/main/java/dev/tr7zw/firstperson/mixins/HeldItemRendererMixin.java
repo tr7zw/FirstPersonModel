@@ -86,24 +86,23 @@ public abstract class HeldItemRendererMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F", shift = At.Shift.BEFORE), method = "tick", cancellable = true)
     public void tick(CallbackInfo ci) {//TODO DYNAMIC HAND
         if (FirstPersonModelCore.instance.getConfig().vanillaHandsItem
-                && FirstPersonModelCore.instance.getConfig().dynamicHands
-                && Minecraft.getInstance().player.getXRot() > 15) {
+                && FirstPersonModelCore.instance.getConfig().dynamicHands) {
             LocalPlayer localPlayer = Minecraft.getInstance().player;
-
             float f = localPlayer.getXRot();
-            if (f >= 15 && f < 30) {
-                this.mainHandHeight = 15/f;
-                this.offHandHeight = 15/f;
-                ci.cancel();
+            if(f > 15) {
+                if (f < 30) {
+                    this.mainHandHeight = 15/f;
+                    this.offHandHeight = 15/f;
+                    ci.cancel();
+                } else {
+                    f = localPlayer.getAttackStrengthScale(1.0f);
+                    this.mainHandHeight -= Mth.clamp((this.mainHandItem == localPlayer.getMainHandItem() ? f * f * f : 0.0f) + this.mainHandHeight, -0.4f, 0.4f);
+                    this.offHandHeight -= Mth.clamp((float)(this.offHandItem == localPlayer.getOffhandItem() ? 1 : 0) + this.offHandHeight, -0.4f, 0.4f);
+                    ci.cancel();
+                }
+                this.mainHandItem = localPlayer.getMainHandItem();
+                this.offHandItem = localPlayer.getOffhandItem();
             }
-            else if (f >= 30) {
-                f = localPlayer.getAttackStrengthScale(1.0f);
-                this.mainHandHeight -= Mth.clamp((this.mainHandItem == localPlayer.getMainHandItem() ? f * f * f : 0.0f) + this.mainHandHeight, -0.4f, 0.4f);
-                this.offHandHeight -= Mth.clamp((float)(this.offHandItem == localPlayer.getOffhandItem() ? 1 : 0) + this.offHandHeight, -0.4f, 0.4f);
-                ci.cancel();
-            }
-            this.mainHandItem = localPlayer.getMainHandItem();
-            this.offHandItem = localPlayer.getOffhandItem();
         }
     }
 
