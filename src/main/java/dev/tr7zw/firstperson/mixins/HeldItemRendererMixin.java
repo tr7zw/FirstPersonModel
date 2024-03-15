@@ -84,7 +84,7 @@ public abstract class HeldItemRendererMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F", shift = At.Shift.BEFORE), method = "tick", cancellable = true)
     public void tick(CallbackInfo ci) {//TODO DYNAMIC HAND
-        if (FirstPersonModelCore.instance.getConfig().vanillaHandsItem
+        if (FirstPersonModelCore.instance.isEnabled() && FirstPersonModelCore.instance.getConfig().vanillaHandsItem
                 && FirstPersonModelCore.instance.getConfig().dynamicHands) {
             LocalPlayer localPlayer = Minecraft.getInstance().player;
             float f = localPlayer.getXRot();
