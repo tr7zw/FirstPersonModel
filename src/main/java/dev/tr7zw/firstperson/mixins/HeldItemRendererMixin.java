@@ -41,7 +41,6 @@ public abstract class HeldItemRendererMixin {
             MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
 
         if (!FirstPersonModelCore.instance.isEnabled()) {
-            info.cancel();
             return;
         }
         if (!FirstPersonModelCore.instance.getLogicHandler().showVanillaHands() && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
