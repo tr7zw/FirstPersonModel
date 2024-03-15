@@ -1,6 +1,5 @@
 package dev.tr7zw.firstperson.mixins;
 
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,12 +9,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.versionless.config.VanillaHands;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
@@ -30,10 +30,14 @@ public abstract class HeldItemRendererMixin {
 
     @Shadow
     private EntityRenderDispatcher entityRenderDispatcher;
-    @Shadow private float mainHandHeight;
-    @Shadow private float offHandHeight;
-    @Shadow private ItemStack mainHandItem;
-    @Shadow private ItemStack offHandItem;
+    @Shadow
+    private float mainHandHeight;
+    @Shadow
+    private float offHandHeight;
+    @Shadow
+    private ItemStack mainHandItem;
+    @Shadow
+    private ItemStack offHandItem;
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
     public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
@@ -43,22 +47,24 @@ public abstract class HeldItemRendererMixin {
         if (!FirstPersonModelCore.instance.isEnabled()) {
             return;
         }
-        if (!FirstPersonModelCore.instance.getLogicHandler().showVanillaHands() && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+        if (!FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
             info.cancel();
             return;
         }
-        if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem() &&
-                (item.isEmpty() /*TODO VANILLA HANDS ITEM*/|| (FirstPersonModelCore.instance.getConfig().dynamicHands && pitch > 35))) { //TODO DYNAMIC HAND
+        // filter out vanilla hands with no item
+        if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled() && pitch > 35) {
+            // item held too low, hide
             info.cancel();
             return;
         }
-        if (!FirstPersonModelCore.instance.getConfig().doubleHands
+        // double hands
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsMode != VanillaHands.ALL_DOUBLE
                 || player.getMainHandItem().getItem() == Items.FILLED_MAP
                 // spotless:off
-            //#if MC >= 11700
+                //#if MC >= 11700
                 || player.isScoping()) {
             //#else
-        	//$$|| false) {
+            //$$|| false) {
             //#endif
             //spotless:on
             return;
@@ -76,21 +82,23 @@ public abstract class HeldItemRendererMixin {
     public abstract void renderPlayerArm(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
             float equipProgress, float swingProgress, HumanoidArm arm);
 
-    /*public boolean skip() {//TODO NO NEED?
-        return !FirstPersonModelCore.instance.isEnabled()
-                || FirstPersonModelCore.instance.getLogicHandler().showVanillaHands();
-    }*/
+    /*
+     * public boolean skip() {//TODO NO NEED? return
+     * !FirstPersonModelCore.instance.isEnabled() ||
+     * FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(); }
+     */
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F", shift = At.Shift.BEFORE), method = "tick", cancellable = true)
     public void tick(CallbackInfo ci) {//TODO DYNAMIC HAND
-        if (FirstPersonModelCore.instance.isEnabled() && FirstPersonModelCore.instance.getConfig().vanillaHandsItem
-                && FirstPersonModelCore.instance.getConfig().dynamicHands) {
+        if (FirstPersonModelCore.instance.isEnabled()
+                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
+                && FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {
             LocalPlayer localPlayer = Minecraft.getInstance().player;
             float f = localPlayer.getXRot();
-            if(f > 15) {
+            if (f > 15) {
                 if (f < 30) {
-                    this.mainHandHeight = 15/f;
-                    this.offHandHeight = 15/f;
+                    this.mainHandHeight = 15 / f;
+                    this.offHandHeight = 15 / f;
                 } else {
                     this.mainHandHeight -= this.mainHandHeight > -0.1f ? 0.15f : 0;
                     this.offHandHeight -= this.offHandHeight > -0.1f ? 0.15f : 0;
@@ -99,6 +107,7 @@ public abstract class HeldItemRendererMixin {
                 this.mainHandItem = localPlayer.getMainHandItem();
                 this.offHandItem = localPlayer.getOffhandItem();
             }
+        }
     }
 
 }

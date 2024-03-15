@@ -14,10 +14,9 @@ public class FirstPersonSettings {
     public int sitXOffset = 0;
 
     public boolean renderStuckFeatures = true;
-    public boolean vanillaHands = false;
-    public boolean doubleHands = false;
-    public boolean vanillaHandsItem = false;
-    public boolean dynamicHands = false;
+    public VanillaHands vanillaHandsMode = VanillaHands.OFF;
+    public boolean dynamicMode = true;
+
 
     public Set<String> autoVanillaHands = new HashSet<>(Arrays.asList("antiqueatlas:antique_atlas",
             "twilightforest:filled_magic_map", "twilightforest:filled_maze_map", "twilightforest:filled_ore_map",

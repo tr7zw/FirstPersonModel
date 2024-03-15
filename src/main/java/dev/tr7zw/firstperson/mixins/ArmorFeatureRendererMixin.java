@@ -45,12 +45,10 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             info.cancel();
         }
         if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()) {
-            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
-                    && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems()) {
                 ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
                 ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
-            } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()//TODO VANILLA HANDS ITEM
-                    && !FirstPersonModelCore.instance.getConfig().dynamicHands) {//TODO DYNAMIC HAND
+            } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {//TODO DYNAMIC HAND
                 if (!livingEntity.getOffhandItem().isEmpty())
                     ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
                 if (!livingEntity.getMainHandItem().isEmpty())

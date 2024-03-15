@@ -3,10 +3,12 @@ package dev.tr7zw.firstperson;
 import java.util.HashSet;
 import java.util.Set;
 
+import dev.tr7zw.firstperson.access.PlayerAccess;
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.Constants;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
+import dev.tr7zw.firstperson.versionless.config.VanillaHands;
 import dev.tr7zw.util.NMSHelper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,12 @@ public class LogicHandler {
         });
     }
 
+    /**
+     * Checks rather the mod should render at all.
+     * 
+     * @param thirdPerson
+     * @return
+     */
     public boolean shouldApplyThirdPerson(boolean thirdPerson) {
         if (!fpm.isEnabled() || thirdPerson) {
             return false;
@@ -68,6 +76,13 @@ public class LogicHandler {
         return true;
     }
 
+    /**
+     * Calculates the X/Z offset applied to the player model to get it relative to
+     * the vanilla camera position
+     * 
+     * @param entity
+     * @param defValue
+     */
     public void updatePositionOffset(Entity entity, Vec3 defValue) {
         // handle sleeping
         if (entity == client.getCameraEntity() && client.player.isSleeping()) {
@@ -147,25 +162,94 @@ public class LogicHandler {
     }
 
     public boolean showVanillaHands() {
-        return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(client.player.getMainHandItem().getItem())
-                || autoVanillaHandItems.contains(client.player.getOffhandItem().getItem())
-                || autoDisableItems.contains(client.player.getMainHandItem().getItem())
-                || autoDisableItems.contains(client.player.getOffhandItem().getItem());
+        return showVanillaHands(client.player);
     }
 
+    public boolean showVanillaHands(LivingEntity livingEntity) {
+        if (livingEntity instanceof PlayerAccess playerAccess) {
+            return showVanillaHands(playerAccess.getInventory().getSelected(),
+                    playerAccess.getInventory().offhand.get(0));
+        }
+        return false;
+    }
+
+    /**
+     * Don't skip the vanilla first person arm rendering
+     * 
+     * @param mainhand
+     * @param offhand
+     * @return
+     */
     public boolean showVanillaHands(ItemStack mainhand, ItemStack offhand) {
-        return fpm.getConfig().vanillaHands || autoVanillaHandItems.contains(mainhand.getItem())
+        return fpm.getConfig().vanillaHandsMode == VanillaHands.ALL
+                || fpm.getConfig().vanillaHandsMode == VanillaHands.ALL_DOUBLE
+                || (fpm.getConfig().vanillaHandsMode == VanillaHands.ITEMS
+                        && (!mainhand.isEmpty() || !offhand.isEmpty()))
+                || autoVanillaHandItems.contains(mainhand.getItem()) || autoVanillaHandItems.contains(offhand.getItem())
+                || autoDisableItems.contains(mainhand.getItem()) || autoDisableItems.contains(offhand.getItem());
+    }
+
+    public boolean hideArmsAndItems() {
+        return hideArmsAndItems(client.player);
+    }
+
+    public boolean hideArmsAndItems(LivingEntity livingEntity) {
+        if (livingEntity instanceof PlayerAccess playerAccess) {
+            return hideArmsAndItems(playerAccess.getInventory().getSelected(),
+                    playerAccess.getInventory().offhand.get(0));
+        }
+        return false;
+    }
+
+    /**
+     * Should the models arms and items not be rendered?
+     * 
+     * @param mainhand
+     * @param offhand
+     * @return
+     */
+    public boolean hideArmsAndItems(ItemStack mainhand, ItemStack offhand) {
+        if(lookingDown()) {
+            return false;
+        }
+        return fpm.getConfig().vanillaHandsMode != VanillaHands.OFF || autoVanillaHandItems.contains(mainhand.getItem())
                 || autoVanillaHandItems.contains(offhand.getItem()) || autoDisableItems.contains(mainhand.getItem())
                 || autoDisableItems.contains(offhand.getItem());
     }
 
-    public boolean vanillaHandsItem() {
-        return fpm.getConfig().vanillaHandsItem;
-    }//TODO VANILLA HANDS ITEM
+    public boolean dynamicHandsEnabled() {
+        return dynamicHandsEnabled(client.player);
+    }
+    
+    public boolean dynamicHandsEnabled(LivingEntity livingEntity) {
+        if (livingEntity instanceof PlayerAccess playerAccess) {
+            return dynamicHandsEnabled(playerAccess.getInventory().getSelected(),
+                    playerAccess.getInventory().offhand.get(0));
+        }
+        return false;
+    }
+    
+    /**
+     * True is dynamic hands is enabled and could apply at this moment
+     * 
+     * @param mainhand
+     * @param offhand
+     * @return
+     */
+    public boolean dynamicHandsEnabled(ItemStack mainhand, ItemStack offhand) {
+        return fpm.getConfig().dynamicMode && !(autoVanillaHandItems.contains(mainhand.getItem())
+                || autoVanillaHandItems.contains(offhand.getItem()) || autoDisableItems.contains(mainhand.getItem())
+                || autoDisableItems.contains(offhand.getItem()));
+    }
 
-    public boolean seeDown() {
-        return fpm.getConfig().dynamicHands && Minecraft.getInstance().player.getXRot() > 30;
-    }//TODO DYNAMIC HAND
+    /**
+     * Is Dynamic hands enabled and the player looking down?
+     * 
+     * @return
+     */
+    public boolean lookingDown() {
+        return dynamicHandsEnabled() && Minecraft.getInstance().player.getXRot() > 30;
+    }
 
     public void addAutoVanillaHandsItem(Item item) {
         autoVanillaHandItems.add(item);
