@@ -159,6 +159,14 @@ public class LogicHandler {
                 || autoDisableItems.contains(offhand.getItem());
     }
 
+    public boolean vanillaHandsItem() {
+        return fpm.getConfig().vanillaHandsItem;
+    }//TODO VANILLA HANDS ITEM
+
+    public boolean seeDown() {
+        return fpm.getConfig().dynamicHands && Minecraft.getInstance().player.getXRot() > 30;
+    }//TODO DYNAMIC HAND
+
     public void addAutoVanillaHandsItem(Item item) {
         autoVanillaHandItems.add(item);
     }

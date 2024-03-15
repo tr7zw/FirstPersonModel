@@ -44,10 +44,21 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             info.cancel();
         }
-        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()
-                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-            ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
-            ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
+        if (equipmentSlot == EquipmentSlot.CHEST && FirstPersonModelCore.instance.isRenderingPlayer()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
+                    && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+                ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
+                ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
+            } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()//TODO VANILLA HANDS ITEM
+                    && !FirstPersonModelCore.instance.getConfig().dynamicHands) {//TODO DYNAMIC HAND
+                if (!livingEntity.getOffhandItem().isEmpty())
+                    ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
+                if (!livingEntity.getMainHandItem().isEmpty())
+                    ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
+            } else {
+                ((ModelPartBase) (Object) bipedEntityModel.leftArm).showAgain();
+                ((ModelPartBase) (Object) bipedEntityModel.rightArm).showAgain();
+            }
         } else {
             ((ModelPartBase) (Object) bipedEntityModel.leftArm).showAgain();
             ((ModelPartBase) (Object) bipedEntityModel.rightArm).showAgain();

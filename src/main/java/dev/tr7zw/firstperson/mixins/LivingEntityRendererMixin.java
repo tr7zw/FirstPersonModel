@@ -1,5 +1,10 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Items;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,11 +53,26 @@ public abstract class LivingEntityRendererMixin {
             ((ModelPartBase) (Object) headed.getHead()).setHidden();
             headShouldBeHidden = true;
         }
-        if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof PlayerAccess playerAccess
-                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
-                        playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
-            ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
-            ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
+        if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof PlayerAccess playerAccess) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
+                    playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))
+                    && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+                ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
+                ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
+            } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
+                float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot() / 20 + 2, -0.0f, 0.7f);
+                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
+                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
+
+                if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) {//TODO DYNAMIC HAND
+                    if (!playerAccess.getInventory().offhand.get(0).isEmpty() || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
+                        ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
+                    }
+                    if (!playerAccess.getInventory().getSelected().isEmpty()) {
+                        ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
+                    }
+                }
+            }
         }
         if (model instanceof VillagerHeadModel villaterHead) {
             villaterHead.hatVisible(false);
@@ -60,11 +80,26 @@ public abstract class LivingEntityRendererMixin {
         if (model instanceof PlayerModel<?> playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
-            if (livingEntity instanceof PlayerAccess playerAccess
-                    && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
-                            playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))) {
-                ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
-                ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
+            if (livingEntity instanceof PlayerAccess playerAccess) {
+                if(FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(
+                        playerAccess.getInventory().getSelected(), playerAccess.getInventory().offhand.get(0))
+                        && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+                    ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
+                    ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
+                } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
+                    float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot()/20+2,-0.0f,0.7f);
+                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset,0,0));
+                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset,0,0));
+
+                    if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) {//TODO DYNAMIC HAND
+                        if (!playerAccess.getInventory().offhand.get(0).isEmpty() || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
+                            ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
+                        }
+                        if (!playerAccess.getInventory().getSelected().isEmpty()) {
+                            ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
+                        }
+                    }
+                }
             }
         }
         if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel<?> playerModel
@@ -93,17 +128,38 @@ public abstract class LivingEntityRendererMixin {
         if (model instanceof HeadedModel headed) {
             ((ModelPartBase) (Object) headed.getHead()).showAgain();
         }
-        if (model instanceof HumanoidModel<?> humanModel
-                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-            ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
-            ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
+        if (model instanceof HumanoidModel<?> humanModel) {
+            if(FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
+                    && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+                ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
+                ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
+            } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
+                if (!FirstPersonModelCore.instance.getLogicHandler().seeDown()) {//TODO DYNAMIC HAND
+                    ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
+                    ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
+                } else {
+                    if (!livingEntity.getOffhandItem().isEmpty())
+                        ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
+                    if (!livingEntity.getMainHandItem().isEmpty())
+                        ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
+                }
+            }
         }
         if (model instanceof VillagerHeadModel villaterHead) {
             villaterHead.hatVisible(false);
         }
         if (model instanceof PlayerModel<?> playerModel) {
             ((ModelPartBase) (Object) playerModel.hat).showAgain();
-            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
+                    && !FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {
+                ((ModelPartBase) (Object) playerModel.leftSleeve).showAgain();
+                ((ModelPartBase) (Object) playerModel.rightSleeve).showAgain();
+            } else if (FirstPersonModelCore.instance.getLogicHandler().vanillaHandsItem()) {//TODO VANILLA HANDS ITEM
+                if (!livingEntity.getOffhandItem().isEmpty())
+                    ((ModelPartBase) (Object) playerModel.leftSleeve).showAgain();
+                if (!livingEntity.getMainHandItem().isEmpty())
+                    ((ModelPartBase) (Object) playerModel.rightSleeve).showAgain();
+            } else {
                 ((ModelPartBase) (Object) playerModel.leftSleeve).showAgain();
                 ((ModelPartBase) (Object) playerModel.rightSleeve).showAgain();
             }
