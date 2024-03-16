@@ -40,7 +40,8 @@ public class HeldItemFeatureRendererMixin {
       	//#endif
       	//spotless:on
         if (livingEntity instanceof LocalPlayer && FirstPersonModelCore.instance.isRenderingPlayer()) {
-            if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(livingEntity) && !FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {
+            if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(livingEntity)
+                    && !FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {
                 ci.cancel();
             }
         }

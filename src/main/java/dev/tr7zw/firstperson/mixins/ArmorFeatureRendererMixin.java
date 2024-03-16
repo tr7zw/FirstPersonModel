@@ -48,7 +48,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems()) {
                 ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
                 ((ModelPartBase) (Object) bipedEntityModel.rightArm).setHidden();
-            } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {//TODO DYNAMIC HAND
+            } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO DYNAMIC HAND
                 if (!livingEntity.getOffhandItem().isEmpty())
                     ((ModelPartBase) (Object) bipedEntityModel.leftArm).setHidden();
                 if (!livingEntity.getMainHandItem().isEmpty())

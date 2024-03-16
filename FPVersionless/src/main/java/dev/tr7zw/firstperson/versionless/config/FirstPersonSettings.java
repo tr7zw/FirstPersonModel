@@ -17,7 +17,6 @@ public class FirstPersonSettings {
     public VanillaHands vanillaHandsMode = VanillaHands.OFF;
     public boolean dynamicMode = true;
 
-
     public Set<String> autoVanillaHands = new HashSet<>(Arrays.asList("antiqueatlas:antique_atlas",
             "twilightforest:filled_magic_map", "twilightforest:filled_maze_map", "twilightforest:filled_ore_map",
             "create:potato_cannon", "create:extendo_grip", "create:handheld_worldshaper", "map_atlases:atlas"));
