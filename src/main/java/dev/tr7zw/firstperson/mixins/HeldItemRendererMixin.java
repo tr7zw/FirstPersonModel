@@ -52,7 +52,9 @@ public abstract class HeldItemRendererMixin {
             return;
         }
         // filter out vanilla hands with no item
-        if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled() && pitch > 35) {
+        if (FirstPersonModelCore.instance.getLogicHandler().lookingDown() &&
+                (pitch > 35 || Minecraft.getInstance().player.getUseItem() == item && item.getItem().getUseAnimation(item).equals(UseAnim.SPEAR))) { //TODO SPEAR FIX
+
             // item held too low, hide
             info.cancel();
             return;
@@ -100,8 +102,13 @@ public abstract class HeldItemRendererMixin {
                     this.mainHandHeight = 15 / f;
                     this.offHandHeight = 15 / f;
                 } else {
-                    this.mainHandHeight -= this.mainHandHeight > -0.1f ? 0.15f : 0;
-                    this.offHandHeight -= this.offHandHeight > -0.1f ? 0.15f : 0;
+                    f = localPlayer.getAttackStrengthScale(1.0f); //TODO HandHeight rethink again(for items with a long model)
+                    this.mainHandHeight -= //TODO SPEAR FIX
+                            FirstPersonModelCore.instance.getLogicHandler().isUseSpear(localPlayer,this.mainHandItem) ? 0 :
+                                    Mth.clamp((f * f * f) + this.mainHandHeight, -0.4f, 0.4f);
+                    this.offHandHeight -=
+                            FirstPersonModelCore.instance.getLogicHandler().isUseSpear(localPlayer,this.offHandItem) ? 0 :
+                                    Mth.clamp((float)(1) + this.offHandHeight, -0.4f, 0.4f);
                 }
                 ci.cancel();
                 this.mainHandItem = localPlayer.getMainHandItem();

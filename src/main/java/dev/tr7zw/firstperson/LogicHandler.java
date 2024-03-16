@@ -37,10 +37,14 @@ public class LogicHandler {
     private Set<Item> autoVanillaHandItems = new HashSet<>();
     private Set<Item> autoDisableItems = new HashSet<>();
 
+    private int spinTimer = 0;
+
     void registerDefaultHandlers() {
         FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
-            if (client.player.isAutoSpinAttack() || client.player.isFallFlying()
-                    || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
+            if (client.player.isAutoSpinAttack()) {//TODO SPIN ATTACK MODEL OFFSET FIX
+                spinTimer = spinTimer <= 0 ? 132 : spinTimer;
+            }
+            if (spinTimer-- > 0) {
                 return true;
             }
             if (autoDisableItems.contains(client.player.getMainHandItem().getItem())
@@ -159,6 +163,10 @@ public class LogicHandler {
      */
     public boolean isCrawlingOrSwimming(Player player) {
         return player.isVisuallySwimming();
+    }
+
+    public boolean isUseSpear(Player player, ItemStack itemStack) { //TODO SPEAR FIX
+        return player.getUseItem() == itemStack && itemStack.getItem().getUseAnimation(itemStack).equals(UseAnim.SPEAR);
     }
 
     public boolean showVanillaHands() {

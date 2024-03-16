@@ -37,4 +37,9 @@ public class PlayerMixin implements PlayerAccess {
         }
     }
 
+    @Inject(method = "doAutoAttackOnTouch", at = @At("HEAD"))//TODO SPIN ATTACK MODEL OFFSET FIX
+    protected void doAutoAttackOnTouch(LivingEntity livingEntity, CallbackInfo ci) {
+        FirstPersonModelCore.instance.getLogicHandler().setSpinTimer(0);
+    }
+
 }
