@@ -248,7 +248,7 @@ public class LogicHandler {
      * @return
      */
     public boolean lookingDown() {
-        return dynamicHandsEnabled() && Minecraft.getInstance().player.getXRot() > 30;
+        return dynamicHandsEnabled() && NMSHelper.getXRot(Minecraft.getInstance().player) > 30;
     }
 
     public void addAutoVanillaHandsItem(Item item) {

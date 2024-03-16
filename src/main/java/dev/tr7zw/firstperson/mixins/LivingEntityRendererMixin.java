@@ -18,6 +18,7 @@ import dev.tr7zw.firstperson.access.AgeableListModelAccess;
 import dev.tr7zw.firstperson.access.PlayerAccess;
 import dev.tr7zw.firstperson.access.PlayerModelAccess;
 import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -58,7 +59,7 @@ public abstract class LivingEntityRendererMixin {
                 ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
             } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO VANILLA HANDS
                                                                                                // ITEM
-                float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot() / 20 + 2, -0.0f, 0.7f);
+                float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
                 humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
                 humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
@@ -85,7 +86,7 @@ public abstract class LivingEntityRendererMixin {
                     ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
                 } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO VANILLA HANDS
                                                                                                    // ITEM
-                    float offset = Mth.clamp(-Minecraft.getInstance().player.getXRot() / 20 + 2, -0.0f, 0.7f);
+                    float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
                     playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
                     playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
 
