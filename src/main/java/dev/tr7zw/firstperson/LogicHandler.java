@@ -44,7 +44,7 @@ public class LogicHandler {
             if (client.player.isAutoSpinAttack()) {//TODO SPIN ATTACK MODEL OFFSET FIX
                 spinTimer = spinTimer <= 0 ? 132 : spinTimer;
             }
-            if (spinTimer-- > 0) {
+            if ((spinTimer -= spinTimer < 0 ? 0 : 1) > 0) {
                 return true;
             }
             if (autoDisableItems.contains(client.player.getMainHandItem().getItem())
@@ -256,8 +256,8 @@ public class LogicHandler {
      * @return
      */
     public boolean lookingDown() {
-        return dynamicHandsEnabled() && Minecraft.getInstance().player.getXRot() > 30;
-    }
+        return client.player.getXRot() > 30;
+    }//TODO FIX DOUBLE RECHECK dynamicHandsEnabled()
 
     public void addAutoVanillaHandsItem(Item item) {
         autoVanillaHandItems.add(item);
