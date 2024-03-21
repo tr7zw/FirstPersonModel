@@ -217,7 +217,7 @@ public class LogicHandler {
      * @return
      */
     public boolean hideArmsAndItems(ItemStack mainhand, ItemStack offhand) {
-        if(lookingDown()) {
+        if (lookingDown()) {
             return false;
         }
         return fpm.getConfig().vanillaHandsMode != VanillaHands.OFF || autoVanillaHandItems.contains(mainhand.getItem())
@@ -228,7 +228,7 @@ public class LogicHandler {
     public boolean dynamicHandsEnabled() {
         return dynamicHandsEnabled(client.player);
     }
-    
+
     public boolean dynamicHandsEnabled(LivingEntity livingEntity) {
         if (livingEntity instanceof PlayerAccess playerAccess) {
             return dynamicHandsEnabled(playerAccess.getInventory().getSelected(),
@@ -236,7 +236,7 @@ public class LogicHandler {
         }
         return false;
     }
-    
+
     /**
      * True is dynamic hands is enabled and could apply at this moment
      * 
