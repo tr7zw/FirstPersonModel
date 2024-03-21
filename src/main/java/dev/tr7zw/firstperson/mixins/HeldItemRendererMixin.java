@@ -53,7 +53,7 @@ public abstract class HeldItemRendererMixin {
             return;
         }
         // filter out vanilla hands with no item
-        if (FirstPersonModelCore.instance.getLogicHandler().lookingDown() &&
+        if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandEnabled && FirstPersonModelCore.instance.getLogicHandler().lookingDown() &&
                 (pitch > 35 || Minecraft.getInstance().player.getUseItem() == item && item.getItem().getUseAnimation(item).equals(UseAnim.SPEAR))) { //TODO SPEAR FIX
 
             // item held too low, hide
