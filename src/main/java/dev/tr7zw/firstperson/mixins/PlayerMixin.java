@@ -30,7 +30,7 @@ public class PlayerMixin implements PlayerAccess {
                 return;
             }
             if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) && FirstPersonModelCore.instance
-                    .getLogicHandler().showVanillaHands(this.inventory.getSelected(), this.inventory.offhand.get(0))) {
+                    .getLogicHandler().hideArmsAndItems(this.inventory.getSelected(), this.inventory.offhand.get(0))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.versionless.config.VanillaHands;
 import lombok.experimental.UtilityClass;
 //spotless:off 
 //#if MC >= 11900
@@ -36,10 +37,10 @@ public class ConfigScreenProvider {
                         () -> fpm.getConfig().sitXOffset, i -> fpm.getConfig().sitXOffset = i));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures",
                         () -> fpm.getConfig().renderStuckFeatures, b -> fpm.getConfig().renderStuckFeatures = b));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHands",
-                        () -> fpm.getConfig().vanillaHands, b -> fpm.getConfig().vanillaHands = b));
-                options.add(getOnOffOption("text.firstperson.option.firstperson.doubleHands",
-                        () -> fpm.getConfig().doubleHands, b -> fpm.getConfig().doubleHands = b));
+                options.add(getEnumOption("text.firstperson.option.firstperson.vanillaHandMode", VanillaHands.class,
+                        () -> fpm.getConfig().vanillaHandsMode, b -> fpm.getConfig().vanillaHandsMode = b));
+                options.add(getOnOffOption("text.firstperson.option.firstperson.dynamicMode",
+                        () -> fpm.getConfig().dynamicMode, b -> fpm.getConfig().dynamicMode = b));
 
                 // spotless:off
                 //#if MC >= 11900
