@@ -3,7 +3,6 @@ package dev.tr7zw.firstperson.mixins;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
-import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -60,8 +59,10 @@ public abstract class LivingEntityRendererMixin {
             } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO VANILLA HANDS
                                                                                                // ITEM
                 float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
-                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
-                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
+                humanModel.rightArm.xRot += offset;
+                humanModel.leftArm.xRot += offset;
+//                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
+//                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
                 if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                     if (!playerAccess.getInventory().offhand.get(0).isEmpty()
@@ -87,8 +88,10 @@ public abstract class LivingEntityRendererMixin {
                 } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO VANILLA HANDS
                                                                                                    // ITEM
                     float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
-                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
-                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
+                    playerModel.rightSleeve.xRot += offset;
+                    playerModel.leftSleeve.xRot += offset;
+//                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
+//                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
 
                     if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                         if (!playerAccess.getInventory().offhand.get(0).isEmpty()
