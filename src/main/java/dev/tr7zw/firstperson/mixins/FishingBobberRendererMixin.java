@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -28,7 +29,13 @@ public class FishingBobberRendererMixin {
                 && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON;
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+    // spotless:off
+    //#if MC <= 12004
+    //$$ @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+    //#else
+    @Redirect(method = "getPlayerHandPos", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+    //#endif
+    //spotless:on
     private CameraType redirect(Options gameOptions) {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
@@ -45,24 +52,33 @@ public class FishingBobberRendererMixin {
         }
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
-    private double offsetX(Player playerEntity) {
-        return playerEntity.getX() + offsetvec3d.x();
+    // spotless:off
+    //#if MC <= 12004
+//$$    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
+//$$    private double offsetX(Player playerEntity) {
+//$$        return playerEntity.getX() + offsetvec3d.x();
+//$$    }
+//$$
+//$$    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getZ()D"))
+//$$    private double offsetZ(Player playerEntity) {
+//$$        return playerEntity.getZ() + offsetvec3d.z();
+//$$    }
+//$$
+//$$    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;xo:D"))
+//$$    private double prevOffsetX(Player playerEntity) {
+//$$        return playerEntity.xo + offsetvec3d.x();
+//$$    }
+//$$
+//$$    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;zo:D"))
+//$$    private double prevOffsetZ(Player playerEntity) {
+//$$        return playerEntity.zo + offsetvec3d.z();
+//$$    }
+  //#else
+    @Inject(method = "getPlayerHandPos", at = @At("RETURN"), cancellable = true)
+    private void getPlayerHandPosOffset(Player player, float f, float g, CallbackInfoReturnable<Vec3> ci) {
+        ci.setReturnValue(ci.getReturnValue().add(offsetvec3d));
     }
-
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getZ()D"))
-    private double offsetZ(Player playerEntity) {
-        return playerEntity.getZ() + offsetvec3d.z();
-    }
-
-    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;xo:D"))
-    private double prevOffsetX(Player playerEntity) {
-        return playerEntity.xo + offsetvec3d.x();
-    }
-
-    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;zo:D"))
-    private double prevOffsetZ(Player playerEntity) {
-        return playerEntity.zo + offsetvec3d.z();
-    }
+    //#endif
+    //spotless:on
 
 }
