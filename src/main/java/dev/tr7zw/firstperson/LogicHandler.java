@@ -237,9 +237,11 @@ public class LogicHandler {
      * @return
      */
     public boolean dynamicHandsEnabled(ItemStack mainhand, ItemStack offhand) {
-        return fpm.getConfig().dynamicMode && !(autoVanillaHandItems.contains(mainhand.getItem())
-                || autoVanillaHandItems.contains(offhand.getItem()) || autoDisableItems.contains(mainhand.getItem())
-                || autoDisableItems.contains(offhand.getItem()));
+        return fpm.getConfig().dynamicMode && fpm.getConfig().vanillaHandsMode != VanillaHands.OFF
+                && !(autoVanillaHandItems.contains(mainhand.getItem())
+                        || autoVanillaHandItems.contains(offhand.getItem())
+                        || autoDisableItems.contains(mainhand.getItem())
+                        || autoDisableItems.contains(offhand.getItem()));
     }
 
     /**
