@@ -5,7 +5,7 @@ replacements:
   id: "firstperson"
   version: "2.4.1"
   description: "Enables the third person Model in firstperson"
-  homepageUrl: "https://modrinth.com/mod/not-enough-animations"
+  homepageUrl: "https://modrinth.com/mod/first-person-model"
   sourcesUrl: "https://github.com/tr7zw/FirstPersonModel"
   issuesUrl: "https://github.com/tr7zw/FirstPersonModel/issues"
   fabric_entrypoint: "dev.tr7zw.firstperson.FirstPersonModelMod"
