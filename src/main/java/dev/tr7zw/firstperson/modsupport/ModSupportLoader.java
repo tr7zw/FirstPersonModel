@@ -9,18 +9,14 @@ import lombok.experimental.UtilityClass;
 public class ModSupportLoader {
 
     public static void loadSupport() {
-        // spotless:off
-		//#if FABRIC
-		try {
-			if (ModLoaderUtil.isModLoaded("freecam")) {
-				FirstPersonAPI.registerPlayerHandler(new FreecamSupport());
-				FirstPersonBase.LOGGER.info("Freecam support loaded.");
-			}
-		} catch (Throwable ex) {
-			FirstPersonBase.LOGGER.warn("Error during initialization of mod support.", ex);
-		}
-		//#endif
-		//spotless:on
+        try {
+            if (ModLoaderUtil.isModLoaded("freecam")) {
+                FirstPersonAPI.registerPlayerHandler(new FreecamSupport());
+                FirstPersonBase.LOGGER.info("Freecam support loaded.");
+            }
+        } catch (Throwable ex) {
+            FirstPersonBase.LOGGER.warn("Error during initialization of mod support.", ex);
+        }
     }
 
 }
