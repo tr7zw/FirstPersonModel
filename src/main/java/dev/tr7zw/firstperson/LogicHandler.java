@@ -195,7 +195,7 @@ public class LogicHandler {
 
     public boolean hideArmsAndItems(LivingEntity livingEntity) {
         if (livingEntity instanceof PlayerAccess playerAccess) {
-            return hideArmsAndItems(playerAccess.getInventory().getSelected(),
+            return hideArmsAndItems(livingEntity, playerAccess.getInventory().getSelected(),
                     playerAccess.getInventory().offhand.get(0));
         }
         return false;
@@ -208,7 +208,10 @@ public class LogicHandler {
      * @param offhand
      * @return
      */
-    public boolean hideArmsAndItems(ItemStack mainhand, ItemStack offhand) {
+    public boolean hideArmsAndItems(LivingEntity livingEntity, ItemStack mainhand, ItemStack offhand) {
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player && isSwimming(player)) {
+            return false;
+        }
         if (lookingDown()) {
             return false;
         }
@@ -223,7 +226,7 @@ public class LogicHandler {
 
     public boolean dynamicHandsEnabled(LivingEntity livingEntity) {
         if (livingEntity instanceof PlayerAccess playerAccess) {
-            return dynamicHandsEnabled(playerAccess.getInventory().getSelected(),
+            return dynamicHandsEnabled(livingEntity, playerAccess.getInventory().getSelected(),
                     playerAccess.getInventory().offhand.get(0));
         }
         return false;
@@ -236,7 +239,10 @@ public class LogicHandler {
      * @param offhand
      * @return
      */
-    public boolean dynamicHandsEnabled(ItemStack mainhand, ItemStack offhand) {
+    public boolean dynamicHandsEnabled(LivingEntity livingEntity, ItemStack mainhand, ItemStack offhand) {
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player && isSwimming(player)) {
+            return false;
+        }
         return fpm.getConfig().dynamicMode && fpm.getConfig().vanillaHandsMode != VanillaHands.OFF
                 && !(autoVanillaHandItems.contains(mainhand.getItem())
                         || autoVanillaHandItems.contains(offhand.getItem())

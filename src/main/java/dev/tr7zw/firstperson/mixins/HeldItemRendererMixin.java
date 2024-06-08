@@ -52,6 +52,11 @@ public abstract class HeldItemRendererMixin {
             info.cancel();
             return;
         }
+        if(FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
+            // while actively swimming, dont show the offhand item
+            info.cancel();
+            return;
+        }
         // filter out vanilla hands with no item
         if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled() && pitch > 35) {
             // item held too low, hide
