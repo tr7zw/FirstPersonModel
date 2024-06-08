@@ -36,11 +36,17 @@ public class LogicHandler {
     private Vec3 offset = Vec3.ZERO; // Current offset used for rendering
     private Set<Item> autoVanillaHandItems = new HashSet<>();
     private Set<Item> autoDisableItems = new HashSet<>();
+    private long timeout = 0;
 
     void registerDefaultHandlers() {
         FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
             if (client.player.isAutoSpinAttack() || client.player.isFallFlying()
                     || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
+                timeout = System.currentTimeMillis() + 100;
+                return true;
+            }
+            // FIXME: Evil hack to fix weird 1 frame-ish issues when landing with an elytra
+            if (System.currentTimeMillis() < timeout) {
                 return true;
             }
             if (autoDisableItems.contains(client.player.getMainHandItem().getItem())
