@@ -90,9 +90,9 @@ public class LogicHandler {
      * @param defValue
      */
     public void updatePositionOffset(Entity entity, Vec3 defValue) {
+        offset = defValue;
         // handle sleeping
         if (entity == client.getCameraEntity() && client.player.isSleeping()) {
-            offset = defValue;
             return;
         }
         double x = 0;
@@ -102,7 +102,6 @@ public class LogicHandler {
         double realYaw;
         if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)
                 || !fpm.isRenderingPlayer()) {
-            offset = defValue;
             return;
         }
         player = (AbstractClientPlayer) entity;
@@ -123,7 +122,7 @@ public class LogicHandler {
                 if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
                     realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
                 } else if (player.getVehicle() instanceof LivingEntity living) {
-                    realYaw = Mth.rotLerp(client.getFrameTime(), living.yBodyRotO, living.yBodyRot);
+                    realYaw = calculateBodyRot(Mth.rotLerp(client.getFrameTime(), living.yBodyRotO, living.yBodyRot), NMSHelper.getYRot(player));
                 } else {
                     // Non living entities don't use any custom rotation
 //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
@@ -145,6 +144,25 @@ public class LogicHandler {
 
         }
         offset = new Vec3(x, y, z);
+    }
+    
+    private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {
+        // Wrap the head rotation to the range [-180, 180]
+        float wrappedHeadRot = Mth.wrapDegrees(riderHeadRot);
+        
+        // Calculate the difference between the head and body rotation
+        float rotDiff = Mth.wrapDegrees(wrappedHeadRot - entityBodyRot);
+        
+        // If the difference is more than 50 degrees, adjust the body rotation
+        if (Mth.abs(rotDiff) > 50.0F) {
+            // Pull the body along with the head
+            entityBodyRot = wrappedHeadRot - 50.0F * Math.signum(rotDiff);
+        }
+        
+        // Ensure the body rotation is wrapped to [-180, 180]
+        entityBodyRot = Mth.wrapDegrees(entityBodyRot);
+        
+        return entityBodyRot;
     }
 
     /**
