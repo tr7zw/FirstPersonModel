@@ -49,10 +49,10 @@ public class WorldRendererMixin {
         //$$        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
         //$$ PoseStack matrices = new PoseStack();
         //#else
-    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-    public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
-            LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-        PoseStack matrices = new PoseStack();
+            @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+            public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+                    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+                PoseStack matrices = new PoseStack();
         //#endif
         //spotless:on
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
