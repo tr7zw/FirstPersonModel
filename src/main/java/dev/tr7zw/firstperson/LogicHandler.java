@@ -39,7 +39,7 @@ public class LogicHandler {
 
     void registerDefaultHandlers() {
         FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
-            if (client.player.isAutoSpinAttack() || client.player.isFallFlying()
+            if (client.player.isSleeping() || client.player.isAutoSpinAttack() || client.player.isFallFlying()
                     || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
                 timeout = System.currentTimeMillis() + 100;
                 return true;
