@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,8 +87,9 @@ public class LogicHandler {
      * 
      * @param entity
      * @param defValue
+     * @param delta
      */
-    public void updatePositionOffset(Entity entity, Vec3 defValue) {
+    public void updatePositionOffset(Entity entity, Vec3 defValue, float delta) {
         offset = defValue;
         // handle sleeping
         if (entity == client.getCameraEntity() && client.player.isSleeping()) {
@@ -105,7 +105,7 @@ public class LogicHandler {
             return;
         }
         player = (AbstractClientPlayer) entity;
-        realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
+        realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
         if (!player.isLocalPlayer() || client.getCameraEntity() == player) {
             float bodyOffset;
             if (isCrawlingOrSwimming(client.player)) {
@@ -120,9 +120,10 @@ public class LogicHandler {
                 bodyOffset = Constants.SNEAK_BODY_OFFSET + fpm.getConfig().sneakXOffset / 100f;
             } else if (player.isPassenger()) {
                 if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
-                    realYaw = Mth.rotLerp(client.getFrameTime(), player.yBodyRotO, player.yBodyRot);
+                    realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
                 } else if (player.getVehicle() instanceof LivingEntity living) {
-                    realYaw = calculateBodyRot(Mth.rotLerp(client.getFrameTime(), living.yBodyRotO, living.yBodyRot), NMSHelper.getYRot(player));
+                    realYaw = calculateBodyRot(Mth.rotLerp(delta, living.yBodyRotO, living.yBodyRot),
+                            NMSHelper.getYRot(player));
                 } else {
                     // Non living entities don't use any custom rotation
 //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
@@ -145,23 +146,23 @@ public class LogicHandler {
         }
         offset = new Vec3(x, y, z);
     }
-    
+
     private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {
         // Wrap the head rotation to the range [-180, 180]
         float wrappedHeadRot = Mth.wrapDegrees(riderHeadRot);
-        
+
         // Calculate the difference between the head and body rotation
         float rotDiff = Mth.wrapDegrees(wrappedHeadRot - entityBodyRot);
-        
+
         // If the difference is more than 50 degrees, adjust the body rotation
         if (Mth.abs(rotDiff) > 50.0F) {
             // Pull the body along with the head
             entityBodyRot = wrappedHeadRot - 50.0F * Math.signum(rotDiff);
         }
-        
+
         // Ensure the body rotation is wrapped to [-180, 180]
         entityBodyRot = Mth.wrapDegrees(entityBodyRot);
-        
+
         return entityBodyRot;
     }
 
@@ -234,7 +235,8 @@ public class LogicHandler {
      * @return
      */
     public boolean hideArmsAndItems(LivingEntity livingEntity, ItemStack mainhand, ItemStack offhand) {
-        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player && isSwimming(player)) {
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player
+                && isSwimming(player)) {
             return false;
         }
         if (lookingDown()) {
@@ -265,7 +267,8 @@ public class LogicHandler {
      * @return
      */
     public boolean dynamicHandsEnabled(LivingEntity livingEntity, ItemStack mainhand, ItemStack offhand) {
-        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player && isSwimming(player)) {
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && livingEntity instanceof Player player
+                && isSwimming(player)) {
             return false;
         }
         return fpm.getConfig().dynamicMode && fpm.getConfig().vanillaHandsMode != VanillaHands.OFF
@@ -295,10 +298,11 @@ public class LogicHandler {
     public void reloadAutoVanillaHandsSettings() {
         autoVanillaHandItems.clear();
         autoDisableItems.clear();
-        Item invalid = NMSHelper.getItem(new ResourceLocation("minecraft", "air"));
+        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
         for (String itemId : fpm.getConfig().autoVanillaHands) {
             try {
-                Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = NMSHelper
+                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item) {
                     addAutoVanillaHandsItem(item);
                 }
@@ -309,7 +313,8 @@ public class LogicHandler {
         FirstPersonBase.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
         for (String itemId : fpm.getConfig().autoToggleModItems) {
             try {
-                Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = NMSHelper
+                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item) {
                     addAutoDisableItem(item);
                 }

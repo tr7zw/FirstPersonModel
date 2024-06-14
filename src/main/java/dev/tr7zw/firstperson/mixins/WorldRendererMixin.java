@@ -18,6 +18,9 @@ import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 // spotless:off
+//#if MC >= 12100
+import net.minecraft.client.DeltaTracker;
+//#endif
 //#if MC >= 11903
 import org.joml.Matrix4f;
 //#else
@@ -40,10 +43,15 @@ public class WorldRendererMixin {
 //$$    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
 //$$    public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
 //$$            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
+        //#elseif MC < 12100
+        //$$ @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+        //$$ public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
+        //$$        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+        //$$ PoseStack matrices = new PoseStack();
         //#else
-        @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-        public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
-                GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+            LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
         PoseStack matrices = new PoseStack();
         //#endif
         //spotless:on
@@ -53,7 +61,13 @@ public class WorldRendererMixin {
         Vec3 vec3d = camera.getPosition();
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
-        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
+        // spotless:off
+        //#if MC < 12100
+        //$$ renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
+        //#else
+        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
+        //#endif
+        //spotless:on
         FirstPersonModelCore.instance.setRenderingPlayer(false);
     }
 

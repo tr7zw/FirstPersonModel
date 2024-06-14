@@ -23,9 +23,16 @@ import net.minecraft.world.entity.LivingEntity;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class FeatureRendererMixin {
     @Inject(method = "renderColoredCutoutModel", at = @At("HEAD"), cancellable = true)
+    // spotless:off
+    //#if MC >= 12100
     private static <T extends LivingEntity> void removeHead(EntityModel<T> model, ResourceLocation texture,
-            PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
-            float blue, CallbackInfo ci) {
+            PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, int color, CallbackInfo ci) {
+    //#else
+    //$$private static <T extends LivingEntity> void removeHead(EntityModel<T> model, ResourceLocation texture,
+    //$$        PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
+    //$$        float blue, CallbackInfo ci) {
+    //#endif
+    //spotless:on
         if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             if (!(model instanceof HeadedModel)) {
                 ci.cancel();
@@ -39,9 +46,16 @@ public abstract class FeatureRendererMixin {
     }
 
     @Inject(method = "renderColoredCutoutModel", at = @At("RETURN"), cancellable = true)
+    // spotless:off
+    //#if MC >= 12100
     private static <T extends LivingEntity> void removeReturn(EntityModel<T> model, ResourceLocation texture,
-            PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
-            float blue, CallbackInfo ci) {
+            PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, int color, CallbackInfo ci) {
+    //#else
+    //$$private static <T extends LivingEntity> void removeReturn(EntityModel<T> model, ResourceLocation texture,
+    //$$        PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
+    //$$        float blue, CallbackInfo ci) {
+    //#endif
+    //spotless:on
         if (model instanceof HeadedModel) {
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).showAgain();
             if (model instanceof VillagerHeadModel villager) {

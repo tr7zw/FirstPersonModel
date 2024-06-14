@@ -52,7 +52,8 @@ public abstract class HeldItemRendererMixin {
             info.cancel();
             return;
         }
-        if(FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
+        if (FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming
+                && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             // while actively swimming, dont show the offhand item
             info.cancel();
             return;

@@ -25,14 +25,14 @@ public class PlayerRendererMixin {
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-    public void getRenderOffset(AbstractClientPlayer entity, float f, CallbackInfoReturnable<Vec3> ci) {
+    public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
         if (entity == fpmMcInstance.cameraEntity && FirstPersonModelCore.instance.isRenderingPlayer()) {
-            FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, Vec3.ZERO);
+            FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, Vec3.ZERO, delta);
 
             Vec3 offset = ci.getReturnValue().add(FirstPersonModelCore.instance.getLogicHandler().getOffset());
 
             for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
-                offset = handler.applyOffset(entity, f, ci.getReturnValue(), offset);
+                offset = handler.applyOffset(entity, delta, ci.getReturnValue(), offset);
             }
 
             ci.setReturnValue(offset);

@@ -42,7 +42,8 @@ public class ConfigScreenProvider {
                 options.add(getOnOffOption("text.firstperson.option.firstperson.dynamicMode",
                         () -> fpm.getConfig().dynamicMode, b -> fpm.getConfig().dynamicMode = b));
                 options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHandsSkipSwimming",
-                        () -> fpm.getConfig().vanillaHandsSkipSwimming, b -> fpm.getConfig().vanillaHandsSkipSwimming = b));
+                        () -> fpm.getConfig().vanillaHandsSkipSwimming,
+                        b -> fpm.getConfig().vanillaHandsSkipSwimming = b));
 
                 // spotless:off
                 //#if MC >= 11900

@@ -59,7 +59,7 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             relativeTranslation.translate(0, bodyOffset, 0); // Roll back the first [0,1,0] translation.
 
             // calculate the actual rotations and
-            float realYaw = Mth.rotLerp(minecraft.getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
+            float realYaw = Mth.rotLerp(delta, entity.yBodyRotO, entity.yBodyRot);
 
             Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
             matrix.mul(new Matrix4f().scale(-1, 1, 1)); // What is going on with this?!
