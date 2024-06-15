@@ -145,6 +145,10 @@ public abstract class LivingEntityRendererMixin {
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
             ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
+            revert.add(() -> {
+                ((ModelPartBase) (Object) playerModel.body).showAgain();
+                ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
+            });
         }
         if (!headShouldBeHidden) {
             // we failed to hide the head. So either its a mob without one, or something is
