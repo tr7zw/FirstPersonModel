@@ -15,7 +15,7 @@
     "text.firstperson.option.firstperson.vanillaHandMode": "Mostrar Mãos do Vanilla",
     "text.firstperson.option.firstperson.vanillaHandMode.OFF": "Desligado",
     "text.firstperson.option.firstperson.vanillaHandMode.ALL": "Sempre",
-    "text.firstperson.option.firstperson.vanillaHandMode.ALL_DOUBLE": "Sempres Duas Mãos",
+    "text.firstperson.option.firstperson.vanillaHandMode.ALL_DOUBLE": "Sempre Duas Mãos",
     "text.firstperson.option.firstperson.vanillaHandMode.ITEMS": "Com Item na Mão",
     "text.firstperson.option.firstperson.vanillaHandMode.tooltip": "Mostra em primeira pessoa as mãos do Vanilla",
     "text.firstperson.option.firstperson.dynamicMode": "Mãos Dinâmicas",
