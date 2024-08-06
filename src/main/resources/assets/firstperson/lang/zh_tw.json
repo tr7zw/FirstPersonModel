@@ -1,0 +1,28 @@
+{
+    "text.firstperson.title": "第一人稱模型設定 （First-person Model）",
+    "key.firstperson.toggle": "切換第一人稱",
+    "category.firstperson.firstperson": "第一人稱",
+    "text.firstperson.option.firstperson.xOffset": "站立 x 偏移",
+    "text.firstperson.option.firstperson.xOffset.tooltip": "前後移動身體相對於攝影機的位置",
+    "text.firstperson.option.firstperson.sneakXOffset": "潛行 x 偏移",
+    "text.firstperson.option.firstperson.sneakXOffset.tooltip": "潛行時前後移動身體相對於攝影機的位置",
+    "text.firstperson.option.firstperson.enabledByDefault": "預設啟用",
+    "text.firstperson.option.firstperson.enabledByDefault.tooltip": "開始遊戲後 FirstPerson 模組的預設狀態",
+    "text.firstperson.option.firstperson.sitXOffset": "坐下 x 偏移",
+    "text.firstperson.option.firstperson.sitXOffset.tooltip": "坐下時前後移動身體相對於攝影機的位置",
+    "text.firstperson.option.firstperson.renderStuckFeatures": "繪製箭矢和毒刺",
+    "text.firstperson.option.firstperson.renderStuckFeatures.tooltip": "以第一人稱顯示箭矢、蜜蜂毒刺或其他模組功能",
+    "text.firstperson.option.firstperson.vanillaHandMode": "原版手臂模式",
+    "text.firstperson.option.firstperson.vanillaHandMode.OFF": "關閉",
+    "text.firstperson.option.firstperson.vanillaHandMode.ALL": "總是顯示",
+    "text.firstperson.option.firstperson.vanillaHandMode.ALL_DOUBLE": "總是顯示雙手",
+    "text.firstperson.option.firstperson.vanillaHandMode.ITEMS": "手持物品時顯示",
+    "text.firstperson.option.firstperson.vanillaHandMode.tooltip": "顯示原版第一人稱手臂",
+    "text.firstperson.option.firstperson.dynamicMode": "動態模式",
+    "text.firstperson.option.firstperson.dynamicMode.tooltip": "根據當前視角變更原版手臂的顯示方式",
+    "modmenu.summaryTranslation.firstperson": "在第一人稱中啟用第三人稱模型",
+    "modmenu.descriptionTranslation.firstperson": "在第一人稱中啟用第三人稱模型",
+    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming": "游泳時停用原版手臂",
+    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming.tooltip": "游泳時停用原版手臂（同時忽略動態模式）"
+  }
+  
