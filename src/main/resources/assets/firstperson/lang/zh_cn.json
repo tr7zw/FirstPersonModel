@@ -21,7 +21,7 @@
     "text.firstperson.option.firstperson.dynamicMode": "动态模式",
     "text.firstperson.option.firstperson.dynamicMode.tooltip": "基于当前的显示改变原版的手部显示",
     "text.firstperson.option.firstperson.forceActive": "强制使用",
-    "text.firstperson.option.firstperson.forceActive.tooltip": "当其他模组修改渲染时强制使用第一人称模型，但会导致视觉问题（例如玩家头部缺失）"
+    "text.firstperson.option.firstperson.forceActive.tooltip": "当其他模组修改渲染时强制使用第一人称模型，但会导致视觉问题（例如玩家头部缺失）",
     "modmenu.summaryTranslation.firstperson": "在第一人称的视角启用第三人称的模型",
     "modmenu.descriptionTranslation.firstperson": "在第一人称的视角启用第三人称的模型",
     "text.firstperson.option.firstperson.vanillaHandsSkipSwimming": "在游泳时禁用原版手部显示",
