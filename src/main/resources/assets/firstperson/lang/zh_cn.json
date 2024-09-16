@@ -13,7 +13,17 @@
     "text.firstperson.option.firstperson.sitXOffset": "坐下时的 X 轴补偿",
     "text.firstperson.option.firstperson.sitXOffset.tooltip": "前后调节坐下时身体相对于镜头的位置",
     "text.firstperson.option.firstperson.vanillaHands": "原版的手部显示效果",
+    "text.firstperson.option.firstperson.vanillaHandMode.OFF": "关闭",
+    "text.firstperson.option.firstperson.vanillaHandMode.ALL": "总是",
+    "text.firstperson.option.firstperson.vanillaHandMode.ALL_DOUBLE": "总是显示双手",
+    "text.firstperson.option.firstperson.vanillaHandMode.ITEMS": "手上的物品",
     "text.firstperson.option.firstperson.vanillaHands.tooltip": "显示原版第一人称手的显示效果，但同时也显示玩家模型（没有手臂）",
+    "text.firstperson.option.firstperson.dynamicMode": "动态模式",
+    "text.firstperson.option.firstperson.dynamicMode.tooltip": "基于当前的显示改变原版的手部显示",
     "text.firstperson.option.firstperson.forceActive": "强制使用",
     "text.firstperson.option.firstperson.forceActive.tooltip": "当其他模组修改渲染时强制使用第一人称模型，但会导致视觉问题（例如玩家头部缺失）"
+    "modmenu.summaryTranslation.firstperson": "在第一人称的视角启用第三人称的模型",
+    "modmenu.descriptionTranslation.firstperson": "在第一人称的视角启用第三人称的模型",
+    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming": "在游泳时禁用原版手部显示",
+    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming.tooltip": "在游泳时禁用原版手部显示（当然也会忽略动态模式）"
 }
