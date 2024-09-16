@@ -1,5 +1,6 @@
 {
     "text.firstperson.title": "FirstPerson Settings",
+    "firstperson.keybind": "Firstperson",
     "key.firstperson.toggle": "Toggle Firstperson",
     "category.firstperson.firstperson": "FirstPerson",
     "text.firstperson.option.firstperson.xOffset": "Standing x Offset",
