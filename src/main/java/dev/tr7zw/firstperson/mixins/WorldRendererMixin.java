@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -23,6 +24,9 @@ import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 //#endif
 //#if MC >= 12100
 import net.minecraft.client.DeltaTracker;
+
+import java.util.List;
+
 //#endif
 //#if MC >= 11903
 import org.joml.Matrix4f;
@@ -55,10 +59,9 @@ public class WorldRendererMixin {
     //$$    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
     //$$    PoseStack matrices = new PoseStack();
     //#else
-    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;addMainPass(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lnet/minecraft/client/renderer/culling/Frustum;Lnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/client/renderer/FogParameters;ZZLnet/minecraft/client/DeltaTracker;Lnet/minecraft/util/profiling/ProfilerFiller;)V", ordinal = 0, shift = Shift.BEFORE))
-    public void renderLevel(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean bl,
-            Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2,
-            CallbackInfo info) {
+    @Inject(method = "renderEntities", at = @At(value = "HEAD"))
+    private void renderEntities(PoseStack poseStack, BufferSource bufferSource, Camera camera,
+            DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         //#endif
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
