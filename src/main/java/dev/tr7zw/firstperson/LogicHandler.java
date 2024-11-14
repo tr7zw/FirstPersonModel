@@ -89,8 +89,8 @@ public class LogicHandler {
      * @param defValue
      * @param delta
      */
-    public void updatePositionOffset(Entity entity, Vec3 defValue, float delta) {
-        offset = defValue;
+    public void updatePositionOffset(Entity entity, float delta) {
+        offset = Vec3.ZERO;
         // handle sleeping
         if (entity == client.getCameraEntity() && client.player.isSleeping()) {
             return;

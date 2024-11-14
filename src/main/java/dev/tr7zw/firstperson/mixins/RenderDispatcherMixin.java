@@ -1,21 +1,28 @@
 package dev.tr7zw.firstperson.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.world.level.LevelReader;
 
-//#if MC < 12103
+//#if MC >= 12103
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+//#else
 //$$import org.spongepowered.asm.mixin.injection.At;
 //$$import org.spongepowered.asm.mixin.injection.At.Shift;
-//$$import org.spongepowered.asm.mixin.injection.Inject;
 //$$import org.spongepowered.asm.mixin.injection.Redirect;
 //$$import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-//$$import com.mojang.blaze3d.vertex.PoseStack;
 //$$import com.mojang.blaze3d.vertex.VertexConsumer;
-//$$import dev.tr7zw.firstperson.FirstPersonModelCore;
 //$$import net.minecraft.client.CameraType;
 //$$import net.minecraft.client.renderer.MultiBufferSource;
 //$$import net.minecraft.util.Mth;
@@ -34,7 +41,33 @@ public abstract class RenderDispatcherMixin {
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
-    //#if MC < 12103
+    //#if MC >= 12103
+    private static double tmpX;
+    private static double tmpZ;
+
+    @Inject(method = "renderShadow", at = @At("HEAD"))
+    private static void renderShadow(PoseStack poseStack, MultiBufferSource multiBufferSource,
+            EntityRenderState entityRenderState, float f, float g, LevelReader levelReader, float h, CallbackInfo ci) {
+        if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
+            poseStack.pushPose();
+            poseStack.translate(FirstPersonModelCore.instance.getLogicHandler().getOffset());
+            tmpX = entityRenderState.x;
+            tmpZ = entityRenderState.z;
+            entityRenderState.x += FirstPersonModelCore.instance.getLogicHandler().getOffset().x;
+            entityRenderState.z += FirstPersonModelCore.instance.getLogicHandler().getOffset().z;
+        }
+    }
+
+    @Inject(method = "renderShadow", at = @At("RETURN"))
+    private static void renderShadowEnd(PoseStack poseStack, MultiBufferSource multiBufferSource,
+            EntityRenderState entityRenderState, float f, float g, LevelReader levelReader, float h, CallbackInfo ci) {
+        if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
+            entityRenderState.x = tmpX;
+            entityRenderState.z = tmpZ;
+            poseStack.popPose();
+        }
+    }
+    //#else
     //$$   @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     //$$  private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
     //$$          MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {

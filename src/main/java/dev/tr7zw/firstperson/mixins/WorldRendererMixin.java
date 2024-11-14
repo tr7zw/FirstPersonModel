@@ -70,6 +70,7 @@ public class WorldRendererMixin {
         Vec3 vec3d = camera.getPosition();
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
+        FirstPersonModelCore.instance.setRenderingPlayerPost(true);
         // spotless:off
         //#if MC < 12100
         //$$ renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
@@ -78,6 +79,7 @@ public class WorldRendererMixin {
         //#endif
         //spotless:on
         FirstPersonModelCore.instance.setRenderingPlayer(false);
+        FirstPersonModelCore.instance.setRenderingPlayerPost(false);
     }
 
     @Shadow
