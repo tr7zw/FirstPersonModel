@@ -12,6 +12,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.phys.Vec3;
+//#if MC >= 12103
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#endif
 
 /**
  * Offset the player behind the camera
@@ -25,7 +28,13 @@ public class PlayerRendererMixin {
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-    public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
+    //#if MC >= 12103
+    public void getRenderOffset(PlayerRenderState playerRenderState, CallbackInfoReturnable<Vec3> ci) {
+        AbstractClientPlayer entity = Minecraft.getInstance().player;
+        float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
+        //#else
+        //$$public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
+        //#endif
         if (entity == fpmMcInstance.cameraEntity && FirstPersonModelCore.instance.isRenderingPlayer()) {
             FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, Vec3.ZERO, delta);
 

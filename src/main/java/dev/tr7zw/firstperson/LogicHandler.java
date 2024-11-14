@@ -126,8 +126,8 @@ public class LogicHandler {
                             NMSHelper.getYRot(player));
                 } else {
                     // Non living entities don't use any custom rotation
-//                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
-//                            NMSHelper.getYRot(player.getVehicle()));
+                    //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
+                    //                            NMSHelper.getYRot(player.getVehicle()));
                 }
                 bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
             } else {

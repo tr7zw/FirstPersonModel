@@ -3,6 +3,7 @@ package dev.tr7zw.firstperson.mixins;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -17,7 +18,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-// spotless:off
+//#if MC >= 12103
+import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
+//#endif
 //#if MC >= 12100
 import net.minecraft.client.DeltaTracker;
 //#endif
@@ -26,7 +29,6 @@ import org.joml.Matrix4f;
 //#else
 //$$ import com.mojang.math.Matrix4f;
 //#endif
-//spotless:on
 
 /**
  * Detects when the player is rendered and triggers the correct changes
@@ -38,23 +40,27 @@ public class WorldRendererMixin {
     @Shadow
     private RenderBuffers renderBuffers;
 
-    // spotless:off
     //#if MC <= 12004
-//$$    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-//$$    public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
-//$$            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
-        //#elseif MC < 12100
-        //$$ @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-        //$$ public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
-        //$$        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-        //$$ PoseStack matrices = new PoseStack();
-        //#else
-            @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-            public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
-                    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-                PoseStack matrices = new PoseStack();
+    //$$    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    //$$    public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
+    //$$            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
+    //#elseif MC < 12100
+    //$$ @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    //$$ public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
+    //$$        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+    //$$ PoseStack matrices = new PoseStack();
+    //#elseif MC < 12103
+    //$$ @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    //$$ public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+    //$$    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+    //$$    PoseStack matrices = new PoseStack();
+    //#else
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;addMainPass(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lnet/minecraft/client/renderer/culling/Frustum;Lnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/client/renderer/FogParameters;ZZLnet/minecraft/client/DeltaTracker;Lnet/minecraft/util/profiling/ProfilerFiller;)V", ordinal = 0, shift = Shift.BEFORE))
+    public void renderLevel(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean bl,
+            Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2,
+            CallbackInfo info) {
+        PoseStack matrices = new PoseStack();
         //#endif
-        //spotless:on
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
             return;
         }

@@ -1,9 +1,13 @@
 package dev.tr7zw.firstperson.access;
 
-import net.minecraft.client.model.geom.ModelPart;
+//#if MC < 12103
+//$$import net.minecraft.client.model.geom.ModelPart;
+//#endif
 
 public interface PlayerModelAccess {
 
-    ModelPart getCloak();
+    //#if MC < 12103
+    //$$ ModelPart getCloak();
+    //#endif
 
 }

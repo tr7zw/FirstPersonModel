@@ -16,8 +16,12 @@ import net.minecraft.client.Options;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.phys.Vec3;
+//#if MC >= 12103
+import net.minecraft.client.renderer.entity.state.FishingHookRenderState;
+//#else
+//$$ import net.minecraft.world.entity.projectile.FishingHook;
+//#endif
 
 @Mixin(FishingHookRenderer.class)
 public class FishingBobberRendererMixin {
@@ -42,9 +46,14 @@ public class FishingBobberRendererMixin {
     }
 
     @Inject(method = "render", at = @At("HEAD"))
-    private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
-            MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        if (fishingBobberEntity.getOwner() instanceof Player) {
+    //#if MC >= 12103
+    public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
+            MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
+        //#else
+        //$$ private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
+        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+        //#endif
+        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             offsetvec3d = FirstPersonModelCore.instance.getLogicHandler().getOffset();// getPositionOffset((Player)
                                                                                       // fishingBobberEntity.getOwner(),
                                                                                       // matrixStack);

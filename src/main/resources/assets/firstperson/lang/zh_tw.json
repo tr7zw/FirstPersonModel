@@ -24,5 +24,4 @@
     "modmenu.descriptionTranslation.firstperson": "在第一人稱中啟用第三人稱模型",
     "text.firstperson.option.firstperson.vanillaHandsSkipSwimming": "游泳時停用原版手臂",
     "text.firstperson.option.firstperson.vanillaHandsSkipSwimming.tooltip": "游泳時停用原版手臂（同時忽略動態模式）"
-  }
-  
+}
