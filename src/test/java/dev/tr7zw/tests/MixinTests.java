@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.client.renderer.entity.layers.ArrowLayer;
 import net.minecraft.client.renderer.entity.layers.CapeLayer;
-import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -42,7 +41,7 @@ public class MixinTests {
     void testMixins() {
         Objenesis objenesis = new ObjenesisStd();
         objenesis.newInstance(HumanoidArmorLayer.class);
-        objenesis.newInstance(ElytraLayer.class);
+        //        objenesis.newInstance(ElytraLayer.class);
         objenesis.newInstance(CapeLayer.class);
         objenesis.newInstance(FishingHookRenderer.class);
         objenesis.newInstance(ItemInHandLayer.class);

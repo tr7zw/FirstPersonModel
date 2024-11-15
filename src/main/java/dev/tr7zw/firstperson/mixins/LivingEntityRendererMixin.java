@@ -31,8 +31,14 @@ import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Shulker;
+
+//#if MC >= 12103
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#endif
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
@@ -40,9 +46,22 @@ public abstract class LivingEntityRendererMixin {
     private static List<Runnable> revert = new ArrayList<Runnable>();
 
     // pull all registers to try to get rid of the head or other bodyparts
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
-    public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
-            MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+    //#if MC >= 12103
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = Shift.AFTER), cancellable = true)
+    public void render(LivingEntityRenderState livingEntityRenderState, PoseStack matrixStack,
+            MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
+        if (!FirstPersonModelCore.instance.isRenderingPlayer())
+            return;
+        Entity entity = Minecraft.getInstance().cameraEntity;
+        if (!(entity instanceof LivingEntity)) {
+            return;
+        }
+        LivingEntity livingEntity = (LivingEntity) entity;
+        //#else
+        //$$@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
+        //$$public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
+        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+        //#endif
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -81,8 +100,8 @@ public abstract class LivingEntityRendererMixin {
                 float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
                 humanModel.rightArm.xRot += offset;
                 humanModel.leftArm.xRot += offset;
-//                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
-//                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
+                //                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
+                //                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
                 if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                     if (!playerAccess.getInventory().offhand.get(0).isEmpty()
@@ -107,7 +126,7 @@ public abstract class LivingEntityRendererMixin {
                 villaterHead.hatVisible(true);
             });
         }
-        if (model instanceof PlayerModel<?> playerModel) {
+        if (model instanceof PlayerModel playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
             revert.add(() -> ((ModelPartBase) (Object) playerModel.hat).showAgain());
@@ -124,8 +143,8 @@ public abstract class LivingEntityRendererMixin {
                     float offset = Mth.clamp(-NMSHelper.getXRot(Minecraft.getInstance().player) / 20 + 2, -0.0f, 0.7f);
                     playerModel.rightSleeve.xRot += offset;
                     playerModel.leftSleeve.xRot += offset;
-//                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
-//                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
+                    //                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
+                    //                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
 
                     if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                         if (!playerAccess.getInventory().offhand.get(0).isEmpty()
@@ -141,13 +160,21 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-        if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel<?> playerModel
+        if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
-            ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
+            //#if MC >= 12103
+            if (livingEntityRenderState instanceof PlayerRenderState prs) {
+                prs.showCape = false;
+            }
+            //#else
+            //$$((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
+            //#endif
             revert.add(() -> {
                 ((ModelPartBase) (Object) playerModel.body).showAgain();
-                ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
+                //#if MC < 12103
+                //$$ ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
+                //#endif
             });
         }
         if (!headShouldBeHidden) {
@@ -159,8 +186,13 @@ public abstract class LivingEntityRendererMixin {
     }
 
     @Inject(method = "render", at = @At("RETURN"))
-    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
-            MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+    //#if MC >= 12103
+    public void renderEnd(LivingEntityRenderState livingEntityRenderState, PoseStack poseStack,
+            MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
+        //#else
+        //$$    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
+        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+        //#endifs
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -171,6 +203,6 @@ public abstract class LivingEntityRendererMixin {
     }
 
     @Shadow
-    public abstract EntityModel<LivingEntity> getModel();
+    public abstract EntityModel getModel();
 
 }

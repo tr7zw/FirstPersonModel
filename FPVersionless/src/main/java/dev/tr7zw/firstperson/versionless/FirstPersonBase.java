@@ -19,9 +19,20 @@ import lombok.Setter;
 public class FirstPersonBase {
 
     public static final Logger LOGGER = LogManager.getLogger("FirstPersonModel");
+    /**
+     * Stays true till the first entity is rendered when the player is supposed to
+     * be rendered
+     */
     @Getter
     @Setter
     private boolean isRenderingPlayer = false;
+    /**
+     * Stays true for the entire render time of the entity, even after the entity
+     * itself
+     */
+    @Getter
+    @Setter
+    private boolean isRenderingPlayerPost = false;
     @Getter
     @Setter
     private boolean enabled = true;
