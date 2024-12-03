@@ -27,7 +27,7 @@ import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.VillagerHeadModel;
+
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -38,6 +38,9 @@ import net.minecraft.world.entity.monster.Shulker;
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#endif
+//#if MC < 12104
+//$$import net.minecraft.client.model.VillagerHeadModel;
 //#endif
 
 @Mixin(LivingEntityRenderer.class)
@@ -120,12 +123,14 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-        if (model instanceof VillagerHeadModel villaterHead) {
-            villaterHead.hatVisible(false);
-            revert.add(() -> {
-                villaterHead.hatVisible(true);
-            });
-        }
+        //#if MC < 12104
+        //$$if (model instanceof VillagerHeadModel villaterHead) {
+        //$$    villaterHead.hatVisible(false);
+        //$$    revert.add(() -> {
+        //$$        villaterHead.hatVisible(true);
+        //$$    });
+        //$$}
+        //#endif
         if (model instanceof PlayerModel playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();

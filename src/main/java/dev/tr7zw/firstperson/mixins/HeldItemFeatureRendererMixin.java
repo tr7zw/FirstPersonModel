@@ -13,18 +13,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.ItemStack;
-//#if MC >= 12103
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+//#if MC < 12104
+//$$import net.minecraft.world.item.ItemStack;
+//#endif
+//#if MC == 12103
+//$$import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+//#endif
+//#if MC >= 12103 && MC < 12104
+//$$import net.minecraft.client.resources.model.BakedModel;
 //#else
 //$$import net.minecraft.client.player.LocalPlayer;
 //$$import net.minecraft.world.entity.LivingEntity;
 //#endif
-//#if MC >= 11904
-import net.minecraft.world.item.ItemDisplayContext;
+//#if MC >= 11904 && MC < 12104
+//$$import net.minecraft.world.item.ItemDisplayContext;
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+//#endif
+//#if MC >= 12104
+import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 //#endif
 
 /**
@@ -35,10 +43,14 @@ import net.minecraft.world.item.ItemDisplayContext;
 public class HeldItemFeatureRendererMixin {
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    //#if MC >= 12103
-    private void renderArmWithItem(LivingEntityRenderState livingEntityRenderState, BakedModel bakedModel,
-            ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+    //#if MC >= 12104
+    private void renderArmWithItem(ArmedEntityRenderState livingEntityRenderState,
+            ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        //#elseif MC >= 12103
+        //$$private void renderArmWithItem(LivingEntityRenderState livingEntityRenderState, BakedModel bakedModel,
+        //$$        ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+        //$$        MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
         //#elseif MC >= 11904
         //$$private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext,
         //$$        HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {

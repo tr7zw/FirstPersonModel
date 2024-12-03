@@ -13,13 +13,15 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
-import net.minecraft.client.model.VillagerHeadModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+//#endif
+//#if MC < 12104
+//$$import net.minecraft.client.model.VillagerHeadModel;
 //#endif
 
 @Mixin(RenderLayer.class)
@@ -44,9 +46,11 @@ public abstract class FeatureRendererMixin {
                 return;
             }
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).setHidden();
-            if (model instanceof VillagerHeadModel villager) {
-                villager.hatVisible(false);
-            }
+            //#if MC < 12104
+            //$$if (model instanceof VillagerHeadModel villager) {
+            //$$    villager.hatVisible(false);
+            //$$}
+            //#endif
         }
     }
 
@@ -65,9 +69,11 @@ public abstract class FeatureRendererMixin {
         //#endif
         if (model instanceof HeadedModel) {
             ((ModelPartBase) (Object) ((HeadedModel) model).getHead()).showAgain();
-            if (model instanceof VillagerHeadModel villager) {
-                villager.hatVisible(true);
-            }
+            //#if MC < 12104
+            //$$  if (model instanceof VillagerHeadModel villager) {
+            //$$      villager.hatVisible(true);
+            //$$  }
+            //#endif
         }
     }
 
