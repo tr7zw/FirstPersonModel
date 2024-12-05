@@ -25,8 +25,10 @@ import net.minecraft.world.entity.HumanoidArm;
 //$$import net.minecraft.client.player.LocalPlayer;
 //$$import net.minecraft.world.entity.LivingEntity;
 //#endif
-//#if MC >= 11904 && MC < 12104
+//#if MC >= 11904
+//#if MC < 12104
 //$$import net.minecraft.world.item.ItemDisplayContext;
+//#endif
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 //#endif
