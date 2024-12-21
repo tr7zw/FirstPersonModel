@@ -74,7 +74,7 @@ public abstract class RenderDispatcherMixin {
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
     private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer, Entity entity, float red, float green,
             float blue, float alpha, CallbackInfo ci) {
-        if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
+        if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             ci.cancel();
         }
     }
@@ -83,7 +83,7 @@ public abstract class RenderDispatcherMixin {
     //$$   @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     //$$  private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
     //$$          MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
-    //$$      if (FirstPersonModelCore.instance.isRenderingPlayer()) {
+    //$$      if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
     //$$          return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().x;
     //$$      }
     //$$       return Mth.lerp(delta, old, cur);
@@ -92,7 +92,7 @@ public abstract class RenderDispatcherMixin {
     //$$  @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 2))
     //$$  private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack,
     //$$          MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
-    //$$      if (FirstPersonModelCore.instance.isRenderingPlayer()) {
+    //$$      if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
     //$$         return Mth.lerp(delta, old, cur) + FirstPersonModelCore.instance.getLogicHandler().getOffset().z;
     //$$      }
     //$$      return Mth.lerp(delta, old, cur);
@@ -101,7 +101,7 @@ public abstract class RenderDispatcherMixin {
     //$$   @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = Shift.BEFORE))
     //$$   private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity,
     //$$           float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
-    //$$      if (entity != fpmMcInstance.cameraEntity || fpmMcInstance.options.getCameraType() != CameraType.FIRST_PERSON) {
+    //$$      if (!FirstPersonModelCore.instance.isRenderingPlayerPost()) {
     //$$          return;
     //$$       }
     //$$       Vec3 offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
@@ -119,7 +119,7 @@ public abstract class RenderDispatcherMixin {
     //$$       float g, float h, float i,
     //$$               CallbackInfo ci) {
     //#endif
-    //$$    if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
+    //$$    if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
     //$$       ci.cancel();
     //$$    }
     //$$}
