@@ -6,13 +6,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelReader;
 
 //#if MC >= 12103
@@ -67,6 +70,15 @@ public abstract class RenderDispatcherMixin {
             poseStack.popPose();
         }
     }
+
+    @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
+    private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer, Entity entity, float red, float green,
+            float blue, float alpha, CallbackInfo ci) {
+        if (entity == fpmMcInstance.cameraEntity && fpmMcInstance.options.getCameraType() == CameraType.FIRST_PERSON) {
+            ci.cancel();
+        }
+    }
+
     //#else
     //$$   @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     //$$  private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
