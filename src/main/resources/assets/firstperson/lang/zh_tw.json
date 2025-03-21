@@ -1,5 +1,6 @@
 {
     "text.firstperson.title": "第一人稱模型設定 （First-person Model）",
+    "firstperson.keybind": "第一人稱模型",
     "key.firstperson.toggle": "切換第一人稱",
     "category.firstperson.firstperson": "第一人稱",
     "text.firstperson.option.firstperson.xOffset": "站立 x 偏移",
