@@ -19,7 +19,7 @@ public class InventoryUtil {
         //#if MC >= 12105
         return inventory.getItem(Inventory.SLOT_OFFHAND);
         //#else
-        //$$ return inventory.offhand;
+        //$$ return inventory.offhand.get(0);
         //#endif
     }
 
