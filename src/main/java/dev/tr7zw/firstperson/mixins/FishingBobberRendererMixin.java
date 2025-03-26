@@ -34,13 +34,11 @@ public class FishingBobberRendererMixin {
                 && !FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems();
     }
 
-    // spotless:off
     //#if MC <= 12004
     //$$ @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
     //#else
     @Redirect(method = "getPlayerHandPos", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
     //#endif
-    //spotless:on
     private CameraType redirect(Options gameOptions) {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
@@ -62,7 +60,6 @@ public class FishingBobberRendererMixin {
         }
     }
 
-    // spotless:off
     //#if MC <= 12004
     //$$    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
     //$$    private double offsetX(Player playerEntity) {
@@ -89,6 +86,5 @@ public class FishingBobberRendererMixin {
         ci.setReturnValue(ci.getReturnValue().add(offsetvec3d));
     }
     //#endif
-    //spotless:on
 
 }

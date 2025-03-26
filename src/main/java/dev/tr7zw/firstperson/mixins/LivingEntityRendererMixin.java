@@ -17,9 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.InventoryUtil;
 import dev.tr7zw.firstperson.access.AgeableListModelAccess;
-import dev.tr7zw.firstperson.access.PlayerAccess;
-import dev.tr7zw.firstperson.access.PlayerModelAccess;
+//#if MC < 12103
+//$$ import dev.tr7zw.firstperson.access.PlayerModelAccess;
+//#endif
 import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.model.EntityModel;
@@ -34,7 +36,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Shulker;
-
+import net.minecraft.world.entity.player.Player;
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
@@ -90,7 +92,7 @@ public abstract class LivingEntityRendererMixin {
             revert.add(() -> ((ModelPartBase) (Object) headed.getHead()).showAgain());
             headShouldBeHidden = true;
         }
-        if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof PlayerAccess playerAccess) {
+        if (model instanceof HumanoidModel<?> humanModel && livingEntity instanceof Player player) {
             if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(livingEntity)) {
                 ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
                 ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
@@ -107,14 +109,14 @@ public abstract class LivingEntityRendererMixin {
                 //                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
                 if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
-                    if (!playerAccess.getInventory().offhand.get(0).isEmpty()
+                    if (!InventoryUtil.getOffhand(player.getInventory()).isEmpty()
                             || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
                         ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
                         revert.add(() -> {
                             ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
                         });
                     }
-                    if (!playerAccess.getInventory().getSelected().isEmpty()) {
+                    if (!InventoryUtil.getSelected(player.getInventory()).isEmpty()) {
                         ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
                         revert.add(() -> {
                             ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
@@ -135,7 +137,7 @@ public abstract class LivingEntityRendererMixin {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
             revert.add(() -> ((ModelPartBase) (Object) playerModel.hat).showAgain());
-            if (livingEntity instanceof PlayerAccess playerAccess) {
+            if (livingEntity instanceof Player player) {
                 if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(livingEntity)) {
                     ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                     ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
@@ -152,12 +154,12 @@ public abstract class LivingEntityRendererMixin {
                     //                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
 
                     if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
-                        if (!playerAccess.getInventory().offhand.get(0).isEmpty()
+                        if (!InventoryUtil.getOffhand(player.getInventory()).isEmpty()
                                 || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
                             ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                             revert.add(() -> ((ModelPartBase) (Object) playerModel.leftSleeve).showAgain());
                         }
-                        if (!playerAccess.getInventory().getSelected().isEmpty()) {
+                        if (!InventoryUtil.getSelected(player.getInventory()).isEmpty()) {
                             ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
                             revert.add(() -> ((ModelPartBase) (Object) playerModel.rightSleeve).showAgain());
                         }

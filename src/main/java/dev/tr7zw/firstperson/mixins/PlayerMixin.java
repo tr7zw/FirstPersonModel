@@ -1,37 +1,35 @@
 package dev.tr7zw.firstperson.mixins;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.access.PlayerAccess;
-import lombok.Getter;
+import dev.tr7zw.firstperson.InventoryUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-@Mixin(Player.class)
-public class PlayerMixin implements PlayerAccess {
-
-    @Shadow
-    @Getter
-    private Inventory inventory;
+//#if MC >= 12105
+import net.minecraft.world.entity.LivingEntity;
+@Mixin(LivingEntity.class)
+//#else
+//$$ @Mixin(Player.class)
+//#endif
+public class PlayerMixin {
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
-        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread() && (Object)this instanceof Player player) {
             if (slot == EquipmentSlot.HEAD) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
             if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND)
                     && FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(Minecraft.getInstance().player,
-                            this.inventory.getSelected(), this.inventory.offhand.get(0))) {
+                            InventoryUtil.getSelected(player.getInventory()), InventoryUtil.getOffhand(player.getInventory()))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }

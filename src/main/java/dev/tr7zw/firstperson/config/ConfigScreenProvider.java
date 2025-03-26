@@ -7,13 +7,11 @@ import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.versionless.config.VanillaHands;
 import lombok.experimental.UtilityClass;
-//spotless:off 
 //#if MC >= 11900
 import net.minecraft.client.OptionInstance;
 //#else
 //$$ import net.minecraft.client.Option;
 //#endif
-//spotless:on
 import net.minecraft.client.gui.screens.Screen;
 
 @UtilityClass
@@ -45,13 +43,11 @@ public class ConfigScreenProvider {
                         () -> fpm.getConfig().vanillaHandsSkipSwimming,
                         b -> fpm.getConfig().vanillaHandsSkipSwimming = b));
 
-                // spotless:off
                 //#if MC >= 11900
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
                 //#else
                 //$$getOptions().addSmall(options.toArray(new Option[0]));
                 //#endif
-                // spotless:on
 
             }
 

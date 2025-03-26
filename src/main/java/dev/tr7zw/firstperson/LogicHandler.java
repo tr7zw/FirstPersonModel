@@ -3,7 +3,6 @@ package dev.tr7zw.firstperson;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.firstperson.access.PlayerAccess;
 import dev.tr7zw.firstperson.api.ActivationHandler;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.Constants;
@@ -52,13 +51,11 @@ public class LogicHandler {
                     || autoDisableItems.contains(client.player.getOffhandItem().getItem())) {
                 return true;
             }
-            // spotless:off
             //#if MC >= 11700
             if (client.player.isScoping()) {
                 return true;
             }
             //#endif
-            //spotless:on
             return false;
         });
     }
@@ -192,9 +189,9 @@ public class LogicHandler {
     }
 
     public boolean showVanillaHands(LivingEntity livingEntity) {
-        if (livingEntity instanceof PlayerAccess playerAccess) {
-            return showVanillaHands(playerAccess.getInventory().getSelected(),
-                    playerAccess.getInventory().offhand.get(0));
+        if (livingEntity instanceof Player player) {
+            return showVanillaHands(InventoryUtil.getSelected(player.getInventory()),
+                    InventoryUtil.getOffhand(player.getInventory()));
         }
         return false;
     }
@@ -220,9 +217,9 @@ public class LogicHandler {
     }
 
     public boolean hideArmsAndItems(LivingEntity livingEntity) {
-        if (livingEntity instanceof PlayerAccess playerAccess) {
-            return hideArmsAndItems(livingEntity, playerAccess.getInventory().getSelected(),
-                    playerAccess.getInventory().offhand.get(0));
+        if (livingEntity instanceof Player player) {
+            return hideArmsAndItems(livingEntity, InventoryUtil.getSelected(player.getInventory()),
+                    InventoryUtil.getOffhand(player.getInventory()));
         }
         return false;
     }
@@ -252,9 +249,9 @@ public class LogicHandler {
     }
 
     public boolean dynamicHandsEnabled(LivingEntity livingEntity) {
-        if (livingEntity instanceof PlayerAccess playerAccess) {
-            return dynamicHandsEnabled(livingEntity, playerAccess.getInventory().getSelected(),
-                    playerAccess.getInventory().offhand.get(0));
+        if (livingEntity instanceof Player player) {
+            return dynamicHandsEnabled(livingEntity, InventoryUtil.getSelected(player.getInventory()),
+                    InventoryUtil.getOffhand(player.getInventory()));
         }
         return false;
     }

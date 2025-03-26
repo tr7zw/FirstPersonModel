@@ -11,7 +11,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -20,13 +19,13 @@ import net.minecraft.world.level.LevelReader;
 
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.entity.state.HitboxRenderState;
 //#else
 //$$import org.spongepowered.asm.mixin.injection.At;
 //$$import org.spongepowered.asm.mixin.injection.At.Shift;
 //$$import org.spongepowered.asm.mixin.injection.Redirect;
 //$$import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //$$import com.mojang.blaze3d.vertex.VertexConsumer;
-//$$import net.minecraft.client.CameraType;
 //$$import net.minecraft.client.renderer.MultiBufferSource;
 //$$import net.minecraft.util.Mth;
 //$$import net.minecraft.world.entity.Entity;
@@ -50,7 +49,11 @@ public abstract class RenderDispatcherMixin {
 
     @Inject(method = "renderShadow", at = @At("HEAD"))
     private static void renderShadow(PoseStack poseStack, MultiBufferSource multiBufferSource,
-            EntityRenderState entityRenderState, float f, float g, LevelReader levelReader, float h, CallbackInfo ci) {
+            EntityRenderState entityRenderState, float f, 
+            //#if MC < 12105
+            //$$float g, 
+            //#endif
+            LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             poseStack.pushPose();
             poseStack.translate(FirstPersonModelCore.instance.getLogicHandler().getOffset());
@@ -63,7 +66,11 @@ public abstract class RenderDispatcherMixin {
 
     @Inject(method = "renderShadow", at = @At("RETURN"))
     private static void renderShadowEnd(PoseStack poseStack, MultiBufferSource multiBufferSource,
-            EntityRenderState entityRenderState, float f, float g, LevelReader levelReader, float h, CallbackInfo ci) {
+            EntityRenderState entityRenderState, float f, 
+            //#if MC < 12105
+            //$$float g, 
+            //#endif
+            LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             entityRenderState.x = tmpX;
             entityRenderState.z = tmpZ;
@@ -72,8 +79,13 @@ public abstract class RenderDispatcherMixin {
     }
 
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
-    private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer, Entity entity, float red, float green,
-            float blue, float alpha, CallbackInfo ci) {
+    private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer, 
+            //#if MC >= 12105
+            HitboxRenderState hitboxRenderState,
+            //#else
+            //$$ Entity entity, float red, float green, float blue, float alpha, 
+            //#endif
+            CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             ci.cancel();
         }

@@ -17,15 +17,15 @@ replacements:
   breaks: ', "FastAnim": "*"'
   fabric_dependencies: "
       modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
-      modCompileOnly 'maven.modrinth:freecam:mYKA10cM'\n
+      modCompileOnly 'maven.modrinth:freecam:Cg10zLnR'\n
       "
   forge_dependencies: "
       modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge'\n
-      modCompileOnly 'maven.modrinth:freecam:tXR5Jx3F'\n
+      modCompileOnly 'maven.modrinth:freecam:EMcbl7eP'\n
       "
   neoforge_dependencies: "
       modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge'\n
-      modCompileOnly 'maven.modrinth:freecam:DrSgHrTu'\n
+      modCompileOnly 'maven.modrinth:freecam:ZgduhqT3'\n
       "
 enabledFlags:
   - autopublish

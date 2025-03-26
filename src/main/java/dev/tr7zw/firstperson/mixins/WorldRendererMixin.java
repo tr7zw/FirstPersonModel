@@ -71,13 +71,12 @@ public class WorldRendererMixin {
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
         FirstPersonModelCore.instance.setRenderingPlayerPost(true);
-        // spotless:off
         //#if MC < 12100
         //$$ renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
         //#else
-        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
+        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
+                deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
         //#endif
-        //spotless:on
         FirstPersonModelCore.instance.setRenderingPlayer(false);
         FirstPersonModelCore.instance.setRenderingPlayerPost(false);
     }
