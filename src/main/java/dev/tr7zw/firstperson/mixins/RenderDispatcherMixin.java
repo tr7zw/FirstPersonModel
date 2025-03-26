@@ -17,9 +17,11 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelReader;
 
+//#if MC >= 12105
+import net.minecraft.client.renderer.entity.state.HitboxRenderState;
+//#endif
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.entity.state.HitboxRenderState;
 //#else
 //$$import org.spongepowered.asm.mixin.injection.At;
 //$$import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -49,7 +51,7 @@ public abstract class RenderDispatcherMixin {
 
     @Inject(method = "renderShadow", at = @At("HEAD"))
     private static void renderShadow(PoseStack poseStack, MultiBufferSource multiBufferSource,
-            EntityRenderState entityRenderState, float f, 
+            EntityRenderState entityRenderState, float f,
             //#if MC < 12105
             //$$float g, 
             //#endif
@@ -66,7 +68,7 @@ public abstract class RenderDispatcherMixin {
 
     @Inject(method = "renderShadow", at = @At("RETURN"))
     private static void renderShadowEnd(PoseStack poseStack, MultiBufferSource multiBufferSource,
-            EntityRenderState entityRenderState, float f, 
+            EntityRenderState entityRenderState, float f,
             //#if MC < 12105
             //$$float g, 
             //#endif
@@ -79,7 +81,7 @@ public abstract class RenderDispatcherMixin {
     }
 
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
-    private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer, 
+    private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer,
             //#if MC >= 12105
             HitboxRenderState hitboxRenderState,
             //#else

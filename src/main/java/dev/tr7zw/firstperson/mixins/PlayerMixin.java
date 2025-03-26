@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 
 //#if MC >= 12105
 import net.minecraft.world.entity.LivingEntity;
+
 @Mixin(LivingEntity.class)
 //#else
 //$$ @Mixin(Player.class)
@@ -22,14 +23,16 @@ public class PlayerMixin {
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
-        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread() && (Object)this instanceof Player player) {
+        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()
+                && (Object) this instanceof Player player) {
             if (slot == EquipmentSlot.HEAD) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }
             if ((slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND)
                     && FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(Minecraft.getInstance().player,
-                            InventoryUtil.getSelected(player.getInventory()), InventoryUtil.getOffhand(player.getInventory()))) {
+                            InventoryUtil.getSelected(InventoryUtil.getInventory(player)),
+                            InventoryUtil.getOffhand(InventoryUtil.getInventory(player)))) {
                 ci.setReturnValue(ItemStack.EMPTY);
                 return;
             }

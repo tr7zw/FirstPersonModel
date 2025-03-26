@@ -109,14 +109,14 @@ public abstract class LivingEntityRendererMixin {
                 //                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
 
                 if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
-                    if (!InventoryUtil.getOffhand(player.getInventory()).isEmpty()
+                    if (!InventoryUtil.getOffhand(InventoryUtil.getInventory(player)).isEmpty()
                             || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
                         ((ModelPartBase) (Object) humanModel.leftArm).setHidden();
                         revert.add(() -> {
                             ((ModelPartBase) (Object) humanModel.leftArm).showAgain();
                         });
                     }
-                    if (!InventoryUtil.getSelected(player.getInventory()).isEmpty()) {
+                    if (!InventoryUtil.getSelected(InventoryUtil.getInventory(player)).isEmpty()) {
                         ((ModelPartBase) (Object) humanModel.rightArm).setHidden();
                         revert.add(() -> {
                             ((ModelPartBase) (Object) humanModel.rightArm).showAgain();
@@ -154,12 +154,12 @@ public abstract class LivingEntityRendererMixin {
                     //                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
 
                     if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
-                        if (!InventoryUtil.getOffhand(player.getInventory()).isEmpty()
+                        if (!InventoryUtil.getOffhand(InventoryUtil.getInventory(player)).isEmpty()
                                 || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
                             ((ModelPartBase) (Object) playerModel.leftSleeve).setHidden();
                             revert.add(() -> ((ModelPartBase) (Object) playerModel.leftSleeve).showAgain());
                         }
-                        if (!InventoryUtil.getSelected(player.getInventory()).isEmpty()) {
+                        if (!InventoryUtil.getSelected(InventoryUtil.getInventory(player)).isEmpty()) {
                             ((ModelPartBase) (Object) playerModel.rightSleeve).setHidden();
                             revert.add(() -> ((ModelPartBase) (Object) playerModel.rightSleeve).showAgain());
                         }

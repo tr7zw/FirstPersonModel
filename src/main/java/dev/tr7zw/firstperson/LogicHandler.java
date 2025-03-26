@@ -18,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -190,8 +191,8 @@ public class LogicHandler {
 
     public boolean showVanillaHands(LivingEntity livingEntity) {
         if (livingEntity instanceof Player player) {
-            return showVanillaHands(InventoryUtil.getSelected(player.getInventory()),
-                    InventoryUtil.getOffhand(player.getInventory()));
+            return showVanillaHands(InventoryUtil.getSelected(InventoryUtil.getInventory(player)),
+                    InventoryUtil.getOffhand(InventoryUtil.getInventory(player)));
         }
         return false;
     }
@@ -218,8 +219,8 @@ public class LogicHandler {
 
     public boolean hideArmsAndItems(LivingEntity livingEntity) {
         if (livingEntity instanceof Player player) {
-            return hideArmsAndItems(livingEntity, InventoryUtil.getSelected(player.getInventory()),
-                    InventoryUtil.getOffhand(player.getInventory()));
+            return hideArmsAndItems(livingEntity, InventoryUtil.getSelected(InventoryUtil.getInventory(player)),
+                    InventoryUtil.getOffhand(InventoryUtil.getInventory(player)));
         }
         return false;
     }
@@ -250,8 +251,8 @@ public class LogicHandler {
 
     public boolean dynamicHandsEnabled(LivingEntity livingEntity) {
         if (livingEntity instanceof Player player) {
-            return dynamicHandsEnabled(livingEntity, InventoryUtil.getSelected(player.getInventory()),
-                    InventoryUtil.getOffhand(player.getInventory()));
+            return dynamicHandsEnabled(livingEntity, InventoryUtil.getSelected(InventoryUtil.getInventory(player)),
+                    InventoryUtil.getOffhand(InventoryUtil.getInventory(player)));
         }
         return false;
     }
