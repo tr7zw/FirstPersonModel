@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.4.8"
+  version: "2.4.9"
   description: "Enables the third person Model in firstperson"
   homepageUrl: "https://modrinth.com/mod/first-person-model"
   sourcesUrl: "https://github.com/tr7zw/FirstPersonModel"
@@ -26,6 +26,12 @@ replacements:
   neoforge_dependencies: "
       modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge'\n
       modCompileOnly 'maven.modrinth:freecam:ZgduhqT3'\n
+      "
+  modrinth_dependencies: "
+      requires('not-enough-animations')\n
+      "
+  curseforge_dependencies: "
+      requires('not-enough-animations')\n
       "
 enabledFlags:
   - autopublish
