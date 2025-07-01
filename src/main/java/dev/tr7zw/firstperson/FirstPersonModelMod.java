@@ -10,7 +10,7 @@ public class FirstPersonModelMod extends FirstPersonModelCore implements ClientM
         sharedSetup();
     }
     //#else
-    //$$ import dev.tr7zw.util.ModLoaderUtil;
+    //$$ import dev.tr7zw.transition.loader.ModLoaderUtil;
     //$$ import dev.tr7zw.firstperson.forge.RenderHandEventListener;
     //$$ public class FirstPersonModelMod extends FirstPersonModelCore {
     //$$ public FirstPersonModelMod() {
