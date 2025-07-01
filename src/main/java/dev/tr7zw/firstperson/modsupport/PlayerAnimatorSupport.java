@@ -9,6 +9,9 @@ import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+//#if MC < 12000
+//$$ import net.minecraft.client.Minecraft;
+//#endif
 //#if MC >= 11903
 import org.joml.Matrix4f;
 import org.joml.Vector4f;

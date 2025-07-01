@@ -68,7 +68,7 @@ public class ConfigScreenProvider {
             options.add(getOnOffOption("text.firstperson.option.firstperson.vanillaHandsSkipSwimming",
                     () -> FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming,
                     b -> FirstPersonModelCore.instance.getConfig().vanillaHandsSkipSwimming = b));
-            
+
             var optionList = createOptionList(options);
             optionList.setGap(-1);
             optionList.setSize(14 * 20, 9 * 20);
@@ -84,12 +84,15 @@ public class ConfigScreenProvider {
                         l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
                         l.setToolip(ComponentProvider.literal(s.getKey().location().toString()));
                         l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(s.getKey().location().toString()));
+                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoVanillaHands
+                                .contains(s.getKey().location().toString()));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.add(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
+                                        .add(s.getKey().location().toString());
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.remove(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
+                                        .remove(s.getKey().location().toString());
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();
@@ -107,18 +110,21 @@ public class ConfigScreenProvider {
             itemTab.add(searchField, 0, 7, 17, 1);
             wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.autovanillahands"))
                     .icon(new ItemIcon(Items.FILLED_MAP)));
-            
+
             WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> disableList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
                     items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
                         l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
                         l.setToolip(ComponentProvider.literal(s.getKey().location().toString()));
                         l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoToggleModItems.contains(s.getKey().location().toString()));
+                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoToggleModItems
+                                .contains(s.getKey().location().toString()));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
+                                        .add(s.getKey().location().toString());
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
+                                        .remove(s.getKey().location().toString());
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();
