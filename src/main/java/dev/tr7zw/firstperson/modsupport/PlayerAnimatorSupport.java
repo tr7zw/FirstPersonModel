@@ -5,8 +5,7 @@ import dev.kosmx.playerAnim.core.impl.AnimationProcessor;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
 import dev.tr7zw.firstperson.api.PlayerOffsetHandler;
-import dev.tr7zw.util.NMSHelper;
-import net.minecraft.client.Minecraft;
+import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -19,8 +18,6 @@ import org.joml.Vector4f;
 //#endif
 
 public class PlayerAnimatorSupport implements PlayerOffsetHandler {
-
-    private Minecraft minecraft = Minecraft.getInstance();
 
     @Override
     public Vec3 applyOffset(AbstractClientPlayer entity, float delta, Vec3 original, Vec3 current) {
@@ -45,9 +42,9 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             relativeTranslation.translate(pos.getX(), pos.getY(), pos.getZ()); // Apply torso
                                                                                // transformation
 
-            relativeTranslation.rotate(NMSHelper.ZP.rotation(rot.getZ()));
-            relativeTranslation.rotate(NMSHelper.YP.rotation(rot.getY()));
-            relativeTranslation.rotate(NMSHelper.XP.rotation(rot.getX()));
+            relativeTranslation.rotate(MathUtil.ZP.rotation(rot.getZ()));
+            relativeTranslation.rotate(MathUtil.YP.rotation(rot.getY()));
+            relativeTranslation.rotate(MathUtil.XP.rotation(rot.getX()));
             // relativeTranslation.multiply(Quaternion.fromXYZ(rot.getX(), rot.getY(),
             // rot.getZ()));
 
@@ -61,7 +58,7 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
             matrix.mul(new Matrix4f().scale(-1, 1, 1)); // What is going on with this?!
 
-            matrix.mul(new Matrix4f().rotate(NMSHelper.YP.rotationDegrees(realYaw)));
+            matrix.mul(new Matrix4f().rotate(MathUtil.YP.rotationDegrees(realYaw)));
 
             matrix.mul(new Matrix4f().scale(1, 1, -1));
             matrix.mul(relativeTranslation);
@@ -78,9 +75,9 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             //$$   relativeTranslation.multiplyWithTranslation(pos.getX(), pos.getY(), pos.getZ()); // Apply torso
             //$$                                                                                     // transformation
             //$$
-            //$$    relativeTranslation.multiply(NMSHelper.ZP.rotation(rot.getZ()));
-            //$$    relativeTranslation.multiply(NMSHelper.YP.rotation(rot.getY()));
-            //$$     relativeTranslation.multiply(NMSHelper.XP.rotation(rot.getX()));
+            //$$    relativeTranslation.multiply(MathUtil.ZP.rotation(rot.getZ()));
+            //$$    relativeTranslation.multiply(MathUtil.YP.rotation(rot.getY()));
+            //$$     relativeTranslation.multiply(MathUtil.XP.rotation(rot.getX()));
             //$$     // relativeTranslation.multiply(Quaternion.fromXYZ(rot.getX(), rot.getY(),
             //$$     // rot.getZ()));
             //$$
@@ -89,13 +86,13 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             //$$     relativeTranslation.multiplyWithTranslation(0, bodyOffset, 0); // Roll back the first [0,1,0] translation.
             //$$
             //$$      // calculate the actual rotations and
-            //$$     float realYaw = Mth.rotLerp(minecraft.getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
+            //$$     float realYaw = Mth.rotLerp(Minecraft.getInstance().getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
             //$$
             //$$      Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
             //$$      matrix.setIdentity();
             //$$      matrix.multiply(Matrix4f.createScaleMatrix(-1, 1, 1)); // What is going on with this?!
             //$$
-            //$$       matrix.multiply(new Matrix4f(NMSHelper.YP.rotationDegrees(realYaw)));
+            //$$       matrix.multiply(new Matrix4f(MathUtil.YP.rotationDegrees(realYaw)));
             //$$
             //$$        matrix.multiply(Matrix4f.createScaleMatrix(1, 1, -1));
             //$$          matrix.multiply(relativeTranslation);
@@ -112,9 +109,9 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             //$$ relativeTranslation.multiply(Matrix4f.createTranslateMatrix(pos.getX(), pos.getY(), pos.getZ())); // Apply torso
             //$$                                                                                    // transformation
             //$$
-            //$$  relativeTranslation.multiply(NMSHelper.ZP.rotation(rot.getZ()));
-            //$$  relativeTranslation.multiply(NMSHelper.YP.rotation(rot.getY()));
-            //$$   relativeTranslation.multiply(NMSHelper.XP.rotation(rot.getX()));
+            //$$  relativeTranslation.multiply(MathUtil.ZP.rotation(rot.getZ()));
+            //$$  relativeTranslation.multiply(MathUtil.YP.rotation(rot.getY()));
+            //$$   relativeTranslation.multiply(MathUtil.XP.rotation(rot.getX()));
             //$$   // relativeTranslation.multiply(Quaternion.fromXYZ(rot.getX(), rot.getY(),
             //$$   // rot.getZ()));
             //$$
@@ -123,13 +120,13 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             //$$  relativeTranslation.multiply(Matrix4f.createTranslateMatrix(0, bodyOffset, 0)); // Roll back the first [0,1,0] translation.
             //$$
             //$$    // calculate the actual rotations and
-            //$$    float realYaw = Mth.rotLerp(minecraft.getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
+            //$$    float realYaw = Mth.rotLerp(Minecraft.getInstance().getFrameTime(), entity.yBodyRotO, entity.yBodyRot);
             //$$
             //$$    Matrix4f matrix = new Matrix4f(); // To multiply from LEFT, I have to create a new instance?!
             //$$    matrix.setIdentity();
             //$$    matrix.multiply(Matrix4f.createScaleMatrix(-1, 1, 1)); // What is going on with this?!
             //$$
-            //$$     matrix.multiply(new Matrix4f(NMSHelper.YP.rotationDegrees(realYaw)));
+            //$$     matrix.multiply(new Matrix4f(MathUtil.YP.rotationDegrees(realYaw)));
             //$$
             //$$      matrix.multiply(Matrix4f.createScaleMatrix(1, 1, -1));
             //$$        matrix.multiply(relativeTranslation);

@@ -4,10 +4,18 @@
 //$$import net.minecraftforge.api.distmarker.Dist;
 //$$import net.minecraftforge.fml.DistExecutor;
 //$$import net.minecraftforge.fml.common.Mod;
+//$$import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+//$$import dev.tr7zw.transition.loader.ModLoaderUtil;
 //$$
 //$$@Mod("firstperson")
 //$$public class FirstPersonBootstrap {
 //$$
+//$$    public FirstPersonBootstrap(FMLJavaModLoadingContext context) {
+//$$        ModLoaderUtil.setModLoadingContext(context);
+//$$            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> { 
+//$$         new FirstPersonModelMod().sharedSetup();
+//$$        });
+//$$    }
 //$$    public FirstPersonBootstrap() {
 //$$            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> FirstPersonModelMod::new);
 //$$    }

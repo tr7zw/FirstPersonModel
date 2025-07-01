@@ -8,7 +8,9 @@ import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.Constants;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
 import dev.tr7zw.firstperson.versionless.config.VanillaHands;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.EntityUtil;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.CameraType;
@@ -18,7 +20,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -121,7 +122,7 @@ public class LogicHandler {
                     realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
                 } else if (player.getVehicle() instanceof LivingEntity living) {
                     realYaw = calculateBodyRot(Mth.rotLerp(delta, living.yBodyRotO, living.yBodyRot),
-                            NMSHelper.getYRot(player));
+                            EntityUtil.getYRot(player));
                 } else {
                     // Non living entities don't use any custom rotation
                     //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
@@ -282,7 +283,7 @@ public class LogicHandler {
      * @return
      */
     public boolean lookingDown() {
-        return dynamicHandsEnabled() && NMSHelper.getXRot(Minecraft.getInstance().player) > 30;
+        return dynamicHandsEnabled() && EntityUtil.getXRot(Minecraft.getInstance().player) > 30;
     }
 
     public void addAutoVanillaHandsItem(Item item) {
@@ -296,11 +297,11 @@ public class LogicHandler {
     public void reloadAutoVanillaHandsSettings() {
         autoVanillaHandItems.clear();
         autoDisableItems.clear();
-        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
+        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
         for (String itemId : fpm.getConfig().autoVanillaHands) {
             try {
-                Item item = NMSHelper
-                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = ItemUtil
+                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item) {
                     addAutoVanillaHandsItem(item);
                 }
@@ -311,8 +312,8 @@ public class LogicHandler {
         FirstPersonBase.LOGGER.info("Loaded Vanilla Hands items: {}", autoVanillaHandItems);
         for (String itemId : fpm.getConfig().autoToggleModItems) {
             try {
-                Item item = NMSHelper
-                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = ItemUtil
+                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item) {
                     addAutoDisableItem(item);
                 }

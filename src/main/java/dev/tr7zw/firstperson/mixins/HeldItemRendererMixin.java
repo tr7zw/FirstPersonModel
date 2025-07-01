@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.versionless.config.VanillaHands;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
@@ -99,7 +99,7 @@ public abstract class HeldItemRendererMixin {
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
                 && FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {
             LocalPlayer localPlayer = Minecraft.getInstance().player;
-            float f = NMSHelper.getXRot(localPlayer);
+            float f = EntityUtil.getXRot(localPlayer);
             if (f > 15) {
                 if (f < 30) {
                     this.mainHandHeight = 15 / f;

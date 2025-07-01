@@ -2,7 +2,7 @@ package dev.tr7zw.firstperson.modsupport;
 
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
-import dev.tr7zw.util.ModLoaderUtil;
+import dev.tr7zw.transition.loader.ModLoaderUtil;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

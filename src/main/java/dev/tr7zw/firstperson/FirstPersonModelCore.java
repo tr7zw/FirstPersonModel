@@ -5,7 +5,8 @@ import dev.tr7zw.firstperson.config.ConfigScreenProvider;
 import dev.tr7zw.firstperson.modsupport.ModSupportLoader;
 import dev.tr7zw.firstperson.modsupport.PlayerAnimatorSupport;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
-import dev.tr7zw.util.ModLoaderUtil;
+import dev.tr7zw.transition.loader.ModLoaderEventUtil;
+import dev.tr7zw.transition.loader.ModLoaderUtil;
 import lombok.Getter;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -27,7 +28,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         instance = this;
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
-        ModLoaderUtil.registerClientSetupListener(this::sharedSetup);
+        ModLoaderEventUtil.registerClientSetupListener(this::sharedSetup);
     }
 
     public void sharedSetup() {
@@ -37,7 +38,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         super.loadConfig();
 
         ModLoaderUtil.registerKeybind(keyBinding);
-        ModLoaderUtil.registerClientTickListener(this::onTick);
+        ModLoaderEventUtil.registerClientTickStartListener(this::onTick);
 
         ModSupportLoader.loadSupport();
     }
