@@ -17,7 +17,7 @@
 //$$        });
 //$$    }
 //$$    public FirstPersonBootstrap() {
-//$$            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> FirstPersonModelMod::new);
+//$$        this(FMLJavaModLoadingContext.get());
 //$$    }
 //$$    
 //$$}
@@ -33,7 +33,7 @@
 //$$
 //$$    public FirstPersonBootstrap() {
 //$$            if(FMLEnvironment.dist == Dist.CLIENT) {
-//$$                new FirstPersonModelMod();
+//$$                new FirstPersonModelMod().sharedSetup();
 //$$            }
 //$$    }
 //$$    

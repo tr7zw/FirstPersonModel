@@ -26,9 +26,6 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     protected FirstPersonModelCore() {
         instance = this;
-        ModLoaderUtil.disableDisplayTest();
-        ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
-        ModLoaderEventUtil.registerClientSetupListener(this::sharedSetup);
     }
 
     public void sharedSetup() {
@@ -39,6 +36,19 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
         ModLoaderUtil.registerKeybind(keyBinding);
         ModLoaderEventUtil.registerClientTickStartListener(this::onTick);
+        ModLoaderUtil.disableDisplayTest();
+        ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
+
+        //#if NEOFORGE
+        //$$        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+        //#endif
+        //#if FORGE
+        //#if MC >= 12106
+        //$$ net.minecraftforge.client.event.RenderHandEvent.BUS.addListener(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+        //#else
+        //$$        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+        //#endif
+        //#endif
 
         ModSupportLoader.loadSupport();
     }
