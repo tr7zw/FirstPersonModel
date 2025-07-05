@@ -33,7 +33,7 @@
 //$$
 //$$    public FirstPersonBootstrap() {
 //$$            if(FMLEnvironment.dist == Dist.CLIENT) {
-//$$                new FirstPersonModelMod().sharedSetup();
+//$$                dev.tr7zw.transition.loader.ModLoaderEventUtil.registerClientSetupListener(() -> new FirstPersonModelMod().sharedSetup());
 //$$            }
 //$$    }
 //$$    
