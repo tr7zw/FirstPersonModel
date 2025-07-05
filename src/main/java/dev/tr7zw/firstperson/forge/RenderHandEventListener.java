@@ -19,7 +19,6 @@
 //$$ 	@SubscribeEvent
 //#if MC >= 12106 && FORGE
 //$$    public boolean onRender(RenderHandEvent e) {
-//$$            System.out.println("Render Hand Event");
 //$$                if(FirstPersonModelCore.instance.isEnabled() && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
 //$$                        return true;
 //$$                }
