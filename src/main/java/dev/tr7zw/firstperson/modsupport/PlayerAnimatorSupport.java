@@ -29,11 +29,19 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             anim.setTickDelta(delta); // Probably the tick is done, set tick delta.
 
             // get required data
-            Vec3f rot = anim.get3DTransform("body", TransformType.ROTATION, Vec3f.ZERO);
-            Vec3f pos = anim.get3DTransform("body", TransformType.POSITION, Vec3f.ZERO); // .scale(1 / 16f); It has been
-                                                                                         // pre-scaled
-            Vec3f headPos = anim.get3DTransform("head", TransformType.POSITION, Vec3f.ZERO).scale(1 / 16f);
-
+            //#if MC >= 12106
+            Vec3f rot = anim.get3DTransform(dev.kosmx.playerAnim.api.PartKey.BODY, TransformType.ROTATION, Vec3f.ZERO);
+            Vec3f pos = anim.get3DTransform(dev.kosmx.playerAnim.api.PartKey.BODY, TransformType.POSITION, Vec3f.ZERO); // .scale(1 / 16f); It has been
+            // pre-scaled
+            Vec3f headPos = anim
+                    .get3DTransform(dev.kosmx.playerAnim.api.PartKey.HEAD, TransformType.POSITION, Vec3f.ZERO)
+                    .scale(1 / 16f);
+            //#else
+            //$$Vec3f rot = anim.get3DTransform("body", TransformType.ROTATION, Vec3f.ZERO);
+            //$$Vec3f pos = anim.get3DTransform("body", TransformType.POSITION, Vec3f.ZERO); // .scale(1 / 16f); It has been
+            //$$                                                                             // pre-scaled
+            //$$Vec3f headPos = anim.get3DTransform("head", TransformType.POSITION, Vec3f.ZERO).scale(1 / 16f);
+            //#endif
             //#if MC >= 11903
             // Matrix4f#translate is an offset applied from LEFT (or absolute)
             Matrix4f relativeTranslation = new Matrix4f();
