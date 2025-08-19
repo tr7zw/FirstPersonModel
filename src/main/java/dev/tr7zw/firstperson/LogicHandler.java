@@ -40,8 +40,11 @@ public class LogicHandler {
 
     void registerDefaultHandlers() {
         FirstPersonAPI.registerPlayerHandler((ActivationHandler) () -> {
-            if (client.player.isSleeping() || client.player.isAutoSpinAttack() || client.player.isFallFlying()
-                    || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player))) {
+            if (((client.player.isSleeping() && !fpm.getConfig().renderSleepingModel)
+                    || (client.player.isAutoSpinAttack() && !fpm.getConfig().renderSpinAttackModel)
+                    || (client.player.isFallFlying() && !fpm.getConfig().renderFlyingModel)
+                    || (client.player.getSwimAmount(1f) != 0 && !isCrawlingOrSwimming(client.player) && !fpm.getConfig().renderSwimTransitionModel))
+                    && !fpm.getConfig().keepModelVisible) {
                 timeout = System.currentTimeMillis() + 100;
                 return true;
             }
@@ -54,7 +57,8 @@ public class LogicHandler {
                 return true;
             }
             //#if MC >= 11700
-            if (client.player.isScoping()) {
+            if (client.player.isScoping() && !fpm.getConfig().renderScopingModel
+                    && !fpm.getConfig().keepModelVisible) {
                 return true;
             }
             //#endif
@@ -100,7 +104,7 @@ public class LogicHandler {
         AbstractClientPlayer player;
         double realYaw;
         if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)
-                || !fpm.isRenderingPlayer()) {
+                || !fpm.isRenderingPlayer() || !fpm.getConfig().modifyPlayerModel) {  // 添加了对 modifyPlayerModel 的检查
             return;
         }
         player = (AbstractClientPlayer) entity;
@@ -110,9 +114,9 @@ public class LogicHandler {
             if (isCrawlingOrSwimming(client.player)) {
                 player.yBodyRot = player.yHeadRot;
                 if (player.xRotO > 0) {
-                    bodyOffset = Constants.SWIM_UP_BODY_OFFSET;
+                    bodyOffset = Constants.SWIM_UP_BODY_OFFSET + fpm.getConfig().swimXOffset / 100f; // 保留原值并加上配置项
                 } else {
-                    bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
+                    bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET + fpm.getConfig().crawlXOffset / 100f; // 保留原值并加上配置项
                 }
                 // some mods seem to break the isCrouching method
             } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) {
@@ -134,7 +138,7 @@ public class LogicHandler {
             }
             x += bodyOffset * Math.sin(Math.toRadians(realYaw));
             z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-            if (isCrawlingOrSwimming(client.player)) {
+            if (isCrawlingOrSwimming(client.player) && fpm.getConfig().swimOrCrawlY) {
                 if (player.xRotO > 0 && player.isUnderWater()) {
                     y += 0.6f * Math.sin(Math.toRadians(player.xRotO));
                 } else {

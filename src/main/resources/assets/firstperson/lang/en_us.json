@@ -29,5 +29,29 @@
     "modmenu.summaryTranslation.firstperson": "Enables the third-person Model in first-person",
     "modmenu.descriptionTranslation.firstperson": "Enables the third-person Model in first-person",
     "text.firstperson.option.firstperson.vanillaHandsSkipSwimming": "Disable Vanilla Hands while Swimming",
-    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming.tooltip": "Disables the Vanilla Hands while swimming(also ignoring the dynamic mode)"
+    "text.firstperson.option.firstperson.vanillaHandsSkipSwimming.tooltip": "Disables the Vanilla Hands while swimming(also ignoring the dynamic mode)",
+    
+    "text.firstperson.option.firstperson.swimXOffset": "Swim X Offset",
+    "text.firstperson.option.firstperson.swimXOffset.tooltip": "Moves the body relative to the camera back and forth while swimming",
+    "text.firstperson.option.firstperson.crawlXOffset": "Crawl X Offset",
+    "text.firstperson.option.firstperson.crawlXOffset.tooltip": "Moves the body relative to the camera back and forth while crawling",
+    "text.firstperson.option.firstperson.swimOrCrawlY": "Enable Swim Or Crawl Y Offset",
+    "text.firstperson.option.firstperson.swimOrCrawlY.tooltip": "Whether to enable Y-axis compensation while swimming or crawling",
+    
+    "text.firstperson.option.firstperson.renderSleepingModel": "Render Sleeping Model",
+    "text.firstperson.option.firstperson.renderSleepingModel.tooltip": "Whether to render the sleeping model",
+    "text.firstperson.option.firstperson.renderSpinAttackModel": "Render Spin Attack Model",
+    "text.firstperson.option.firstperson.renderSpinAttackModel.tooltip": "Whether to render the spin attack model",
+    "text.firstperson.option.firstperson.renderFlyingModel": "Render Flying Model",
+    "text.firstperson.option.firstperson.renderFlyingModel.tooltip": "Whether to render the first-person model while flying",
+    "text.firstperson.option.firstperson.renderSwimTransitionModel": "Render Swim Transition Model",
+    "text.firstperson.option.firstperson.renderSwimTransitionModel.tooltip": "Whether to render the swim transition model",
+    "text.firstperson.option.firstperson.renderScopingModel": "Render Scoping Model",
+    "text.firstperson.option.firstperson.renderScopingModel.tooltip": "Whether to render the scoping model",
+    "text.firstperson.option.firstperson.modifyPlayerModel": "Modify Player Model",
+    "text.firstperson.option.firstperson.modifyPlayerModel.tooltip": "Whether to modify the player model",
+    "text.firstperson.option.firstperson.keepModelVisible": "Keep Model Visible",
+    "text.firstperson.option.firstperson.keepModelVisible.tooltip": "Whether to keep the model visible (except in dynamic mode)"
+
+
 }
