@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.access.PlayerRendererAccess;
 import dev.tr7zw.firstperson.versionless.config.VanillaHands;
 import dev.tr7zw.transition.mc.ComponentProvider;
 import dev.tr7zw.transition.mc.ItemUtil;
@@ -21,6 +22,10 @@ import dev.tr7zw.trender.gui.widget.icon.ItemIcon;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+//#if MC >= 12106
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#endif
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
@@ -142,6 +147,49 @@ public class ConfigScreenProvider {
             disableTab.add(searchDisableField, 0, 7, 17, 1);
             wTabPanel.add(disableTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.disableitems"))
                     .icon(new ItemIcon(Items.BARRIER)));
+
+            // Layers
+            PlayerRendererAccess access = null;
+            //#if MC >= 12106
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                    .getRenderer(new PlayerRenderState());
+            //#else
+            //$$if (Minecraft.getInstance().player != null) {
+            //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+            //$$            .getRenderer(Minecraft.getInstance().player);
+            //$$}
+            //#endif
+            if (access != null) {
+                WListPanel<RenderLayer, WToggleButton> layerList = new WListPanel<RenderLayer, WToggleButton>(
+                        access.getRenderLayers(), () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
+                            l.setLabel(ComponentProvider.literal(s.getClass().getSimpleName()));
+                            l.setToolip(ComponentProvider.literal(s.getClass().getName()));
+                            l.setToggle(!FirstPersonModelCore.instance.getConfig().hiddenLayers
+                                    .contains(s.getClass().getName()));
+                            l.setOnToggle(b -> {
+                                if (b) {
+                                    FirstPersonModelCore.instance.getConfig().hiddenLayers
+                                            .remove(s.getClass().getName());
+                                } else {
+                                    FirstPersonModelCore.instance.getConfig().hiddenLayers.add(s.getClass().getName());
+                                }
+                                save();
+                                FirstPersonModelCore.instance.updatePlayerLayers();
+                            });
+                        });
+                layerList.setGap(-1);
+                layerList.setInsets(new Insets(2, 4));
+                WGridPanel layerTab = new WGridPanel(20);
+                layerTab.add(layerList, 0, 0, 17, 7);
+                WTextField searchLayerField = new WTextField();
+                searchLayerField.setChangedListener(s -> {
+                    layerList.setFilter(e -> e.getClass().getName().toLowerCase().contains(s.toLowerCase()));
+                    layerList.layout();
+                });
+                layerTab.add(searchLayerField, 0, 7, 17, 1);
+                wTabPanel.add(layerTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.layers"))
+                        .icon(new ItemIcon(Items.NETHERITE_HELMET)));
+            }
 
             wTabPanel.layout();
             root.add(wTabPanel, 0, 2);

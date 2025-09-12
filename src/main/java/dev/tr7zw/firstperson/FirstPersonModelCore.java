@@ -1,5 +1,6 @@
 package dev.tr7zw.firstperson;
 
+import dev.tr7zw.firstperson.access.PlayerRendererAccess;
 import dev.tr7zw.firstperson.api.FirstPersonAPI;
 import dev.tr7zw.firstperson.config.ConfigScreenProvider;
 import dev.tr7zw.firstperson.modsupport.ModSupportLoader;
@@ -8,8 +9,12 @@ import dev.tr7zw.firstperson.versionless.FirstPersonBase;
 import dev.tr7zw.transition.loader.ModLoaderEventUtil;
 import dev.tr7zw.transition.loader.ModLoaderUtil;
 import lombok.Getter;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+//#if MC >= 12106
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#endif
 
 public abstract class FirstPersonModelCore extends FirstPersonBase {
 
@@ -23,6 +28,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     public static boolean enabled = true;
     @Deprecated
     public static boolean isRenderingPlayer = false;
+    private CameraType lastCameraType = null;
 
     protected FirstPersonModelCore() {
         instance = this;
@@ -67,6 +73,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
         logicHandler.registerDefaultHandlers();
         logicHandler.reloadAutoVanillaHandsSettings();
+        updatePlayerLayers();
     }
 
     public void onTick() {
@@ -89,12 +96,33 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     public void setRenderingPlayer(boolean isRenderingPlayer) {
         super.setRenderingPlayer(isRenderingPlayer);
         FirstPersonModelCore.isRenderingPlayer = isRenderingPlayer;
+        // TODO: ugly sideffect, find better way
+        if (lastCameraType != Minecraft.getInstance().options.getCameraType()) {
+            lastCameraType = Minecraft.getInstance().options.getCameraType();
+            updatePlayerLayers();
+        }
     }
 
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         FirstPersonModelCore.enabled = enabled;
+    }
+
+    public void updatePlayerLayers() {
+        PlayerRendererAccess access = null;
+        //#if MC >= 12106
+        access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                .getRenderer(new PlayerRenderState());
+        //#else
+        //$$if (Minecraft.getInstance().player != null) {
+        //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+        //$$            .getRenderer(Minecraft.getInstance().player);
+        //$$}
+        //#endif
+        if (access != null) {
+            access.updatePartsList(lastCameraType != CameraType.FIRST_PERSON);
+        }
     }
 
 }

@@ -29,7 +29,7 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
             anim.setTickDelta(delta); // Probably the tick is done, set tick delta.
 
             // get required data
-            //#if MC >= 12106
+            //#if MC >= 12103
             Vec3f rot = anim.get3DTransform(dev.kosmx.playerAnim.api.PartKey.BODY, TransformType.ROTATION, Vec3f.ZERO);
             Vec3f pos = anim.get3DTransform(dev.kosmx.playerAnim.api.PartKey.BODY, TransformType.POSITION, Vec3f.ZERO); // .scale(1 / 16f); It has been
             // pre-scaled

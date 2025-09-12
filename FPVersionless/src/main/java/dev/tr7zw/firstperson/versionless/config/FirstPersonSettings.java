@@ -24,4 +24,6 @@ public class FirstPersonSettings {
 
     public Set<String> autoToggleModItems = new HashSet<>(Arrays.asList("exposure:camera"));
 
+    public Set<String> hiddenLayers = new HashSet<>();
+
 }

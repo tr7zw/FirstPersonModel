@@ -8,6 +8,7 @@
     "text.firstperson.tab.autovanillahands.tooltip": "Automatically switches to vanilla hands when holding items",
     "text.firstperson.tab.disableitems": "Disable Items",
     "text.firstperson.tab.disableitems.tooltip": "Disables FirstPerson mod while holding the specified items",
+    "text.firstperson.tab.layers": "Show Layers",
     "text.firstperson.option.firstperson.xOffset": "Standing x Offset",
     "text.firstperson.option.firstperson.xOffset.tooltip": "Moves the body relative to the camera back and forth",
     "text.firstperson.option.firstperson.sneakXOffset": "Sneaking x Offset",
