@@ -1,0 +1,3 @@
+dependencies{ 
+      modCompileOnly 'maven.modrinth:playeranimator:2.0.2+1.21.3-fabric'
+}

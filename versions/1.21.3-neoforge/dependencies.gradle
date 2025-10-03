@@ -1,0 +1,3 @@
+dependencies{ 
+      modCompileOnly 'maven.modrinth:playeranimator:2.0.1+1.21.3-forge'
+}
