@@ -61,6 +61,40 @@ public class ConfigScreenProvider {
             options.add(getIntOption("text.firstperson.option.firstperson.sitXOffset", -40, 40,
                     () -> FirstPersonModelCore.instance.getConfig().sitXOffset,
                     i -> FirstPersonModelCore.instance.getConfig().sitXOffset = i));
+
+            // NEW
+            options.add(getIntOption("text.firstperson.option.firstperson.swimXOffset", -100, 100,
+                    () -> FirstPersonModelCore.instance.getConfig().swimXOffset,
+                    i -> FirstPersonModelCore.instance.getConfig().swimXOffset = i));
+            options.add(getIntOption("text.firstperson.option.firstperson.crawlXOffset", -100, 100,
+                    () -> FirstPersonModelCore.instance.getConfig().crawlXOffset,
+                    i -> FirstPersonModelCore.instance.getConfig().crawlXOffset = i));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.swimOrCrawlY",
+                    () -> FirstPersonModelCore.instance.getConfig().swimOrCrawlY,
+                    b -> FirstPersonModelCore.instance.getConfig().swimOrCrawlY = b));
+            // 渲染开关
+            options.add(getOnOffOption("text.firstperson.option.firstperson.renderSleepingModel",
+                    () -> FirstPersonModelCore.instance.getConfig().renderSleepingModel,
+                    b -> FirstPersonModelCore.instance.getConfig().renderSleepingModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.renderSpinAttackModel",
+                    () -> FirstPersonModelCore.instance.getConfig().renderSpinAttackModel,
+                    b -> FirstPersonModelCore.instance.getConfig().renderSpinAttackModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.renderFlyingModel",
+                    () -> FirstPersonModelCore.instance.getConfig().renderFlyingModel,
+                    b -> FirstPersonModelCore.instance.getConfig().renderFlyingModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.renderSwimTransitionModel",
+                    () -> FirstPersonModelCore.instance.getConfig().renderSwimTransitionModel,
+                    b -> FirstPersonModelCore.instance.getConfig().renderSwimTransitionModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.renderScopingModel",
+                    () -> FirstPersonModelCore.instance.getConfig().renderScopingModel,
+                    b -> FirstPersonModelCore.instance.getConfig().renderScopingModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.modifyPlayerModel",
+                    () -> FirstPersonModelCore.instance.getConfig().modifyPlayerModel,
+                    b -> FirstPersonModelCore.instance.getConfig().modifyPlayerModel = b));
+            options.add(getOnOffOption("text.firstperson.option.firstperson.keepModelVisible",
+                    () -> FirstPersonModelCore.instance.getConfig().keepModelVisible,
+                    b -> FirstPersonModelCore.instance.getConfig().keepModelVisible = b));
+
             options.add(getOnOffOption("text.firstperson.option.firstperson.renderStuckFeatures",
                     () -> FirstPersonModelCore.instance.getConfig().renderStuckFeatures,
                     b -> FirstPersonModelCore.instance.getConfig().renderStuckFeatures = b));
