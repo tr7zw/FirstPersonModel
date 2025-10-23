@@ -1,5 +1,6 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,10 +41,12 @@ public abstract class HeldItemRendererMixin {
     @Shadow
     private ItemStack offHandItem;
 
+    @Shadow
+    protected abstract void renderPlayerArm(PoseStack arg, SubmitNodeCollector arg2, int i, float g, float h, HumanoidArm arg3);
+
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
-            float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
-            MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
+    public void renderFirstPersonItem(AbstractClientPlayer player, float deltaTick, float pitch, InteractionHand hand, float swingProgress,
+                                      ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector submitNodeCollector, int light, CallbackInfo info) {
 
         if (!FirstPersonModelCore.instance.isEnabled()) {
             return;
@@ -78,14 +81,10 @@ public abstract class HeldItemRendererMixin {
         HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
         matrices.pushPose();
         if (item.isEmpty() && !bl && !player.isInvisible()) {
-            renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
+            renderPlayerArm(matrices, submitNodeCollector, light, equipProgress, swingProgress, arm);
         }
         matrices.popPose();
     }
-
-    @Shadow
-    public abstract void renderPlayerArm(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-            float equipProgress, float swingProgress, HumanoidArm arm);
 
     /*
      * public boolean skip() {//TODO NO NEED? return

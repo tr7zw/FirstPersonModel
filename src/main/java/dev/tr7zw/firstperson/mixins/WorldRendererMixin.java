@@ -1,5 +1,8 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.state.LevelRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,7 +42,10 @@ import org.joml.Matrix4f;
  *
  */
 @Mixin(LevelRenderer.class)
-public class WorldRendererMixin {
+public abstract class WorldRendererMixin {
+
+    @Shadow
+    protected abstract EntityRenderState extractEntity(Entity arg, float f);
 
     @Shadow
     private RenderBuffers renderBuffers;
@@ -59,9 +65,8 @@ public class WorldRendererMixin {
     //$$    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
     //$$    PoseStack matrices = new PoseStack();
     //#else
-    @Inject(method = "renderEntities", at = @At(value = "HEAD"))
-    private void renderEntities(PoseStack poseStack, BufferSource bufferSource, Camera camera,
-            DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
+    @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
+    private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker, LevelRenderState levelRenderState, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         //#endif
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
@@ -74,17 +79,12 @@ public class WorldRendererMixin {
         //#if MC < 12100
         //$$ renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
         //#else
-        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
-                deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
+        levelRenderState.entityRenderStates.add(extractEntity(camera.getEntity(), deltaTracker.getGameTimeDeltaPartialTick(false)));
         //#endif
         FirstPersonModelCore.instance.setRenderingPlayer(false);
         FirstPersonModelCore.instance.setRenderingPlayerPost(false);
-    }
 
-    @Shadow
-    private void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta,
-            PoseStack matrices, MultiBufferSource vertexConsumers) {
-        // shadow
+
     }
 
 }

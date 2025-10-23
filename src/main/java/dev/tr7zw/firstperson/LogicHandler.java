@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -99,8 +100,7 @@ public class LogicHandler {
         double z = 0;
         AbstractClientPlayer player;
         double realYaw;
-        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)
-                || !fpm.isRenderingPlayer()) {
+        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)) {
             return;
         }
         player = (AbstractClientPlayer) entity;
@@ -283,7 +283,15 @@ public class LogicHandler {
      * @return
      */
     public boolean lookingDown() {
-        return dynamicHandsEnabled() && EntityUtil.getXRot(Minecraft.getInstance().player) > 30;
+        return lookingDown(client.player);
+    }
+
+    public boolean lookingDown(LivingEntity livingEntity) {
+        return dynamicHandsEnabled() && EntityUtil.getXRot(livingEntity) > 30;
+    }
+
+    public boolean lookingDown(LivingEntityRenderState state) {
+        return dynamicHandsEnabled() && state.xRot > 30;
     }
 
     public void addAutoVanillaHandsItem(Item item) {

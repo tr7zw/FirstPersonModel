@@ -47,13 +47,13 @@ public class ModelPartMixin implements ModelPartBase {
         }
     }
 
-    @Inject(method = "copyFrom", at = @At("RETURN"))
+    /*@Inject(method = "copyFrom", at = @At("RETURN"))
     public void copyTransform(ModelPart modelPart, CallbackInfo info) {
         if (moved) {
             zCopy = z;
             z = 5000;
         }
-    }
+    }*/
 
     @Override
     public boolean isHidden() {

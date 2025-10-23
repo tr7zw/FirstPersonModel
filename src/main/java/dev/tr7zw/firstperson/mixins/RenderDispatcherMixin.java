@@ -43,7 +43,7 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class RenderDispatcherMixin {
 
-    private static Minecraft fpmMcInstance = Minecraft.getInstance();
+    /*private static Minecraft fpmMcInstance = Minecraft.getInstance();
 
     //#if MC >= 12103
     private static double tmpX;
@@ -138,5 +138,6 @@ public abstract class RenderDispatcherMixin {
     //$$    }
     //$$}
     //#endif
+*/
 
 }

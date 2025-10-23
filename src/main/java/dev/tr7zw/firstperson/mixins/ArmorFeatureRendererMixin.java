@@ -37,7 +37,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         super(context);
     }
 
-    //#if MC >= 12103
+    /*//#if MC >= 12103
     @Inject(method = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;shouldRender(Lnet/minecraft/world/item/equipment/Equippable;Lnet/minecraft/world/entity/EquipmentSlot;)Z", at = @At("HEAD"), cancellable = true)
     private static void shouldRender(Equippable equippable, EquipmentSlot equipmentSlot,
             CallbackInfoReturnable<Boolean> ci) {
@@ -112,6 +112,6 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             ((ModelPartBase) (Object) bipedEntityModel.leftArm).showAgain();
             ((ModelPartBase) (Object) bipedEntityModel.rightArm).showAgain();
         }
-    }
+    }*/
 
 }

@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,10 +45,9 @@ public class FishingBobberRendererMixin {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
 
-    @Inject(method = "render", at = @At("HEAD"))
+    @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("HEAD"))
     //#if MC >= 12103
-    public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
-            MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
+    public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState, CallbackInfo ci) {
         //#else
         //$$ private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
         //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {

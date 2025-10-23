@@ -1,5 +1,6 @@
 package dev.tr7zw.firstperson.mixins;
 
+import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
@@ -39,7 +40,7 @@ import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.player.Player;
 //#if MC >= 12103
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#endif
 //#if MC < 12104
 //$$import net.minecraft.client.model.VillagerHeadModel;
@@ -50,7 +51,7 @@ public abstract class LivingEntityRendererMixin {
 
     private static List<Runnable> revert = new ArrayList<Runnable>();
 
-    // pull all registers to try to get rid of the head or other bodyparts
+    /*// pull all registers to try to get rid of the head or other bodyparts
     //#if MC >= 12103
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = Shift.AFTER), cancellable = true)
     public void render(LivingEntityRenderState livingEntityRenderState, PoseStack matrixStack,
@@ -190,9 +191,14 @@ public abstract class LivingEntityRendererMixin {
             matrixStack.popPose();
             info.cancel();
         }
+    }*/
+
+    @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("HEAD"))
+    private void checkIfCameraEntity(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState, float f, CallbackInfo ci) {
+        ((LivingEntityRenderStateAccess) livingEntityRenderState).setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayer());
     }
 
-    @Inject(method = "render", at = @At("RETURN"))
+    /*@Inject(method = "render", at = @At("RETURN"))
     //#if MC >= 12103
     public void renderEnd(LivingEntityRenderState livingEntityRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
@@ -207,7 +213,7 @@ public abstract class LivingEntityRendererMixin {
             revert.clear();
         }
         FirstPersonModelCore.instance.setRenderingPlayer(false);
-    }
+    }*/
 
     @Shadow
     public abstract EntityModel getModel();

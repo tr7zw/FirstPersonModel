@@ -21,7 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 //#endif
 public class PlayerMixin {
 
-    @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
+    /*@Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()
                 && (Object) this instanceof Player player) {
@@ -37,6 +37,6 @@ public class PlayerMixin {
                 return;
             }
         }
-    }
+    }*/
 
 }

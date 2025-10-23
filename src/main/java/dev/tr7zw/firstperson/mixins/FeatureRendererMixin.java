@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,11 +29,9 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 @Mixin(RenderLayer.class)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class FeatureRendererMixin {
-    @Inject(method = "renderColoredCutoutModel", at = @At("HEAD"), cancellable = true)
+    /*@Inject(method = "renderColoredCutoutModel", at = @At("HEAD"), cancellable = true)
     //#if MC >= 12103
-    private static void renderColoredCutoutModel(EntityModel<?> model, ResourceLocation resourceLocation,
-            PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-            LivingEntityRenderState livingEntityRenderState, int j, CallbackInfo ci) {
+    private static void renderColoredCutoutModel(Model<? super LivingEntityRenderState> model, ResourceLocation resourceLocation, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, LivingEntityRenderState livingEntityRenderState, int j, int k, CallbackInfo ci) {
         //#elseif MC >= 12100
         //$$private static <T extends LivingEntity> void removeHead(EntityModel model, ResourceLocation texture,
         //$$        PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, int color, CallbackInfo ci) {
@@ -75,6 +75,6 @@ public abstract class FeatureRendererMixin {
             //$$  }
             //#endif
         }
-    }
+    }*/
 
 }

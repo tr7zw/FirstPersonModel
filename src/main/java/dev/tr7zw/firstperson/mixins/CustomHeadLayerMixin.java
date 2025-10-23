@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.mixins;
 
+import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,15 +22,14 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 @Mixin(value = CustomHeadLayer.class, priority = 100)
 public class CustomHeadLayerMixin {
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;FF)V", at = @At("HEAD"), cancellable = true)
     //#if MC >= 12103
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-            LivingEntityRenderState livingEntityRenderState, float f, float g, CallbackInfo info) {
+    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, LivingEntityRenderState livingEntityRenderState, float f, float g, CallbackInfo info) {
         //#else
         //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity,
         //$$        float f, float g, float h, float j, float k, float l, CallbackInfo info) {
         //#endif
-        if (FirstPersonModelCore.instance.isRenderingPlayer()) {
+        if (((LivingEntityRenderStateAccess) livingEntityRenderState).isCameraEntity()) {
             info.cancel();
         }
     }

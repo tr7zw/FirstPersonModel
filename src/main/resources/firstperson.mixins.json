@@ -1,27 +1,30 @@
 {
-    "required": true,
-    "package": "dev.tr7zw.firstperson.mixins",
-    "compatibilityLevel": "JAVA_8",
-    "mixins": [],
-    "client": [
-        "HeldItemRendererMixin",
-        "WorldRendererMixin",
-        "FishingBobberRendererMixin",
-        "RenderDispatcherMixin",
-        "HeldItemFeatureRendererMixin",
-        "ModelPartMixin",
-        "LivingEntityRendererMixin",
-        "FeatureRendererMixin",
-        "ArmorFeatureRendererMixin",
-        "StuckInBodyLayerMixin",
-        "ElytraLayerMixin",
-        "PlayerRendererMixin",
-        "CustomHeadLayerMixin",
-        "PlayerModelMixin",
-        "PlayerMixin",
-        "AgeableListModelMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+  "required": true,
+  "package": "dev.tr7zw.firstperson.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [
+    "AgeableListModelMixin",
+    "ArmorFeatureRendererMixin",
+    "CustomHeadLayerMixin",
+    "ElytraLayerMixin",
+    "EntityRendererMixin",
+    "FeatureRendererMixin",
+    "FishingBobberRendererMixin",
+    "HeldItemFeatureRendererMixin",
+    "HeldItemRendererMixin",
+    "HumanoidModelMixin",
+    "LivingEntityRendererMixin",
+    "LivingEntityRenderStateMixin",
+    "ModelPartMixin",
+    "PlayerMixin",
+    "PlayerModelMixin",
+    "PlayerRendererMixin",
+    "RenderDispatcherMixin",
+    "StuckInBodyLayerMixin",
+    "WorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

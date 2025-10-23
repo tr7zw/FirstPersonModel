@@ -24,8 +24,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 //#if MC >= 12106
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#endif
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
@@ -152,7 +153,7 @@ public class ConfigScreenProvider {
             PlayerRendererAccess access = null;
             //#if MC >= 12106
             access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-                    .getRenderer(new PlayerRenderState());
+                    .getRenderer(new AvatarRenderState());
             //#else
             //$$if (Minecraft.getInstance().player != null) {
             //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()

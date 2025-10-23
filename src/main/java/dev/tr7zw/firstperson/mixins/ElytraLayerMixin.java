@@ -1,5 +1,7 @@
 package dev.tr7zw.firstperson.mixins;
 
+import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,17 +32,15 @@ import net.minecraft.world.entity.LivingEntity;
 public class ElytraLayerMixin<T extends LivingEntity> {
 
     //#if MC >= 12103
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-            HumanoidRenderState humanoidRenderState, float f, float g, CallbackInfo ci) {
+    @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/HumanoidRenderState;FF)V", at = @At("HEAD"), cancellable = true)
+    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, HumanoidRenderState humanoidRenderState, float f, float g, CallbackInfo ci) {
         //#else
         //$$  @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
         //$$  public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
         //$$          float g, float h, float j, float k, float l, CallbackInfo ci) {
         //#endif
-        if (FirstPersonModelCore.instance.isRenderingPlayer()
-                && Minecraft.getInstance().getCameraEntity() instanceof AbstractClientPlayer player
-                && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
+        if (((LivingEntityRenderStateAccess) humanoidRenderState).isCameraEntity() && humanoidRenderState.isVisuallySwimming
+                ) {
             ci.cancel();
         }
     }

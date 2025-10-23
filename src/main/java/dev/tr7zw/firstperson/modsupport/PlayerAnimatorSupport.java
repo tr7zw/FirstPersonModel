@@ -24,7 +24,8 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
 
     @Override
     public Vec3 applyOffset(AbstractClientPlayer entity, float delta, Vec3 original, Vec3 current) {
-        if (entity instanceof IAnimatedPlayer player && player.playerAnimator_getAnimation().isActive()) {
+        // FIXME for some reason I don't have PartKey
+        /*if (entity instanceof IAnimatedPlayer player && player.playerAnimator_getAnimation().isActive()) {
             AnimationProcessor anim = player.playerAnimator_getAnimation();
             anim.setTickDelta(delta); // Probably the tick is done, set tick delta.
 
@@ -148,8 +149,8 @@ public class PlayerAnimatorSupport implements PlayerOffsetHandler {
 
             // You may use the Y offset too. new Vector, since it already cancels out all
             // deltas
-            return current.add(offset.x(), /* offset.y() */ 0, offset.z());
-        }
+            return current.add(offset.x(), /* offset.y() *//* 0, offset.z());
+        }*/
         return current;
     }
 

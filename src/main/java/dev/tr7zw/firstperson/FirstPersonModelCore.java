@@ -13,7 +13,9 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 //#if MC >= 12106
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.resources.ResourceLocation;
 //#endif
 
 public abstract class FirstPersonModelCore extends FirstPersonBase {
@@ -22,7 +24,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
     private boolean isHeld = false;
-    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, "firstperson.keybind");
+    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("firstperson", "keybind")));
     private boolean lateInit = true;
     @Deprecated
     public static boolean enabled = true;
@@ -113,7 +115,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         PlayerRendererAccess access = null;
         //#if MC >= 12106
         access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(new PlayerRenderState());
+                .getRenderer(new AvatarRenderState());
         //#else
         //$$if (Minecraft.getInstance().player != null) {
         //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
