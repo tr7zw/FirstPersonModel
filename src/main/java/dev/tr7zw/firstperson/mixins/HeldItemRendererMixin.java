@@ -42,11 +42,13 @@ public abstract class HeldItemRendererMixin {
     private ItemStack offHandItem;
 
     @Shadow
-    protected abstract void renderPlayerArm(PoseStack arg, SubmitNodeCollector arg2, int i, float g, float h, HumanoidArm arg3);
+    protected abstract void renderPlayerArm(PoseStack arg, SubmitNodeCollector arg2, int i, float g, float h,
+            HumanoidArm arg3);
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    public void renderFirstPersonItem(AbstractClientPlayer player, float deltaTick, float pitch, InteractionHand hand, float swingProgress,
-                                      ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector submitNodeCollector, int light, CallbackInfo info) {
+    public void renderFirstPersonItem(AbstractClientPlayer player, float deltaTick, float pitch, InteractionHand hand,
+            float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
+            SubmitNodeCollector submitNodeCollector, int light, CallbackInfo info) {
 
         if (!FirstPersonModelCore.instance.isEnabled()) {
             return;
@@ -70,13 +72,13 @@ public abstract class HeldItemRendererMixin {
         // double hands
         if (FirstPersonModelCore.instance.getConfig().vanillaHandsMode != VanillaHands.ALL_DOUBLE
                 || player.getMainHandItem().getItem() == Items.FILLED_MAP
-//? if >= 1.17.0 {
+                //? if >= 1.17.0 {
 
                 || player.isScoping()) {
-//? } else {
+            //? } else {
 
             // || false) {
-//? }
+            //? }
             return;
         }
         boolean bl = hand == InteractionHand.MAIN_HAND;

@@ -23,11 +23,14 @@ import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-//? if >= 1.21.6 {
+//? if >= 1.21.6 && < 1.21.9 {
+/*
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+*///? }
+   //? if >= 1.21.9 {
 
-//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//? }
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+//? }
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
@@ -152,17 +155,17 @@ public class ConfigScreenProvider {
 
             // Layers
             PlayerRendererAccess access = null;
-//? if >= 1.21.6 {
+            //? if >= 1.21.6 {
 
             access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
                     .getRenderer(new AvatarRenderState());
-//? } else {
+            //? } else {
 
             // if (Minecraft.getInstance().player != null) {
             //    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
             //            .getRenderer(Minecraft.getInstance().player);
             // }
-//? }
+            //? }
             if (access != null) {
                 WListPanel<RenderLayer, WToggleButton> layerList = new WListPanel<RenderLayer, WToggleButton>(
                         access.getRenderLayers(), () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {

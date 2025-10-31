@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(value = PlayerModel.class)
 public class PlayerModelMixin<T extends LivingEntity> implements PlayerModelAccess {
 
-//? if < 1.21.3 {
+    //? if < 1.21.3 {
 
     // @Shadow
     // @Final
@@ -25,6 +25,6 @@ public class PlayerModelMixin<T extends LivingEntity> implements PlayerModelAcce
     // public ModelPart getCloak() {
     //    return cloak;
     // }
-//? }
+    //? }
 
 }

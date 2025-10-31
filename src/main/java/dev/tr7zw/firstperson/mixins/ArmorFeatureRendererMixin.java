@@ -56,7 +56,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
                     hideLeftArm = true;
                     hideRightArm = true;
                 } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO DYNAMIC HAND
-
+    
                     if (!Minecraft.getInstance().player.getOffhandItem().isEmpty())
                         hideLeftArm = true;
                     if (!Minecraft.getInstance().player.getMainHandItem().isEmpty())
@@ -65,7 +65,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             }
         }
     }
-
+    
     @Inject(method = "setPartVisibility", at = @At("TAIL"))
     protected void setPartVisibility(A model, EquipmentSlot slot, CallbackInfo ci) {
         if (hideLeftArm) {
@@ -79,11 +79,11 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             ((ModelPartBase) (Object) model.rightArm).showAgain();
         }
     }
-
-//? } else {
-
+    
+    //? } else {
+    
     // @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-//? }
+    //? }
     private void renderArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T livingEntity,
             EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
         if (livingEntity != fpmMcInstance.cameraEntity) {

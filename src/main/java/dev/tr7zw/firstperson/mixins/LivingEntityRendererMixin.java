@@ -55,8 +55,8 @@ public abstract class LivingEntityRendererMixin {
     private static List<Runnable> revert = new ArrayList<Runnable>();
 
     /*// pull all registers to try to get rid of the head or other bodyparts
-//? if >= 1.21.3 {
-
+    //? if >= 1.21.3 {
+    
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = Shift.AFTER), cancellable = true)
     public void render(LivingEntityRenderState livingEntityRenderState, PoseStack matrixStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
@@ -67,12 +67,12 @@ public abstract class LivingEntityRendererMixin {
             return;
         }
         LivingEntity livingEntity = (LivingEntity) entity;
-//? } else {
-
+    //? } else {
+    
         // @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
         // public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
         //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-//? }
+    //? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -113,7 +113,7 @@ public abstract class LivingEntityRendererMixin {
                 humanModel.leftArm.xRot += offset;
                 //                humanModel.rightArm.offsetRotation(new Vector3f(offset, 0, 0));
                 //                humanModel.leftArm.offsetRotation(new Vector3f(offset, 0, 0));
-
+    
                 if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                     if (!InventoryUtil.getOffhand(InventoryUtil.getInventory(player)).isEmpty()
                             || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
@@ -131,15 +131,15 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-//? if < 1.21.4 {
-
+    //? if < 1.21.4 {
+    
         // if (model instanceof VillagerHeadModel villaterHead) {
         //    villaterHead.hatVisible(false);
         //    revert.add(() -> {
         //        villaterHead.hatVisible(true);
         //    });
         // }
-//? }
+    //? }
         if (model instanceof PlayerModel playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
@@ -159,7 +159,7 @@ public abstract class LivingEntityRendererMixin {
                     playerModel.leftSleeve.xRot += offset;
                     //                    playerModel.rightSleeve.offsetRotation(new Vector3f(offset, 0, 0));
                     //                    playerModel.leftSleeve.offsetRotation(new Vector3f(offset, 0, 0));
-
+    
                     if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown()) {// TODO DYNAMIC HAND
                         if (!InventoryUtil.getOffhand(InventoryUtil.getInventory(player)).isEmpty()
                                 || livingEntity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
@@ -177,21 +177,21 @@ public abstract class LivingEntityRendererMixin {
         if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
-//? if >= 1.21.3 {
-
+    //? if >= 1.21.3 {
+    
             if (livingEntityRenderState instanceof PlayerRenderState prs) {
                 prs.showCape = false;
             }
-//? } else {
-
+    //? } else {
+    
             // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
-//? }
+    //? }
             revert.add(() -> {
                 ((ModelPartBase) (Object) playerModel.body).showAgain();
-//? if < 1.21.3 {
-
+    //? if < 1.21.3 {
+    
                 // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
-//? }
+    //? }
             });
         }
         if (!headShouldBeHidden) {
@@ -203,20 +203,22 @@ public abstract class LivingEntityRendererMixin {
     }*/
 
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("HEAD"))
-    private void checkIfCameraEntity(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState, float f, CallbackInfo ci) {
-        ((LivingEntityRenderStateAccess) livingEntityRenderState).setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayer());
+    private void checkIfCameraEntity(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState,
+            float f, CallbackInfo ci) {
+        ((LivingEntityRenderStateAccess) livingEntityRenderState)
+                .setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayer());
     }
 
     /*@Inject(method = "render", at = @At("RETURN"))
-//? if >= 1.21.3 {
-
+    //? if >= 1.21.3 {
+    
     public void renderEnd(LivingEntityRenderState livingEntityRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
-//? } else {
-
+    //? } else {
+    
         //    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
         //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-//? }
+    //? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();

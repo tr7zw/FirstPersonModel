@@ -47,19 +47,19 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 public abstract class RenderDispatcherMixin {
 
     /*private static Minecraft fpmMcInstance = Minecraft.getInstance();
-
-//? if >= 1.21.3 {
-
+    
+    //? if >= 1.21.3 {
+    
     private static double tmpX;
     private static double tmpZ;
-
+    
     @Inject(method = "renderShadow", at = @At("HEAD"))
     private static void renderShadow(PoseStack poseStack, MultiBufferSource multiBufferSource,
             EntityRenderState entityRenderState, float f,
-//? if < 1.21.5 {
-
+    //? if < 1.21.5 {
+    
             // float g, 
-//? }
+    //? }
             LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             poseStack.pushPose();
@@ -70,14 +70,14 @@ public abstract class RenderDispatcherMixin {
             entityRenderState.z += FirstPersonModelCore.instance.getLogicHandler().getOffset().z;
         }
     }
-
+    
     @Inject(method = "renderShadow", at = @At("RETURN"))
     private static void renderShadowEnd(PoseStack poseStack, MultiBufferSource multiBufferSource,
             EntityRenderState entityRenderState, float f,
-//? if < 1.21.5 {
-
+    //? if < 1.21.5 {
+    
             // float g, 
-//? }
+    //? }
             LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             entityRenderState.x = tmpX;
@@ -85,24 +85,24 @@ public abstract class RenderDispatcherMixin {
             poseStack.popPose();
         }
     }
-
+    
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
     private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer,
-//? if >= 1.21.5 {
-
+    //? if >= 1.21.5 {
+    
             HitboxRenderState hitboxRenderState,
-//? } else {
-
+    //? } else {
+    
             // Entity entity, float red, float green, float blue, float alpha, 
-//? }
+    //? }
             CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             ci.cancel();
         }
     }
-
-//? } else {
-
+    
+    //? } else {
+    
     //   @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     //  private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
     //          MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
@@ -132,24 +132,24 @@ public abstract class RenderDispatcherMixin {
     // }
     //
     // @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
-// //? if < 1.17.0 {
-
+    // //? if < 1.17.0 {
+    
     // //  private void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
-// //? } else if < 1.21.0 {
-
+    // //? } else if < 1.21.0 {
+    
     // // private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
     // //       CallbackInfo ci) {
-// //? } else {
-
+    // //? } else {
+    
     // // private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
     // //       float g, float h, float i,
     // //               CallbackInfo ci) {
-// //? }
+    // //? }
     //    if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
     //       ci.cancel();
     //    }
     // }
-//? }
-*/
+    //? }
+    */
 
 }

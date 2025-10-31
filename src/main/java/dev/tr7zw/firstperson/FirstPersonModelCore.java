@@ -25,7 +25,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
     private boolean isHeld = false;
-    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295, new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("firstperson", "keybind")));
+    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295,
+            new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("firstperson", "keybind")));
     private boolean lateInit = true;
     @Deprecated
     public static boolean enabled = true;
@@ -48,20 +49,20 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
 
-//? if neoforge {
-
-        //        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-//? }
-//? if forge {
-
-// //? if >= 1.21.6 {
-
-        // // net.minecraftforge.client.event.RenderHandEvent.BUS.addListener(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-// //? } else {
-
-        // //        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-// //? }
-//? }
+        //? if neoforge {
+        /*
+                ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+        *///? }
+           //? if forge {
+           /*
+            //? if >= 1.21.6 {
+           
+             net.minecraftforge.client.event.RenderHandEvent.BUS.addListener(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+            //? } else {
+           
+            //        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+            //? }
+           *///? }
 
         ModSupportLoader.loadSupport();
     }
@@ -118,17 +119,17 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     public void updatePlayerLayers() {
         PlayerRendererAccess access = null;
-//? if >= 1.21.6 {
+        //? if >= 1.21.6 {
 
         access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(new AvatarRenderState());
-//? } else {
+        //? } else {
 
         // if (Minecraft.getInstance().player != null) {
         //    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
         //            .getRenderer(Minecraft.getInstance().player);
         // }
-//? }
+        //? }
         if (access != null) {
             access.updatePartsList(lastCameraType != CameraType.FIRST_PERSON);
         }

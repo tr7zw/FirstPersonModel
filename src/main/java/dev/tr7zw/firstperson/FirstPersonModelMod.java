@@ -6,16 +6,16 @@ import net.fabricmc.api.ClientModInitializer;
 //? }
 
 public class FirstPersonModelMod extends FirstPersonModelCore
-//? if fabric {
+        //? if fabric {
 
         implements ClientModInitializer
 //? }
 {
 
-//? if fabric {
+    //? if fabric {
 
     @Override
-//? }
+    //? }
     public void onInitializeClient() {
         sharedSetup();
     }

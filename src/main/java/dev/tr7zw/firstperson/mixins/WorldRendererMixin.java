@@ -54,29 +54,30 @@ public abstract class WorldRendererMixin {
     @Shadow
     private RenderBuffers renderBuffers;
 
-//? if <= 1.20.4 {
+    //? if <= 1.20.4 {
 
     //    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
     //    public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
     //            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
-//? } else if < 1.21.0 {
+    //? } else if < 1.21.0 {
 
     // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
     // public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
     //        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
     // PoseStack matrices = new PoseStack();
-//? } else if < 1.21.3 {
+    //? } else if < 1.21.3 {
 
     // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
     // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
     //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
     //    PoseStack matrices = new PoseStack();
-//? } else {
+    //? } else {
 
     @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
-    private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker, LevelRenderState levelRenderState, CallbackInfo ci) {
+    private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
+            LevelRenderState levelRenderState, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
-//? }
+        //? }
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
             return;
         }
@@ -84,16 +85,16 @@ public abstract class WorldRendererMixin {
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
         FirstPersonModelCore.instance.setRenderingPlayerPost(true);
-//? if < 1.21.0 {
+        //? if < 1.21.0 {
 
         // renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
-//? } else {
+        //? } else {
 
-        levelRenderState.entityRenderStates.add(extractEntity(camera.getEntity(), deltaTracker.getGameTimeDeltaPartialTick(false)));
-//? }
+        levelRenderState.entityRenderStates
+                .add(extractEntity(camera.getEntity(), deltaTracker.getGameTimeDeltaPartialTick(false)));
+        //? }
         FirstPersonModelCore.instance.setRenderingPlayer(false);
         FirstPersonModelCore.instance.setRenderingPlayerPost(false);
-
 
     }
 

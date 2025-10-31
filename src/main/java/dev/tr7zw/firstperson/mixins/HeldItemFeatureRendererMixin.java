@@ -28,8 +28,8 @@ import net.minecraft.world.entity.HumanoidArm;
 // import net.minecraft.client.resources.model.BakedModel;
 //? } else {
 
-// import net.minecraft.client.player.LocalPlayer;
-// import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.LivingEntity;
 //? }
 //? if >= 1.19.4 {
 
@@ -55,23 +55,25 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 public class HeldItemFeatureRendererMixin {
 
     @Inject(at = @At("HEAD"), method = "submitArmWithItem", cancellable = true)
-//? if >= 1.21.4 {
+    //? if >= 1.21.4 {
 
-    private void renderArmWithItem(ArmedEntityRenderState armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
-//? } else if >= 1.21.3 {
+    private void renderArmWithItem(ArmedEntityRenderState armedEntityRenderState,
+            ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
+        //? } else if >= 1.21.3 {
 
         // private void renderArmWithItem(LivingEntityRenderState livingEntityRenderState, BakedModel bakedModel,
         //        ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
         //        MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-//? } else if >= 1.19.4 {
+        //? } else if >= 1.19.4 {
 
         // private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext,
         //        HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-//? } else {
+        //? } else {
 
         //   	private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, TransformType transformType,
         //     			HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-//? }
+        //? }
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) armedEntityRenderState;
         if (access.hideLeftArm() && access.hideRightArm()
                 && !FirstPersonModelCore.instance.getLogicHandler().lookingDown(armedEntityRenderState)) {

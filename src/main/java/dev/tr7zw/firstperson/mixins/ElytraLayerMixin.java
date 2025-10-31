@@ -35,18 +35,19 @@ import net.minecraft.world.entity.LivingEntity;
 //? }
 public class ElytraLayerMixin<T extends LivingEntity> {
 
-//? if >= 1.21.3 {
+    //? if >= 1.21.3 {
 
     @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/HumanoidRenderState;FF)V", at = @At("HEAD"), cancellable = true)
-    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, HumanoidRenderState humanoidRenderState, float f, float g, CallbackInfo ci) {
-//? } else {
+    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i,
+            HumanoidRenderState humanoidRenderState, float f, float g, CallbackInfo ci) {
+        //? } else {
 
         //  @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
         //  public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
         //          float g, float h, float j, float k, float l, CallbackInfo ci) {
-//? }
-        if (((LivingEntityRenderStateAccess) humanoidRenderState).isCameraEntity() && humanoidRenderState.isVisuallySwimming
-                ) {
+        //? }
+        if (((LivingEntityRenderStateAccess) humanoidRenderState).isCameraEntity()
+                && humanoidRenderState.isVisuallySwimming) {
             ci.cancel();
         }
     }

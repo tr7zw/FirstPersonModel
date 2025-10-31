@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public class EntityRendererMixin {
 
     @WrapOperation(method = "finalizeRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/EntityRenderer;extractShadow(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lnet/minecraft/client/Minecraft;Lnet/minecraft/world/level/Level;)V"))
-    private void offsetRendering(EntityRenderer<?, ?> instance, EntityRenderState entityRenderState, Minecraft mc, Level level, Operation<Void> original) {
+    private void offsetRendering(EntityRenderer<?, ?> instance, EntityRenderState entityRenderState, Minecraft mc,
+            Level level, Operation<Void> original) {
         if (entityRenderState instanceof LivingEntityRenderStateAccess access && access.isCameraEntity()) {
             Vec3 vec3 = access.getRenderOffset();
             entityRenderState.x -= vec3.x;

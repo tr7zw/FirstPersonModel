@@ -54,12 +54,12 @@ public class LogicHandler {
                     || autoDisableItems.contains(client.player.getOffhandItem().getItem())) {
                 return true;
             }
-//? if >= 1.17.0 {
+            //? if >= 1.17.0 {
 
             if (client.player.isScoping()) {
                 return true;
             }
-//? }
+            //? }
             return false;
         });
     }

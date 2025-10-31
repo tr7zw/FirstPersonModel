@@ -34,9 +34,13 @@ import net.minecraft.world.phys.Vec3;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //? }
-//? if >= 1.21.3 {
+//? if >= 1.21.6 && < 1.21.9 {
+/*
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+*///? }
+   //? if >= 1.21.9 {
 
-//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 //? }
 
 /**
@@ -48,31 +52,31 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 @Mixin(value = AvatarRenderer.class, priority = 500)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer implements PlayerRendererAccess {
 
-//? if >= 1.18.2 {
+    //? if >= 1.18.2 {
 
     public PlayerRendererMixin(Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-//? } else {
+    //? } else {
 
     // public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
     //    super(entityRenderDispatcher, entityModel, f);
     // }
-//? }
+    //? }
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();
 
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-//? if >= 1.21.3 {
+    //? if >= 1.21.3 {
 
     public void getRenderOffset(AvatarRenderState playerRenderState, CallbackInfoReturnable<Vec3> ci) {
         AbstractClientPlayer entity = Minecraft.getInstance().player;
         float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
-//? } else {
+        //? } else {
 
         // public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
-//? }
+        //? }
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) playerRenderState;
         if (access.isCameraEntity()) {
             Vec3 offset = ci.getReturnValue().add(access.getRenderOffset());
@@ -88,14 +92,14 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
     public void extractRenderState(Avatar avatar, AvatarRenderState avatarRenderState, float delta, CallbackInfo ci) {
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) avatarRenderState;
-        if (!access.isCameraEntity()) return;
+        if (!access.isCameraEntity())
+            return;
         if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar)) {
             access.setHideArms(true);
         } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {
             access.setArmOffset(Mth.clamp(-EntityUtil.getXRot(avatar) / 20 + 2, -0.0f, 0.7f));
             if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown(avatar)) {// TODO DYNAMIC HAND
-                if (!avatar.getOffhandItem().isEmpty()
-                        || avatar.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
+                if (!avatar.getOffhandItem().isEmpty() || avatar.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
                     access.setHideLeftArm(true);
                 }
                 if (!avatar.getMainHandItem().isEmpty()) {
@@ -107,7 +111,9 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
             access.setHideBody(true);
             avatarRenderState.showCape = false;
         }
-        if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(), avatar.getOffhandItem())) access.setHideArms(true);
+        if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(),
+                avatar.getOffhandItem()))
+            access.setHideArms(true);
         FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(avatar, delta);
         access.setRenderOffset(FirstPersonModelCore.instance.getLogicHandler().getOffset());
     }

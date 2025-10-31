@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.entity.layers.ArrowLayer;
 import net.minecraft.client.renderer.entity.layers.CapeLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.server.Bootstrap;
 
 public class MixinTests {
@@ -48,7 +47,12 @@ public class MixinTests {
         objenesis.newInstance(ItemInHandLayer.class);
         objenesis.newInstance(ItemInHandRenderer.class);
         objenesis.newInstance(HumanoidModel.class);
-        objenesis.newInstance(PlayerRenderer.class);
+        //? if >= 1.21.9 {
+        objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
+        //? } else {
+        /*
+        objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
+        *///? }
         objenesis.newInstance(EntityRenderDispatcher.class);
         objenesis.newInstance(ArrowLayer.class);
         objenesis.newInstance(LevelRenderer.class);
