@@ -12,11 +12,12 @@ import lombok.Getter;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-//#if MC >= 12106
+//? if >= 1.21.6 {
+
 //import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.ResourceLocation;
-//#endif
+//? }
 
 public abstract class FirstPersonModelCore extends FirstPersonBase {
 
@@ -47,16 +48,20 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
 
-        //#if NEOFORGE
-        //$$        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-        //#endif
-        //#if FORGE
-        //#if MC >= 12106
-        //$$ net.minecraftforge.client.event.RenderHandEvent.BUS.addListener(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-        //#else
-        //$$        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
-        //#endif
-        //#endif
+//? if neoforge {
+
+        //        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+//? }
+//? if forge {
+
+// //? if >= 1.21.6 {
+
+        // // net.minecraftforge.client.event.RenderHandEvent.BUS.addListener(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+// //? } else {
+
+        // //        ModLoaderUtil.registerForgeEvent(new dev.tr7zw.firstperson.forge.RenderHandEventListener()::onRender);
+// //? }
+//? }
 
         ModSupportLoader.loadSupport();
     }
@@ -113,15 +118,17 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
     public void updatePlayerLayers() {
         PlayerRendererAccess access = null;
-        //#if MC >= 12106
+//? if >= 1.21.6 {
+
         access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(new AvatarRenderState());
-        //#else
-        //$$if (Minecraft.getInstance().player != null) {
-        //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-        //$$            .getRenderer(Minecraft.getInstance().player);
-        //$$}
-        //#endif
+//? } else {
+
+        // if (Minecraft.getInstance().player != null) {
+        //    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+        //            .getRenderer(Minecraft.getInstance().player);
+        // }
+//? }
         if (access != null) {
             access.updatePartsList(lastCameraType != CameraType.FIRST_PERSON);
         }

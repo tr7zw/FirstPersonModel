@@ -1,18 +1,21 @@
 package dev.tr7zw.firstperson;
 
-//#if FABRIC
+//? if fabric {
+
 import net.fabricmc.api.ClientModInitializer;
-//#endif
+//? }
 
 public class FirstPersonModelMod extends FirstPersonModelCore
-        //#if FABRIC
+//? if fabric {
+
         implements ClientModInitializer
-//#endif
+//? }
 {
 
-    //#if FABRIC
+//? if fabric {
+
     @Override
-    //#endif
+//? }
     public void onInitializeClient() {
         sharedSetup();
     }

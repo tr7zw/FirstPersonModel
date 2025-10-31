@@ -14,9 +14,10 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.StuckInBodyLayer;
 import net.minecraft.world.entity.LivingEntity;
-//#if MC >= 12103
+//? if >= 1.21.3 {
+
 //import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//#endif
+//? }
 
 /**
  * @author KxmischesDomi | https://github.com/kxmischesdomi
@@ -24,14 +25,16 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(StuckInBodyLayer.class)
 public class StuckInBodyLayerMixin<T extends LivingEntity> {
 
-    //#if MC >= 12103
+//? if >= 1.21.3 {
+
     @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/AvatarRenderState;FF)V", at = @At("HEAD"), cancellable = true)
     public void disableStuckFeatureLayer(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, AvatarRenderState avatarRenderState, float f, float g, CallbackInfo ci) {
-        //#else
-        //$$@Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
-        //$$public void disableStuckFeatureLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-        //$$ T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        //#endif   
+//? } else {
+
+        // @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
+        // public void disableStuckFeatureLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
+        // T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
+//? }
         if (((LivingEntityRenderStateAccess) avatarRenderState).isCameraEntity()
                 && !FirstPersonModelCore.instance.getConfig().renderStuckFeatures) {
             ci.cancel();

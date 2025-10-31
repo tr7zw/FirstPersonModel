@@ -20,9 +20,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.tr7zw.firstperson.FirstPersonModelCore;
 import dev.tr7zw.firstperson.InventoryUtil;
 import dev.tr7zw.firstperson.access.AgeableListModelAccess;
-//#if MC < 12103
-//$$ import dev.tr7zw.firstperson.access.PlayerModelAccess;
-//#endif
+//? if < 1.21.3 {
+
+// import dev.tr7zw.firstperson.access.PlayerModelAccess;
+//? }
 import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
 import dev.tr7zw.transition.mc.EntityUtil;
 import net.minecraft.client.model.EntityModel;
@@ -38,13 +39,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.player.Player;
-//#if MC >= 12103
+//? if >= 1.21.3 {
+
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 //import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//#endif
-//#if MC < 12104
-//$$import net.minecraft.client.model.VillagerHeadModel;
-//#endif
+//? }
+//? if < 1.21.4 {
+
+// import net.minecraft.client.model.VillagerHeadModel;
+//? }
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
@@ -52,7 +55,8 @@ public abstract class LivingEntityRendererMixin {
     private static List<Runnable> revert = new ArrayList<Runnable>();
 
     /*// pull all registers to try to get rid of the head or other bodyparts
-    //#if MC >= 12103
+//? if >= 1.21.3 {
+
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = Shift.AFTER), cancellable = true)
     public void render(LivingEntityRenderState livingEntityRenderState, PoseStack matrixStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
@@ -63,11 +67,12 @@ public abstract class LivingEntityRendererMixin {
             return;
         }
         LivingEntity livingEntity = (LivingEntity) entity;
-        //#else
-        //$$@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
-        //$$public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
-        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        //#endif
+//? } else {
+
+        // @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
+        // public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
+        //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+//? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -126,14 +131,15 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-        //#if MC < 12104
-        //$$if (model instanceof VillagerHeadModel villaterHead) {
-        //$$    villaterHead.hatVisible(false);
-        //$$    revert.add(() -> {
-        //$$        villaterHead.hatVisible(true);
-        //$$    });
-        //$$}
-        //#endif
+//? if < 1.21.4 {
+
+        // if (model instanceof VillagerHeadModel villaterHead) {
+        //    villaterHead.hatVisible(false);
+        //    revert.add(() -> {
+        //        villaterHead.hatVisible(true);
+        //    });
+        // }
+//? }
         if (model instanceof PlayerModel playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
@@ -171,18 +177,21 @@ public abstract class LivingEntityRendererMixin {
         if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
-            //#if MC >= 12103
+//? if >= 1.21.3 {
+
             if (livingEntityRenderState instanceof PlayerRenderState prs) {
                 prs.showCape = false;
             }
-            //#else
-            //$$((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
-            //#endif
+//? } else {
+
+            // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
+//? }
             revert.add(() -> {
                 ((ModelPartBase) (Object) playerModel.body).showAgain();
-                //#if MC < 12103
-                //$$ ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
-                //#endif
+//? if < 1.21.3 {
+
+                // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
+//? }
             });
         }
         if (!headShouldBeHidden) {
@@ -199,13 +208,15 @@ public abstract class LivingEntityRendererMixin {
     }
 
     /*@Inject(method = "render", at = @At("RETURN"))
-    //#if MC >= 12103
+//? if >= 1.21.3 {
+
     public void renderEnd(LivingEntityRenderState livingEntityRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
-        //#else
-        //$$    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
-        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        //#endifs
+//? } else {
+
+        //    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
+        //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+//? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();

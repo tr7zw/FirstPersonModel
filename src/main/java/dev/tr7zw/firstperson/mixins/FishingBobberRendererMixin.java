@@ -19,11 +19,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.FishingHookRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-//#if MC >= 12103
+//? if >= 1.21.3 {
+
 import net.minecraft.client.renderer.entity.state.FishingHookRenderState;
-//#else
-//$$ import net.minecraft.world.entity.projectile.FishingHook;
-//#endif
+//? } else {
+
+// import net.minecraft.world.entity.projectile.FishingHook;
+//? }
 
 @Mixin(FishingHookRenderer.class)
 public class FishingBobberRendererMixin {
@@ -36,22 +38,26 @@ public class FishingBobberRendererMixin {
                 && !FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems();
     }
 
-    //#if MC <= 12004
-    //$$ @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
-    //#else
+//? if <= 1.20.4 {
+
+    // @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+//? } else {
+
     @Redirect(method = "getPlayerHandPos", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
-    //#endif
+//? }
     private CameraType redirect(Options gameOptions) {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
 
     @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("HEAD"))
-    //#if MC >= 12103
+//? if >= 1.21.3 {
+
     public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState, CallbackInfo ci) {
-        //#else
-        //$$ private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
-        //$$        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-        //#endif
+//? } else {
+
+        // private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
+        //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
+//? }
         if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             offsetvec3d = FirstPersonModelCore.instance.getLogicHandler().getOffset();// getPositionOffset((Player)
                                                                                       // fishingBobberEntity.getOwner(),
@@ -61,31 +67,33 @@ public class FishingBobberRendererMixin {
         }
     }
 
-    //#if MC <= 12004
-    //$$    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
-    //$$    private double offsetX(Player playerEntity) {
-    //$$        return playerEntity.getX() + offsetvec3d.x();
-    //$$    }
-    //$$
-    //$$    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getZ()D"))
-    //$$    private double offsetZ(Player playerEntity) {
-    //$$        return playerEntity.getZ() + offsetvec3d.z();
-    //$$    }
-    //$$
-    //$$    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;xo:D"))
-    //$$    private double prevOffsetX(Player playerEntity) {
-    //$$        return playerEntity.xo + offsetvec3d.x();
-    //$$    }
-    //$$
-    //$$    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;zo:D"))
-    //$$    private double prevOffsetZ(Player playerEntity) {
-    //$$        return playerEntity.zo + offsetvec3d.z();
-    //$$    }
-    //#else
+//? if <= 1.20.4 {
+
+    //    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getX()D"))
+    //    private double offsetX(Player playerEntity) {
+    //        return playerEntity.getX() + offsetvec3d.x();
+    //    }
+    //
+    //    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getZ()D"))
+    //    private double offsetZ(Player playerEntity) {
+    //        return playerEntity.getZ() + offsetvec3d.z();
+    //    }
+    //
+    //    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;xo:D"))
+    //    private double prevOffsetX(Player playerEntity) {
+    //        return playerEntity.xo + offsetvec3d.x();
+    //    }
+    //
+    //    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;zo:D"))
+    //    private double prevOffsetZ(Player playerEntity) {
+    //        return playerEntity.zo + offsetvec3d.z();
+    //    }
+//? } else {
+
     @Inject(method = "getPlayerHandPos", at = @At("RETURN"), cancellable = true)
     private void getPlayerHandPosOffset(Player player, float f, float g, CallbackInfoReturnable<Vec3> ci) {
         ci.setReturnValue(ci.getReturnValue().add(offsetvec3d));
     }
-    //#endif
+//? }
 
 }

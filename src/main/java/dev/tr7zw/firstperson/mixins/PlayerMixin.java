@@ -12,13 +12,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-//#if MC >= 12105
+//? if >= 1.21.5 {
+
 import net.minecraft.world.entity.LivingEntity;
 
 @Mixin(LivingEntity.class)
-//#else
-//$$ @Mixin(Player.class)
-//#endif
+//? } else {
+
+// @Mixin(Player.class)
+//? }
 public class PlayerMixin {
 
     /*@Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)

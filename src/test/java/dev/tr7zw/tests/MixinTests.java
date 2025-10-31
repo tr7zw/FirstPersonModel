@@ -1,4 +1,5 @@
-//#if MC >= 11800
+//? if >= 1.18.0 {
+
 package dev.tr7zw.tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -54,4 +55,4 @@ public class MixinTests {
     }
 
 }
-//#endif
+//? }

@@ -70,11 +70,13 @@ public abstract class HeldItemRendererMixin {
         // double hands
         if (FirstPersonModelCore.instance.getConfig().vanillaHandsMode != VanillaHands.ALL_DOUBLE
                 || player.getMainHandItem().getItem() == Items.FILLED_MAP
-                //#if MC >= 11700
+//? if >= 1.17.0 {
+
                 || player.isScoping()) {
-            //#else
-            //$$|| false) {
-            //#endif
+//? } else {
+
+            // || false) {
+//? }
             return;
         }
         boolean bl = hand == InteractionHand.MAIN_HAND;

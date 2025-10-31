@@ -19,9 +19,10 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-//#if MC >= 12103
+//? if >= 1.21.3 {
+
 import net.minecraft.world.item.equipment.Equippable;
-//#endif
+//? }
 
 // lower prio to run before fabric api
 @SuppressWarnings("rawtypes")
@@ -79,9 +80,10 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         }
     }
 
-    //#else
-    //$$@Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-    //#endif
+//? } else {
+
+    // @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
+//? }
     private void renderArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T livingEntity,
             EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
         if (livingEntity != fpmMcInstance.cameraEntity) {

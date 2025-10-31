@@ -30,12 +30,14 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 //import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.phys.Vec3;
-//#if MC >= 11802
+//? if >= 1.18.2 {
+
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-//#endif
-//#if MC >= 12103
+//? }
+//? if >= 1.21.3 {
+
 //import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//#endif
+//? }
 
 /**
  * Offset the player behind the camera
@@ -46,27 +48,31 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 @Mixin(value = AvatarRenderer.class, priority = 500)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer implements PlayerRendererAccess {
 
-    //#if MC >= 11802
+//? if >= 1.18.2 {
+
     public PlayerRendererMixin(Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-    //#else
-    //$$public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
-    //$$    super(entityRenderDispatcher, entityModel, f);
-    //$$}
-    //#endif
+//? } else {
+
+    // public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
+    //    super(entityRenderDispatcher, entityModel, f);
+    // }
+//? }
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();
 
     @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-    //#if MC >= 12103
+//? if >= 1.21.3 {
+
     public void getRenderOffset(AvatarRenderState playerRenderState, CallbackInfoReturnable<Vec3> ci) {
         AbstractClientPlayer entity = Minecraft.getInstance().player;
         float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
-        //#else
-        //$$public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
-        //#endif
+//? } else {
+
+        // public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
+//? }
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) playerRenderState;
         if (access.isCameraEntity()) {
             Vec3 offset = ci.getReturnValue().add(access.getRenderOffset());
