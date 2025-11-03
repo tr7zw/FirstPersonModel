@@ -29,7 +29,4 @@ public interface LivingEntityRenderStateAccess {
 
     float getArmOffset();
 
-    void setRenderOffset(Vec3 offset);
-
-    Vec3 getRenderOffset();
 }

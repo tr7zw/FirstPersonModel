@@ -1,8 +1,8 @@
 package dev.tr7zw.firstperson.mixins;
 
+import net.minecraft.client.renderer.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,7 +12,6 @@ import dev.tr7zw.firstperson.FirstPersonModelCore;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.LevelReader;
@@ -46,10 +45,12 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class RenderDispatcherMixin {
 
-    /*private static Minecraft fpmMcInstance = Minecraft.getInstance();
-    
-    //? if >= 1.21.3 {
-    
+    private static Minecraft fpmMcInstance = Minecraft.getInstance();
+
+    //? if >= 1.21.9 {
+
+    //? } else if >= 1.21.3 {
+    /*
     private static double tmpX;
     private static double tmpZ;
     
@@ -101,8 +102,8 @@ public abstract class RenderDispatcherMixin {
         }
     }
     
-    //? } else {
-    
+    *///? } else {
+
     //   @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     //  private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
     //          MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
@@ -133,14 +134,14 @@ public abstract class RenderDispatcherMixin {
     //
     // @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
     // //? if < 1.17.0 {
-    
+
     // //  private void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
     // //? } else if < 1.21.0 {
-    
+
     // // private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
     // //       CallbackInfo ci) {
     // //? } else {
-    
+
     // // private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
     // //       float g, float h, float i,
     // //               CallbackInfo ci) {
@@ -150,6 +151,5 @@ public abstract class RenderDispatcherMixin {
     //    }
     // }
     //? }
-    */
 
 }

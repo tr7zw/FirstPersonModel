@@ -3,8 +3,7 @@ package dev.tr7zw.firstperson;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.firstperson.api.ActivationHandler;
-import dev.tr7zw.firstperson.api.FirstPersonAPI;
+import dev.tr7zw.firstperson.api.*;
 import dev.tr7zw.firstperson.versionless.Constants;
 import dev.tr7zw.firstperson.versionless.FirstPersonBase;
 import dev.tr7zw.firstperson.versionless.config.VanillaHands;
@@ -145,6 +144,9 @@ public class LogicHandler {
 
         }
         offset = new Vec3(x, y, z);
+        for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
+            offset = handler.applyOffset(client.player, delta, Vec3.ZERO, offset);
+        }
     }
 
     private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {

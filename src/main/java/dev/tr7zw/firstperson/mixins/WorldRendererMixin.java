@@ -90,8 +90,31 @@ public abstract class WorldRendererMixin {
         // renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
         //? } else {
 
-        levelRenderState.entityRenderStates
-                .add(extractEntity(camera.getEntity(), deltaTracker.getGameTimeDeltaPartialTick(false)));
+        var ent = camera.getEntity();
+        var pos = ((EntityAccessor) ent).entityCulling$getRawPosition();
+        var xO = ent.xo;
+        var yO = ent.yo;
+        var zO = ent.zo;
+        var xOld = ent.xOld;
+        var yOld = ent.yOld;
+        var zOld = ent.zOld;
+        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent, deltaTracker.getGameTimeDeltaPartialTick(true));
+        var offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
+        ((EntityAccessor) ent).entityCulling$setRawPosition(pos.add(offset));
+        ent.xo += offset.x;
+        ent.yo += offset.y;
+        ent.zo += offset.z;
+        ent.xOld += offset.x;
+        ent.yOld += offset.y;
+        ent.zOld += offset.z;
+        levelRenderState.entityRenderStates.add(extractEntity(ent, deltaTracker.getGameTimeDeltaPartialTick(true)));
+        ((EntityAccessor) ent).entityCulling$setRawPosition(pos);
+        ent.xo = xO;
+        ent.yo = yO;
+        ent.zo = zO;
+        ent.xOld = xOld;
+        ent.yOld = yOld;
+        ent.zOld = zOld;
         //? }
         FirstPersonModelCore.instance.setRenderingPlayer(false);
         FirstPersonModelCore.instance.setRenderingPlayerPost(false);

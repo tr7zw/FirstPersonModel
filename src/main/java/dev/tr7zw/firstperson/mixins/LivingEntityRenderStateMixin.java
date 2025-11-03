@@ -2,7 +2,6 @@ package dev.tr7zw.firstperson.mixins;
 
 import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -19,8 +18,6 @@ public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAcce
     private boolean hideBody;
     @Unique
     private float armOffset;
-    @Unique
-    private Vec3 renderOffset = Vec3.ZERO;
 
     @Override
     public void setIsCameraEntity(boolean value) {
@@ -72,13 +69,4 @@ public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAcce
         return this.armOffset;
     }
 
-    @Override
-    public void setRenderOffset(Vec3 offset) {
-        this.renderOffset = offset;
-    }
-
-    @Override
-    public Vec3 getRenderOffset() {
-        return renderOffset;
-    }
 }

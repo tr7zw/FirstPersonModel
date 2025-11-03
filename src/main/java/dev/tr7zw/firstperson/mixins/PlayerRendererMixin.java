@@ -67,28 +67,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();
 
-    @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-    //? if >= 1.21.3 {
-
-    public void getRenderOffset(AvatarRenderState playerRenderState, CallbackInfoReturnable<Vec3> ci) {
-        AbstractClientPlayer entity = Minecraft.getInstance().player;
-        float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
-        //? } else {
-
-        // public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
-        //? }
-        LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) playerRenderState;
-        if (access.isCameraEntity()) {
-            Vec3 offset = ci.getReturnValue().add(access.getRenderOffset());
-            // FIXME use render state instead of entity
-            for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
-                offset = handler.applyOffset(entity, delta, ci.getReturnValue(), offset);
-            }
-
-            ci.setReturnValue(offset);
-        }
-    }
-
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
     public void extractRenderState(Avatar avatar, AvatarRenderState avatarRenderState, float delta, CallbackInfo ci) {
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) avatarRenderState;
@@ -114,8 +92,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
         if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(),
                 avatar.getOffhandItem()))
             access.setHideArms(true);
-        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(avatar, delta);
-        access.setRenderOffset(FirstPersonModelCore.instance.getLogicHandler().getOffset());
     }
 
     @Override

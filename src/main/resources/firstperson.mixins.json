@@ -8,7 +8,6 @@
         "ArmorFeatureRendererMixin",
         "CustomHeadLayerMixin",
         "ElytraLayerMixin",
-        "EntityRendererMixin",
         "FeatureRendererMixin",
         "FishingBobberRendererMixin",
         "HeldItemFeatureRendererMixin",
@@ -22,7 +21,8 @@
         "PlayerRendererMixin",
         "RenderDispatcherMixin",
         "StuckInBodyLayerMixin",
-        "WorldRendererMixin"
+        "WorldRendererMixin",
+        "EntityAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
