@@ -1,45 +1,27 @@
 package dev.tr7zw.firstperson.mixins;
 
-import net.minecraft.client.renderer.culling.Frustum;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.state.LevelRenderState;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
-import net.minecraft.client.renderer.RenderBuffers;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
-//? if >= 1.21.3 {
-
-import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
+import com.mojang.blaze3d.vertex.*;
+import dev.tr7zw.firstperson.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.culling.*;
+//? if >= 1.21.2 {
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.client.renderer.state.*;
 //? }
-//? if >= 1.21.0 {
+import net.minecraft.world.entity.*;
+import net.minecraft.world.phys.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import net.minecraft.client.DeltaTracker;
-
-import java.util.List;
-
-//? }
-//? if >= 1.19.3 {
-
-import org.joml.Matrix4f;
-//? } else {
-
-// import com.mojang.math.Matrix4f;
-//? }
+import java.util.*;
+//? if >= 1.21.9 {
+//? } else if >= 1.19.3 {
+/*import org.joml.*;
+*///? } else {
+   // import com.mojang.math.*;
+   //? }
 
 /**
  * Detects when the player is rendered and triggers the correct changes
@@ -48,8 +30,14 @@ import org.joml.Matrix4f;
 @Mixin(LevelRenderer.class)
 public abstract class WorldRendererMixin {
 
+    //? if >= 1.21.9 {
     @Shadow
     protected abstract EntityRenderState extractEntity(Entity arg, float f);
+    //? } else {
+    /*@Shadow
+    protected abstract void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta,
+            PoseStack matrices, MultiBufferSource vertexConsumers);
+    *///? }
 
     @Shadow
     private RenderBuffers renderBuffers;
@@ -71,7 +59,12 @@ public abstract class WorldRendererMixin {
     // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
     //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
     //    PoseStack matrices = new PoseStack();
-    //? } else {
+    //? } else if < 1.21.9 {
+    /*@Inject(method = "renderEntities", at = @At(value = "HEAD"))
+    private void renderEntities(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, Camera camera,
+            DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
+        PoseStack matrices = new PoseStack();
+        *///? } else {
 
     @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
     private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
@@ -88,7 +81,10 @@ public abstract class WorldRendererMixin {
         //? if < 1.21.0 {
 
         // renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
-        //? } else {
+        //? } else if < 1.21.9 {
+        /*renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
+                deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
+        *///? } else {
 
         var ent = camera.getEntity();
         var pos = ((EntityAccessor) ent).entityCulling$getRawPosition();
@@ -98,7 +94,8 @@ public abstract class WorldRendererMixin {
         var xOld = ent.xOld;
         var yOld = ent.yOld;
         var zOld = ent.zOld;
-        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent, deltaTracker.getGameTimeDeltaPartialTick(true));
+        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent,
+                deltaTracker.getGameTimeDeltaPartialTick(true));
         var offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
         ((EntityAccessor) ent).entityCulling$setRawPosition(pos.add(offset));
         ent.xo += offset.x;

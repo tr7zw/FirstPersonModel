@@ -1,27 +1,19 @@
 package dev.tr7zw.firstperson.mixins;
 
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.versionless.config.VanillaHands;
-import dev.tr7zw.transition.mc.EntityUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.ItemInHandRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import com.mojang.blaze3d.vertex.*;
+import dev.tr7zw.firstperson.*;
+import dev.tr7zw.firstperson.versionless.config.*;
+import dev.tr7zw.transition.mc.*;
+import net.minecraft.client.*;
+import net.minecraft.client.player.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 /**
  * Hides the normal first person hands
@@ -42,13 +34,24 @@ public abstract class HeldItemRendererMixin {
     private ItemStack offHandItem;
 
     @Shadow
+    //? if >= 1.21.9 {
     protected abstract void renderPlayerArm(PoseStack arg, SubmitNodeCollector arg2, int i, float g, float h,
             HumanoidArm arg3);
+    //? } else {
+    /*public abstract void renderPlayerArm(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
+            float equipProgress, float swingProgress, HumanoidArm arm);
+    *///? }
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
+    //? if >= 1.21.9 {
     public void renderFirstPersonItem(AbstractClientPlayer player, float deltaTick, float pitch, InteractionHand hand,
             float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
-            SubmitNodeCollector submitNodeCollector, int light, CallbackInfo info) {
+            SubmitNodeCollector vertexConsumers, int light, CallbackInfo info) {
+        //? } else {
+        /*public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
+            float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
+            MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
+        *///? }
 
         if (!FirstPersonModelCore.instance.isEnabled()) {
             return;
@@ -85,7 +88,7 @@ public abstract class HeldItemRendererMixin {
         HumanoidArm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();
         matrices.pushPose();
         if (item.isEmpty() && !bl && !player.isInvisible()) {
-            renderPlayerArm(matrices, submitNodeCollector, light, equipProgress, swingProgress, arm);
+            renderPlayerArm(matrices, vertexConsumers, light, equipProgress, swingProgress, arm);
         }
         matrices.popPose();
     }

@@ -1,17 +1,16 @@
 //? if forge || neoforge {
 /*
- package dev.tr7zw.firstperson.forge;
+package dev.tr7zw.firstperson.forge;
 
- import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
 
- //? if >= 1.21.6 && forge {
+//? if >= 1.21.6 && forge {
 /^
-  import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
- ^///? } else if forge {
-
- // import net.minecraftforge.eventbus.api.SubscribeEvent;
- //? }
-
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+^///? } else if forge {
+// import net.minecraftforge.client.event.RenderHandEvent;
+// import net.minecraftforge.eventbus.api.SubscribeEvent;
+//? }
 
 //? if neoforge {
 /^
@@ -19,25 +18,26 @@
   import net.neoforged.neoforge.client.event.RenderHandEvent;
  ^///? }
 
- public class RenderHandEventListener {
+public class RenderHandEventListener {
 
- 	@SubscribeEvent
- //? if >= 1.21.6 && forge {
+    @SubscribeEvent
+    //? if >= 1.21.6 && forge {
 /^
-     public boolean onRender(net.minecraftforge.client.event.RenderHandEvent e) {
-                 if(FirstPersonModelCore.instance.isEnabled() && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-                         return true;
-                 }
-                 return false;
-         }
- ^///? } else {
+    public boolean onRender(net.minecraftforge.client.event.RenderHandEvent e) {
+        if (FirstPersonModelCore.instance.isEnabled()
+                && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
+            return true;
+        }
+        return false;
+    }
+    ^///? } else {
+    
+      	public void onRender(RenderHandEvent e) {
+      		if(FirstPersonModelCore.instance.isEnabled() && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
+      			e.setCanceled(true);
+      		}
+      	}
+     //? }
 
-  	public void onRender(RenderHandEvent e) {
-  		if(FirstPersonModelCore.instance.isEnabled() && !FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()) {
-  			e.setCanceled(true);
-  		}
-  	}
- //? }
- 	
- }
+}
 *///? }

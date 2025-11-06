@@ -1,9 +1,9 @@
 package dev.tr7zw.firstperson.mixins;
 
-import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+//? if >= 1.21.9 {
+import dev.tr7zw.firstperson.access.*;
+import net.minecraft.client.renderer.entity.state.*;
+import org.spongepowered.asm.mixin.*;
 
 @Mixin(LivingEntityRenderState.class)
 public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAccess {
@@ -68,5 +68,10 @@ public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAcce
     public float getArmOffset() {
         return this.armOffset;
     }
-
 }
+//? } else {
+/*@org.spongepowered.asm.mixin.Mixin(net.minecraft.client.Minecraft.class)
+public class LivingEntityRenderStateMixin {
+}
+
+*///? }

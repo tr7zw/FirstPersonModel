@@ -1,15 +1,14 @@
 package dev.tr7zw.firstperson.mixins;
 
-import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//? if >= 1.21.9 {
+
+import dev.tr7zw.firstperson.access.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.geom.*;
+import net.minecraft.client.renderer.entity.state.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(HumanoidModel.class)
 public class HumanoidModelMixin {
@@ -41,3 +40,8 @@ public class HumanoidModelMixin {
         body.visible = !access.hideBody();
     }
 }
+//? } else {
+/*@org.spongepowered.asm.mixin.Mixin(net.minecraft.client.Minecraft.class)
+public class HumanoidModelMixin {
+}
+*///? }

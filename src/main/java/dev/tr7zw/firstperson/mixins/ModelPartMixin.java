@@ -1,13 +1,10 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
-import net.minecraft.client.model.geom.ModelPart;
+import dev.tr7zw.firstperson.versionless.mixinbase.*;
+import net.minecraft.client.model.geom.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(ModelPart.class)
 public class ModelPartMixin implements ModelPartBase {
@@ -47,13 +44,15 @@ public class ModelPartMixin implements ModelPartBase {
         }
     }
 
+    //? if < 1.21.9 {
     /*@Inject(method = "copyFrom", at = @At("RETURN"))
     public void copyTransform(ModelPart modelPart, CallbackInfo info) {
         if (moved) {
             zCopy = z;
             z = 5000;
         }
-    }*/
+    }
+    *///? }
 
     @Override
     public boolean isHidden() {

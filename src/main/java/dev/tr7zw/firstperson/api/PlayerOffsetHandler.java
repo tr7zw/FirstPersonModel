@@ -1,7 +1,7 @@
 package dev.tr7zw.firstperson.api;
 
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.client.player.*;
+import net.minecraft.world.phys.*;
 
 public interface PlayerOffsetHandler {
 

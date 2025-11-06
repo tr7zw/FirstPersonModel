@@ -1,7 +1,7 @@
 package dev.tr7zw.firstperson.modsupport;
 
-import dev.tr7zw.firstperson.api.ActivationHandler;
-import net.xolt.freecam.Freecam;
+import dev.tr7zw.firstperson.api.*;
+import net.xolt.freecam.*;
 
 public class FreecamSupport implements ActivationHandler {
 

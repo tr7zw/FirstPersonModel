@@ -1,14 +1,7 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-
-//? if < 1.21.3 {
-
-// import org.spongepowered.asm.mixin.Shadow;
-// import dev.tr7zw.firstperson.access.AgeableListModelAccess;
-// import net.minecraft.client.model.AgeableListModel;
-//? }
-import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.*;
+import org.spongepowered.asm.mixin.*;
 
 //? if >= 1.21.3 {
 
@@ -16,6 +9,8 @@ import net.minecraft.client.model.geom.ModelPart;
 public abstract class AgeableListModelMixin {
 }
 //? } else {
+//import dev.tr7zw.firstperson.access.*;
+//import net.minecraft.client.model.*;
 
 // @Mixin(AgeableListModel.class)
 // public abstract class AgeableListModelMixin implements AgeableListModelAccess {

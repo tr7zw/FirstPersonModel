@@ -1,10 +1,9 @@
 package dev.tr7zw.firstperson;
 
-import java.util.List;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
 
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import java.util.*;
 
 public class InventoryUtil {
 

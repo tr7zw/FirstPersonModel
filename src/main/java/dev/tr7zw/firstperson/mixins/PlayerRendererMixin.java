@@ -1,47 +1,24 @@
 package dev.tr7zw.firstperson.mixins;
 
-import java.util.ArrayList;
-import java.util.List;
+import dev.tr7zw.firstperson.*;
+import dev.tr7zw.firstperson.access.*;
+import dev.tr7zw.transition.mc.*;
+import net.minecraft.client.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.client.renderer.entity.player.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.util.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import dev.tr7zw.firstperson.InventoryUtil;
-import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
-import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
-import dev.tr7zw.transition.mc.EntityUtil;
-import net.minecraft.client.renderer.entity.player.AvatarRenderer;
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Avatar;
-import net.minecraft.world.item.Items;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.access.PlayerRendererAccess;
-import dev.tr7zw.firstperson.api.FirstPersonAPI;
-import dev.tr7zw.firstperson.api.PlayerOffsetHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-//import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.phys.Vec3;
-//? if >= 1.18.2 {
-
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-//? }
-//? if >= 1.21.6 && < 1.21.9 {
-/*
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-*///? }
-   //? if >= 1.21.9 {
-
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-//? }
+import java.util.*;
 
 /**
  * Offset the player behind the camera
@@ -49,12 +26,16 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
  * @author tr7zw
  *
  */
+//? if >= 1.21.9 {
 @Mixin(value = AvatarRenderer.class, priority = 500)
+//? } else {
+/*@Mixin(value = PlayerRenderer.class, priority = 500)
+*///? }
 public abstract class PlayerRendererMixin extends LivingEntityRenderer implements PlayerRendererAccess {
 
     //? if >= 1.18.2 {
 
-    public PlayerRendererMixin(Context context, PlayerModel model, float shadowRadius) {
+    public PlayerRendererMixin(EntityRendererProvider.Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
     //? } else {
@@ -67,6 +48,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();
 
+    //? if >= 1.21.9 {
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
     public void extractRenderState(Avatar avatar, AvatarRenderState avatarRenderState, float delta, CallbackInfo ci) {
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) avatarRenderState;
@@ -93,6 +75,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
                 avatar.getOffhandItem()))
             access.setHideArms(true);
     }
+    //? }
 
     @Override
     public List<RenderLayer> getRenderLayers() {

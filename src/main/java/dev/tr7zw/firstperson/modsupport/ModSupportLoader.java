@@ -1,9 +1,9 @@
 package dev.tr7zw.firstperson.modsupport;
 
-import dev.tr7zw.firstperson.api.FirstPersonAPI;
-import dev.tr7zw.firstperson.versionless.FirstPersonBase;
-import dev.tr7zw.transition.loader.ModLoaderUtil;
-import lombok.experimental.UtilityClass;
+import dev.tr7zw.firstperson.api.*;
+import dev.tr7zw.firstperson.versionless.*;
+import dev.tr7zw.transition.loader.*;
+import lombok.experimental.*;
 
 @UtilityClass
 public class ModSupportLoader {

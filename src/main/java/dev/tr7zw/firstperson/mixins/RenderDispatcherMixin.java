@@ -1,41 +1,27 @@
 package dev.tr7zw.firstperson.mixins;
 
+import com.mojang.blaze3d.vertex.*;
+import dev.tr7zw.firstperson.*;
+import lombok.*;
+import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
-import org.spongepowered.asm.mixin.Mixin;
+import net.minecraft.client.renderer.entity.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.world.level.*;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.*;
+import net.minecraft.world.entity.*;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.LevelReader;
-
-//? if >= 1.21.5 {
-
-import net.minecraft.client.renderer.entity.state.HitboxRenderState;
-//? }
-//? if >= 1.21.3 {
-
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
-//? } else {
-
-// import org.spongepowered.asm.mixin.injection.At;
-// import org.spongepowered.asm.mixin.injection.At.Shift;
-// import org.spongepowered.asm.mixin.injection.Redirect;
-// import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-// import com.mojang.blaze3d.vertex.VertexConsumer;
-// import net.minecraft.client.renderer.MultiBufferSource;
-// import net.minecraft.util.Mth;
-// import net.minecraft.world.entity.Entity;
-// import net.minecraft.world.level.LevelReader;
-// import net.minecraft.world.phys.Vec3;
-//? }
+//? if < 1.21.3 {
+/*import org.spongepowered.asm.mixin.injection.*;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.util.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.phys.*;
+*///? }
 
 /**
  * Move the first person shadow to be at the correct location
@@ -57,10 +43,10 @@ public abstract class RenderDispatcherMixin {
     @Inject(method = "renderShadow", at = @At("HEAD"))
     private static void renderShadow(PoseStack poseStack, MultiBufferSource multiBufferSource,
             EntityRenderState entityRenderState, float f,
-    //? if < 1.21.5 {
+            //? if < 1.21.5 {
     
-            // float g, 
-    //? }
+            // float g,
+            //? }
             LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             poseStack.pushPose();
@@ -75,10 +61,10 @@ public abstract class RenderDispatcherMixin {
     @Inject(method = "renderShadow", at = @At("RETURN"))
     private static void renderShadowEnd(PoseStack poseStack, MultiBufferSource multiBufferSource,
             EntityRenderState entityRenderState, float f,
-    //? if < 1.21.5 {
+            //? if < 1.21.5 {
     
             // float g, 
-    //? }
+            //? }
             LevelReader levelReader, float h, CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             entityRenderState.x = tmpX;
@@ -89,13 +75,13 @@ public abstract class RenderDispatcherMixin {
     
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
     private static void renderHitbox(PoseStack poseStack, VertexConsumer buffer,
-    //? if >= 1.21.5 {
+            //? if >= 1.21.5 {
     
             HitboxRenderState hitboxRenderState,
-    //? } else {
+            //? } else {
     
             // Entity entity, float red, float green, float blue, float alpha, 
-    //? }
+            //? }
             CallbackInfo ci) {
         if (FirstPersonModelCore.instance.isRenderingPlayerPost()) {
             ci.cancel();
@@ -122,7 +108,7 @@ public abstract class RenderDispatcherMixin {
     //      return Mth.lerp(delta, old, cur);
     //  }
     //
-    //   @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = Shift.BEFORE))
+    //   @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = At.Shift.BEFORE))
     //   private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity,
     //           float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
     //      if (!FirstPersonModelCore.instance.isRenderingPlayerPost()) {

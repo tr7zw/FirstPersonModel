@@ -1,31 +1,20 @@
 package dev.tr7zw.firstperson.mixins;
 
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import net.minecraft.client.CameraType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.FishingHookRenderer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
-//? if >= 1.21.3 {
-
-import net.minecraft.client.renderer.entity.state.FishingHookRenderState;
-//? } else {
-
-// import net.minecraft.world.entity.projectile.FishingHook;
+import com.mojang.blaze3d.vertex.*;
+import dev.tr7zw.firstperson.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.*;
+//? if >= 1.21.2 {
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.client.renderer.state.*;
 //? }
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.phys.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
+import net.minecraft.world.entity.projectile.*;
 
 @Mixin(FishingHookRenderer.class)
 public class FishingBobberRendererMixin {
@@ -49,12 +38,19 @@ public class FishingBobberRendererMixin {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
 
+    //? if >= 1.21.9 {
     @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("HEAD"))
-    //? if >= 1.21.3 {
+    //? } else {
+    /*@Inject(method = "render", at = @At("HEAD"))
+    *///? }
+       //? if >= 1.21.9 {
 
     public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
             SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState, CallbackInfo ci) {
-        //? } else {
+        //? } else if >= 1.21.3 {
+        /*public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
+            MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
+        *///? } else {
 
         // private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
         //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {

@@ -2,7 +2,7 @@ package dev.tr7zw.firstperson;
 
 //? if fabric {
 
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.*;
 //? }
 
 public class FirstPersonModelMod extends FirstPersonModelCore

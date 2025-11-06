@@ -1,27 +1,28 @@
 //? if forge {
 /*
- package dev.tr7zw.firstperson;
+package dev.tr7zw.firstperson;
 
- import net.minecraftforge.api.distmarker.Dist;
- import net.minecraftforge.fml.DistExecutor;
- import net.minecraftforge.fml.common.Mod;
- import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
- import dev.tr7zw.transition.loader.ModLoaderUtil;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import dev.tr7zw.transition.loader.ModLoaderUtil;
 
- @Mod("firstperson")
- public class FirstPersonBootstrap {
+@Mod("firstperson")
+public class FirstPersonBootstrap {
 
     public FirstPersonBootstrap(FMLJavaModLoadingContext context) {
         ModLoaderUtil.setModLoadingContext(context);
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-         new FirstPersonModelMod().sharedSetup();
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            new FirstPersonModelMod().sharedSetup();
         });
     }
+
     public FirstPersonBootstrap() {
         this(FMLJavaModLoadingContext.get());
     }
-    
- }
+
+}
 *///? } else if neoforge {
 /*
  package dev.tr7zw.firstperson;

@@ -1,23 +1,12 @@
 package dev.tr7zw.firstperson.modsupport;
 
-import dev.kosmx.playerAnim.api.TransformType;
-import dev.kosmx.playerAnim.core.impl.AnimationProcessor;
-import dev.kosmx.playerAnim.core.util.Vec3f;
-import dev.kosmx.playerAnim.impl.IAnimatedPlayer;
-import dev.tr7zw.firstperson.api.PlayerOffsetHandler;
-import dev.tr7zw.transition.mc.MathUtil;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-//? if < 1.20.0 {
-
-// import net.minecraft.client.Minecraft;
-//? }
-//? if >= 1.19.3 {
-
-import org.joml.Matrix4f;
-import org.joml.Vector4f;
-//? } else {
+import dev.tr7zw.firstperson.api.*;
+import net.minecraft.client.player.*;
+import net.minecraft.world.phys.*;
+//? if >= 1.21.9 {
+//? } else if >= 1.19.3 {
+/*import org.joml.*;
+*///? } else {
 
 // import com.mojang.math.Matrix4f;
 // import com.mojang.math.Vector4f;

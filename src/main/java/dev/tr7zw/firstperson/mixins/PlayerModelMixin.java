@@ -1,10 +1,9 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-
-import dev.tr7zw.firstperson.access.PlayerModelAccess;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.world.entity.LivingEntity;
+import dev.tr7zw.firstperson.access.*;
+import net.minecraft.client.model.*;
+import net.minecraft.world.entity.*;
+import org.spongepowered.asm.mixin.*;
 //? if < 1.21.3 {
 
 // import org.spongepowered.asm.mixin.Final;

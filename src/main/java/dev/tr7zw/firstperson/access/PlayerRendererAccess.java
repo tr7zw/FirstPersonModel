@@ -1,8 +1,8 @@
 package dev.tr7zw.firstperson.access;
 
-import java.util.List;
+import net.minecraft.client.renderer.entity.layers.*;
 
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import java.util.*;
 
 public interface PlayerRendererAccess {
 

@@ -1,7 +1,5 @@
 package dev.tr7zw.firstperson.access;
 
-import net.minecraft.world.phys.Vec3;
-
 public interface LivingEntityRenderStateAccess {
 
     void setIsCameraEntity(boolean value);

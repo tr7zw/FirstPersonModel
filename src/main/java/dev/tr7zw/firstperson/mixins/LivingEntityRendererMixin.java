@@ -1,63 +1,39 @@
 package dev.tr7zw.firstperson.mixins;
 
-import dev.tr7zw.firstperson.access.LivingEntityRenderStateAccess;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.Items;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
+import com.mojang.blaze3d.vertex.*;
+import dev.tr7zw.firstperson.*;
 import dev.tr7zw.firstperson.InventoryUtil;
-import dev.tr7zw.firstperson.access.AgeableListModelAccess;
-//? if < 1.21.3 {
+import dev.tr7zw.firstperson.access.*;
+import dev.tr7zw.firstperson.versionless.mixinbase.*;
+import dev.tr7zw.transition.mc.*;
+import net.minecraft.client.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.player.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.util.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-// import dev.tr7zw.firstperson.access.PlayerModelAccess;
-//? }
-import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
-import dev.tr7zw.transition.mc.EntityUtil;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HeadedModel;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.PlayerModel;
-
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Shulker;
-import net.minecraft.world.entity.player.Player;
-//? if >= 1.21.3 {
-
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-//import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//? }
-//? if < 1.21.4 {
-
-// import net.minecraft.client.model.VillagerHeadModel;
-//? }
+import java.util.*;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
 
     private static List<Runnable> revert = new ArrayList<Runnable>();
 
+    //? if < 1.21.9 {
     /*// pull all registers to try to get rid of the head or other bodyparts
     //? if >= 1.21.3 {
     
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = Shift.AFTER), cancellable = true)
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V", shift = At.Shift.AFTER), cancellable = true)
     public void render(LivingEntityRenderState livingEntityRenderState, PoseStack matrixStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
         if (!FirstPersonModelCore.instance.isRenderingPlayer())
@@ -67,12 +43,12 @@ public abstract class LivingEntityRendererMixin {
             return;
         }
         LivingEntity livingEntity = (LivingEntity) entity;
-    //? } else {
+        //? } else {
     
-        // @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = Shift.AFTER), cancellable = true)
+        // @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", shift = At.Shift.AFTER), cancellable = true)
         // public void renderPostAnim(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
         //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-    //? }
+        //? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -131,7 +107,7 @@ public abstract class LivingEntityRendererMixin {
                 }
             }
         }
-    //? if < 1.21.4 {
+        //? if < 1.21.4 {
     
         // if (model instanceof VillagerHeadModel villaterHead) {
         //    villaterHead.hatVisible(false);
@@ -139,7 +115,7 @@ public abstract class LivingEntityRendererMixin {
         //        villaterHead.hatVisible(true);
         //    });
         // }
-    //? }
+        //? }
         if (model instanceof PlayerModel playerModel) {
             headShouldBeHidden = true;
             ((ModelPartBase) (Object) playerModel.hat).setHidden();
@@ -177,21 +153,21 @@ public abstract class LivingEntityRendererMixin {
         if (livingEntity instanceof AbstractClientPlayer player && (Object) model instanceof PlayerModel playerModel
                 && FirstPersonModelCore.instance.getLogicHandler().isSwimming(player)) {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
-    //? if >= 1.21.3 {
+            //? if >= 1.21.3 {
     
             if (livingEntityRenderState instanceof PlayerRenderState prs) {
                 prs.showCape = false;
             }
-    //? } else {
+            //? } else {
     
             // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).setHidden();
-    //? }
+            //? }
             revert.add(() -> {
                 ((ModelPartBase) (Object) playerModel.body).showAgain();
-    //? if < 1.21.3 {
+                //? if < 1.21.3 {
     
                 // ((ModelPartBase) (Object) ((PlayerModelAccess) model).getCloak()).showAgain();
-    //? }
+                //? }
             });
         }
         if (!headShouldBeHidden) {
@@ -200,25 +176,27 @@ public abstract class LivingEntityRendererMixin {
             matrixStack.popPose();
             info.cancel();
         }
-    }*/
-
+    }
+    *///? } else {
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("HEAD"))
     private void checkIfCameraEntity(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState,
             float f, CallbackInfo ci) {
         ((LivingEntityRenderStateAccess) livingEntityRenderState)
                 .setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayer());
     }
+    //? }
 
+    //? if < 1.21.9 {
     /*@Inject(method = "render", at = @At("RETURN"))
     //? if >= 1.21.3 {
     
     public void renderEnd(LivingEntityRenderState livingEntityRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
-    //? } else {
+        //? } else {
     
         //    public void renderReturn(LivingEntity livingEntity, float f, float g, PoseStack matrixStack,
         //        MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
-    //? }
+        //? }
         if (!revert.isEmpty()) {
             for (Runnable r : revert) {
                 r.run();
@@ -226,7 +204,8 @@ public abstract class LivingEntityRendererMixin {
             revert.clear();
         }
         FirstPersonModelCore.instance.setRenderingPlayer(false);
-    }*/
+    }
+    *///? }
 
     @Shadow
     public abstract EntityModel getModel();
