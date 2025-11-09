@@ -8,14 +8,10 @@ import org.spongepowered.asm.mixin.gen.*;
 @Mixin(Entity.class)
 public interface EntityAccessor {
 
-    //? if >= 1.21.9 {
-
     @Accessor("position")
     Vec3 entityCulling$getRawPosition();
 
     @Accessor("position")
     void entityCulling$setRawPosition(Vec3 position);
-
-    //? }
 
 }

@@ -141,16 +141,16 @@ public class ConfigScreenProvider {
             // Layers
             PlayerRendererAccess access = null;
             //? if >= 1.21.6 {
-
+            
             access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(
                     /*? if >= 1.21.9 {*/new AvatarRenderState()/*?} else {*//*new PlayerRenderState()*//*? }*/);
             //? } else {
-
-            // if (Minecraft.getInstance().player != null) {
-            //    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-            //            .getRenderer(Minecraft.getInstance().player);
-            // }
-            //? }
+/*
+            if (Minecraft.getInstance().player != null) {
+                access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                        .getRenderer(Minecraft.getInstance().player);
+            }
+            *///? }
             if (access != null) {
                 WListPanel<RenderLayer, WToggleButton> layerList = new WListPanel<RenderLayer, WToggleButton>(
                         access.getRenderLayers(), () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {

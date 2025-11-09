@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 //? if >= 1.21.5 {
 @Mixin(LivingEntity.class)
 //? } else {
-
-// @Mixin(Player.class)
-//? }
+/*
+@Mixin(Player.class)
+*///? }
 public class PlayerMixin {
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)

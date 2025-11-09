@@ -39,11 +39,11 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
         super(context, model, shadowRadius);
     }
     //? } else {
-
-    // public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
-    //    super(entityRenderDispatcher, entityModel, f);
-    // }
-    //? }
+    /*
+     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
+        super(entityRenderDispatcher, entityModel, f);
+     }
+    *///? }
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();

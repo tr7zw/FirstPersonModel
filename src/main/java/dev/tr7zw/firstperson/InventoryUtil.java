@@ -12,49 +12,49 @@ public class InventoryUtil {
 
         return player.getInventory();
         //? } else {
-
-        // return player.inventory;
-        //? }
+        /*
+         return player.inventory;
+        *///? }
     }
 
     public static ItemStack getSelected(Inventory inventory) {
         //? if >= 1.21.5 {
-
+        
         return inventory.getSelectedItem();
         //? } else {
-
-        // return inventory.getSelected();
-        //? }
+/*
+        return inventory.getSelected();
+        *///? }
     }
 
     public static ItemStack getOffhand(Inventory inventory) {
         //? if >= 1.21.5 {
-
+        
         return inventory.getItem(Inventory.SLOT_OFFHAND);
         //? } else {
-
-        // return inventory.offhand.get(0);
-        //? }
+/*
+        return inventory.offhand.get(0);
+        *///? }
     }
 
     public static int getSelectedId(Inventory inventory) {
         //? if >= 1.21.5 {
-
+        
         return inventory.getSelectedSlot();
         //? } else {
-
-        // return inventory.selected;
-        //? }
+/*
+        return inventory.selected;
+        *///? }
     }
 
     public static List<ItemStack> getNonEquipmentItems(Inventory inventory) {
         //? if >= 1.21.5 {
-
+        
         return inventory.getNonEquipmentItems();
         //? } else {
-
-        // return inventory.items;
-        //? }
+/*
+        return inventory.items;
+        *///? }
     }
 
 }

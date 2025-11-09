@@ -20,8 +20,8 @@ import java.util.*;
 //? } else if >= 1.19.3 {
 /*import org.joml.*;
 *///? } else {
-   // import com.mojang.math.*;
-   //? }
+/*import com.mojang.math.*;
+*///? }
 
 /**
  * Detects when the player is rendered and triggers the correct changes
@@ -43,31 +43,32 @@ public abstract class WorldRendererMixin {
     private RenderBuffers renderBuffers;
 
     //? if <= 1.20.4 {
+    /*
+        @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+        public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
+                GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
+    *///? } else if < 1.21.0 {
+/*
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
+            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2,
+            CallbackInfo info) {
+        PoseStack matrices = new PoseStack();
+        *///? } else if < 1.21.3 {
 
-    //    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-    //    public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
-    //            GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
-    //? } else if < 1.21.0 {
-
-    // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-    // public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
-    //        GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-    // PoseStack matrices = new PoseStack();
-    //? } else if < 1.21.3 {
-
-    // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-    // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
-    //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-    //    PoseStack matrices = new PoseStack();
-    //? } else if < 1.21.9 {
-    /*@Inject(method = "renderEntities", at = @At(value = "HEAD"))
-    private void renderEntities(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, Camera camera,
+        // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+        // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+        //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+        //    PoseStack matrices = new PoseStack();
+        //? } else if < 1.21.9 {
+        /*@Inject(method = "renderEntities", at = @At(value = "HEAD"))
+        private void renderEntities(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, Camera camera,
             DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         *///? } else {
-
-    @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
-    private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
+        
+            @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
+            private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
             LevelRenderState levelRenderState, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         //? }
@@ -78,14 +79,7 @@ public abstract class WorldRendererMixin {
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
         FirstPersonModelCore.instance.setRenderingPlayerPost(true);
-        //? if < 1.21.0 {
-
-        // renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
-        //? } else if < 1.21.9 {
-        /*renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
-                deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
-        *///? } else {
-
+        // Store position and apply offset
         var ent = camera.getEntity();
         var pos = ((EntityAccessor) ent).entityCulling$getRawPosition();
         var xO = ent.xo;
@@ -94,8 +88,11 @@ public abstract class WorldRendererMixin {
         var xOld = ent.xOld;
         var yOld = ent.yOld;
         var zOld = ent.zOld;
-        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent,
-                deltaTracker.getGameTimeDeltaPartialTick(true));
+        //? if >= 1.21.0{
+        
+        float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(true);
+        //? }
+        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent, tickDelta);
         var offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
         ((EntityAccessor) ent).entityCulling$setRawPosition(pos.add(offset));
         ent.xo += offset.x;
@@ -104,7 +101,21 @@ public abstract class WorldRendererMixin {
         ent.xOld += offset.x;
         ent.yOld += offset.y;
         ent.zOld += offset.z;
+        // Trigger render
+        //? if < 1.21.0 {
+/*
+        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
+        *///? } else if < 1.21.9 {
+        /*
+        FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent,
+                deltaTracker.getGameTimeDeltaPartialTick(true));
+        renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
+                deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
+        *///? } else {
+        
         levelRenderState.entityRenderStates.add(extractEntity(ent, deltaTracker.getGameTimeDeltaPartialTick(true)));
+        //? }
+           // Restore position
         ((EntityAccessor) ent).entityCulling$setRawPosition(pos);
         ent.xo = xO;
         ent.yo = yO;
@@ -112,7 +123,6 @@ public abstract class WorldRendererMixin {
         ent.xOld = xOld;
         ent.yOld = yOld;
         ent.zOld = zOld;
-        //? }
         FirstPersonModelCore.instance.setRenderingPlayer(false);
         FirstPersonModelCore.instance.setRenderingPlayerPost(false);
 

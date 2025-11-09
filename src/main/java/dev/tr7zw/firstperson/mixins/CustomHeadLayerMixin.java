@@ -21,22 +21,22 @@ public class CustomHeadLayerMixin {
     //? } else {
     /*@Inject(method = "render", at = @At("HEAD"), cancellable = true)
     *///? }
-       //? if >= 1.21.9 {
-
+    //? if >= 1.21.9 {
+    
     public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i,
             LivingEntityRenderState livingEntityRenderState, float f, float g, CallbackInfo info) {
         //? } else >= 1.21.3 {
-        /*public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
+    /*public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             LivingEntityRenderState livingEntityRenderState, float f, float g, CallbackInfo info) {
         *///? } else {
-
-        // public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity,
-        //        float f, float g, float h, float j, float k, float l, CallbackInfo info) {
-        //? }
+/*
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity,
+            float f, float g, float h, float j, float k, float l, CallbackInfo info) {
+        *///? }
         //? if >= 1.21.9 {
         if (((LivingEntityRenderStateAccess) livingEntityRenderState).isCameraEntity()) {
             //? } else {
-            /*if (FirstPersonModelCore.instance.isRenderingPlayer()) {
+        /*if (FirstPersonModelCore.instance.isRenderingPlayer()) {
             *///? }
             info.cancel();
         }

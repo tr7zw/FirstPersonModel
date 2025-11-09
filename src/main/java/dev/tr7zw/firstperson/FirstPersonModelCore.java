@@ -21,8 +21,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295,
             //? if >= 1.21.9 {
             new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("firstperson", "keybind")));
-    //? } else {
-    /*"firstperson.keybind");
+            //? } else {
+            /*"firstperson.keybind");
     *///? }
     private boolean lateInit = true;
     @Deprecated
@@ -118,16 +118,16 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     public void updatePlayerLayers() {
         PlayerRendererAccess access = null;
         //? if >= 1.21.6 {
-
+        
         access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(
                 /*? if >= 1.21.9 {*/new AvatarRenderState()/*?} else {*//*new PlayerRenderState()*//*? }*/);
         //? } else {
-
-        // if (Minecraft.getInstance().player != null) {
-        //    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-        //            .getRenderer(Minecraft.getInstance().player);
-        // }
-        //? }
+/*
+        if (Minecraft.getInstance().player != null) {
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                    .getRenderer(Minecraft.getInstance().player);
+        }
+        *///? }
         if (access != null) {
             access.updatePartsList(lastCameraType != CameraType.FIRST_PERSON);
         }
