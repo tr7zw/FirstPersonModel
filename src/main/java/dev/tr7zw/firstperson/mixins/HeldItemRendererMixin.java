@@ -48,7 +48,7 @@ public abstract class HeldItemRendererMixin {
             float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
             SubmitNodeCollector vertexConsumers, int light, CallbackInfo info) {
         //? } else {
-    /*public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
+        /*public void renderFirstPersonItem(AbstractClientPlayer player, float tickDelta, float pitch, InteractionHand hand,
             float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
             MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
         *///? }

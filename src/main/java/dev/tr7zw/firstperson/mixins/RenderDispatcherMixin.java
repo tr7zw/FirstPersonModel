@@ -89,7 +89,7 @@ public abstract class RenderDispatcherMixin {
     }
     
     *///? } else {
-/*
+    /*
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 0))
     private static double shadowOffsetX(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
@@ -98,7 +98,7 @@ public abstract class RenderDispatcherMixin {
         }
         return Mth.lerp(delta, old, cur);
     }
-
+    
     @Redirect(method = "renderShadow", at = @At(value = "invoke", target = "Lnet/minecraft/util/Mth;lerp(DDD)D", ordinal = 2))
     private static double shadowOffsetZ(double delta, double old, double cur, PoseStack poseStack,
             MultiBufferSource multiBufferSource, Entity entity, float f, float g, LevelReader levelReader, float h) {
@@ -107,7 +107,7 @@ public abstract class RenderDispatcherMixin {
         }
         return Mth.lerp(delta, old, cur);
     }
-
+    
     @Inject(method = "renderShadow", at = @At(value = "invoke", target = "Lcom/mojang/blaze3d/vertex/PoseStack;last()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;", shift = At.Shift.BEFORE))
     private static void shadowMove(PoseStack matrices, MultiBufferSource vertexConsumers, Entity entity, float opacity,
             float tickDelta, LevelReader world, float radius, CallbackInfo ci) {
@@ -117,13 +117,13 @@ public abstract class RenderDispatcherMixin {
         Vec3 offset = FirstPersonModelCore.instance.getLogicHandler().getOffset();
         matrices.translate(offset.x, offset.y, offset.z);
     }
-
+    
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
     //? if < 1.17.0 {
     /^
        private void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f, CallbackInfo ci) {
      ^///? } else if < 1.21.0 {
-/^
+    /^
     private static void renderHitbox(PoseStack poseStack, VertexConsumer vertexConsumer, Entity entity, float f,
             CallbackInfo ci) {
         ^///? } else {

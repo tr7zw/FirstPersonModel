@@ -43,16 +43,16 @@ public class FishingBobberRendererMixin {
     //? } else {
     /*@Inject(method = "render", at = @At("HEAD"))
     *///? }
-    //? if >= 1.21.9 {
-    
+       //? if >= 1.21.9 {
+
     public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
             SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState, CallbackInfo ci) {
         //? } else if >= 1.21.3 {
-    /*public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
+        /*public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {
         *///? } else {
-/*
-    private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
+        /*
+            private void calcOffset(FishingHook fishingBobberEntity, float f, float g, PoseStack matrixStack,
             MultiBufferSource vertexConsumerProvider, int i, CallbackInfo info) {
         *///? }
         if (FirstPersonModelCore.instance.isRenderingPlayer()) {

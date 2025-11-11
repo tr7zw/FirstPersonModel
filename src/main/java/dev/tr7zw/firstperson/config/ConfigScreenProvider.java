@@ -141,11 +141,11 @@ public class ConfigScreenProvider {
             // Layers
             PlayerRendererAccess access = null;
             //? if >= 1.21.6 {
-            
+
             access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(
                     /*? if >= 1.21.9 {*/new AvatarRenderState()/*?} else {*//*new PlayerRenderState()*//*? }*/);
             //? } else {
-/*
+            /*
             if (Minecraft.getInstance().player != null) {
                 access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
                         .getRenderer(Minecraft.getInstance().player);

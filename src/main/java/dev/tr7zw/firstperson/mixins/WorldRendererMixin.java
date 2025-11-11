@@ -48,7 +48,7 @@ public abstract class WorldRendererMixin {
         public void render(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
                 GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
     *///? } else if < 1.21.0 {
-/*
+    /*
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
     public void render(float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
             GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2,
@@ -56,19 +56,19 @@ public abstract class WorldRendererMixin {
         PoseStack matrices = new PoseStack();
         *///? } else if < 1.21.3 {
 
-        // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
-        // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
-        //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
-        //    PoseStack matrices = new PoseStack();
-        //? } else if < 1.21.9 {
-        /*@Inject(method = "renderEntities", at = @At(value = "HEAD"))
-        private void renderEntities(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, Camera camera,
-            DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
-        PoseStack matrices = new PoseStack();
-        *///? } else {
-        
-            @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
-            private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
+    // @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
+    // public void render(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+    //    LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo info) {
+    //    PoseStack matrices = new PoseStack();
+    //? } else if < 1.21.9 {
+    /*@Inject(method = "renderEntities", at = @At(value = "HEAD"))
+    private void renderEntities(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, Camera camera,
+        DeltaTracker deltaTracker, List<Entity> list, CallbackInfo ci) {
+    PoseStack matrices = new PoseStack();
+    *///? } else {
+
+    @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
+    private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
             LevelRenderState levelRenderState, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         //? }
@@ -89,7 +89,7 @@ public abstract class WorldRendererMixin {
         var yOld = ent.yOld;
         var zOld = ent.zOld;
         //? if >= 1.21.0{
-        
+
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(true);
         //? }
         FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(ent, tickDelta);
@@ -103,7 +103,7 @@ public abstract class WorldRendererMixin {
         ent.zOld += offset.z;
         // Trigger render
         //? if < 1.21.0 {
-/*
+        /*
         renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(), tickDelta, matrices, immediate);
         *///? } else if < 1.21.9 {
         /*
@@ -112,10 +112,10 @@ public abstract class WorldRendererMixin {
         renderEntity(camera.getEntity(), vec3d.x(), vec3d.y(), vec3d.z(),
                 deltaTracker.getGameTimeDeltaPartialTick(false), matrices, immediate);
         *///? } else {
-        
+
         levelRenderState.entityRenderStates.add(extractEntity(ent, deltaTracker.getGameTimeDeltaPartialTick(true)));
         //? }
-           // Restore position
+        // Restore position
         ((EntityAccessor) ent).entityCulling$setRawPosition(pos);
         ent.xo = xO;
         ent.yo = yO;

@@ -42,7 +42,7 @@ public class MixinTests {
         //? if >= 1.21.9 {
         objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
         //? } else {
-/*
+        /*
         objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
         *///? }
         objenesis.newInstance(EntityRenderDispatcher.class);
