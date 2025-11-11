@@ -1,31 +1,22 @@
 package dev.tr7zw.firstperson;
 
-import java.util.HashSet;
-import java.util.Set;
+import dev.tr7zw.firstperson.api.*;
+import dev.tr7zw.firstperson.versionless.*;
+import dev.tr7zw.firstperson.versionless.config.*;
+import dev.tr7zw.transition.mc.*;
+import lombok.*;
+import net.minecraft.client.*;
+import net.minecraft.client.player.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.util.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.entity.vehicle.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.phys.*;
 
-import dev.tr7zw.firstperson.api.ActivationHandler;
-import dev.tr7zw.firstperson.api.FirstPersonAPI;
-import dev.tr7zw.firstperson.versionless.Constants;
-import dev.tr7zw.firstperson.versionless.FirstPersonBase;
-import dev.tr7zw.firstperson.versionless.config.VanillaHands;
-import dev.tr7zw.transition.mc.EntityUtil;
-import dev.tr7zw.transition.mc.GeneralUtil;
-import dev.tr7zw.transition.mc.ItemUtil;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import net.minecraft.client.CameraType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.Minecart;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class LogicHandler {
@@ -53,11 +44,12 @@ public class LogicHandler {
                     || autoDisableItems.contains(client.player.getOffhandItem().getItem())) {
                 return true;
             }
-            //#if MC >= 11700
+            //? if >= 1.17.0 {
+
             if (client.player.isScoping()) {
                 return true;
             }
-            //#endif
+            //? }
             return false;
         });
     }
@@ -99,8 +91,7 @@ public class LogicHandler {
         double z = 0;
         AbstractClientPlayer player;
         double realYaw;
-        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)
-                || !fpm.isRenderingPlayer()) {
+        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)) {
             return;
         }
         player = (AbstractClientPlayer) entity;
@@ -144,6 +135,9 @@ public class LogicHandler {
 
         }
         offset = new Vec3(x, y, z);
+        for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
+            offset = handler.applyOffset(client.player, delta, Vec3.ZERO, offset);
+        }
     }
 
     private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {
@@ -283,8 +277,18 @@ public class LogicHandler {
      * @return
      */
     public boolean lookingDown() {
-        return dynamicHandsEnabled() && EntityUtil.getXRot(Minecraft.getInstance().player) > 30;
+        return lookingDown(client.player);
     }
+
+    public boolean lookingDown(LivingEntity livingEntity) {
+        return dynamicHandsEnabled() && EntityUtil.getXRot(livingEntity) > 30;
+    }
+
+    //? if >= 1.21.6 {
+    public boolean lookingDown(LivingEntityRenderState state) {
+        return dynamicHandsEnabled() && state.xRot > 30;
+    }
+    //? }
 
     public void addAutoVanillaHandsItem(Item item) {
         autoVanillaHandItems.add(item);

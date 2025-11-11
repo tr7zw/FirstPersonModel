@@ -1,27 +1,11 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-//#if MC >= 12103
-import net.minecraft.world.item.equipment.Equippable;
-//#endif
+import net.minecraft.client.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.world.entity.*;
+import org.spongepowered.asm.mixin.*;
 
 // lower prio to run before fabric api
 @SuppressWarnings("rawtypes")
@@ -37,7 +21,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
         super(context);
     }
 
-    //#if MC >= 12103
+    /*//#if MC >= 12103
     @Inject(method = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;shouldRender(Lnet/minecraft/world/item/equipment/Equippable;Lnet/minecraft/world/entity/EquipmentSlot;)Z", at = @At("HEAD"), cancellable = true)
     private static void shouldRender(Equippable equippable, EquipmentSlot equipmentSlot,
             CallbackInfoReturnable<Boolean> ci) {
@@ -55,7 +39,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
                     hideLeftArm = true;
                     hideRightArm = true;
                 } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {// TODO DYNAMIC HAND
-
+    
                     if (!Minecraft.getInstance().player.getOffhandItem().isEmpty())
                         hideLeftArm = true;
                     if (!Minecraft.getInstance().player.getMainHandItem().isEmpty())
@@ -64,7 +48,7 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             }
         }
     }
-
+    
     @Inject(method = "setPartVisibility", at = @At("TAIL"))
     protected void setPartVisibility(A model, EquipmentSlot slot, CallbackInfo ci) {
         if (hideLeftArm) {
@@ -78,10 +62,11 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             ((ModelPartBase) (Object) model.rightArm).showAgain();
         }
     }
-
-    //#else
-    //$$@Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-    //#endif
+    
+    //? } else {
+    
+    // @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
+    //? }
     private void renderArmor(PoseStack matrices, MultiBufferSource vertexConsumers, T livingEntity,
             EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
         if (livingEntity != fpmMcInstance.cameraEntity) {
@@ -112,6 +97,6 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
             ((ModelPartBase) (Object) bipedEntityModel.leftArm).showAgain();
             ((ModelPartBase) (Object) bipedEntityModel.rightArm).showAgain();
         }
-    }
+    }*/
 
 }

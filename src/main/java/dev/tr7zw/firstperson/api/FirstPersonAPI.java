@@ -1,9 +1,8 @@
 package dev.tr7zw.firstperson.api;
 
-import java.util.ArrayList;
-import java.util.List;
+import dev.tr7zw.firstperson.*;
 
-import dev.tr7zw.firstperson.FirstPersonModelCore;
+import java.util.*;
 
 public final class FirstPersonAPI {
 

@@ -1,33 +1,24 @@
 package dev.tr7zw.firstperson.mixins;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import dev.tr7zw.firstperson.*;
+import dev.tr7zw.firstperson.access.*;
+import dev.tr7zw.transition.mc.*;
+import net.minecraft.client.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.client.renderer.entity.player.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.util.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.access.PlayerRendererAccess;
-import dev.tr7zw.firstperson.api.FirstPersonAPI;
-import dev.tr7zw.firstperson.api.PlayerOffsetHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.phys.Vec3;
-//#if MC >= 11802
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-//#endif
-//#if MC >= 12103
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//#endif
+import java.util.*;
 
 /**
  * Offset the player behind the camera
@@ -35,41 +26,56 @@ import net.minecraft.client.renderer.entity.state.PlayerRenderState;
  * @author tr7zw
  *
  */
-@Mixin(value = PlayerRenderer.class, priority = 500)
+//? if >= 1.21.9 {
+@Mixin(value = AvatarRenderer.class, priority = 500)
+//? } else {
+/*@Mixin(value = PlayerRenderer.class, priority = 500)
+*///? }
 public abstract class PlayerRendererMixin extends LivingEntityRenderer implements PlayerRendererAccess {
 
-    //#if MC >= 11802
-    public PlayerRendererMixin(Context context, PlayerModel model, float shadowRadius) {
+    //? if >= 1.18.2 {
+
+    public PlayerRendererMixin(EntityRendererProvider.Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-    //#else
-    //$$public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
-    //$$    super(entityRenderDispatcher, entityModel, f);
-    //$$}
-    //#endif
+    //? } else {
+    /*
+     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher, EntityModel entityModel, float f) {
+        super(entityRenderDispatcher, entityModel, f);
+     }
+    *///? }
 
     private static Minecraft fpmMcInstance = Minecraft.getInstance();
     private List<RenderLayer> removedLayers = new ArrayList<>();
 
-    @Inject(method = "getRenderOffset", at = @At("RETURN"), cancellable = true)
-    //#if MC >= 12103
-    public void getRenderOffset(PlayerRenderState playerRenderState, CallbackInfoReturnable<Vec3> ci) {
-        AbstractClientPlayer entity = Minecraft.getInstance().player;
-        float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
-        //#else
-        //$$public void getRenderOffset(AbstractClientPlayer entity, float delta, CallbackInfoReturnable<Vec3> ci) {
-        //#endif
-        if (entity == fpmMcInstance.cameraEntity && FirstPersonModelCore.instance.isRenderingPlayer()) {
-            FirstPersonModelCore.instance.getLogicHandler().updatePositionOffset(entity, delta);
-
-            Vec3 offset = ci.getReturnValue().add(FirstPersonModelCore.instance.getLogicHandler().getOffset());
-            for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
-                offset = handler.applyOffset(entity, delta, ci.getReturnValue(), offset);
+    //? if >= 1.21.9 {
+    @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
+    public void extractRenderState(Avatar avatar, AvatarRenderState avatarRenderState, float delta, CallbackInfo ci) {
+        LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) avatarRenderState;
+        if (!access.isCameraEntity())
+            return;
+        if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar)) {
+            access.setHideArms(true);
+        } else if (FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {
+            access.setArmOffset(Mth.clamp(-EntityUtil.getXRot(avatar) / 20 + 2, -0.0f, 0.7f));
+            if (!FirstPersonModelCore.instance.getLogicHandler().lookingDown(avatar)) {// TODO DYNAMIC HAND
+                if (!avatar.getOffhandItem().isEmpty() || avatar.getMainHandItem().getItem().equals(Items.FILLED_MAP)) {
+                    access.setHideLeftArm(true);
+                }
+                if (!avatar.getMainHandItem().isEmpty()) {
+                    access.setHideRightArm(true);
+                }
             }
-
-            ci.setReturnValue(offset);
         }
+        if (avatar.isSwimming()) {
+            access.setHideBody(true);
+            avatarRenderState.showCape = false;
+        }
+        if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(),
+                avatar.getOffhandItem()))
+            access.setHideArms(true);
     }
+    //? }
 
     @Override
     public List<RenderLayer> getRenderLayers() {

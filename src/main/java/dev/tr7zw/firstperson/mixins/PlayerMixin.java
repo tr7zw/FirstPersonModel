@@ -1,24 +1,20 @@
 package dev.tr7zw.firstperson.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import dev.tr7zw.firstperson.*;
+import net.minecraft.client.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.InventoryUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-
-//#if MC >= 12105
-import net.minecraft.world.entity.LivingEntity;
-
+//? if >= 1.21.5 {
 @Mixin(LivingEntity.class)
-//#else
-//$$ @Mixin(Player.class)
-//#endif
+//? } else {
+/*
+@Mixin(Player.class)
+*///? }
 public class PlayerMixin {
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)

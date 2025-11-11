@@ -1,10 +1,9 @@
-//#if FABRIC
+//? if fabric {
+
 package dev.tr7zw.firstperson.fabric;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
-
-import dev.tr7zw.firstperson.config.ConfigScreenProvider;
+import com.terraformersmc.modmenu.api.*;
+import dev.tr7zw.firstperson.config.*;
 
 public class FPModMenuProvider implements ModMenuApi {
 
@@ -14,4 +13,4 @@ public class FPModMenuProvider implements ModMenuApi {
     }
 
 }
-//#endif
+//? }

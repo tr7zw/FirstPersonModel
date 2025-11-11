@@ -1,27 +1,19 @@
-//#if MC >= 11800
+//? if >= 1.18.0 {
+
 package dev.tr7zw.tests;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import dev.tr7zw.firstperson.versionless.mixinbase.*;
+import net.minecraft.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.geom.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.server.*;
+import org.junit.jupiter.api.*;
+import org.objenesis.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
-import dev.tr7zw.firstperson.versionless.mixinbase.ModelPartBase;
-import net.minecraft.SharedConstants;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.ItemInHandRenderer;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.FishingHookRenderer;
-import net.minecraft.client.renderer.entity.layers.ArrowLayer;
-import net.minecraft.client.renderer.entity.layers.CapeLayer;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.server.Bootstrap;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MixinTests {
 
@@ -47,11 +39,16 @@ public class MixinTests {
         objenesis.newInstance(ItemInHandLayer.class);
         objenesis.newInstance(ItemInHandRenderer.class);
         objenesis.newInstance(HumanoidModel.class);
-        objenesis.newInstance(PlayerRenderer.class);
+        //? if >= 1.21.9 {
+        objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
+        //? } else {
+        /*
+        objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
+        *///? }
         objenesis.newInstance(EntityRenderDispatcher.class);
         objenesis.newInstance(ArrowLayer.class);
         objenesis.newInstance(LevelRenderer.class);
     }
 
 }
-//#endif
+//? }

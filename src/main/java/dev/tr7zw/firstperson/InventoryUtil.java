@@ -1,51 +1,60 @@
 package dev.tr7zw.firstperson;
 
-import java.util.List;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
 
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import java.util.*;
 
 public class InventoryUtil {
 
     public static Inventory getInventory(Player player) {
-        //#if MC >= 11700
+        //? if >= 1.17.0 {
+
         return player.getInventory();
-        //#else
-        //$$ return player.inventory;
-        //#endif
+        //? } else {
+        /*
+         return player.inventory;
+        *///? }
     }
 
     public static ItemStack getSelected(Inventory inventory) {
-        //#if MC >= 12105
+        //? if >= 1.21.5 {
+
         return inventory.getSelectedItem();
-        //#else
-        //$$ return inventory.getSelected();
-        //#endif
+        //? } else {
+        /*
+        return inventory.getSelected();
+        *///? }
     }
 
     public static ItemStack getOffhand(Inventory inventory) {
-        //#if MC >= 12105
+        //? if >= 1.21.5 {
+
         return inventory.getItem(Inventory.SLOT_OFFHAND);
-        //#else
-        //$$ return inventory.offhand.get(0);
-        //#endif
+        //? } else {
+        /*
+        return inventory.offhand.get(0);
+        *///? }
     }
 
     public static int getSelectedId(Inventory inventory) {
-        //#if MC >= 12105
+        //? if >= 1.21.5 {
+
         return inventory.getSelectedSlot();
-        //#else
-        //$$ return inventory.selected;
-        //#endif
+        //? } else {
+        /*
+        return inventory.selected;
+        *///? }
     }
 
     public static List<ItemStack> getNonEquipmentItems(Inventory inventory) {
-        //#if MC >= 12105
+        //? if >= 1.21.5 {
+
         return inventory.getNonEquipmentItems();
-        //#else
-        //$$ return inventory.items;
-        //#endif
+        //? } else {
+        /*
+        return inventory.items;
+        *///? }
     }
 
 }

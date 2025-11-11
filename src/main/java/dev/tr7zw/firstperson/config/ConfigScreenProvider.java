@@ -1,35 +1,25 @@
 package dev.tr7zw.firstperson.config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
+import dev.tr7zw.firstperson.*;
+import dev.tr7zw.firstperson.access.*;
+import dev.tr7zw.firstperson.versionless.config.*;
+import dev.tr7zw.transition.mc.*;
+import dev.tr7zw.trender.gui.client.*;
+import dev.tr7zw.trender.gui.widget.*;
+import dev.tr7zw.trender.gui.widget.data.*;
+import dev.tr7zw.trender.gui.widget.icon.*;
+import lombok.experimental.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.screens.*;
+import net.minecraft.client.renderer.entity.layers.*;
+//? if >= 1.21.2
+import net.minecraft.client.renderer.entity.state.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
+import net.minecraft.world.item.*;
 
-import dev.tr7zw.firstperson.FirstPersonModelCore;
-import dev.tr7zw.firstperson.access.PlayerRendererAccess;
-import dev.tr7zw.firstperson.versionless.config.VanillaHands;
-import dev.tr7zw.transition.mc.ComponentProvider;
-import dev.tr7zw.transition.mc.ItemUtil;
-import dev.tr7zw.trender.gui.client.AbstractConfigScreen;
-import dev.tr7zw.trender.gui.client.BackgroundPainter;
-import dev.tr7zw.trender.gui.widget.WButton;
-import dev.tr7zw.trender.gui.widget.WGridPanel;
-import dev.tr7zw.trender.gui.widget.WListPanel;
-import dev.tr7zw.trender.gui.widget.WTabPanel;
-import dev.tr7zw.trender.gui.widget.WTextField;
-import dev.tr7zw.trender.gui.widget.WToggleButton;
-import dev.tr7zw.trender.gui.widget.data.Insets;
-import dev.tr7zw.trender.gui.widget.icon.ItemIcon;
-import lombok.experimental.UtilityClass;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-//#if MC >= 12106
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//#endif
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import java.util.*;
+import java.util.Map.*;
 
 @UtilityClass
 public class ConfigScreenProvider {
@@ -150,15 +140,17 @@ public class ConfigScreenProvider {
 
             // Layers
             PlayerRendererAccess access = null;
-            //#if MC >= 12106
-            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-                    .getRenderer(new PlayerRenderState());
-            //#else
-            //$$if (Minecraft.getInstance().player != null) {
-            //$$    access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
-            //$$            .getRenderer(Minecraft.getInstance().player);
-            //$$}
-            //#endif
+            //? if >= 1.21.6 {
+
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(
+                    /*? if >= 1.21.9 {*/new AvatarRenderState()/*?} else {*//*new PlayerRenderState()*//*? }*/);
+            //? } else {
+            /*
+            if (Minecraft.getInstance().player != null) {
+                access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                        .getRenderer(Minecraft.getInstance().player);
+            }
+            *///? }
             if (access != null) {
                 WListPanel<RenderLayer, WToggleButton> layerList = new WListPanel<RenderLayer, WToggleButton>(
                         access.getRenderLayers(), () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
