@@ -31,6 +31,11 @@ public class HumanoidModelMixin {
 
     @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V", at = @At("TAIL"))
     private void setupAnim(HumanoidRenderState renderState, CallbackInfo ci) {
+        if (renderState instanceof AvatarRenderState avatarRenderState && avatarRenderState.isSpectator) {
+            // Do not touch or change spectator avatars
+            head.visible = true;
+            return;
+        }
         LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) renderState;
         head.visible = !access.isCameraEntity();
         leftArm.visible = !access.hideLeftArm();

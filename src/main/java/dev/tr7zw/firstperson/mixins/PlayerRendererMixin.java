@@ -74,6 +74,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
         if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(),
                 avatar.getOffhandItem()))
             access.setHideArms(true);
+        avatarRenderState.hitboxesRenderState = null;
     }
     //? }
 

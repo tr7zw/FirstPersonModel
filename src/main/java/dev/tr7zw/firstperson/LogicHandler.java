@@ -89,50 +89,50 @@ public class LogicHandler {
         double x = 0;
         double y = 0;
         double z = 0;
-        AbstractClientPlayer player;
         double realYaw;
-        if ((entity != client.player) || (client.options.getCameraType() != CameraType.FIRST_PERSON)) {
+        if (client.options.getCameraType() != CameraType.FIRST_PERSON) {
             return;
         }
-        player = (AbstractClientPlayer) entity;
-        realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
-        if (!player.isLocalPlayer() || client.getCameraEntity() == player) {
-            float bodyOffset;
-            if (isCrawlingOrSwimming(client.player)) {
-                player.yBodyRot = player.yHeadRot;
-                if (player.xRotO > 0) {
-                    bodyOffset = Constants.SWIM_UP_BODY_OFFSET;
+        if (entity instanceof LivingEntity player) {
+            realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
+            if (client.getCameraEntity() == player) {
+                float bodyOffset;
+                if (isCrawlingOrSwimming(client.player)) {
+                    player.yBodyRot = player.yHeadRot;
+                    if (player.xRotO > 0) {
+                        bodyOffset = Constants.SWIM_UP_BODY_OFFSET;
+                    } else {
+                        bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
+                    }
+                    // some mods seem to break the isCrouching method
+                } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) {
+                    bodyOffset = Constants.SNEAK_BODY_OFFSET + fpm.getConfig().sneakXOffset / 100f;
+                } else if (player.isPassenger()) {
+                    if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
+                        realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
+                    } else if (player.getVehicle() instanceof LivingEntity living) {
+                        realYaw = calculateBodyRot(Mth.rotLerp(delta, living.yBodyRotO, living.yBodyRot),
+                                EntityUtil.getYRot(player));
+                    } else {
+                        // Non living entities don't use any custom rotation
+                        //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
+                        //                            NMSHelper.getYRot(player.getVehicle()));
+                    }
+                    bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
                 } else {
-                    bodyOffset = Constants.SWIM_DOWN_BODY_OFFSET;
+                    bodyOffset = 0.25f + fpm.getConfig().xOffset / 100f;
                 }
-                // some mods seem to break the isCrouching method
-            } else if (player.isCrouching() || player.getPose() == Pose.CROUCHING) {
-                bodyOffset = Constants.SNEAK_BODY_OFFSET + fpm.getConfig().sneakXOffset / 100f;
-            } else if (player.isPassenger()) {
-                if (player.getVehicle() instanceof Boat || player.getVehicle() instanceof Minecart) {
-                    realYaw = Mth.rotLerp(delta, player.yBodyRotO, player.yBodyRot);
-                } else if (player.getVehicle() instanceof LivingEntity living) {
-                    realYaw = calculateBodyRot(Mth.rotLerp(delta, living.yBodyRotO, living.yBodyRot),
-                            EntityUtil.getYRot(player));
-                } else {
-                    // Non living entities don't use any custom rotation
-                    //                    realYaw = Mth.rotLerp(client.getFrameTime(), player.getVehicle().yRotO,
-                    //                            NMSHelper.getYRot(player.getVehicle()));
+                x += bodyOffset * Math.sin(Math.toRadians(realYaw));
+                z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
+                if (isCrawlingOrSwimming(client.player)) {
+                    if (player.xRotO > 0 && player.isUnderWater()) {
+                        y += 0.6f * Math.sin(Math.toRadians(player.xRotO));
+                    } else {
+                        y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
+                    }
                 }
-                bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
-            } else {
-                bodyOffset = 0.25f + fpm.getConfig().xOffset / 100f;
-            }
-            x += bodyOffset * Math.sin(Math.toRadians(realYaw));
-            z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
-            if (isCrawlingOrSwimming(client.player)) {
-                if (player.xRotO > 0 && player.isUnderWater()) {
-                    y += 0.6f * Math.sin(Math.toRadians(player.xRotO));
-                } else {
-                    y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
-                }
-            }
 
+            }
         }
         offset = new Vec3(x, y, z);
         for (PlayerOffsetHandler handler : FirstPersonAPI.getPlayerOffsetHandlers()) {
