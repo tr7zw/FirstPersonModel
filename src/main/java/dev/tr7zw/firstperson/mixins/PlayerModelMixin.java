@@ -1,7 +1,11 @@
 package dev.tr7zw.firstperson.mixins;
 
 import dev.tr7zw.firstperson.access.*;
-import net.minecraft.client.model.*;
+//? if >=1.21.11 {
+import net.minecraft.client.model.player.*;
+//?} else {
+/*import net.minecraft.client.model.*;
+*///?}
 import net.minecraft.world.entity.*;
 import org.spongepowered.asm.mixin.*;
 //? if < 1.21.3 {

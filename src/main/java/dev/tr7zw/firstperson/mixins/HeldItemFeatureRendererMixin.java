@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.client.renderer.entity.state.*;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -41,12 +42,16 @@ public class HeldItemFeatureRendererMixin {
     //? } else {
     /*@Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
     *///? }
-       //? if >= 1.21.9 {
+       //? if >= 1.21.11 {
 
     private void renderArmWithItem(ArmedEntityRenderState armedEntityRenderState,
+            ItemStackRenderState itemStackRenderState, ItemStack stack, HumanoidArm humanoidArm, PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
+        //? } else if >= 1.21.9 {
+        /*private void renderArmWithItem(ArmedEntityRenderState armedEntityRenderState,
             ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack,
             SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
-        //? } else if >= 1.21.4 {
+        *///? } else if >= 1.21.4 {
         /*private void renderArmWithItem(ArmedEntityRenderState livingEntityRenderState,
             ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {

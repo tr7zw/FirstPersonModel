@@ -75,12 +75,12 @@ public abstract class WorldRendererMixin {
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
             return;
         }
-        Vec3 vec3d = camera.getPosition();
+        Vec3 vec3d = /*? if >=1.21.11 {*/ camera.position() /*?} else {*//*camera.getPosition()*//*?}*/;
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
         FirstPersonModelCore.instance.setRenderingPlayer(true);
         FirstPersonModelCore.instance.setRenderingPlayerPost(true);
         // Store position and apply offset
-        var ent = camera.getEntity();
+        var ent = /*? if >=1.21.11 {*/ camera.entity() /*?} else {*//*camera.getEntity()*//*?}*/;
         var pos = ((EntityAccessor) ent).entityCulling$getRawPosition();
         var xO = ent.xo;
         var yO = ent.yo;

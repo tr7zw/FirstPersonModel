@@ -12,7 +12,12 @@ import net.minecraft.client.renderer.entity.state.*;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.*;
-import net.minecraft.world.entity.vehicle.*;
+//? if >=1.21.11 {
+import net.minecraft.world.entity.vehicle.minecart.*;
+import net.minecraft.world.entity.vehicle.boat.*;
+//?} else {
+/*import net.minecraft.world.entity.vehicle.*;*/
+//?}
 import net.minecraft.world.item.*;
 import net.minecraft.world.phys.*;
 
