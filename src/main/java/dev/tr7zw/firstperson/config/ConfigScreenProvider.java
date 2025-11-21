@@ -80,15 +80,13 @@ public class ConfigScreenProvider {
                         l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
                         l.setToolip(ComponentProvider.literal(getStringItem(s)));
                         l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                .contains(getStringItem(s)));
+                        l.setToggle(
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                        .add(getStringItem(s));
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.add(getStringItem(s));
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                        .remove(getStringItem(s));
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.remove(getStringItem(s));
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();
@@ -116,11 +114,9 @@ public class ConfigScreenProvider {
                                 .contains(getStringItem(s)));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                        .add(getStringItem(s));
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                        .remove(getStringItem(s));
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();

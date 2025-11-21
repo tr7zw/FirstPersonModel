@@ -79,7 +79,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
                 avatar.getOffhandItem()))
             access.setHideArms(true);
         //? if <1.21.11
-        /*avatarRenderState.hitboxesRenderState = null;*/
+        /*avatarRenderState.hitboxesRenderState = null;*/
     }
     //? }
 

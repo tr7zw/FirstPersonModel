@@ -20,7 +20,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private boolean isHeld = false;
     private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295,
             //? if >= 1.21.9 {
-            new KeyMapping.Category(/*? if >=1.21.11 {*/ Identifier /*?} else {*//*ResourceLocation*//*?}*/.fromNamespaceAndPath("firstperson", "keybind")));
+            new KeyMapping.Category(/*? if >=1.21.11 {*/ Identifier
+                    /*?} else {*//*ResourceLocation*//*?}*/.fromNamespaceAndPath("firstperson", "keybind")));
     //? } else {
     /*"firstperson.keybind");
     *///? }
