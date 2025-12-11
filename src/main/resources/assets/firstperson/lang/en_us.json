@@ -1,5 +1,6 @@
 {
     "text.firstperson.title": "FirstPerson Settings",
+    "key.category.firstperson.keybind": "FirstPerson Mod",
     "firstperson.keybind": "Firstperson",
     "key.firstperson.toggle": "Toggle Firstperson",
     "category.firstperson.firstperson": "FirstPerson",
