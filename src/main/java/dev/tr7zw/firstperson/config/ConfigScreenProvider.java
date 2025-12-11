@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.state.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.Map.*;
@@ -72,22 +73,20 @@ public class ConfigScreenProvider {
                     .icon(new ItemIcon(Items.COMPARATOR)));
 
             List<Entry<ResourceKey<Item>, Item>> items = new ArrayList<>(ItemUtil.getItems());
-            items.sort((a, b) -> a.getKey().location().toString().compareTo(b.getKey().location().toString()));
+            items.sort(Comparator.comparing(CustomConfigScreen::getStringItem));
 
             WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> itemList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
                     items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
                         l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
-                        l.setToolip(ComponentProvider.literal(s.getKey().location().toString()));
+                        l.setToolip(ComponentProvider.literal(getStringItem(s)));
                         l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                .contains(s.getKey().location().toString()));
+                        l.setToggle(
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                        .add(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.add(getStringItem(s));
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands
-                                        .remove(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.remove(getStringItem(s));
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();
@@ -99,7 +98,7 @@ public class ConfigScreenProvider {
             itemTab.add(itemList, 0, 0, 17, 7);
             WTextField searchField = new WTextField();
             searchField.setChangedListener(s -> {
-                itemList.setFilter(e -> e.getKey().location().toString().toLowerCase().contains(s.toLowerCase()));
+                itemList.setFilter(e -> getStringItem(e).toLowerCase().contains(s.toLowerCase()));
                 itemList.layout();
             });
             itemTab.add(searchField, 0, 7, 17, 1);
@@ -109,17 +108,15 @@ public class ConfigScreenProvider {
             WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> disableList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
                     items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
                         l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
-                        l.setToolip(ComponentProvider.literal(s.getKey().location().toString()));
+                        l.setToolip(ComponentProvider.literal(getStringItem(s)));
                         l.setIcon(new ItemIcon(s.getValue()));
                         l.setToggle(FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                .contains(s.getKey().location().toString()));
+                                .contains(getStringItem(s)));
                         l.setOnToggle(b -> {
                             if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                        .add(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
                             } else {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                        .remove(s.getKey().location().toString());
+                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
                             }
                             FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
                             save();
@@ -131,7 +128,7 @@ public class ConfigScreenProvider {
             disableTab.add(disableList, 0, 0, 17, 7);
             WTextField searchDisableField = new WTextField();
             searchDisableField.setChangedListener(s -> {
-                disableList.setFilter(e -> e.getKey().location().toString().toLowerCase().contains(s.toLowerCase()));
+                disableList.setFilter(e -> getStringItem(e).toLowerCase().contains(s.toLowerCase()));
                 disableList.layout();
             });
             disableTab.add(searchDisableField, 0, 7, 17, 1);
@@ -204,6 +201,10 @@ public class ConfigScreenProvider {
 
             root.validate(this);
             root.setHost(this);
+        }
+
+        private static @NotNull String getStringItem(Entry<ResourceKey<Item>, Item> a) {
+            return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString();
         }
 
         @Override

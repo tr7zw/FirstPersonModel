@@ -6,6 +6,7 @@ import dev.tr7zw.firstperson.config.*;
 import dev.tr7zw.firstperson.modsupport.*;
 import dev.tr7zw.firstperson.versionless.*;
 import dev.tr7zw.transition.loader.*;
+import dev.tr7zw.transition.mc.*;
 import lombok.*;
 import net.minecraft.client.*;
 //? if >= 1.21.2
@@ -18,12 +19,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
     private boolean isHeld = false;
-    private KeyMapping keyBinding = new KeyMapping("key.firstperson.toggle", 295,
-            //? if >= 1.21.9 {
-            new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath("firstperson", "keybind")));
-    //? } else {
-    /*"firstperson.keybind");
-    *///? }
+    private KeyMapping keyBinding = GeneralUtil.createKeyMapping("key.firstperson.toggle", 295, "firstperson:keybind");
     private boolean lateInit = true;
     @Deprecated
     public static boolean enabled = true;

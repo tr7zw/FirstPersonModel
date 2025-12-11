@@ -4,7 +4,11 @@ import dev.tr7zw.firstperson.*;
 import dev.tr7zw.firstperson.access.*;
 import dev.tr7zw.transition.mc.*;
 import net.minecraft.client.*;
-import net.minecraft.client.model.*;
+//? if >=1.21.11 {
+import net.minecraft.client.model.player.*;
+//?} else {
+/*import net.minecraft.client.model.*;
+*///?}
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.layers.*;
@@ -74,7 +78,8 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer implement
         if (FirstPersonModelCore.instance.getLogicHandler().hideArmsAndItems(avatar, avatar.getMainHandItem(),
                 avatar.getOffhandItem()))
             access.setHideArms(true);
-        avatarRenderState.hitboxesRenderState = null;
+        //? if <1.21.11
+        /*avatarRenderState.hitboxesRenderState = null;*/
     }
     //? }
 

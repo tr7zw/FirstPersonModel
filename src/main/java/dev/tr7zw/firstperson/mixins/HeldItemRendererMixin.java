@@ -99,7 +99,7 @@ public abstract class HeldItemRendererMixin {
      * FirstPersonModelCore.instance.getLogicHandler().showVanillaHands(); }
      */
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F", shift = At.Shift.BEFORE), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = /*? if >=1.21.11 {*/ "Lnet/minecraft/client/player/LocalPlayer;getItemSwapScale(F)F" /*?} else {*//*"Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F"*//*?}*/, shift = At.Shift.BEFORE), method = "tick", cancellable = true)
     public void tick(CallbackInfo ci) {// TODO DYNAMIC HAND
         if (FirstPersonModelCore.instance.isEnabled()
                 && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
