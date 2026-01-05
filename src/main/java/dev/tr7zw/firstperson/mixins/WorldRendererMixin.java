@@ -73,6 +73,7 @@ public abstract class WorldRendererMixin {
         PoseStack matrices = new PoseStack();
         //? }
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {
+            FirstPersonModelCore.instance.setRenderingPlayer(false);
             return;
         }
         Vec3 vec3d = /*? if >=1.21.11 {*/ camera.position() /*?} else {*//*camera.getPosition()*//*?}*/;
