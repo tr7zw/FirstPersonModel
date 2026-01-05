@@ -117,6 +117,7 @@ public abstract class WorldRendererMixin {
         //? }
         // Restore position
         ((EntityAccessor) ent).entityCulling$setRawPosition(pos);
+        ent.refreshDimensions(); // Fix corrupted state caused during rendering by other mods (NEA apparently)
         ent.xo = xO;
         ent.yo = yO;
         ent.zo = zO;
