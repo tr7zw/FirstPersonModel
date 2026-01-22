@@ -26,6 +26,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     @Deprecated
     public static boolean isRenderingPlayer = false;
     private CameraType lastCameraType = null;
+    @Deprecated
+    private int tickCounterWorkaround = 0;
 
     protected FirstPersonModelCore() {
         instance = this;
@@ -92,6 +94,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         } else {
             isHeld = false;
         }
+        tickCounterWorkaround++;
     }
 
     @Override
@@ -99,7 +102,9 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         super.setRenderingPlayer(isRenderingPlayer);
         FirstPersonModelCore.isRenderingPlayer = isRenderingPlayer;
         // TODO: ugly sideffect, find better way
-        if (lastCameraType != Minecraft.getInstance().options.getCameraType()) {
+        // TODO2: even worse workaround with counting ticks
+        if (lastCameraType != Minecraft.getInstance().options.getCameraType() || tickCounterWorkaround % 21 == 0) {
+            tickCounterWorkaround++;
             lastCameraType = Minecraft.getInstance().options.getCameraType();
             updatePlayerLayers();
         }
@@ -119,7 +124,8 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
         //? if >= 1.21.6 {
 
         if (GeneralUtil.getPlayer() != null) {
-            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(GeneralUtil.getPlayer());
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                    .getRenderer(GeneralUtil.getPlayer());
         } else {
             return;
         }
