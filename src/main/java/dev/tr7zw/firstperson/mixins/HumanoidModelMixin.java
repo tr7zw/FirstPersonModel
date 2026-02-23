@@ -3,6 +3,7 @@ package dev.tr7zw.firstperson.mixins;
 //? if >= 1.21.9 {
 
 import dev.tr7zw.firstperson.access.*;
+import dev.tr7zw.firstperson.versionless.mixinbase.*;
 import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.*;
 import net.minecraft.client.renderer.entity.state.*;
@@ -31,13 +32,17 @@ public class HumanoidModelMixin {
 
     @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V", at = @At("TAIL"))
     private void setupAnim(HumanoidRenderState renderState, CallbackInfo ci) {
+        LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) renderState;
+        //head.visible = !access.isCameraEntity();
+        if (access.isCameraEntity()) {
+            ((ModelPartBase) (Object) head).setHidden();
+        } else {
+            ((ModelPartBase) (Object) head).showAgain();
+        }
         if (renderState instanceof AvatarRenderState avatarRenderState && avatarRenderState.isSpectator) {
-            // Do not touch or change spectator avatars
-            head.visible = true;
+            // Do not touch the body in spectator mode
             return;
         }
-        LivingEntityRenderStateAccess access = (LivingEntityRenderStateAccess) renderState;
-        head.visible = !access.isCameraEntity();
         leftArm.visible = !access.hideLeftArm();
         leftArm.xRot += access.getArmOffset();
         rightArm.visible = !access.hideRightArm();
