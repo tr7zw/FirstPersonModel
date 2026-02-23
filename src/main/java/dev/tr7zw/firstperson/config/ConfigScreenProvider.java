@@ -98,7 +98,7 @@ public class ConfigScreenProvider {
             itemTab.add(itemList, 0, 0, 17, 7);
             WTextField searchField = new WTextField();
             searchField.setChangedListener(s -> {
-                itemList.setFilter(e -> getStringItem(e).toLowerCase().contains(s.toLowerCase()));
+                itemList.setFilter(e -> getFilterStringItem(e).toLowerCase().contains(s.toLowerCase()));
                 itemList.layout();
             });
             itemTab.add(searchField, 0, 7, 17, 1);
@@ -128,7 +128,7 @@ public class ConfigScreenProvider {
             disableTab.add(disableList, 0, 0, 17, 7);
             WTextField searchDisableField = new WTextField();
             searchDisableField.setChangedListener(s -> {
-                disableList.setFilter(e -> getStringItem(e).toLowerCase().contains(s.toLowerCase()));
+                disableList.setFilter(e -> getFilterStringItem(e).toLowerCase().contains(s.toLowerCase()));
                 disableList.layout();
             });
             disableTab.add(searchDisableField, 0, 7, 17, 1);
@@ -205,6 +205,10 @@ public class ConfigScreenProvider {
 
         private static @NotNull String getStringItem(Entry<ResourceKey<Item>, Item> a) {
             return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString();
+        }
+
+        private static @NotNull String getFilterStringItem(Entry<ResourceKey<Item>, Item> a) {
+            return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString() + " " + a.getValue().getName(a.getValue().getDefaultInstance()).getString();
         }
 
         @Override
