@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ProcessedModTemplate/tree/stonecutter"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
-  version: "2.6.2"
+  version: "2.6.3"
   description: "Enables the third person Model in firstperson"
   homepageUrl: "https://modrinth.com/mod/first-person-model"
   sourcesUrl: "https://github.com/tr7zw/FirstPersonModel"
