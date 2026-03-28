@@ -38,15 +38,19 @@ public class FishingBobberRendererMixin {
         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
     }
 
-    //? if >= 1.21.9 {
+    //? if >= 26.1 {
+    @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V", at = @At("HEAD"))
+    //? } else if >= 1.21.9 {
+    /*
     @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V", at = @At("HEAD"))
-    //? } else {
+    *///? } else {
     /*@Inject(method = "render", at = @At("HEAD"))
     *///? }
        //? if >= 1.21.9 {
 
     public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
-            SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState, CallbackInfo ci) {
+            SubmitNodeCollector submitNodeCollector,
+            net.minecraft.client.renderer.state.level.CameraRenderState cameraRenderState, CallbackInfo ci) {
         //? } else if >= 1.21.3 {
         /*public void render(FishingHookRenderState fishingHookRenderState, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo info) {

@@ -26,7 +26,7 @@ public class StuckInBodyLayerMixin<T extends LivingEntity> {
         /*
         @Inject(method = "render", at = @At("HEAD"), cancellable = true)
         public void disableStuckFeatureLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-            PlayerRenderState playerRenderState, float f, float g, CallbackInfo ci) {
+            AvatarRenderState playerRenderState, float f, float g, CallbackInfo ci) {
         
         *///? } else {
         /*

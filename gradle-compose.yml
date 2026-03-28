@@ -1,5 +1,5 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ProcessedModTemplate/tree/stonecutter"
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/stonecutter261"
 replacements:
   name: "FirstPerson"
   id: "firstperson"
@@ -16,8 +16,12 @@ replacements:
   versionlessname: "FPVersionless"
   breaks: ', "FastAnim": "*"'
   fabric_dependencies: "
-      modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
-      modCompileOnly 'maven.modrinth:freecam:Cg10zLnR'\n
+      if (stonecutter.eval(\"${project.minecraft_version}\", '>= 26.1')) {\n
+        compileOnly 'maven.modrinth:freecam:Cg10zLnR'\n
+      } else {\n
+        modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-fabric'\n
+        modCompileOnly 'maven.modrinth:freecam:Cg10zLnR'\n
+      }\n
       "
   forge_dependencies: "
       modCompileOnly 'maven.modrinth:playeranimator:1.0.2-rc1+1.20-forge'\n

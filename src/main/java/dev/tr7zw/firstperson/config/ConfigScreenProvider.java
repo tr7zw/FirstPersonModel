@@ -139,8 +139,7 @@ public class ConfigScreenProvider {
             PlayerRendererAccess access = null;
             //? if >= 1.21.6 {
 
-            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(
-                    /*? if >= 1.21.9 {*/new AvatarRenderState()/*?} else {*//*new PlayerRenderState()*//*? }*/);
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(new AvatarRenderState());
             //? } else {
             /*
             if (Minecraft.getInstance().player != null) {
@@ -208,7 +207,8 @@ public class ConfigScreenProvider {
         }
 
         private static @NotNull String getFilterStringItem(Entry<ResourceKey<Item>, Item> a) {
-            return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString() + " " + a.getValue().getName(a.getValue().getDefaultInstance()).getString();
+            return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString() + " "
+                    + a.getValue().getName(a.getValue().getDefaultInstance()).getString();
         }
 
         @Override

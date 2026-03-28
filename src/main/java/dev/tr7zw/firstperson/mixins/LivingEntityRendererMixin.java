@@ -155,7 +155,7 @@ public abstract class LivingEntityRendererMixin {
             ((ModelPartBase) (Object) playerModel.body).setHidden();
             //? if >= 1.21.3 {
             
-            if (livingEntityRenderState instanceof PlayerRenderState prs) {
+            if (livingEntityRenderState instanceof AvatarRenderState prs) {
                 prs.showCape = false;
             }
             //? } else {

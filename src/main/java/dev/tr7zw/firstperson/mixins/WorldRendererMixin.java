@@ -69,7 +69,7 @@ public abstract class WorldRendererMixin {
 
     @Inject(method = "extractVisibleEntities", at = @At(value = "HEAD"))
     private void renderEntities(Camera camera, Frustum frustum, DeltaTracker deltaTracker,
-            LevelRenderState levelRenderState, CallbackInfo ci) {
+            net.minecraft.client.renderer.state.level.LevelRenderState levelRenderState, CallbackInfo ci) {
         PoseStack matrices = new PoseStack();
         //? }
         if (camera.isDetached() || !FirstPersonModelCore.instance.getLogicHandler().shouldApplyThirdPerson(false)) {

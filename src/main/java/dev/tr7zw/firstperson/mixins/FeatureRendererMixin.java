@@ -27,16 +27,16 @@ public abstract class FeatureRendererMixin {
     @Inject(method = "renderColoredCutoutModel", at = @At("HEAD"), cancellable = true)
     //? if >= 1.21.3 {
     
-    private static void renderColoredCutoutModel(EntityModel<?> model, ResourceLocation resourceLocation,
+    private static void renderColoredCutoutModel(EntityModel<?> model, Identifier resourceLocation,
             PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             LivingEntityRenderState livingEntityRenderState, int j, CallbackInfo ci) {
         //? } else if >= 1.21.0 {
 
-    // private static <T extends LivingEntity> void removeHead(EntityModel model, ResourceLocation texture,
+    // private static <T extends LivingEntity> void removeHead(EntityModel model, Identifier texture,
     //        PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, int color, CallbackInfo ci) {
     //? } else {
 /^
-    private static <T extends LivingEntity> void removeHead(EntityModel<T> model, ResourceLocation texture,
+    private static <T extends LivingEntity> void removeHead(EntityModel<T> model, Identifier texture,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
             float blue, CallbackInfo ci) {
         ^///? }
@@ -58,16 +58,16 @@ public abstract class FeatureRendererMixin {
     @Inject(method = "renderColoredCutoutModel", at = @At("RETURN"), cancellable = true)
     //? if >= 1.21.3 {
     
-    private static void removeReturn(EntityModel<?> model, ResourceLocation resourceLocation, PoseStack poseStack,
+    private static void removeReturn(EntityModel<?> model, Identifier resourceLocation, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, LivingEntityRenderState livingEntityRenderState, int j,
             CallbackInfo ci) {
         //? } else if >= 1.21.0 {
 
-    // private static <T extends LivingEntity> void removeReturn(EntityModel model, ResourceLocation texture,
+    // private static <T extends LivingEntity> void removeReturn(EntityModel model, Identifier texture,
     //        PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, int color, CallbackInfo ci) {
     //? } else {
 /^
-    private static <T extends LivingEntity> void removeReturn(EntityModel<T> model, ResourceLocation texture,
+    private static <T extends LivingEntity> void removeReturn(EntityModel<T> model, Identifier texture,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, T entity, float red, float green,
             float blue, CallbackInfo ci) {
         ^///? }
