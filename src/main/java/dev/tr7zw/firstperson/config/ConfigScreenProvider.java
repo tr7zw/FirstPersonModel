@@ -72,66 +72,28 @@ public class ConfigScreenProvider {
             wTabPanel.add(optionList, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.settings"))
                     .icon(new ItemIcon(Items.COMPARATOR)));
 
-            List<Entry<ResourceKey<Item>, Item>> items = new ArrayList<>(ItemUtil.getItems());
-            items.sort(Comparator.comparing(CustomConfigScreen::getStringItem));
-
-            WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> itemList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
-                    items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
-                        l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
-                        l.setToolip(ComponentProvider.literal(getStringItem(s)));
-                        l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)));
-                        l.setOnToggle(b -> {
-                            if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.add(getStringItem(s));
-                            } else {
-                                FirstPersonModelCore.instance.getConfig().autoVanillaHands.remove(getStringItem(s));
-                            }
-                            FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
-                            save();
-                        });
-                    });
-            itemList.setGap(-1);
-            itemList.setInsets(new Insets(2, 4));
-            WGridPanel itemTab = new WGridPanel(20);
-            itemTab.add(itemList, 0, 0, 17, 7);
-            WTextField searchField = new WTextField();
-            searchField.setChangedListener(s -> {
-                itemList.setFilter(e -> getFilterStringItem(e).toLowerCase().contains(s.toLowerCase()));
-                itemList.layout();
+            WGridPanel itemTab = createItemTab(s -> FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)), (b, s) -> {
+                if (b) {
+                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
+                } else {
+                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
+                }
+                FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
+                save();
             });
-            itemTab.add(searchField, 0, 7, 17, 1);
             wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.autovanillahands"))
                     .icon(new ItemIcon(Items.FILLED_MAP)));
 
-            WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> disableList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
-                    items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
-                        l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
-                        l.setToolip(ComponentProvider.literal(getStringItem(s)));
-                        l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                                .contains(getStringItem(s)));
-                        l.setOnToggle(b -> {
-                            if (b) {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
-                            } else {
-                                FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
-                            }
-                            FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
-                            save();
-                        });
-                    });
-            disableList.setGap(-1);
-            disableList.setInsets(new Insets(2, 4));
-            WGridPanel disableTab = new WGridPanel(20);
-            disableTab.add(disableList, 0, 0, 17, 7);
-            WTextField searchDisableField = new WTextField();
-            searchDisableField.setChangedListener(s -> {
-                disableList.setFilter(e -> getFilterStringItem(e).toLowerCase().contains(s.toLowerCase()));
-                disableList.layout();
+            WGridPanel disableTab = createItemTab(s -> FirstPersonModelCore.instance.getConfig().autoToggleModItems
+                    .contains(getStringItem(s)), (b, s) ->{
+                if (b) {
+                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
+                } else {
+                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
+                }
+                FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
+                save();
             });
-            disableTab.add(searchDisableField, 0, 7, 17, 1);
             wTabPanel.add(disableTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.disableitems"))
                     .icon(new ItemIcon(Items.BARRIER)));
 
@@ -206,10 +168,6 @@ public class ConfigScreenProvider {
             return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString();
         }
 
-        private static @NotNull String getFilterStringItem(Entry<ResourceKey<Item>, Item> a) {
-            return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString() + " "
-                    + a.getValue().getName(a.getValue().getDefaultInstance()).getString();
-        }
 
         @Override
         public void reset() {
