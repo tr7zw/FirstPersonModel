@@ -24,6 +24,15 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     public static boolean enabled = true;
     @Deprecated
     public static boolean isRenderingPlayer = false;
+    /**
+     * True while the render state of the camera entity is being extracted and
+     * the mod is active. Widens {@link #isRenderingPlayer()} for mods that build
+     * their render data at extraction time (e.g. YSM), without marking the
+     * extracted states themselves, so captures of other mods (RealCamera, GUIs)
+     * evaluate with the flag down and keep rendering the full model with its
+     * head.
+     */
+    public static boolean cameraEntityExtract = false;
     private CameraType lastCameraType = null;
     @Deprecated
     private int tickCounterWorkaround = 0;
@@ -94,6 +103,19 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
             isHeld = false;
         }
         tickCounterWorkaround++;
+    }
+
+    @Override
+    public boolean isRenderingPlayer() {
+        return super.isRenderingPlayer() || cameraEntityExtract;
+    }
+
+    /**
+     * The un-widened flag. Only true while FirstPerson itself extracts/renders
+     * the camera entity, not for third party extractions.
+     */
+    public boolean isRenderingPlayerRaw() {
+        return super.isRenderingPlayer();
     }
 
     @Override
