@@ -181,8 +181,10 @@ public abstract class LivingEntityRendererMixin {
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("HEAD"))
     private void checkIfCameraEntity(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState,
             float f, CallbackInfo ci) {
+        // Raw flag: only states extracted by FirstPerson itself are marked, so
+        // third party captures (RealCamera, GUIs) keep rendering the head.
         ((LivingEntityRenderStateAccess) livingEntityRenderState)
-                .setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayer());
+                .setIsCameraEntity(FirstPersonModelCore.instance.isRenderingPlayerRaw());
     }
     //? }
 

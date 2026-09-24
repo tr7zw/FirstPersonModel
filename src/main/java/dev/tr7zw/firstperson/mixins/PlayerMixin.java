@@ -19,7 +19,7 @@ public class PlayerMixin {
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
     public void getItemBySlot(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> ci) {
-        if (FirstPersonModelCore.instance.isRenderingPlayer() && Minecraft.getInstance().isSameThread()
+        if (FirstPersonModelCore.instance.isRenderingPlayerRaw() && Minecraft.getInstance().isSameThread()
                 && (Object) this instanceof Player player) {
             if (slot == EquipmentSlot.HEAD) {
                 ci.setReturnValue(ItemStack.EMPTY);
