@@ -37,7 +37,14 @@ public class MixinTests {
         objenesis.newInstance(CapeLayer.class);
         objenesis.newInstance(FishingHookRenderer.class);
         objenesis.newInstance(ItemInHandLayer.class);
+        //? if >= 26.3 {
+
+        objenesis.newInstance(FirstPersonHandsAndItemsRenderer.class);
+        //? } else {
+        /*
         objenesis.newInstance(ItemInHandRenderer.class);
+         */
+        //? }
         objenesis.newInstance(HumanoidModel.class);
         //? if >= 1.21.9 {
         objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
