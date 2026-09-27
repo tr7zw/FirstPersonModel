@@ -107,6 +107,32 @@ public abstract class HeldItemRendererMixin {
         }
         matrices.popPose();
     }
+
+    // modify inverseArmHeight
+    @ModifyVariable(method = "submitArmWithItem", at = @At("HEAD"), index = 8)
+    private float modifyInverseArmHeight(float inverseArmHeight) {
+        if (FirstPersonModelCore.instance.isEnabled()
+                && FirstPersonModelCore.instance.getLogicHandler().showVanillaHands()
+                && FirstPersonModelCore.instance.getLogicHandler().dynamicHandsEnabled()) {
+            LocalPlayer localPlayer = Minecraft.getInstance().player;
+            if (localPlayer == null) {
+                return inverseArmHeight;
+            }
+            float f = EntityUtil.getXRot(localPlayer);
+            if (f > 15) {
+                if (f < 30) {
+                    return 1f - (15f / f);
+                }
+                if (f < 35f) {
+                    return 0.5f + ((f - 30f) / 5f) * 0.7f;
+                }
+                return 1.2f;
+            }
+        }
+        return inverseArmHeight;
+    }
+
+
     //? }
 
     //? if < 26.3 {
