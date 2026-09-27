@@ -121,10 +121,10 @@ public abstract class HeldItemRendererMixin {
             float f = EntityUtil.getXRot(localPlayer);
             if (f > 15) {
                 if (f < 30) {
-                    return 1f - (15f / f);
+                    return Math.max(inverseArmHeight, 1f - (15f / f));
                 }
                 if (f < 35f) {
-                    return 0.5f + ((f - 30f) / 5f) * 0.7f;
+                    return Math.max(inverseArmHeight, 0.5f + ((f - 30f) / 5f) * 0.7f);
                 }
                 return 1.2f;
             }
