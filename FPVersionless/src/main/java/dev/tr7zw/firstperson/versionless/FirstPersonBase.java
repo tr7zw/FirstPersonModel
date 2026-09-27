@@ -21,7 +21,7 @@ public class FirstPersonBase {
     public static final Logger LOGGER = LogManager.getLogger("FirstPersonModel");
     /**
      * Stays true till the first entity is rendered when the player is supposed to
-     * be rendered
+     * be rendered, or during extraction in 26.1+
      */
     @Getter
     @Setter

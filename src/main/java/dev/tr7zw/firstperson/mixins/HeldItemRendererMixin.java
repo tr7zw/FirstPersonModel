@@ -132,7 +132,6 @@ public abstract class HeldItemRendererMixin {
         return inverseArmHeight;
     }
 
-
     //? }
 
     //? if < 26.3 {
