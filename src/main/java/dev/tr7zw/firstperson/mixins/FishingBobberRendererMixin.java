@@ -1,5 +1,8 @@
 package dev.tr7zw.firstperson.mixins;
 
+//? if > 1.20.4 {
+import com.llamalad7.mixinextras.injector.*;
+//? }
 import com.mojang.blaze3d.vertex.*;
 import dev.tr7zw.firstperson.*;
 import net.minecraft.client.*;
@@ -30,13 +33,16 @@ public class FishingBobberRendererMixin {
     //? if <= 1.20.4 {
     /*
      @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+     private CameraType redirect(Options gameOptions) {
+         return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
+     }
     *///? } else {
 
-    @Redirect(method = "getPlayerHandPos", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
-    //? }
-    private CameraType redirect(Options gameOptions) {
-        return doCorrect() ? CameraType.THIRD_PERSON_BACK : gameOptions.getCameraType();
+    @ModifyExpressionValue(method = "getPlayerHandPos", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCameraType()Lnet/minecraft/client/CameraType;"))
+    private CameraType redirect(CameraType cameraType) {
+        return doCorrect() ? CameraType.THIRD_PERSON_BACK : cameraType;
     }
+    //? }
 
     //? if >= 26.1 {
     @Inject(method = "submit(Lnet/minecraft/client/renderer/entity/state/FishingHookRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V", at = @At("HEAD"))
