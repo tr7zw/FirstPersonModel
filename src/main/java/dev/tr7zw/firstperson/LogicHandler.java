@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.state.*;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.*;
+//? if >= 1.20.5
+import net.minecraft.world.entity.ai.attributes.Attributes;
 //? if >=1.21.11 {
 import net.minecraft.world.entity.vehicle.minecart.*;
 import net.minecraft.world.entity.vehicle.boat.*;
@@ -125,8 +127,13 @@ public class LogicHandler {
                     }
                     bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
                 } else {
-                    bodyOffset = 0.25f + fpm.getConfig().xOffset / 100f;
+                    bodyOffset = Constants.STAND_BODY_OFFSET + fpm.getConfig().xOffset / 100f;
                 }
+
+                //? if >=1.20.5 {
+                bodyOffset *= player.getAttributeValue(Attributes.SCALE);
+                //?}
+
                 x += bodyOffset * Math.sin(Math.toRadians(realYaw));
                 z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
                 if (isCrawlingOrSwimming(client.player)) {
