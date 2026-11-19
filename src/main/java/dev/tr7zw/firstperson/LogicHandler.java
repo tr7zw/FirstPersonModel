@@ -130,7 +130,7 @@ public class LogicHandler {
                     bodyOffset = Constants.STAND_BODY_OFFSET + fpm.getConfig().xOffset / 100f;
                 }
 
-                //? if >=1.21.11 {
+                //? if >=1.20.5 {
                 bodyOffset *= player.getAttributeValue(Attributes.SCALE);
                 //?}
 
