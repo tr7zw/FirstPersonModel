@@ -85,7 +85,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
             lateInit = false;
             lateInit();
         }
-        if (KeybindHolder.INSTANCE.getKeyBinding().isDown()) {
+        if (!KeybindHolder.INSTANCE.getKeyBinding().isUnbound() && KeybindHolder.INSTANCE.getKeyBinding().isDown()) {
             if (isHeld) {
                 return;
             }
