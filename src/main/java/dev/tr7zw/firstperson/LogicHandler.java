@@ -131,7 +131,9 @@ public class LogicHandler {
                 }
 
                 //? if >=1.20.5 {
-                bodyOffset *= player.getAttributeValue(Attributes.SCALE);
+                double bodytScale = player.getAttributeValue(Attributes.SCALE);
+
+                bodyOffset *= bodytScale;
                 //?}
 
                 x += bodyOffset * Math.sin(Math.toRadians(realYaw));
@@ -142,6 +144,9 @@ public class LogicHandler {
                     } else {
                         y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
                     }
+                    //? if >=1.20.5 {
+                    y *= bodytScale;
+                    //?}
                 }
 
             }
