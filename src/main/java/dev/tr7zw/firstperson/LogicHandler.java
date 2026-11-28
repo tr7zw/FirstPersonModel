@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.state.*;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.*;
+//? if >= 1.20.5
+import net.minecraft.world.entity.ai.attributes.Attributes;
 //? if >=1.21.11 {
 import net.minecraft.world.entity.vehicle.minecart.*;
 import net.minecraft.world.entity.vehicle.boat.*;
@@ -125,8 +127,12 @@ public class LogicHandler {
                     }
                     bodyOffset = Constants.IN_VEHICLE_BODY_OFFSET + fpm.getConfig().sitXOffset / 100f;
                 } else {
-                    bodyOffset = 0.25f + fpm.getConfig().xOffset / 100f;
+                    bodyOffset = Constants.STAND_BODY_OFFSET + fpm.getConfig().xOffset / 100f;
                 }
+
+                double bodyScale = getEntityScale(player);
+                bodyOffset *= bodyScale;
+
                 x += bodyOffset * Math.sin(Math.toRadians(realYaw));
                 z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
                 if (isCrawlingOrSwimming(client.player)) {
@@ -135,6 +141,7 @@ public class LogicHandler {
                     } else {
                         y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
                     }
+                    y *= bodyScale;
                 }
 
             }
@@ -144,6 +151,20 @@ public class LogicHandler {
             offset = handler.applyOffset(client.player, delta, Vec3.ZERO, offset);
         }
     }
+
+    
+    private static double getEntityScale(LivingEntity player) {
+        // this just returns 1 if scaling is not supported
+        double entityScale = 1;
+
+        //? if >=1.20.5 {
+        // apply vanilla attribute scale but only for 1.20.5 and above
+        entityScale *= player.getAttributeValue(Attributes.SCALE);
+        //?}
+
+        return entityScale;
+    }
+
 
     private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {
         // Wrap the head rotation to the range [-180, 180]
