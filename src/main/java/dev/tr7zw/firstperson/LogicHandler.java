@@ -130,11 +130,8 @@ public class LogicHandler {
                     bodyOffset = Constants.STAND_BODY_OFFSET + fpm.getConfig().xOffset / 100f;
                 }
 
-                //? if >=1.20.5 {
-                double bodytScale = player.getAttributeValue(Attributes.SCALE);
-
-                bodyOffset *= bodytScale;
-                //?}
+                double bodyScale = getEntityScale(player);
+                bodyOffset *= bodyScale;
 
                 x += bodyOffset * Math.sin(Math.toRadians(realYaw));
                 z -= bodyOffset * Math.cos(Math.toRadians(realYaw));
@@ -144,9 +141,7 @@ public class LogicHandler {
                     } else {
                         y += 0.01f * -Math.sin(Math.toRadians(player.xRotO));
                     }
-                    //? if >=1.20.5 {
-                    y *= bodytScale;
-                    //?}
+                    y *= bodyScale;
                 }
 
             }
@@ -156,6 +151,20 @@ public class LogicHandler {
             offset = handler.applyOffset(client.player, delta, Vec3.ZERO, offset);
         }
     }
+
+    
+    private static double getEntityScale(LivingEntity player) {
+        // this just returns 1 if scaling is not supported
+        double entityScale = 1;
+
+        //? if >=1.20.5 {
+        // apply vanilla attribute scale but only for 1.20.5 and above
+        entityScale *= player.getAttributeValue(Attributes.SCALE);
+        //?}
+
+        return entityScale;
+    }
+
 
     private static float calculateBodyRot(float entityBodyRot, float riderHeadRot) {
         // Wrap the head rotation to the range [-180, 180]
